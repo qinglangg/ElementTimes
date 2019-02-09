@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "F F",
+    "F F"
+  ],
+  "key": {
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:element_sleeve_leggings",
+    "count": 1
+    }
+}

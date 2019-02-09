@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SES",
+    "GEG",
+    "OER"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:dragon_breath"
+    },
+    "G": {
+      "item": "minecraft:experience_bottle"
+    },
+    "O": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "R": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "E": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "elementtimes:waterelement",
+    "count": 1
+    }
+}

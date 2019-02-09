@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    " W ",
+    "CSC"
+  ],
+  "key": {
+    "L": {
+      "item": "elementtimes:leafessence"
+    },
+    "W": {
+      "item": "elementtimes:woodessence"
+    },
+    "C": {
+      "item": "elementtimes:cropessence"
+    },
+    "S": {
+      "item": "elementtimes:saplingessence"
+    }
+  },
+  "result": {
+    "item": "elementtimes:woodelement",
+    "count": 1
+    }
+}

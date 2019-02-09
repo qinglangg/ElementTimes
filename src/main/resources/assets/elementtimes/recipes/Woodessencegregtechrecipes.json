@@ -1,0 +1,39 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": 
+    [
+	{
+        "item": "gregtech:gt.block.log.b",
+        "data": 3
+    },
+	{
+        "item": "gregtech:gt.block.log.a",
+        "data": 1
+    },
+	{
+        "item": "gregtech:gt.block.log.a",
+        "data": 2
+    },
+	{
+        "item": "gregtech:gt.block.log.b",
+        "data": 0
+    },
+    {
+        "item": "gregtech:gt.block.log.b",
+        "data": 1
+    },
+	{
+        "item": "gregtech:gt.block.log.a",
+        "data": 0
+    },
+	{
+        "item": "gregtech:gt.block.log.a",
+        "data": 3
+    }
+	],
+    "result": 
+    {
+        "item": "elementtimes:woodessence",
+        "count": 1
+    }
+}

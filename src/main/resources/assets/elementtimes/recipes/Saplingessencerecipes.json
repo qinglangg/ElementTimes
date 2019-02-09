@@ -1,0 +1,35 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": 
+    [
+	{
+        "item": "minecraft:sapling",
+        "data": 0
+    },
+	{
+        "item": "minecraft:sapling",
+        "data": 1
+    },
+	{
+        "item": "minecraft:sapling",
+        "data": 2
+    },
+	{
+        "item": "minecraft:sapling",
+        "data": 3
+    },
+	{
+        "item": "minecraft:sapling",
+        "data": 4
+    },
+	{
+        "item": "minecraft:sapling",
+        "data": 5
+    }
+	],
+	"result": 
+	{
+		"item": "elementtimes:saplingessence",
+		"count": 1
+	}
+}

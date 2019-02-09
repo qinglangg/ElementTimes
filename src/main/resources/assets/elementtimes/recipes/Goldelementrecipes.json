@@ -1,0 +1,37 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients":[
+        {
+            "item":"minecraft:coal_block"
+        },
+        {
+            "item":"minecraft:iron_block"
+        },
+        {
+            "item":"minecraft:redstone_block"
+        },
+        {
+            "item":"minecraft:gold_block"
+        },
+        {
+            "item":"minecraft:lapis_block"
+        },
+        {
+            "item":"minecraft:diamond_block"
+        },
+        {
+            "item":"minecraft:emerald_block"
+        },
+        {
+            "item":"minecraft:quartz_block",
+            "data":0
+        },
+        {
+            "item":"minecraft:obsidian"
+        }
+    ],
+    "result":{
+        "item":"elementtimes:goldelement",
+        "count":1
+    }
+}

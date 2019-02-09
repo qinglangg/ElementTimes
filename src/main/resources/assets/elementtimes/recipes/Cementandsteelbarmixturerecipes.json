@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:cement"
+    },
+    "B": {
+      "item": "elementtimes:ingotcolumn"
+    }
+  },
+  "result": {
+    "item": "elementtimes:cementandsteelbarmixture",
+    "count": 1
+    }
+}

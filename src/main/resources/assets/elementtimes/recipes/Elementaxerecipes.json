@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FF",
+    "FF",
+    " F"
+  ],
+  "key": {
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementaxe",
+    "count": 1
+    }
+}

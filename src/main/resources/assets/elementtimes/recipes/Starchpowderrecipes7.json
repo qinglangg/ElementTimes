@@ -1,0 +1,12 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients":[
+        {
+            "item":"minecraft:cooked_chicken"
+        }
+    ],
+    "result":{
+        "item":"elementtimes:starchpowder",
+        "count":13
+    }
+} 

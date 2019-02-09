@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:starchpowder"
+    }
+  },
+  "result": {
+    "item": "elementtimes:amylum",
+    "count": 1
+    }
+}

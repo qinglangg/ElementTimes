@@ -1,0 +1,12 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients":[
+        {
+            "item":"minecraft:cake"
+        }
+    ],
+    "result":{
+        "item":"elementtimes:starchpowder",
+        "count":17
+    }
+} 
