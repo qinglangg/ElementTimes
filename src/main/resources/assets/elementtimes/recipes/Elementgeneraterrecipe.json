@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GIH"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:endelement"
+    },
+    "B": {
+      "item": "elementtimes:cementandsteelbarmixture"
+    },
+    "C": {
+      "item": "elementtimes:waterelement"
+    },
+    "D": {
+      "item": "elementtimes:goldelement"
+    },
+    "E": {
+      "item": "elementtimes:fiveelements"
+    },
+    "F": {
+      "item": "elementtimes:soilelement"
+    },
+    "G": {
+      "item": "elementtimes:woodelement"
+    },
+    "H": {
+      "item": "elementtimes:fireelement"
+    },
+    "I": {
+      "item": "elementtimes:spanner"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementgenerater",
+    "count": 1
+    }
+}

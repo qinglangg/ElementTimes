@@ -2,10 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " F ",
-    "FFF",
+    "EFE",
     " F "
   ],
   "key": {
+    "E": {
+      "item": "elementtimes:endelement"
+    },
     "F": {
       "item": "elementtimes:fiveelements"
     }

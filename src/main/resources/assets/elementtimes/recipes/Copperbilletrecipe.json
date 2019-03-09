@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:copper"
+    }
+  },
+  "result": {
+    "item": "elementtimes:copperbillet",
+    "count": 1
+    }
+}

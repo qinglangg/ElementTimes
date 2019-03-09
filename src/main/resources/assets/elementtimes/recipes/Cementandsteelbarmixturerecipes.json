@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    "CCC",
     "ABA",
     "ABA"
   ],
@@ -10,6 +11,9 @@
     },
     "B": {
       "item": "elementtimes:ingotcolumn"
+    },
+    "C": {
+      "item": "minecraft:obsidian"
     }
   },
   "result": {

@@ -10,7 +10,7 @@ public class ElementSleeveHelmet extends ItemArmor
 {
 	public ElementSleeveHelmet() 
 	{
-		super(EnumHelper.addArmorMaterial("elementsleeve", "elementtimes:element_sleeve", 100, new int[] {20, 60, 40, 20}, 30, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 10.0F), 1, EntityEquipmentSlot.HEAD);
+		super(EnumHelper.addArmorMaterial("elementsleeve", "elementtimes:element_sleeve", 100, new int[] {3,6,8,3}, 30, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 50.0F), 1, EntityEquipmentSlot.HEAD);
 		setRegistryName("element_sleeve_helmet");
 		setUnlocalizedName("elementsleevehelmet");
 		setCreativeTab(Elementtimestab.tabBlocks);

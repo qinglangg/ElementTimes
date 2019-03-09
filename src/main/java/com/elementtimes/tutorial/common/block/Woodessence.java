@@ -15,5 +15,6 @@ public class Woodessence extends Block
         setHardness(1000.0F); 
         setResistance(20.0F); 
         setHarvestLevel("axe", 4); 
+        setLightLevel(100.0F); //设置方块光源
 	}
 }

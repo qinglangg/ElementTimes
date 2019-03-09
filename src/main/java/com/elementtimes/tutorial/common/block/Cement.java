@@ -14,6 +14,6 @@ public class Cement extends Block
 		setCreativeTab(Elementtimestab.tabBlocks);
         setHardness(1000.0F); 
         setResistance(30.0F); 
-        setHarvestLevel("Pickaxe", 3); 
+        setHarvestLevel("pickaxe", 3); 
 	}
 }

@@ -1,25 +1,40 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "SES",
-    "GEG",
-    "OER"
+    "ABC",
+    "DEF",
+    "GHI"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:dragon_breath"
+    "A": {
+      "item": "minecraft:waterlily"
     },
-    "G": {
-      "item": "minecraft:experience_bottle"
+    "B": {
+      "item": "minecraft:ice"
     },
-    "O": {
-      "item": "minecraft:prismarine_shard"
+    "C": {
+      "item": "minecraft:packed_ice"
     },
-    "R": {
-      "item": "minecraft:prismarine_crystals"
+    "D": {
+      "item": "minecraft:prismarine",
+      "data": 0
     },
     "E": {
-      "item": "minecraft:water_bucket"
+      "item": "minecraft:prismarine",
+      "data": 1
+    }, 
+    "F": {
+      "item": "minecraft:prismarine",
+      "data": 2
+    },
+    "G": {
+      "item": "minecraft:sea_lantern"
+    },
+    "H": {
+      "item": "minecraft:experience_bottle"
+    },
+    "I": {
+      "item": "minecraft:dragon_breath"
     }
   },
   "result": {

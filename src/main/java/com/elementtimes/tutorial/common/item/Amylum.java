@@ -8,7 +8,7 @@ public class Amylum extends ItemFood
 {
 	public Amylum() 
 	{
-		super(4, 5.0F, false);
+		super(9, 0.0F, false);
 		setRegistryName("amylum");
 		setUnlocalizedName("amylum");
 		setCreativeTab(Elementtimestab.tabBlocks);

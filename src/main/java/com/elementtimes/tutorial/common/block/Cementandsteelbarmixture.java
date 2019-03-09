@@ -14,6 +14,6 @@ public class Cementandsteelbarmixture extends Block
 		setCreativeTab(Elementtimestab.tabBlocks);
         setHardness(10000.0F); 
         setResistance(150.0F); 
-        setHarvestLevel("Pickaxe", 4); 
+        setHarvestLevel("pickaxe", 4); 
 	}
 }

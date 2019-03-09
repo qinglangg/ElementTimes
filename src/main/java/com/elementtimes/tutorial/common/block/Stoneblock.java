@@ -14,6 +14,6 @@ public class Stoneblock extends Block
 		setCreativeTab(Elementtimestab.tabBlocks);
         setHardness(100.0F); 
         setResistance(15.0F); 
-        setHarvestLevel("Pickaxe", 2); 
+        setHarvestLevel("pickaxe", 2); 
 	}
 }
