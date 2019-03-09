@@ -3,6 +3,7 @@ package com.elementtimes.tutorial;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.init.*;
 
+import com.elementtimes.tutorial.world.gen.WorldGenETOres;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -16,7 +17,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Elementtimes.MODID, dependencies = "required-after:cofhcore@[4.6.1,)")
+@Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
 public class Elementtimes {
     public static final String MODID = "elementtimes";
 
@@ -52,7 +53,7 @@ public class Elementtimes {
 
     @EventHandler
     public static void Init(FMLInitializationEvent event) {
-        GameRegistry.registerWorldGenerator(new WorldGenOHROres(), 0);
+        GameRegistry.registerWorldGenerator(new WorldGenETOres(), 0);
         ModRecipes.init();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
         ElementtimesNetwork.init();

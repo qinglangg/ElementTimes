@@ -1,7 +1,5 @@
 package com.elementtimes.tutorial.common.block;
 
-import cofh.api.block.IDismantleable;
-import cofh.core.util.CoreUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -18,6 +16,14 @@ import java.util.ArrayList;
  *
  * @author KSGFK create in 2019/2/17
  */
+@Deprecated
+public abstract class BlockCanDismantle extends BlockTileBase {
+
+    protected BlockCanDismantle(Material materialIn) {
+        super(materialIn,0);
+    }
+}
+/*
 public abstract class BlockCanDismantle extends BlockTileBase implements IDismantleable {
     protected BlockCanDismantle(Material materialIn) {
         super(materialIn);
@@ -67,3 +73,4 @@ public abstract class BlockCanDismantle extends BlockTileBase implements IDisman
         return true;
     }
 }
+*/

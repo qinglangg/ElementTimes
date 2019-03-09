@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
  *
  * @author KSGFK create in 2019/2/17
  */
+@Deprecated
 public abstract class TileInventory extends TileEntity implements ISidedInventory {
     @Override
     public int[] getSlotsForFace(EnumFacing side) {

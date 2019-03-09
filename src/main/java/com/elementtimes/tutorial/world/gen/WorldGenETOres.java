@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial;
+package com.elementtimes.tutorial.world.gen;
 
 import java.util.Random;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
@@ -11,7 +11,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-public class WorldGenOHROres implements IWorldGenerator{
+public class WorldGenETOres implements IWorldGenerator{
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){

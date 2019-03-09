@@ -24,10 +24,10 @@ import java.util.Arrays;
  *
  * @author KSGFK create in 2019/2/17
  */
-public class BlockElementGenerater extends BlockCanDismantle {
+public class BlockElementGenerater extends BlockTileBase {
 
     public BlockElementGenerater() {
-        super(Material.IRON);
+        super(Material.IRON, 0);
         setRegistryName("elementGenerater");
         setUnlocalizedName("elementGenerater");
     }
@@ -64,7 +64,7 @@ public class BlockElementGenerater extends BlockCanDismantle {
             }
         }
     }
-
+    /*
     @Override
     public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnDrops) {
         TileEntity tile = world.getTileEntity(pos);
@@ -77,4 +77,5 @@ public class BlockElementGenerater extends BlockCanDismantle {
         }
         return dismantleDelegate(retTag, world, pos, player, returnDrops, false);
     }
+    */
 }

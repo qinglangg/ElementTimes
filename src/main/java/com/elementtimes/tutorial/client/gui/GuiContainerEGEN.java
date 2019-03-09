@@ -30,8 +30,8 @@ public class GuiContainerEGEN extends GuiContainer {
         this.ySize = 156;
         this.generater = inventorySlotsIn;
 
-        maxEnergy = generater.getGenerater().getMaxEnergyStored(null);
-        maxPowerGen = generater.getGenerater().getMaxPowerGen();
+        maxEnergy = generater.getTileEntity().getMaxEnergyStored(null);
+        maxPowerGen = generater.getTileEntity().getMaxPowerGen();
     }
 
     @Override
