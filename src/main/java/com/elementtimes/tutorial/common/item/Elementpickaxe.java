@@ -1,10 +1,11 @@
 package com.elementtimes.tutorial.common.item;
 
+import com.elementtimes.tutorial.common.init.Elementtimestab;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraftforge.common.util.EnumHelper;
-import tab.Elementtimestab;
 
 public class Elementpickaxe  extends ItemPickaxe
 {

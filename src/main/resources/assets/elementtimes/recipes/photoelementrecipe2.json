@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "AdvancedSolarPanel:sunnarium"
+    }
+  },
+  "result": {
+    "item": "elementtimes:photoelement",
+    "count": 1
+    }
+}

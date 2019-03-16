@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_ore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:quartzpowder",
+    "count": 3
+  }
+}

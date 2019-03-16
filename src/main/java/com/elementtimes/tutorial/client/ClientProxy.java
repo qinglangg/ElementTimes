@@ -76,6 +76,11 @@ public class ClientProxy extends CommonProxy {
         
         registerItemModel(ElementtimesItems.Copper);
         
+        registerItemModel(ElementtimesItems.Largerubbingsuncompound);
+        registerItemModel(ElementtimesItems.Intermediaterubbingsuncompound);
+        registerItemModel(ElementtimesItems.Twiningsuncompound);
+        registerItemModel(ElementtimesItems.Photoelement);
+        registerItemModel(ElementtimesItems.Quartzpowder);
         registerItemModel(ElementtimesItems.Greenstonepowder);
         registerItemModel(ElementtimesItems.Redstonepowder);
         registerItemModel(ElementtimesItems.Bluestonepowder);

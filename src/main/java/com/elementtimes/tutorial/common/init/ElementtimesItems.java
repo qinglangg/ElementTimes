@@ -42,4 +42,9 @@ public class ElementtimesItems {
     public static final Item Diamondpowder = new Diamondpowder();
     public static final Item Copperpowder = new Copperpowder();
     public static final Item Spanner = new Spanner();
+    public static final Item Twiningsuncompound = new Twiningsuncompound();
+    public static final Item Intermediaterubbingsuncompound = new Intermediaterubbingsuncompound();
+    public static final Item Largerubbingsuncompound = new Largerubbingsuncompound();
+    public static final Item Photoelement = new Photoelement();
+    public static final Item Quartzpowder = new Quartzpowder();
 }

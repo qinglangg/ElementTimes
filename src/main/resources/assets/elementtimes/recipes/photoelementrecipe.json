@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:largerubbingsuncompound"
+    }
+  },
+  "result": {
+    "item": "elementtimes:photoelement",
+    "count": 1
+    }
+}

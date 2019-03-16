@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.common.tileentity.TileMachine;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,7 +16,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import tab.Elementtimestab;
 
 import javax.annotation.Nullable;
 

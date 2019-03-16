@@ -1,6 +1,5 @@
-package tab;
+package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "minecraft:emerald_ore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:greenstonepowder",
+    "count": 3
+  }
+}

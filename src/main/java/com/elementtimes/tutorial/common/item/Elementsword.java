@@ -1,9 +1,10 @@
 package com.elementtimes.tutorial.common.item;
 
+import com.elementtimes.tutorial.common.init.Elementtimestab;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
-import tab.Elementtimestab;
 
 public class Elementsword  extends ItemSword
 {

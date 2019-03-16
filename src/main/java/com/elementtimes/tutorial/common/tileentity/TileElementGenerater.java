@@ -29,6 +29,8 @@ public class TileElementGenerater extends TileMachine {
             boolean isValid = i.equals(ElementtimesItems.Fiveelements) ||
                     i.equals(ElementtimesItems.Fireelement) ||
                     i.equals(ElementtimesItems.Endelement) ||
+                    i.equals(ElementtimesItems.Photoelement) ||
+                    i.equals(ElementtimesItems.Photoelement) ||
                     i.equals(ElementtimesItems.Goldelement) ||
                     i.equals(ElementtimesItems.Waterelement) ||
                     i.equals(ElementtimesItems.Woodelement) ||
@@ -72,6 +74,8 @@ public class TileElementGenerater extends TileMachine {
                         setPower(nature, ElementtimesConfig.general.generaterFive);
                     else if (nature.getItem().equals(ElementtimesItems.Endelement))
                         setPower(nature, ElementtimesConfig.general.generaterEnd);
+                    else if (nature.getItem().equals(ElementtimesItems.Photoelement))
+                        setPower(nature, ElementtimesConfig.general.generaterSun);
                     else if (nature.getItem().equals(ElementtimesItems.Soilelement))
                         setPower(nature, ElementtimesConfig.general.generaterSoilGen);
                     else if (nature.getItem().equals(ElementtimesItems.Woodelement))

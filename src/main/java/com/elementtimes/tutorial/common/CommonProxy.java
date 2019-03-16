@@ -68,11 +68,14 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesItems.Ironpower);
         event.getRegistry().register(ElementtimesItems.Goldpowder);
         event.getRegistry().register(ElementtimesItems.Coalpowder);
-
-
         event.getRegistry().register(ElementtimesItems.Diamondpowder);
         event.getRegistry().register(ElementtimesItems.Copperpowder);
         event.getRegistry().register(ElementtimesItems.Spanner);
+        event.getRegistry().register(ElementtimesItems.Twiningsuncompound);
+        event.getRegistry().register(ElementtimesItems.Intermediaterubbingsuncompound);
+        event.getRegistry().register(ElementtimesItems.Largerubbingsuncompound);
+        event.getRegistry().register(ElementtimesItems.Photoelement);
+        event.getRegistry().register(ElementtimesItems.Quartzpowder);
     }
 
     public void registerItemBlock(Block block, RegistryEvent.Register<Item> event) {

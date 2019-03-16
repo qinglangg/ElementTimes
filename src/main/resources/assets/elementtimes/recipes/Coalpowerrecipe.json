@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "minecraft:coal_ore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:coalpowder",
+    "count": 3
+  }
+}

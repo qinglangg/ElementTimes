@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_ore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:diamondpowder",
+    "count": 3
+  }
+}

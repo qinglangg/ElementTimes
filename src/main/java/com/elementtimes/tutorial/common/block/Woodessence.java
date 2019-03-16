@@ -1,8 +1,9 @@
 package com.elementtimes.tutorial.common.block;
 
+import com.elementtimes.tutorial.common.init.Elementtimestab;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import tab.Elementtimestab;
 
 public class Woodessence extends Block
 {

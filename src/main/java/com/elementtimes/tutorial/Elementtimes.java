@@ -58,6 +58,11 @@ public class Elementtimes {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
         ElementtimesNetwork.init();
         gui.init();
+        
         OreDictionary.registerOre("oreCopper", ElementtimesBlocks.Copperore);
+        OreDictionary.registerOre("blockCopper", ElementtimesBlocks.Copperbillet);
+        OreDictionary.registerOre("ingotCopper", ElementtimesItems.Copper);
+        OreDictionary.registerOre("ingotSteel", ElementtimesItems.Steelingot);
+
     }
 }

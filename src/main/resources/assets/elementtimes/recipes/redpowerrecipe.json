@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_ore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:redstonepowder",
+    "count": 3
+  }
+}

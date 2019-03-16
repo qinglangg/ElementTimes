@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "#"
+  ],
+  
+  
+  
+  
+  "key": {
+    "#": {
+      "item": "elementtimes:copperore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:copperpowder",
+    "count": 3
+  }
+}

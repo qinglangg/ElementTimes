@@ -1,10 +1,11 @@
 package com.elementtimes.tutorial.common.item;
 
+import com.elementtimes.tutorial.common.init.Elementtimestab;
+
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
-import tab.Elementtimestab;
 
 public class ElementSleeveBody extends ItemArmor
 {

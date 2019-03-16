@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ABC",
-    "DEF",
-    "GIH"
+    "GCH",
+    "DBF",
+    "IEA"
   ],
   "key": {
     "A": {
@@ -31,7 +31,7 @@
       "item": "elementtimes:fireelement"
     },
     "I": {
-      "item": "elementtimes:spanner"
+      "item": "elementtimes:photoelement"
     }
   },
   "result": {
