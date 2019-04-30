@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "A#"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:smallhammer"
+    },
+    "#": {
+      "item": "elementtimes:sulfurore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:sulfurorepowder",
+    "count": 3
+  }
+}

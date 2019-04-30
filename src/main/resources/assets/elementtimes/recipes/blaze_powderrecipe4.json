@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "A#A"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:bighammer"
+    },
+    "#": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "minecraft:blaze_powder",
+    "count": 7
+  }
+}

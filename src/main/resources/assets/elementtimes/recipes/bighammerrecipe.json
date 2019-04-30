@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:smallhammer"
+    }
+  },
+  "result": {
+    "item": "elementtimes:bighammer",
+    "count": 1
+    }
+}

@@ -13,9 +13,9 @@ public class Woodessence extends Block
 		setRegistryName("woodessence");
 		setUnlocalizedName("woodessence");
 		setCreativeTab(Elementtimestab.tabBlocks);
-        setHardness(1000.0F); 
-        setResistance(20.0F); 
-        setHarvestLevel("axe", 4); 
-        setLightLevel(100.0F); //设置方块光源
+        setHardness(50.0F); 
+        setResistance(15.0F); 
+        setHarvestLevel("axe", 2); 
+        setLightLevel(50.0F); //设置方块光源
 	}
 }

@@ -2,19 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "#"
+    "A#"
   ],
-  
-  
-  
-  
   "key": {
+    "A": {
+      "item": "elementtimes:bighammer"
+    },
     "#": {
       "item": "minecraft:diamond_ore"
     }
   },
   "result": {
     "item": "elementtimes:diamondpowder",
-    "count": 3
+    "count": 4
   }
 }

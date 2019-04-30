@@ -2,7 +2,7 @@
     "type":"minecraft:crafting_shapeless",
     "ingredients":[
         {
-            "item":"minecraft:coal_block"
+            "item":"elementtimes:platinumblock"
         },
         {
             "item":"minecraft:iron_block"
@@ -17,7 +17,7 @@
             "item":"minecraft:lapis_block"
         },
         {
-            "item":"minecraft:diamond_block"
+            "item":"elementtimes:diamondblock"
         },
         {
             "item":"minecraft:emerald_block"
@@ -27,7 +27,8 @@
             "data":0
         },
         {
-            "item":"elementtimes:copperbillet"
+      "type":"forge:ore_dict",
+      "ore":"blockCopper"
         }
     ],
     "result":{

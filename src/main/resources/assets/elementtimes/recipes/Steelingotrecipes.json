@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " A ",
-    "ABA",
-    " A "
+    "BBB",
+    "BAB",
+    "BBB"
   ],
   "key": {
     "A": {
@@ -16,6 +16,6 @@
   },
   "result": {
     "item": "elementtimes:steelingot",
-    "count": 1
+    "count": 4
     }
 }

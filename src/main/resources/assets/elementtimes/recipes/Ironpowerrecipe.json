@@ -2,13 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "#"
+    "A#"
   ],
-  
-  
-  
-  
   "key": {
+    "A": {
+      "item": "elementtimes:smallhammer"
+    },
     "#": {
       "item": "minecraft:iron_ore"
     }

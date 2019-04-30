@@ -11,12 +11,13 @@ public class Leafessence extends Block
 {
 	public Leafessence()
 	{
-		super(Material.WOOD);
+		super(Material.LEAVES);
 		setRegistryName("leafessence");
 		setUnlocalizedName("leafessence");
 		setCreativeTab(Elementtimestab.tabBlocks);
         setHardness(5.0F); 
-        setResistance(10.0F); 
+        setResistance(10.0F);         
+        setLightLevel(20.0F);
 	}
 	
 	

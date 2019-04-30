@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "age=0": { "model": "elementtimes:corn/corn_crop_up_stage0" },
+        "age=1": { "model": "elementtimes:corn/corn_crop_up_stage1" },
+        "age=2": { "model": "elementtimes:corn/corn_crop_up_stage2" },
+        "age=3": { "model": "elementtimes:corn/corn_crop_up_stage3" }
+    }
+}

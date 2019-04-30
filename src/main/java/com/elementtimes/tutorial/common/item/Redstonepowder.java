@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.common.init.Elementtimestab;
+import com.elementtimes.tutorial.common.init.Elementtimesoretab;
 
 import net.minecraft.item.Item;
 
@@ -10,6 +10,6 @@ public class Redstonepowder  extends Item
 	{
 		setRegistryName("redstonepowder");
 		setUnlocalizedName("redstonepowder");
-		setCreativeTab(Elementtimestab.tabBlocks);
+		setCreativeTab(Elementtimesoretab.tabBlocks);
 	}
 }

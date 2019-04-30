@@ -3,8 +3,11 @@ package com.elementtimes.tutorial;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.init.*;
 
+import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.world.gen.WorldGenETOres;
+import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -49,20 +52,24 @@ public class Elementtimes {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(proxy);
         ElementtimesTile.init();
+        if (Loader.isModLoaded("flammpfeil.slashblade"))
+        {
+            SlashBlade.InitEventBus.register(new BladeElementknife());
+        }
     }
 
     @EventHandler
-    public static void Init(FMLInitializationEvent event) {
+    public void Init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new WorldGenETOres(), 0);
-        ModRecipes.init();
+        ElementtimesRecipes.init();
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
         ElementtimesNetwork.init();
         gui.init();
-        
+        ElementtimesFuels.init();
         OreDictionary.registerOre("oreCopper", ElementtimesBlocks.Copperore);
         OreDictionary.registerOre("blockCopper", ElementtimesBlocks.Copperbillet);
         OreDictionary.registerOre("ingotCopper", ElementtimesItems.Copper);
         OreDictionary.registerOre("ingotSteel", ElementtimesItems.Steelingot);
-
+        ElementtimesRecipe.Init(event);
     }
 }

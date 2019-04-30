@@ -2,8 +2,8 @@
   {
     "modid": "elementtimes",
     "name": "ElementTimes",
-    "description": "ElementTimes is half of rf Energy. The module is mainly composed of elements, and the new building materials and starch food are added. The original food can be converted into starch. The ElementTimes is a collection of modules. Most of its items are made from rare items, but weapons and armor are very powerful. If you have any questions welcome to the mcmod community for feedback, the current module is only updated on mcmod.",
-    "version": "1.3.2",
+    "description": "The ElementTimes is an element mod based on chemical elements and five elements in ancient China. It adds powerful weapon armour, introduces RF energy, and adds starch mechanism and corn in agriculture. The chemical industry restores the real industrial process. ",
+    "version": "1.4.3",
     "logoFile": "assets.elementtimes.redstoneflux.textures/logo.png",
     "mcversion": "1.12.2",
     "url": "https://www.mcmod.cn/class/1398.html",

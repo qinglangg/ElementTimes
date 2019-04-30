@@ -15,67 +15,45 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void registerItemModels(ModelRegistryEvent event) {
         registerItemModel(ElementtimesBlocks.Woodessence);
-
         registerItemModel(ElementtimesBlocks.Leafessence);
-
         registerItemModel(ElementtimesBlocks.Stoneblock);
-
         registerItemModel(ElementtimesBlocks.Cement);
-
-        registerItemModel(ElementtimesBlocks.Cementandsteelbarmixture);
-        
-        registerItemModel(ElementtimesBlocks.Copperore);
-        
+        registerItemModel(ElementtimesBlocks.Cementandsteelbarmixture);   
+        registerItemModel(ElementtimesBlocks.Copperore); 
         registerItemModel(ElementtimesBlocks.Copperbillet);
+        registerItemModel(ElementtimesBlocks.ElementGenerater);
+        registerItemModel(ElementtimesBlocks.Sulfurore);
+        registerItemModel(ElementtimesBlocks.Calciumfluoride);
+        registerItemModel(ElementtimesBlocks.Platinumore);
+        registerItemModel(ElementtimesBlocks.Platinumblock);
+        registerItemModel(ElementtimesBlocks.Diamondblock);
+        registerItemModel(ElementtimesBlocks.Corncrop);
+        registerItemModel(ElementtimesBlocks.Corncropup);
 
         registerItemModel(ElementtimesItems.Saplingessence);
-
-        registerItemModel(ElementtimesItems.Fiveelements);
-        
+        registerItemModel(ElementtimesItems.Fiveelements);   
         registerItemModel(ElementtimesItems.Endelement);
-
         registerItemModel(ElementtimesItems.Soilelement);
-
         registerItemModel(ElementtimesItems.Woodelement);
-
         registerItemModel(ElementtimesItems.Waterelement);
-
         registerItemModel(ElementtimesItems.Fireelement);
-
         registerItemModel(ElementtimesItems.Goldelement);
-
         registerItemModel(ElementtimesItems.Cropessence);
-
         registerItemModel(ElementtimesItems.Elementsword);
-
         registerItemModel(ElementtimesItems.Elementaxe);
-
         registerItemModel(ElementtimesItems.Elementpickaxe);
-
         registerItemModel(ElementtimesItems.Starchpowder);
-
         registerItemModel(ElementtimesItems.Amylum);
-        
         registerItemModel(ElementtimesItems.Puremeat);
-        
         registerItemModel(ElementtimesItems.Corn);
-        
         registerItemModel(ElementtimesItems.Bakedcorn);
-
         registerItemModel(ElementtimesItems.Stoneingot);
-
         registerItemModel(ElementtimesItems.Steelingot);
-
         registerItemModel(ElementtimesItems.Calciumcarbonate);
-
         registerItemModel(ElementtimesItems.Calciumoxide);
-
         registerItemModel(ElementtimesItems.Ingotcolumn);
-
         registerItemModel(ElementtimesItems.Concrete);
-        
-        registerItemModel(ElementtimesItems.Copper);
-        
+        registerItemModel(ElementtimesItems.Copper); 
         registerItemModel(ElementtimesItems.Largerubbingsuncompound);
         registerItemModel(ElementtimesItems.Intermediaterubbingsuncompound);
         registerItemModel(ElementtimesItems.Twiningsuncompound);
@@ -90,14 +68,28 @@ public class ClientProxy extends CommonProxy {
         registerItemModel(ElementtimesItems.Copperpowder);
         registerItemModel(ElementtimesItems.Coalpowder);
         registerItemModel(ElementtimesItems.Spanner);
-        
+        registerItemModel(ElementtimesItems.Bighammer);
+        registerItemModel(ElementtimesItems.Smallhammer);
+        registerItemModel(ElementtimesItems.Cornbroth);
+        registerItemModel(ElementtimesItems.Money);
+        registerItemModel(ElementtimesItems.Sulfurorepowder);
+        registerItemModel(ElementtimesItems.Sulfurpowder);
+        registerItemModel(ElementtimesItems.Sucrosecharcoal);
+        registerItemModel(ElementtimesItems.Platinumingot);
+        registerItemModel(ElementtimesItems.Platinumorepowder);
+        registerItemModel(ElementtimesItems.Diamondingot);
+        registerItemModel(ElementtimesItems.Hydrogen);
+        registerItemModel(ElementtimesItems.Steam);
+        registerItemModel(ElementtimesItems.Sulfitesolution);
+        registerItemModel(ElementtimesItems.Sodiumsulfitesolution);
+        registerItemModel(ElementtimesItems.Sulphuricacid);
+        registerItemModel(ElementtimesItems.Elementshovel);
+        registerItemModel(ElementtimesItems.Elementhoe);
         
         registerItemModel(ElementtimesItems.ElementSleeveHelmet);
         registerItemModel(ElementtimesItems.ElementSleeveBody);
         registerItemModel(ElementtimesItems.ElementSleeveLeggings);
         registerItemModel(ElementtimesItems.ElementSleeveBoots);
-
-        registerItemModel(ElementtimesBlocks.ElementGenerater);
         
     }
 

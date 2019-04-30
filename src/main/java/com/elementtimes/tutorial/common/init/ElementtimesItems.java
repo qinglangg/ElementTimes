@@ -47,4 +47,21 @@ public class ElementtimesItems {
     public static final Item Largerubbingsuncompound = new Largerubbingsuncompound();
     public static final Item Photoelement = new Photoelement();
     public static final Item Quartzpowder = new Quartzpowder();
+    public static final Item Bighammer = new Bighammer();
+    public static final Item Smallhammer = new Smallhammer();
+    public static final Item Cornbroth = new Cornbroth();
+    public static final Item Money = new Money();
+    public static final Item Sulfurorepowder = new Sulfurorepowder();   
+    public static final Item Sulfurpowder = new Sulfurpowder();
+    public static final Item Sucrosecharcoal = new Sucrosecharcoal();
+    public static final Item Platinumingot = new Platinumingot();
+    public static final Item Platinumorepowder = new Platinumorepowder();
+    public static final Item Diamondingot = new Diamondingot();
+    public static final Item Hydrogen = new Hydrogen();
+    public static final Item Steam = new Steam();
+    public static final Item Sulfitesolution = new Sulfitesolution();
+    public static final Item Sulphuricacid = new Sulphuricacid();
+    public static final Item Sodiumsulfitesolution = new Sodiumsulfitesolution();
+    public static final Item Elementshovel = new Elementshovel();
+    public static final Item Elementhoe = new Elementhoe();
 }

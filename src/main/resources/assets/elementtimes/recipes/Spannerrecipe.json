@@ -7,10 +7,12 @@
   ],
   "key": {
     "A": {
-      "item": "elementtimes:copper"
+      "type":"forge:ore_dict",
+      "ore":"ingotCopper"
     },
     "B": {
-      "item": "elementtimes:steelingot"
+      "type":"forge:ore_dict",
+      "ore":"ingotSteel"
     }
   },
   "result": {

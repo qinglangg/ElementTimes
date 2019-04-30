@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "#"
+    "A#"
   ],
-  
-  
-  
-  
   "key": {
+    "A": {
+      "item": "elementtimes:smallhammer"
+    },
     "#": {
-      "item": "elementtimes:copperore"
+      "type":"forge:ore_dict",
+      "ore":"oreCopper"
     }
   },
   "result": {

@@ -21,6 +21,14 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesBlocks.ElementGenerater);
         event.getRegistry().register(ElementtimesBlocks.Copperore);
         event.getRegistry().register(ElementtimesBlocks.Copperbillet);
+        event.getRegistry().register(ElementtimesBlocks.Sulfurore);
+        event.getRegistry().register(ElementtimesBlocks.Calciumfluoride);
+        event.getRegistry().register(ElementtimesBlocks.Platinumblock);
+        event.getRegistry().register(ElementtimesBlocks.Platinumore);
+        event.getRegistry().register(ElementtimesBlocks.Diamondblock);
+        event.getRegistry().register(ElementtimesBlocks.Corncrop);
+        event.getRegistry().register(ElementtimesBlocks.Corncropup);
+
     }
 
     @SubscribeEvent
@@ -33,7 +41,17 @@ public class CommonProxy {
         registerItemBlock(ElementtimesBlocks.ElementGenerater, event);
         registerItemBlock(ElementtimesBlocks.Copperore, event);
         registerItemBlock(ElementtimesBlocks.Copperbillet, event);
-
+        registerItemBlock(ElementtimesBlocks.Sulfurore, event);
+        registerItemBlock(ElementtimesBlocks.Calciumfluoride, event);
+        registerItemBlock(ElementtimesBlocks.Platinumblock, event);
+        registerItemBlock(ElementtimesBlocks.Platinumore, event);
+        registerItemBlock(ElementtimesBlocks.Diamondblock, event);
+        registerItemBlock(ElementtimesBlocks.Corncrop, event);
+        registerItemBlock(ElementtimesBlocks.Corncropup, event);
+        
+        event.getRegistry().register(ElementtimesItems.Sucrosecharcoal);
+        event.getRegistry().register(ElementtimesItems.Sulfurpowder);
+        event.getRegistry().register(ElementtimesItems.Sulfurorepowder);
         event.getRegistry().register(ElementtimesItems.Fiveelements);
         event.getRegistry().register(ElementtimesItems.Endelement);
         event.getRegistry().register(ElementtimesItems.Soilelement);
@@ -76,6 +94,20 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesItems.Largerubbingsuncompound);
         event.getRegistry().register(ElementtimesItems.Photoelement);
         event.getRegistry().register(ElementtimesItems.Quartzpowder);
+        event.getRegistry().register(ElementtimesItems.Bighammer);
+        event.getRegistry().register(ElementtimesItems.Smallhammer);
+        event.getRegistry().register(ElementtimesItems.Cornbroth);
+        event.getRegistry().register(ElementtimesItems.Money);
+        event.getRegistry().register(ElementtimesItems.Platinumingot);
+        event.getRegistry().register(ElementtimesItems.Diamondingot);
+        event.getRegistry().register(ElementtimesItems.Platinumorepowder);	
+        event.getRegistry().register(ElementtimesItems.Hydrogen);	
+        event.getRegistry().register(ElementtimesItems.Steam);	
+        event.getRegistry().register(ElementtimesItems.Sulfitesolution);	
+        event.getRegistry().register(ElementtimesItems.Sulphuricacid);	
+        event.getRegistry().register(ElementtimesItems.Sodiumsulfitesolution);	
+        event.getRegistry().register(ElementtimesItems.Elementhoe);	
+        event.getRegistry().register(ElementtimesItems.Elementshovel);	
     }
 
     public void registerItemBlock(Block block, RegistryEvent.Register<Item> event) {

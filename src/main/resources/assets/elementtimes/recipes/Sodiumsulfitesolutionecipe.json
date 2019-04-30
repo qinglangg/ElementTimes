@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "A#"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:sulfitesolution"
+    },
+    "#": {
+      "item": "minecraft:salt"
+    }
+  },
+  "result": {
+    "item": "elementtimes:sodiumsulfitesolution",
+    "count": 1
+  }
+}

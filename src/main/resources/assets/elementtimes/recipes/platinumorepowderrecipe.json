@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "A#"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:smallhammer"
+    },
+    "#": {
+      "item": "elementtimes:platinumore"
+    }
+  },
+  "result": {
+    "item": "elementtimes:platinumorepowder",
+    "count": 3
+  }
+}
