@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:diamondingot"
+    },
+    "B": {
+      "item": "elementtimes:platinumingot"
+    },
+    "C": {
+      "type":"forge:ore_dict",
+      "ore":"ingotSteel"
+    }
+  },
+  "result": {
+    "item": "elementtimes:platinumshovel",
+    "count": 1
+    }
+}

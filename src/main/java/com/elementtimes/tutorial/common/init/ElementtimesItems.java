@@ -32,6 +32,10 @@ public class ElementtimesItems {
     public static final Item ElementSleeveBody = new ElementSleeveBody();
     public static final Item ElementSleeveLeggings = new ElementSleeveLeggings();
     public static final Item ElementSleeveBoots = new ElementSleeveBoots();
+    public static final Item PlatinumSleeveHelmet = new PlatinumSleeveHelmet();
+    public static final Item PlatinumSleeveBody = new PlatinumSleeveBody();
+    public static final Item PlatinumSleeveLeggings = new PlatinumSleeveLeggings();
+    public static final Item PlatinumSleeveBoots = new PlatinumSleeveBoots();
     public static final Item Copper = new Copper();
     public static final Item Greenstonepowder = new Greenstonepowder();
     public static final Item Redstonepowder = new Redstonepowder();
@@ -64,4 +68,9 @@ public class ElementtimesItems {
     public static final Item Sodiumsulfitesolution = new Sodiumsulfitesolution();
     public static final Item Elementshovel = new Elementshovel();
     public static final Item Elementhoe = new Elementhoe();
+    public static final Item Platinumsword = new Platinumsword();
+    public static final Item Platinumhoe = new Platinumhoe();
+    public static final Item Platinumshovel = new Platinumshovel();
+    public static final Item Platinumaxe = new Platinumaxe();
+    public static final Item Platinumpick = new Platinumpick();
 }

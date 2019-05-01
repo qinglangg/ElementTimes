@@ -78,6 +78,10 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesItems.ElementSleeveBody);
         event.getRegistry().register(ElementtimesItems.ElementSleeveLeggings);
         event.getRegistry().register(ElementtimesItems.ElementSleeveBoots);
+        event.getRegistry().register(ElementtimesItems.PlatinumSleeveBoots);
+        event.getRegistry().register(ElementtimesItems.PlatinumSleeveHelmet);
+        event.getRegistry().register(ElementtimesItems.PlatinumSleeveLeggings);
+        event.getRegistry().register(ElementtimesItems.PlatinumSleeveBody);
         event.getRegistry().register(ElementtimesItems.Copper);
         event.getRegistry().register(ElementtimesItems.Ingotcolumn);
         event.getRegistry().register(ElementtimesItems.Greenstonepowder);
@@ -108,6 +112,11 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesItems.Sodiumsulfitesolution);	
         event.getRegistry().register(ElementtimesItems.Elementhoe);	
         event.getRegistry().register(ElementtimesItems.Elementshovel);	
+        event.getRegistry().register(ElementtimesItems.Platinumsword);	
+        event.getRegistry().register(ElementtimesItems.Platinumhoe);	
+        event.getRegistry().register(ElementtimesItems.Platinumshovel);	
+        event.getRegistry().register(ElementtimesItems.Platinumaxe);	
+        event.getRegistry().register(ElementtimesItems.Platinumpick);	
     }
 
     public void registerItemBlock(Block block, RegistryEvent.Register<Item> event) {

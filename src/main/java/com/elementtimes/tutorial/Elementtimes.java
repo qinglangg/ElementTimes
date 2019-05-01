@@ -72,6 +72,9 @@ public class Elementtimes {
         OreDictionary.registerOre("blockCopper", ElementtimesBlocks.Copperbillet);
         OreDictionary.registerOre("ingotCopper", ElementtimesItems.Copper);
         OreDictionary.registerOre("ingotSteel", ElementtimesItems.Steelingot);
+        OreDictionary.registerOre("orePlatinum", ElementtimesBlocks.Platinumore);
+        OreDictionary.registerOre("blockPlatinum", ElementtimesBlocks.Platinumblock);
+        OreDictionary.registerOre("ingotPlatinum", ElementtimesItems.Platinumingot);
         ElementtimesRecipe.Init(event);
     }
 }

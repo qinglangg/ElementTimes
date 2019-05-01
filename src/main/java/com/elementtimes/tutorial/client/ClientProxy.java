@@ -85,7 +85,15 @@ public class ClientProxy extends CommonProxy {
         registerItemModel(ElementtimesItems.Sulphuricacid);
         registerItemModel(ElementtimesItems.Elementshovel);
         registerItemModel(ElementtimesItems.Elementhoe);
-        
+        registerItemModel(ElementtimesItems.Platinumsword);
+        registerItemModel(ElementtimesItems.Platinumhoe);
+        registerItemModel(ElementtimesItems.Platinumshovel);
+        registerItemModel(ElementtimesItems.Platinumaxe);
+        registerItemModel(ElementtimesItems.Platinumpick);
+        registerItemModel(ElementtimesItems.PlatinumSleeveBoots);
+        registerItemModel(ElementtimesItems.PlatinumSleeveHelmet);
+        registerItemModel(ElementtimesItems.PlatinumSleeveLeggings);
+        registerItemModel(ElementtimesItems.PlatinumSleeveBody);
         registerItemModel(ElementtimesItems.ElementSleeveHelmet);
         registerItemModel(ElementtimesItems.ElementSleeveBody);
         registerItemModel(ElementtimesItems.ElementSleeveLeggings);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "ACA",
+    " D "
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:diamondingot"
+    },
+    "B": {
+      "item": "elementtimes:platinumingot"
+    },
+    "C": {
+      "type":"forge:ore_dict",
+      "ore":"ingotSteel"
+    },
+    "D": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "elementtimes:platinumsword",
+    "count": 1
+    }
+}
