@@ -37,7 +37,8 @@ public abstract class TileMachine extends TileEntity implements ITickable {
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         storage.writeToNBT(nbt);
         nbt.setTag("items", items.serializeNBT());
-        return super.writeToNBT(nbt);
+        super.writeToNBT(nbt);
+        return nbt;
     }
 
     @Override

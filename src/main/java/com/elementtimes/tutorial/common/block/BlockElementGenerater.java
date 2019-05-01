@@ -2,11 +2,14 @@ package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.TileElementGenerater;
+import com.elementtimes.tutorial.common.tileentity.TileMachine;
+import com.elementtimes.tutorial.util.IDismantleBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -24,21 +27,19 @@ import java.util.Arrays;
  *
  * @author KSGFK create in 2019/2/17
  */
-public class BlockElementGenerater extends BlockTileBase {
+public class BlockElementGenerater extends BlockTileBase implements IDismantleBlock {
 
     public BlockElementGenerater() {
-        super(Material.IRON, 0);
+        super(Material.ROCK, 0);
         setRegistryName("elementGenerater");
         setUnlocalizedName("elementGenerater");
+        //setBlockUnbreakable();
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        TileElementGenerater egen = new TileElementGenerater();
-        egen.readFromNBT(nbt);
-        return egen;
+        return new TileElementGenerater();
     }
 
     @Override
@@ -64,18 +65,30 @@ public class BlockElementGenerater extends BlockTileBase {
             }
         }
     }
-    /*
+
     @Override
-    public ArrayList<ItemStack> dismantleBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player, boolean returnDrops) {
-        TileEntity tile = world.getTileEntity(pos);
-        NBTTagCompound retTag = null;
-        if (tile instanceof TileElementGenerater) {
-            TileElementGenerater dyn = (TileElementGenerater) tile;
-            retTag = dyn.writeToNBT(dyn.getNbtTagCompound());
-            dyn.inventory = new ItemStack[dyn.inventory.length];
-            Arrays.fill(dyn.inventory, ItemStack.EMPTY);
+    public ItemStack dismantleBlock(World world, BlockPos pos, IBlockState state, boolean returnDrops) {
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile != null) {
+                NBTTagCompound tag = tile.serializeNBT();
+                Elementtimes.getLogger().info(tag);
+                ItemStack stack = new ItemStack(state.getBlock());
+                stack.setCount(1);
+                stack.setTagCompound(tag);
+                return stack;
+            }
         }
-        return dismantleDelegate(retTag, world, pos, player, returnDrops, false);
+        return ItemStack.EMPTY;
     }
-    */
+
+    @Override
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        if (worldIn.isRemote) return;
+        worldIn.setBlockToAir(pos);
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile != null) {
+            worldIn.removeTileEntity(pos);
+        }
+    }
 }

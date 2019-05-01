@@ -1,4 +1,6 @@
 package com.elementtimes.tutorial.common.block;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
@@ -6,10 +8,14 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,6 +27,7 @@ extends Block{
 		super(Material.ROCK);
 		this.setRegistryName("corn_crop_up");
 		this.setUnlocalizedName("cornCropUp");
+		this.setCreativeTab(null);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0));
 		this.setTickRandomly(true);
 		this.disableStats();
@@ -93,4 +100,21 @@ extends Block{
     {
         return new BlockStateContainer(this, new IProperty[] {AGE});
     }
+
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
+			int fortune) {
+		drops.clear();//清空所有掉落物品
+	}
+
+	@Override
+	public int quantityDropped(Random random) {
+		// TODO 自动生成的方法存根
+		return 0;//返回0个物品
+	}
+
+	
+
+	
+    
 }

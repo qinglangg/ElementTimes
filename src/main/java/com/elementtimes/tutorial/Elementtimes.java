@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial;
 
 import com.elementtimes.tutorial.common.CommonProxy;
+import com.elementtimes.tutorial.common.event.BreakBlockListener;
 import com.elementtimes.tutorial.common.init.*;
 
 import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
@@ -51,6 +52,7 @@ public class Elementtimes {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(proxy);
+        MinecraftForge.EVENT_BUS.register(new BreakBlockListener());
         ElementtimesTile.init();
         if (Loader.isModLoaded("flammpfeil.slashblade"))
         {

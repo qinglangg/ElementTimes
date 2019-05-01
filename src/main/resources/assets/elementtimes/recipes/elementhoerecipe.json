@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FF",
+    " S",
+    " S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementhoe",
+    "count": 1
+    }
+}

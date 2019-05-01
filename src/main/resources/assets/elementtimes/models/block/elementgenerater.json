@@ -1,6 +1,7 @@
 {
     "parent": "block/cube",
     "textures": {
+        "particle": "elementtimes:blocks/elementgeneraterup",
         "down": "elementtimes:blocks/elementgeneraterdown",
         "up": "elementtimes:blocks/elementgeneraterup",
         "north": "elementtimes:blocks/elementgeneraternotrh",
