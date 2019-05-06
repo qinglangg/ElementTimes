@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.Elementtimes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -44,7 +43,9 @@ public class ElementtimesRecipe {
 			@Override
 			public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 				//返回的材料
+				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK))
 				return new ItemStack(ElementtimesItems.Diamondingot);
+				return new ItemStack(Items.AIR);
 			}
 		});
     }
