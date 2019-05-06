@@ -1,13 +1,13 @@
 # 元素时代/ElementTimes
 
-------
-
 ## 简介/Introduction
-元素时代是一个以RF能源为前置的模组，支持和所有RF能源mod联动。模组主要以元素为主，并加入了元素合成的武器装备等，还加入了新的建筑业材料以及淀粉食物，原版食物均可转换为淀粉。元素时代是一个需要收集的模组，他的大部分物品都是需要原版各种稀有物品来合成，但是武器和护甲非常强大。如果有什么疑问欢迎在[mc百科的评论区][1]，或[发issue][2]进行反馈。
+元素时代是一个以化学元素和中国古代五行阴阳为基础的元素模组，加了强大的武器护甲等，引入RF能源，农业方面加入淀粉机制和玉米。化工业还原真实的工业流程。
 
-ElementTimes is a front-end module for RF energy that supports linkage with all RF energy mod. The module is mainly composed of elements, and the new building materials and starch food are added. The original food can be converted into starch. The ElementTimes is a collection of modules. Most of its items are made from rare items, but weapons and armor are very powerful. If you have any questions welcome to the [mcmod community][3] and [post issue][4] in Github for feedback.
+如果有什么疑问欢迎在[mc百科的评论区][1]、开发群，或[发issue][2]进行反馈。
 
-![物品一览/List of items][5]
+![化学][5]
+![工业][6]
+![主界面][7]
 
 ## 制作人员/Staff
 制作组:我的世界元素时代制作组
@@ -16,9 +16,14 @@ KSGFK（RF能源和叶子透明代码）
 华乐（渲染制作，美工）
 豆焰（后期问题排查，内测组）
 
+## 说明/Description
+* 元素时代模组目前没有前置模组。1.3版本及以后脱离了CoFH core作为前置，独立运行RF能源。1.4版本加入拔刀剑，拔刀剑扩展部分需要添加拔刀剑模组，但拔刀剑并不是元素时代前置模组。
+* 元素时代1.0版本由mcr构建，1.1版本起作者转向纯手敲（eclipse），目前元素时代版权与mcr没有任何关系，版权归我的世界元素时代制作组。
+* 网易国服中的元素时代模组并非制作组人员上传。
+* 欢迎加入我的世界元素时代制作组QQ群：941721748
 
   [1]: https://www.mcmod.cn/class/1398.html
   [2]: https://github.com/qinglangg/ElementTimes/issues
-  [3]: https://www.mcmod.cn/class/1398.html
-  [4]: https://github.com/qinglangg/ElementTimes/issues
-  [5]: https://i.loli.net/2019/03/09/5c8325e15a398.png
+  [5]: https://i.mcmod.cn/editor/upload/20190501/1556698196_39975_IbqD.png
+  [6]: https://i.mcmod.cn/editor/upload/20190501/1556698197_39975_gGIQ.png
+  [7]: https://i.mcmod.cn/editor/upload/20190501/1556698198_39975_VBPV.png
