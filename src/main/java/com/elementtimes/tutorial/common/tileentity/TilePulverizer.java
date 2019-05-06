@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -29,7 +28,6 @@ public class TilePulverizer extends TileMachine {
             return false;
         }
     };
-
     /**
      * key是放进来的物品,value是处理完后的物品
      */
@@ -39,9 +37,22 @@ public class TilePulverizer extends TileMachine {
      */
     private Map<Item, Map<Item, String>> powderLinkOre;
 
+    /**
+     * 是否在处理一个矿石
+     */
     private boolean isProc = false;
+    /**
+     * 处理进度
+     */
     private int schedule = 0;
+    /**
+     * 每个矿石的处理时间
+     * TODO:我猜卿岚还要求每个矿石处理时间不一样:(
+     */
     private int perTime = 200;
+    /**
+     * 标记正在处理的是啥矿石
+     */
     private ItemStack procItem = ItemStack.EMPTY;
 
     public TilePulverizer() {
