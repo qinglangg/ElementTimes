@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.common.event.BreakBlockListener;
 import com.elementtimes.tutorial.common.init.*;
 
 import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
+import com.elementtimes.tutorial.util.PowderDictionary;
 import com.elementtimes.tutorial.world.gen.WorldGenETOres;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,8 +55,7 @@ public class Elementtimes {
         MinecraftForge.EVENT_BUS.register(proxy);
         MinecraftForge.EVENT_BUS.register(new BreakBlockListener());
         ElementtimesTile.init();
-        if (Loader.isModLoaded("flammpfeil.slashblade"))
-        {
+        if (Loader.isModLoaded("flammpfeil.slashblade")) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
     }
@@ -68,13 +68,8 @@ public class Elementtimes {
         ElementtimesNetwork.init();
         gui.init();
         ElementtimesFuels.init();
-        OreDictionary.registerOre("oreCopper", ElementtimesBlocks.Copperore);
-        OreDictionary.registerOre("blockCopper", ElementtimesBlocks.Copperbillet);
-        OreDictionary.registerOre("ingotCopper", ElementtimesItems.Copper);
-        OreDictionary.registerOre("ingotSteel", ElementtimesItems.Steelingot);
-        OreDictionary.registerOre("orePlatinum", ElementtimesBlocks.Platinumore);
-        OreDictionary.registerOre("blockPlatinum", ElementtimesBlocks.Platinumblock);
-        OreDictionary.registerOre("ingotPlatinum", ElementtimesItems.Platinumingot);
+        ElementtimesOreDict.Init();
         ElementtimesRecipe.Init(event);
+        PowderDictionary.getInstance();
     }
 }

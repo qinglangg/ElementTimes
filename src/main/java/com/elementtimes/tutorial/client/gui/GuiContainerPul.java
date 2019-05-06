@@ -16,7 +16,7 @@ public class GuiContainerPul extends GuiContainer {
     private int energy;
     private int maxEnergy;
     private int process;
-    private int perTime = 1;
+    private int perTime;
     private ContainerPulverizer pul;
 
     public GuiContainerPul(ContainerPulverizer inventorySlotsIn) {
@@ -25,11 +25,12 @@ public class GuiContainerPul extends GuiContainer {
         this.ySize = 156;
         this.pul = inventorySlotsIn;
         maxEnergy = pul.getTileEntity().getMaxEnergyStored(null);
-        //perTime = pul.getTileEntity().getPerTime();
+        perTime = pul.getTileEntity().getPerTime();
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        perTime = 200;
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(TEXTURE);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;

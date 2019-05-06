@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 使用矿词对应字符串获取矿物列表
+ *
  * @author KSGFK create in 2019/5/6
  */
 public class OreMapFromOreDictFactory implements IFactory<Map<String, NonNullList<ItemStack>>> {
