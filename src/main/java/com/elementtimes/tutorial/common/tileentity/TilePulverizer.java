@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.network.PulMsg;
 import com.elementtimes.tutorial.util.PowderDictionary;
 import com.elementtimes.tutorial.util.RedStoneEnergy;
@@ -49,14 +50,14 @@ public class TilePulverizer extends TileMachine {
      * 每个矿石的处理时间
      * TODO:我猜卿岚还要求每个矿石处理时间不一样:(
      */
-    private int perTime = 200;
+    private int perTime = ElementtimesConfig.pul.pulPowderEnergy;
     /**
      * 标记正在处理的是啥矿石
      */
     private ItemStack procItem = ItemStack.EMPTY;
 
     public TilePulverizer() {
-        super(new RedStoneEnergy(320000, 20, 20), new ItemStackHandler(2));
+        super(new RedStoneEnergy(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive, ElementtimesConfig.pul.pulMaxExtract), new ItemStackHandler(2));
 
         canInItemMap = PowderDictionary.getInstance().getPulCanInItemMap();
         powderLinkOre = PowderDictionary.getInstance().getPulPowderLinkOre();
@@ -76,14 +77,13 @@ public class TilePulverizer extends TileMachine {
                         }
                     }
                 } else {//必须处理完才能替换out
-                    //Elementtimes.getLogger().info(outputSlot.getHasStack());
                     if (outputSlot.getHasStack()) {//out里有东西了
                         Item out = outputSlot.getStack().getItem();
                         if (powderLinkOre.containsKey(out) && powderLinkOre.get(out).containsKey(procItem.getItem())) {
                             //out里的东西和粉对应的矿石的表一致
                             int now = outputSlot.getStack().getCount();
-                            if (now + 2 <= outputSlot.getSlotStackLimit()) {
-                                outputSlot.getStack().setCount(now + 2);
+                            if (now + ElementtimesConfig.pul.pulPowderCount <= outputSlot.getSlotStackLimit()) {
+                                outputSlot.getStack().setCount(now + ElementtimesConfig.pul.pulPowderCount);
                                 isProc = false;
                                 procItem = ItemStack.EMPTY;
                             }

@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.util;
 
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -38,7 +39,8 @@ public class PowderDictionary {
      */
     private void InitPul() {
         Map<String, Item> powderForOreDict = dict;
-        Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(//TODO:写成配置文件
+        /*
+        Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(
                 "oreIron",
                 "oreRedstone",
                 "oreGold",
@@ -47,6 +49,9 @@ public class PowderDictionary {
                 "oreEmerald",
                 "oreCopper",
                 "oreCoal").get();
+
+         */
+        Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
         for (Map.Entry<String, NonNullList<ItemStack>> ore : pulCanInOresDict.entrySet()) {
             String oreName = ore.getKey();
             NonNullList<ItemStack> list = ore.getValue();

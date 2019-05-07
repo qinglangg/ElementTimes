@@ -11,8 +11,12 @@ import net.minecraftforge.common.config.Config;
 @Config(modid = Elementtimes.MODID)
 public class ElementtimesConfig {
     @Config.Name("General")
-    @Config.LangKey("oceanheartr.config.general")
+    @Config.LangKey("elementtimes.config.general")
     public static final General general = new General();
+
+    @Config.Name("Pul")
+    @Config.LangKey("elementtimes.config.pul")
+    public static final Pul pul = new Pul();
 
     public static final class General {
         @Config.Comment("设置发电机最大容量")
@@ -51,5 +55,41 @@ public class ElementtimesConfig {
         @Config.Comment("设置影元素发电量")
         @Config.Name("generaterEnd")
         public int generaterEnd = 324000000;
+    }
+
+    public static final class Pul {
+        @Config.Comment("设置打粉机机最大电容量")
+        @Config.Name("pulMaxEnergy")
+        public int pulMaxEnergy = 3200000;
+
+        @Config.Comment("设置打粉机每Tick消耗电量(相当于打粉速度")
+        @Config.Name("pulMaxExtract")
+        public int pulMaxExtract = 20;
+
+        @Config.Comment("设置打粉机最大输入")
+        @Config.Name("pulMaxReceive")
+        public int pulMaxReceive = 1000000;
+
+        @Config.Comment("设置打粉机每个矿物耗电量")
+        @Config.Name("pulPowderEnergy")
+        public int pulPowderEnergy = 2000;
+
+        @Config.Comment("设置打粉机每个矿物产粉量")
+        @Config.Name("pulPowderCount")
+        public int pulPowderCount = 5;
+
+        @Config.Comment("设置打粉机可放入的矿石")
+        @Config.Name("pulCanPutIn")
+        public String[] pulCanPutIn = new String[]{
+                "oreIron",
+                "oreRedstone",
+                "oreGold",
+                "oreDiamond",
+                "oreLapis",
+                "oreEmerald",
+                "oreCopper",
+                "oreCoal"};
+
+
     }
 }
