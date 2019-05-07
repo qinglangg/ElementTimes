@@ -67,12 +67,12 @@ public class TilePulverizer extends TileMachine {
         if (!world.isRemote) {
             int itemCount = inputSlot.getStack().getCount();
             if (isProc) {
-                if (schedule > 0) {//没有处理完，先扣电
+                if (schedule <= perTime) {//没有处理完，先扣电
                     if (storage.canExtract()) {
                         int test = storage.extractEnergy(storage.getMaxExtract(), true);
-                        if (test > 0) {
+                        if (test <= perTime) {
                             storage.extractEnergy(test, false);
-                            schedule -= test;
+                            schedule += test;
                         }
                     }
                 } else {//必须处理完才能替换out
@@ -102,7 +102,7 @@ public class TilePulverizer extends TileMachine {
                         procItem = inputSlot.getStack().copy();
                         inputSlot.getStack().setCount(itemCount - 1);
                         isProc = true;
-                        schedule = perTime;
+                        schedule = 0;
                     }
                 }
             }
