@@ -90,7 +90,7 @@ public class TilePulverizer extends TileMachine {
                         }
                     } else {
                         if (canInItemMap.containsKey(procItem.getItem())) {
-                            outputSlot.putStack(new ItemStack(canInItemMap.get(procItem.getItem()), 2));
+                            outputSlot.putStack(new ItemStack(canInItemMap.get(procItem.getItem()), ElementtimesConfig.pul.pulPowderCount));
                             isProc = false;
                             procItem = ItemStack.EMPTY;
                         }

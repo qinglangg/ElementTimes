@@ -88,8 +88,7 @@ public class ElementtimesConfig {
                 "oreLapis",
                 "oreEmerald",
                 "oreCopper",
-                "oreCoal"};
-
-
+                "oreCoal",
+                "orePlatinum"};
     }
 }

@@ -30,6 +30,7 @@ public class PowderDictionary {
         dict.put("oreEmerald", ElementtimesItems.Greenstonepowder);
         dict.put("oreCopper", ElementtimesItems.Copperpowder);
         dict.put("oreCoal", ElementtimesItems.Coalpowder);
+        dict.put("orePlatinum", ElementtimesItems.Platinumorepowder);
 
         InitPul();
     }
@@ -39,18 +40,6 @@ public class PowderDictionary {
      */
     private void InitPul() {
         Map<String, Item> powderForOreDict = dict;
-        /*
-        Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(
-                "oreIron",
-                "oreRedstone",
-                "oreGold",
-                "oreDiamond",
-                "oreLapis",
-                "oreEmerald",
-                "oreCopper",
-                "oreCoal").get();
-
-         */
         Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
         for (Map.Entry<String, NonNullList<ItemStack>> ore : pulCanInOresDict.entrySet()) {
             String oreName = ore.getKey();
