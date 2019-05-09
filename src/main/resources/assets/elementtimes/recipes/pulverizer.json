@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BAB",
+    "CAE",
+    "DAD"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:cementandsteelbarmixture"
+    },
+    "B": {
+      "item": "elementtimes:goldelement"
+    },
+    "C": {
+      "item": "elementtimes:photoelement"
+    },
+    "D": {
+      "item": "elementtimes:spanner"
+    },
+    "E": {
+      "item": "elementtimes:endelement"
+    }
+  },
+  "result": {
+    "item": "elementtimes:pulverizer",
+    "count": 1
+    }
+}

@@ -9,7 +9,8 @@
       "item": "elementtimes:diamondingot"
     },
     "B": {
-      "item": "elementtimes:platinumingot"
+      "type":"forge:ore_dict",
+      "ore":"ingotPlatinum"
     },
     "C": {
       "type":"forge:ore_dict",

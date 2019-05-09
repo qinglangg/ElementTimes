@@ -1,4 +1,3 @@
 {
-  "forge_marker": 1,
-  "parent": "elementtimes:block/pulverizer"
+    "parent": "elementtimes:block/pulverizer"
 }

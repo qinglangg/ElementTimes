@@ -7,7 +7,8 @@
   ],
   "key": {
     "S": {
-    "item": "elementtimes:platinumingot"
+      "type":"forge:ore_dict",
+      "ore":"ingotPlatinum"
     }
   },
   "result": {
