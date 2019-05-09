@@ -2,12 +2,14 @@ package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.TilePulverizer;
+import com.elementtimes.tutorial.util.IDismantleBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,7 +21,7 @@ import javax.annotation.Nullable;
 /**
  * @author KSGFK create in 2019/5/6
  */
-public class BlockPulverizer extends BlockTileBase {
+public class BlockPulverizer extends BlockTileBase implements IDismantleBlock {
     public BlockPulverizer() {
         super(Material.IRON, 1);
         setRegistryName("pulverizer");
@@ -54,5 +56,20 @@ public class BlockPulverizer extends BlockTileBase {
                 dyn.readFromNBT(stack.getTagCompound());
             }
         }
+    }
+
+    @Override
+    public ItemStack dismantleBlock(World world, BlockPos pos, IBlockState state, boolean returnDrops) {
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile != null) {
+                NBTTagCompound tag = tile.serializeNBT();
+                ItemStack stack = new ItemStack(state.getBlock());
+                stack.setCount(1);
+                stack.setTagCompound(tag);
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 }

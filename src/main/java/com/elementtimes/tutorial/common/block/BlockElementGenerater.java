@@ -72,7 +72,6 @@ public class BlockElementGenerater extends BlockTileBase implements IDismantleBl
             TileEntity tile = world.getTileEntity(pos);
             if (tile != null) {
                 NBTTagCompound tag = tile.serializeNBT();
-                Elementtimes.getLogger().info(tag);
                 ItemStack stack = new ItemStack(state.getBlock());
                 stack.setCount(1);
                 stack.setTagCompound(tag);
