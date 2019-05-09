@@ -5,8 +5,11 @@ import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.network.PulMsg;
 import com.elementtimes.tutorial.util.PowderDictionary;
 import com.elementtimes.tutorial.util.RedStoneEnergy;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -16,7 +19,7 @@ import java.util.Map;
 /**
  * @author KSGFK create in 2019/5/6
  */
-public class TilePulverizer extends TileMachine {
+public class TilePulverizer extends TileMachine implements ISidedInventory {
     private SlotItemHandler inputSlot = new SlotItemHandler(items, 0, 56, 30) {
         @Override
         public boolean isItemValid(@Nonnull ItemStack stack) {
@@ -123,5 +126,137 @@ public class TilePulverizer extends TileMachine {
 
     public int getPerTime() {
         return perTime;
+    }
+
+    //实现ISideInventory
+    private int[] temp = new int[]{0, 1};
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side) {
+        return this.temp;
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return this.inputSlot.isItemValid(itemStackIn);
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+        return this.outputSlot.isItemValid(stack);
+    }
+
+    @Override
+    public int getSizeInventory() {
+        return this.items.getSlots();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.inputSlot.inventory.isEmpty();
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index) {
+        return items.getStackInSlot(index);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int count) {
+        ItemStack i;
+
+        switch (index) {
+            case 0:
+                i = inputSlot.inventory.decrStackSize(index, count);
+                break;
+            case 1:
+                i = outputSlot.inventory.decrStackSize(index, count);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + index);
+        }
+
+        return i;
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int index) {
+        ItemStack i = this.items.getStackInSlot(index);
+        this.items.setStackInSlot(index, ItemStack.EMPTY);
+        return i;
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
+        this.items.setStackInSlot(index, stack);
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return this.inputSlot.inventory.getInventoryStackLimit();
+    }
+
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return this.inputSlot.inventory.isUsableByPlayer(player);
+    }
+
+    @Override
+    public void openInventory(EntityPlayer player) {
+
+    }
+
+    @Override
+    public void closeInventory(EntityPlayer player) {
+
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        boolean b;
+
+        switch (index) {
+            case 0:
+                b = this.inputSlot.isItemValid(stack);
+                break;
+            case 1:
+                b = this.outputSlot.isItemValid(stack);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + index);
+        }
+
+        return b;
+    }
+
+    @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value) {
+
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+        this.inputSlot.inventory.clear();
+        this.outputSlot.inventory.clear();
+    }
+
+    @Override
+    public String getName() {
+        return "233";
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return false;
     }
 }
