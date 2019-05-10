@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class ElementtimesRecipe {
     public static void Init(FMLInitializationEvent event) {
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Sulfurpowder),new ItemStack(ElementtimesItems.Sulfitesolution));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Sulfurpowder),new ItemStack(ElementtimesItems.Sulfitesolution,2));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT),new ItemStack(ElementtimesItems.Hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Sulphuricacid), PotionTypes.EMPTY),"ingotCopper",new ItemStack(ElementtimesItems.Hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Ironpower),new ItemStack(Items.IRON_INGOT));
@@ -22,8 +22,8 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Diamondpowder),new ItemStack(Items.DIAMOND));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Greenstonepowder),new ItemStack(Items.EMERALD));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Platinumorepowder),new ItemStack(ElementtimesItems.Platinumingot));
-    	
-    	
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Redstonepowder),new ItemStack(Items.REDSTONE,2));
+      	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Bluestonepowder),new ItemStack(Items.DYE, 2, 4));
     	BrewingRecipeRegistry.addRecipe(new IBrewingRecipe() {
 			
 			@Override

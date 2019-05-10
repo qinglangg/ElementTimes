@@ -29,6 +29,6 @@ public class ElementtimesRecipes {
         GameRegistry.addSmelting(ElementtimesBlocks.Platinumore, new ItemStack(ElementtimesItems.Platinumingot, 1), 5.0f);
         GameRegistry.addSmelting(ElementtimesItems.Platinumorepowder, new ItemStack(ElementtimesItems.Platinumingot, 1), 5.0f);
         GameRegistry.addSmelting(Items.POTIONITEM, new ItemStack(ElementtimesItems.Steam, 1), 2.0f);
-        GameRegistry.addSmelting(ElementtimesItems.Sulfitesolution, new ItemStack(ElementtimesItems.Sulphuricacid, 1), 3.0f);
+        GameRegistry.addSmelting(ElementtimesItems.Sulfitesolution, new ItemStack(ElementtimesItems.Sulphuricacid, 2), 3.0f);
     }        
 }

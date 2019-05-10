@@ -1,25 +1,33 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "BAB",
-    "CAE",
-    "DAD"
+    "AAA",
+    "FDG",
+    "CBE"
   ],
   "key": {
     "A": {
-      "item": "elementtimes:cementandsteelbarmixture"
+      "item": "elementtimes:bighammer"
     },
     "B": {
-      "item": "elementtimes:goldelement"
+      "item": "elementtimes:fiveelements"
     },
     "C": {
       "item": "elementtimes:photoelement"
     },
     "D": {
-      "item": "elementtimes:spanner"
+      "item": "elementtimes:cementandsteelbarmixture"
     },
     "E": {
       "item": "elementtimes:endelement"
+    },
+    "F": {
+      "type":"forge:ore_dict",
+      "ore":"blockCopper"
+    },
+    "G": {
+      "type":"forge:ore_dict",
+      "ore":"blockSteel"
     }
   },
   "result": {

@@ -20,4 +20,5 @@ public class ElementtimesBlocks {
     public static final Block Corncrop = new com.elementtimes.tutorial.common.block.CornCrop();
     public static final Block Corncropup = new CornCropUp();
     public static final Block Pul = new BlockPulverizer();
+    public static final Block Steelblock = new Steelblock();
 }

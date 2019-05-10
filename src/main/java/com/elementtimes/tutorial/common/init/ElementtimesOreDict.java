@@ -13,6 +13,7 @@ public class ElementtimesOreDict {
         OreDictionary.registerOre("ingotSteel", ElementtimesItems.Steelingot);
         OreDictionary.registerOre("orePlatinum", ElementtimesBlocks.Platinumore);
         OreDictionary.registerOre("blockPlatinum", ElementtimesBlocks.Platinumblock);
+        OreDictionary.registerOre("blockSteel", ElementtimesBlocks.Steelblock);
         OreDictionary.registerOre("ingotPlatinum", ElementtimesItems.Platinumingot);
 
         OreDictionary.registerOre("dustEmerald", ElementtimesItems.Greenstonepowder);

@@ -29,6 +29,7 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesBlocks.Corncrop);
         event.getRegistry().register(ElementtimesBlocks.Corncropup);
         event.getRegistry().register(ElementtimesBlocks.Pul);
+        event.getRegistry().register(ElementtimesBlocks.Steelblock);
     }
 
     @SubscribeEvent
@@ -49,6 +50,7 @@ public class CommonProxy {
         registerItemBlock(ElementtimesBlocks.Corncrop, event);
         registerItemBlock(ElementtimesBlocks.Corncropup, event);
         registerItemBlock(ElementtimesBlocks.Pul, event);
+        registerItemBlock(ElementtimesBlocks.Steelblock, event);
 
         event.getRegistry().register(ElementtimesItems.Sucrosecharcoal);
         event.getRegistry().register(ElementtimesItems.Sulfurpowder);

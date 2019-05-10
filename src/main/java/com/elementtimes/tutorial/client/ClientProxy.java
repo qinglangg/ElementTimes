@@ -22,6 +22,7 @@ public class ClientProxy extends CommonProxy {
         registerItemModel(ElementtimesBlocks.Copperore); 
         registerItemModel(ElementtimesBlocks.Copperbillet);
         registerItemModel(ElementtimesBlocks.ElementGenerater);
+        registerItemModel(ElementtimesBlocks.Pul);
         registerItemModel(ElementtimesBlocks.Sulfurore);
         registerItemModel(ElementtimesBlocks.Calciumfluoride);
         registerItemModel(ElementtimesBlocks.Platinumore);
@@ -29,6 +30,7 @@ public class ClientProxy extends CommonProxy {
         registerItemModel(ElementtimesBlocks.Diamondblock);
         registerItemModel(ElementtimesBlocks.Corncrop);
         registerItemModel(ElementtimesBlocks.Corncropup);
+        registerItemModel(ElementtimesBlocks.Steelblock);
 
         registerItemModel(ElementtimesItems.Saplingessence);
         registerItemModel(ElementtimesItems.Fiveelements);   
