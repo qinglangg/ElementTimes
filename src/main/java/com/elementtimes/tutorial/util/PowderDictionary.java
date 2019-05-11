@@ -19,7 +19,7 @@ public class PowderDictionary {
     private final Map<String, Item> dict = new HashMap<>();
 
     private Map<Item, Item> pulCanInItemMap = new HashMap<>();
-    private final Map<Item, Map<Item, String>> pulPowderLinkOre = new HashMap<>();
+    private final Map<Item, Map<Item, String>> pulPowderLinkOre = new HashMap<>();//TODO:value改成Set
 
     private PowderDictionary() {
         dict.put("oreIron", ElementtimesItems.Ironpower);
@@ -42,12 +42,12 @@ public class PowderDictionary {
         Map<String, Item> powderForOreDict = dict;
         Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
         for (Map.Entry<String, NonNullList<ItemStack>> ore : pulCanInOresDict.entrySet()) {
-            String oreName = ore.getKey();
-            NonNullList<ItemStack> list = ore.getValue();
-            if (powderForOreDict.containsKey(oreName)) {
+            String oreName = ore.getKey();//矿词名字
+            NonNullList<ItemStack> list = ore.getValue();//矿词对应矿物数组
+            if (powderForOreDict.containsKey(oreName)) {//矿词对应粉末表
                 Item powder = powderForOreDict.get(oreName);
                 for (ItemStack oreS : list) {
-                    pulCanInItemMap.put(oreS.getItem(), powder);
+                    pulCanInItemMap.put(oreS.getItem(), powder);//矿物Item对应粉末Item
                 }
             }
         }

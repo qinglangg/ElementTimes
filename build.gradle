@@ -23,7 +23,7 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    
+
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -38,7 +38,7 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-      
+
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -55,6 +55,29 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     compile fileTree(dir: 'lib', includes: ['*.jar'])
+    compile "codechicken:CodeChickenLib:1.12.2-3.2.2.353:universal"
+    deobfCompile "cofh:RedstoneFlux:1.12-${redstoneflux_version}:universal"
+    deobfCompile "cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal"
+    //compile "mezz.jei:jei_${mc_version}:${jei_version}"
+    //runtime "mezz.jei:jei_${mc_version}:${jei_version}"
+    deobfCompile "cofh:ThermalFoundation:${mc_version}-${tf_version}:universal"
+    deobfCompile "cofh:ThermalExpansion:${mc_version}-${te_version}:universal"
+    deobfCompile "cofh:CoFHWorld:${mc_version}-${cofhworld_version}:universal"
+}
+
+repositories {
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
+    maven {
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name = "ChickenBones repo"
+        url = "http://chickenbones.net/maven/"
+    }
 }
 
 processResources {
@@ -65,11 +88,11 @@ processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'

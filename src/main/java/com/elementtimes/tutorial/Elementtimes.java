@@ -3,7 +3,6 @@ package com.elementtimes.tutorial;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.event.BreakBlockListener;
 import com.elementtimes.tutorial.common.init.*;
-
 import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.util.PowderDictionary;
 import com.elementtimes.tutorial.world.gen.WorldGenETOres;
@@ -11,14 +10,13 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
