@@ -2,10 +2,12 @@
     "type":"minecraft:crafting_shapeless",
     "ingredients":[
         {
-            "item":"elementtimes:platinumblock"
+      "type":"forge:ore_dict",
+      "ore":"blockPlatinum"
         },
         {
-            "item":"minecraft:iron_block"
+      "type":"forge:ore_dict",
+      "ore":"blockSteel"
         },
         {
             "item":"minecraft:redstone_block"

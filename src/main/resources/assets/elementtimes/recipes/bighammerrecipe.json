@@ -1,15 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAA"
+    "BAB",
+    " C ",
+    " C "
   ],
   "key": {
     "A": {
-      "item": "elementtimes:smallhammer"
+      "item": "elementtimes:diamondingot"
+    },
+    "B": {
+      "type":"forge:ore_dict",
+      "ore":"ingotSteel"
+    },
+    "C": {
+      "type":"forge:ore_dict",
+      "ore":"ingotCopper"
     }
   },
   "result": {
     "item": "elementtimes:bighammer",
-    "count": 1
+    "count": 10
     }
 }

@@ -24,6 +24,7 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Platinumorepowder),new ItemStack(ElementtimesItems.Platinumingot));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Redstonepowder),new ItemStack(Items.REDSTONE,2));
       	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Bluestonepowder),new ItemStack(Items.DYE, 2, 4));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.Steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.Quartzpowder),new ItemStack(Items.QUARTZ,2));
     	BrewingRecipeRegistry.addRecipe(new IBrewingRecipe() {
 			
 			@Override
