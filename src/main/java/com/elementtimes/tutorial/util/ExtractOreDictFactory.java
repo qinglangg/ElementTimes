@@ -13,10 +13,10 @@ import java.util.Map;
  *
  * @author KSGFK create in 2019/5/6
  */
-public class OreMapFromOreDictFactory implements IFactory<Map<String, NonNullList<ItemStack>>> {
+public class ExtractOreDictFactory implements IFactory<Map<String, NonNullList<ItemStack>>> {
     private String[] args;
 
-    public OreMapFromOreDictFactory(String... oreName) {
+    public ExtractOreDictFactory(String... oreName) {
         args = oreName;
     }
 

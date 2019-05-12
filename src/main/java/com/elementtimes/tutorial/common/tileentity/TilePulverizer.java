@@ -76,13 +76,16 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
                     }
                 } else {
                     if (outputSlot.getHasStack()) {
-                        Item out = outputSlot.getStack().getItem();
+                        ItemStack outStack = outputSlot.getStack();
+                        Item out = outStack.getItem();
                         Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
                         Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
-                        if (out == willPutInPowder) {
+                        if (procItem.getItem() == out && procItem.getItemDamage() == outStack.getItemDamage() && out == willPutInPowder) {//理论上没啥问题了吧...
                             int now = outputSlot.getStack().getCount();
                             if (now + ElementtimesConfig.pul.pulPowderCount <= outputSlot.getSlotStackLimit()) {
                                 outputSlot.getStack().setCount(now + ElementtimesConfig.pul.pulPowderCount);
+                                isProc = false;
+                                procItem = ItemStack.EMPTY;
                             }
                         }
                     } else {
@@ -91,10 +94,10 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
                         if (willPutInPowder != null) {
                             ItemStack powderStack = new ItemStack(willPutInPowder, ElementtimesConfig.pul.pulPowderCount);
                             outputSlot.putStack(powderStack);
+                            isProc = false;
+                            procItem = ItemStack.EMPTY;
                         }
                     }
-                    isProc = false;
-                    procItem = ItemStack.EMPTY;
                 }
             } else {
                 if (inputSlot.getHasStack()) {

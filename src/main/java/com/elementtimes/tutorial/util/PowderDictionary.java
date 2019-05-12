@@ -34,7 +34,7 @@ public class PowderDictionary {
     }
 
     private void InitPul() {
-        Map<String, NonNullList<ItemStack>> pulCanPutInOres = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
+        Map<String, NonNullList<ItemStack>> pulCanPutInOres = new ExtractOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
         for (Map.Entry<String, NonNullList<ItemStack>> ores : pulCanPutInOres.entrySet()) {
             String oreDictName = ores.getKey();
             NonNullList<ItemStack> oreItemList = ores.getValue();
