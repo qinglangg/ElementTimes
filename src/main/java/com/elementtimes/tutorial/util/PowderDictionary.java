@@ -16,8 +16,7 @@ import java.util.Map;
  */
 public class PowderDictionary {
     private final Map<String, Item> dict = new HashMap<>();
-
-    private final Map<Item, Map<Integer, Item>> pulOrePowder = new HashMap<>();
+    private final Map<String, Map<Item, Map<Integer, Item>>> machineDict = new HashMap<>();
 
     private PowderDictionary() {
         dict.put("oreIron", ElementtimesItems.Ironpower);
@@ -29,28 +28,41 @@ public class PowderDictionary {
         dict.put("oreCopper", ElementtimesItems.Copperpowder);
         dict.put("oreCoal", ElementtimesItems.Coalpowder);
         dict.put("orePlatinum", ElementtimesItems.Platinumorepowder);
-
-        InitPul();
     }
 
-    private void InitPul() {
-        Map<String, NonNullList<ItemStack>> pulCanPutInOres = new ExtractOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
-        for (Map.Entry<String, NonNullList<ItemStack>> ores : pulCanPutInOres.entrySet()) {
+    /**
+     * 需要映射矿物和矿粉的机器方块
+     */
+    public void Init() {
+        machineDict.put("pul", InitOrePowderDicts(new ExtractOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get()));
+    }
+
+    public Map<Item, Map<Integer, Item>> get(String blockName) {
+        Map<Item, Map<Integer, Item>> map = machineDict.get(blockName);
+        if (map != null)
+            return map;
+        throw new IllegalArgumentException("先添加机器名字，再查找");
+    }
+
+    private Map<Item, Map<Integer, Item>> InitOrePowderDicts(Map<String, NonNullList<ItemStack>> oreLists) {
+        Map<Item, Map<Integer, Item>> result = new HashMap<>();
+        for (Map.Entry<String, NonNullList<ItemStack>> ores : oreLists.entrySet()) {
             String oreDictName = ores.getKey();
             NonNullList<ItemStack> oreItemList = ores.getValue();
             Item powder = dict.get(oreDictName);
             if (powder != null) {
                 for (ItemStack oreItem : oreItemList) {
-                    if (pulOrePowder.containsKey(oreItem.getItem())) {
-                        pulOrePowder.get(oreItem.getItem()).put(oreItem.getItemDamage(), powder);
+                    if (result.containsKey(oreItem.getItem())) {
+                        result.get(oreItem.getItem()).put(oreItem.getItemDamage(), powder);
                     } else {
                         Map<Integer, Item> oreDamageForPowder = new HashMap<>();
                         oreDamageForPowder.put(oreItem.getItemDamage(), powder);
-                        pulOrePowder.put(oreItem.getItem(), oreDamageForPowder);
+                        result.put(oreItem.getItem(), oreDamageForPowder);
                     }
                 }
             }
         }
+        return result;
     }
 
     private static class Instance {
@@ -63,9 +75,5 @@ public class PowderDictionary {
 
     public Map<String, Item> getDict() {
         return dict;
-    }
-
-    public Map<Item, Map<Integer, Item>> getPulOrePowder() {
-        return pulOrePowder;
     }
 }

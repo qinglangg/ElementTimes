@@ -68,6 +68,6 @@ public class Elementtimes {
         ElementtimesFuels.init();
         ElementtimesOreDict.Init();
         ElementtimesRecipe.Init(event);
-        PowderDictionary.getInstance();
+        PowderDictionary.getInstance().Init();
     }
 }
