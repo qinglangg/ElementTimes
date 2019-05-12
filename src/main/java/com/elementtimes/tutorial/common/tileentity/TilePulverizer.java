@@ -23,7 +23,10 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
     private SlotItemHandler inputSlot = new SlotItemHandler(items, 0, 56, 30) {
         @Override
         public boolean isItemValid(@Nonnull ItemStack stack) {
-            return canInItemMap.containsKey(stack.getItem()) && super.isItemValid(stack);
+            Map<Integer, Item> damageForItem = orePowder.get(stack.getItem());
+            if (damageForItem == null)
+                return false;
+            return damageForItem.containsKey(stack.getItemDamage()) && super.isItemValid(stack);
         }
     };
     private SlotItemHandler outputSlot = new SlotItemHandler(items, 1, 110, 30) {
@@ -33,14 +36,9 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
         }
     };
     /**
-     * key是放进来的物品,value是处理完后的物品
+     * 矿石与粉末映射表
      */
-    private Map<Item, Item> canInItemMap;
-    /**
-     * key是处理完后的,value是可能放进来的东西表
-     */
-    private Map<Item, Map<Item, String>> powderLinkOre;
-
+    private Map<Item, Map<Integer, Item>> orePowder;
     /**
      * 是否在处理一个矿石
      */
@@ -51,7 +49,6 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
     private int schedule = 0;
     /**
      * 每个矿石的处理时间
-     * TODO:我猜卿岚还要求每个矿石处理时间不一样:(
      */
     private int perTime = ElementtimesConfig.pul.pulPowderEnergy;
     /**
@@ -61,9 +58,7 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
 
     public TilePulverizer() {
         super(new RedStoneEnergy(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive, ElementtimesConfig.pul.pulMaxExtract), new ItemStackHandler(2));
-
-        canInItemMap = PowderDictionary.getInstance().getPulCanInItemMap();
-        powderLinkOre = PowderDictionary.getInstance().getPulPowderLinkOre();
+        orePowder = PowderDictionary.getInstance().getPulOrePowder();
     }
 
     @Override
@@ -71,7 +66,7 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
         if (!world.isRemote) {
             int itemCount = inputSlot.getStack().getCount();
             if (isProc) {
-                if (schedule <= perTime) {//没有处理完，先扣电
+                if (schedule <= perTime) {
                     if (storage.canExtract()) {
                         int test = storage.extractEnergy(storage.getMaxExtract(), true);
                         if (test <= perTime) {
@@ -79,25 +74,27 @@ public class TilePulverizer extends TileMachine implements ISidedInventory {
                             schedule += test;
                         }
                     }
-                } else {//必须处理完才能替换out
-                    if (outputSlot.getHasStack()) {//out里有东西了
+                } else {
+                    if (outputSlot.getHasStack()) {
                         Item out = outputSlot.getStack().getItem();
-                        if (powderLinkOre.containsKey(out) && powderLinkOre.get(out).containsKey(procItem.getItem())) {
-                            //out里的东西和粉对应的矿石的表一致
+                        Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
+                        Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
+                        if (out == willPutInPowder) {
                             int now = outputSlot.getStack().getCount();
                             if (now + ElementtimesConfig.pul.pulPowderCount <= outputSlot.getSlotStackLimit()) {
                                 outputSlot.getStack().setCount(now + ElementtimesConfig.pul.pulPowderCount);
-                                isProc = false;
-                                procItem = ItemStack.EMPTY;
                             }
                         }
                     } else {
-                        if (canInItemMap.containsKey(procItem.getItem())) {
-                            outputSlot.putStack(new ItemStack(canInItemMap.get(procItem.getItem()), ElementtimesConfig.pul.pulPowderCount));
-                            isProc = false;
-                            procItem = ItemStack.EMPTY;
+                        Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
+                        Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
+                        if (willPutInPowder != null) {
+                            ItemStack powderStack = new ItemStack(willPutInPowder, ElementtimesConfig.pul.pulPowderCount);
+                            outputSlot.putStack(powderStack);
                         }
                     }
+                    isProc = false;
+                    procItem = ItemStack.EMPTY;
                 }
             } else {
                 if (inputSlot.getHasStack()) {

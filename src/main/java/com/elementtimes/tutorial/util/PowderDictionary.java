@@ -5,21 +5,19 @@ import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 矿物（不一定是矿物）对应粉末的字典。单例。
+ * 矿词对应粉末映射表。单例。
  *
  * @author KSGFK create in 2019/5/6
  */
 public class PowderDictionary {
     private final Map<String, Item> dict = new HashMap<>();
 
-    private Map<Item, Item> pulCanInItemMap = new HashMap<>();
-    private final Map<Item, Map<Item, String>> pulPowderLinkOre = new HashMap<>();//TODO:value改成Set
+    private final Map<Item, Map<Integer, Item>> pulOrePowder = new HashMap<>();
 
     private PowderDictionary() {
         dict.put("oreIron", ElementtimesItems.Ironpower);
@@ -35,31 +33,22 @@ public class PowderDictionary {
         InitPul();
     }
 
-    /**
-     * 初始化打粉机数据
-     */
     private void InitPul() {
-        Map<String, Item> powderForOreDict = dict;
-        Map<String, NonNullList<ItemStack>> pulCanInOresDict = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
-        for (Map.Entry<String, NonNullList<ItemStack>> ore : pulCanInOresDict.entrySet()) {
-            String oreName = ore.getKey();//矿词名字
-            NonNullList<ItemStack> list = ore.getValue();//矿词对应矿物数组
-            if (powderForOreDict.containsKey(oreName)) {//矿词对应粉末表
-                Item powder = powderForOreDict.get(oreName);
-                for (ItemStack oreS : list) {
-                    pulCanInItemMap.put(oreS.getItem(), powder);//矿物Item对应粉末Item
+        Map<String, NonNullList<ItemStack>> pulCanPutInOres = new OreMapFromOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get();
+        for (Map.Entry<String, NonNullList<ItemStack>> ores : pulCanPutInOres.entrySet()) {
+            String oreDictName = ores.getKey();
+            NonNullList<ItemStack> oreItemList = ores.getValue();
+            Item powder = dict.get(oreDictName);
+            if (powder != null) {
+                for (ItemStack oreItem : oreItemList) {
+                    if (pulOrePowder.containsKey(oreItem.getItem())) {
+                        pulOrePowder.get(oreItem.getItem()).put(oreItem.getItemDamage(), powder);
+                    } else {
+                        Map<Integer, Item> oreDamageForPowder = new HashMap<>();
+                        oreDamageForPowder.put(oreItem.getItemDamage(), powder);
+                        pulOrePowder.put(oreItem.getItem(), oreDamageForPowder);
+                    }
                 }
-            }
-        }
-        for (Map.Entry<Item, Item> i : pulCanInItemMap.entrySet()) {
-            Item powder = i.getValue();
-            Item ore = i.getKey();
-            if (pulPowderLinkOre.containsKey(powder)) {
-                pulPowderLinkOre.get(powder).put(ore, OreDictionary.getOreName(OreDictionary.getOreIDs(new ItemStack(ore))[0]));
-            } else {
-                Map<Item, String> oresName = new HashMap<>();
-                oresName.put(ore, OreDictionary.getOreName(OreDictionary.getOreIDs(new ItemStack(ore))[0]));
-                pulPowderLinkOre.put(powder, oresName);
             }
         }
     }
@@ -76,11 +65,7 @@ public class PowderDictionary {
         return dict;
     }
 
-    public Map<Item, Map<Item, String>> getPulPowderLinkOre() {
-        return pulPowderLinkOre;
-    }
-
-    public Map<Item, Item> getPulCanInItemMap() {
-        return pulCanInItemMap;
+    public Map<Item, Map<Integer, Item>> getPulOrePowder() {
+        return pulOrePowder;
     }
 }
