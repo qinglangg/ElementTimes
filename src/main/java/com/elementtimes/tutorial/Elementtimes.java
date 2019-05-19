@@ -65,7 +65,6 @@ public class Elementtimes {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
         ElementtimesNetwork.init();
         gui.init();
-        ElementtimesFuels.init();
         ElementtimesOreDict.Init();
         ElementtimesRecipe.Init(event);
         PowderDictionary.getInstance().Init();

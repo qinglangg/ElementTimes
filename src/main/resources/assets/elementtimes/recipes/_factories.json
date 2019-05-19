@@ -1,0 +1,5 @@
+{
+  "recipes": {
+    "max_enchantment": "com.elementtimes.tutorial.util.MaxEnchantmentLevelFactory"
+  }
+}
