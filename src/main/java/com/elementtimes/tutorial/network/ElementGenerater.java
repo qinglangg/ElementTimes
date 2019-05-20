@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
  *
  * @author KSGFK create in 2019/2/17
  */
+@Deprecated
 public class ElementGenerater implements IMessage {
     private int energy;
     private int maxEnergy;
@@ -66,6 +67,7 @@ public class ElementGenerater implements IMessage {
         return maxGen;
     }
 
+    @Deprecated
     public static class Handler implements IMessageHandler<ElementGenerater, IMessage> {
 
         @Override

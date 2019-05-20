@@ -13,10 +13,8 @@ public class GuiContainerPul extends GuiContainer {
     private static final String TEXTURE_PATH = "textures/gui/5.png";
     private static final ResourceLocation TEXTURE = new ResourceLocation(Elementtimes.MODID, TEXTURE_PATH);
 
-    private int energy;
-    private int maxEnergy;
-    private int process;
-    private int perTime;
+    private int energy = 0;
+    private int maxEnergy = 0;
     private ContainerPulverizer pul;
 
     public GuiContainerPul(ContainerPulverizer inventorySlotsIn) {
@@ -24,12 +22,15 @@ public class GuiContainerPul extends GuiContainer {
         this.xSize = 176;
         this.ySize = 156;
         this.pul = inventorySlotsIn;
-        maxEnergy = pul.getTileEntity().getMaxEnergyStored(null);
-        perTime = pul.getTileEntity().getPerTime();
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        energy = pul.tileEntity.getStorage().getEnergyStored();
+        maxEnergy = pul.tileEntity.getStorage().getMaxEnergyStored();
+        int process = pul.tileEntity.getSchedule();
+        int perTime = pul.getTileEntity().getPerTime();
+
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(TEXTURE);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
@@ -49,17 +50,5 @@ public class GuiContainerPul extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String a = energy + "/" + maxEnergy;
         this.fontRenderer.drawString(a, 88 - this.fontRenderer.getStringWidth(a) / 2, 60, 0x404040);
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
-    public void setMaxEnergy(int maxEnergy) {
-        this.maxEnergy = maxEnergy;
-    }
-
-    public void setProcess(int process) {
-        this.process = process;
     }
 }

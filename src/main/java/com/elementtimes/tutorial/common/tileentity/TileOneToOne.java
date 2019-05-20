@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -43,7 +44,7 @@ public abstract class TileOneToOne extends TileMachine implements ISidedInventor
     /**
      * 处理进度
      */
-    int schedule = 0;
+    private int schedule = 0;
     /**
      * 每个矿石的处理时间
      */
@@ -60,61 +61,67 @@ public abstract class TileOneToOne extends TileMachine implements ISidedInventor
     }
 
     @Override
-    public void update() {
-        if (!world.isRemote) {
-            int itemCount = inputSlot.getStack().getCount();
-            if (isProc) {
-                if (schedule <= perTime) {
-                    if (storage.canExtract()) {
-                        int test = storage.extractEnergy(storage.getMaxExtract(), true);
-                        if (test <= perTime) {
-                            storage.extractEnergy(test, false);
-                            schedule += test;
-                        }
+    public void logic() {
+        int itemCount = inputSlot.getStack().getCount();
+        if (isProc) {
+            if (schedule <= perTime) {
+                if (storage.canExtract()) {
+                    int test = storage.extractEnergy(storage.getMaxExtract(), true);
+                    if (test <= perTime) {
+                        storage.extractEnergy(test, false);
+                        schedule += test;
                     }
-                } else {
-                    if (outputSlot.getHasStack()) {
-                        ItemStack outStack = outputSlot.getStack();
-                        Item out = outStack.getItem();
-                        Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
-                        Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
-                        if (procItem.getItem() == out && procItem.getItemDamage() == outStack.getItemDamage() && out == willPutInPowder) {//理论上没啥问题了吧...
-                            int now = outputSlot.getStack().getCount();
-                            if (now + perItemOutItem <= outputSlot.getSlotStackLimit()) {
-                                outputSlot.getStack().setCount(now + perItemOutItem);
-                                isProc = false;
-                                procItem = ItemStack.EMPTY;
-                            }
-                        }
-                    } else {
-                        Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
-                        Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
-                        if (willPutInPowder != null) {
-                            ItemStack powderStack = new ItemStack(willPutInPowder, perItemOutItem);
-                            outputSlot.putStack(powderStack);
+                }
+            } else {
+                if (outputSlot.getHasStack()) {
+                    ItemStack outStack = outputSlot.getStack();
+                    Item out = outStack.getItem();
+                    Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
+                    Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
+                    if (procItem.getItem() == out && procItem.getItemDamage() == outStack.getItemDamage() && out == willPutInPowder) {//理论上没啥问题了吧...
+                        int now = outputSlot.getStack().getCount();
+                        if (now + perItemOutItem <= outputSlot.getSlotStackLimit()) {
+                            outputSlot.getStack().setCount(now + perItemOutItem);
                             isProc = false;
                             procItem = ItemStack.EMPTY;
                         }
                     }
-                }
-            } else {
-                if (inputSlot.getHasStack()) {
-                    if (itemCount > 0) {
-                        procItem = inputSlot.getStack().copy();
-                        inputSlot.getStack().setCount(itemCount - 1);
-                        isProc = true;
-                        schedule = 0;
+                } else {
+                    Map<Integer, Item> oreDamageForPowder = orePowder.get(procItem.getItem());
+                    Item willPutInPowder = oreDamageForPowder.get(procItem.getItemDamage());
+                    if (willPutInPowder != null) {
+                        ItemStack powderStack = new ItemStack(willPutInPowder, perItemOutItem);
+                        outputSlot.putStack(powderStack);
+                        isProc = false;
+                        procItem = ItemStack.EMPTY;
                     }
                 }
             }
-        }
-
-        if (isOpenGui) {
-            sendNetworkMessage();
+        } else {
+            if (inputSlot.getHasStack()) {
+                if (itemCount > 0) {
+                    procItem = inputSlot.getStack().copy();
+                    inputSlot.getStack().setCount(itemCount - 1);
+                    isProc = true;
+                    schedule = 0;
+                }
+            }
         }
     }
 
-    protected abstract void sendNetworkMessage();
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        schedule = nbt.getInteger("schedule");
+        perTime = nbt.getInteger("perTime");
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        nbt.setInteger("schedule", schedule);
+        nbt.setInteger("perTime", perTime);
+        return super.writeToNBT(nbt);
+    }
 
     protected abstract Map<Item, Map<Integer, Item>> setOrePowder();
 
@@ -126,7 +133,7 @@ public abstract class TileOneToOne extends TileMachine implements ISidedInventor
         return outputSlot;
     }
 
-    public TileOneToOne setPerTime(int perTime) {
+    protected TileOneToOne setPerTime(int perTime) {
         this.perTime = perTime;
         return this;
     }
@@ -135,9 +142,13 @@ public abstract class TileOneToOne extends TileMachine implements ISidedInventor
         return perTime;
     }
 
-    public TileOneToOne setPerItemOutItem(int outItemCount) {
+    protected TileOneToOne setPerItemOutItem(int outItemCount) {
         perItemOutItem = outItemCount;
         return this;
+    }
+
+    public int getSchedule() {
+        return schedule;
     }
 
     //实现ISideInventory

@@ -1,10 +1,9 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.network.ElementGenerater;
 import com.elementtimes.tutorial.util.RedStoneEnergy;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -59,63 +58,61 @@ public class TileElementGenerater extends TileMachine implements ISidedInventory
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         powerGening = nbt.getInteger("Gening");
+        maxPowerGen = nbt.getInteger("maxPowerGen");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setInteger("Gening", powerGening);
+        nbt.setInteger("maxPowerGen", maxPowerGen);
         return super.writeToNBT(nbt);
     }
 
-    public void update() {
-        if (!world.isRemote) {
-            ItemStack nature = inputSlot.getStack();
-            if (powerGening == 0) {
-                if (nature.getCount() > 0) {
-                    if (nature.getItem().equals(ElementtimesItems.Fiveelements))
-                        setPower(nature, ElementtimesConfig.general.generaterFive);
-                    else if (nature.getItem().equals(ElementtimesItems.Endelement))
-                        setPower(nature, ElementtimesConfig.general.generaterEnd);
-                    else if (nature.getItem().equals(ElementtimesItems.Photoelement))
-                        setPower(nature, ElementtimesConfig.general.generaterSun);
-                    else if (nature.getItem().equals(ElementtimesItems.Soilelement))
-                        setPower(nature, ElementtimesConfig.general.generaterSoilGen);
-                    else if (nature.getItem().equals(ElementtimesItems.Woodelement))
-                        setPower(nature, ElementtimesConfig.general.generaterWoodGen);
-                    else if (nature.getItem().equals(ElementtimesItems.Waterelement))
-                        setPower(nature, ElementtimesConfig.general.generaterWaterGen);
-                    else if (nature.getItem().equals(ElementtimesItems.Goldelement))
-                        setPower(nature, ElementtimesConfig.general.generaterGoldGen);
-                    else if (nature.getItem().equals(ElementtimesItems.Fireelement))
-                        setPower(nature, ElementtimesConfig.general.generaterFireGen);
-                }
+    @Override
+    public void logic() {
+        ItemStack nature = inputSlot.getStack();
+        if (powerGening == 0) {
+            if (nature.getCount() > 0) {
+                if (nature.getItem().equals(ElementtimesItems.Fiveelements))
+                    setPower(nature, ElementtimesConfig.general.generaterFive);
+                else if (nature.getItem().equals(ElementtimesItems.Endelement))
+                    setPower(nature, ElementtimesConfig.general.generaterEnd);
+                else if (nature.getItem().equals(ElementtimesItems.Photoelement))
+                    setPower(nature, ElementtimesConfig.general.generaterSun);
+                else if (nature.getItem().equals(ElementtimesItems.Soilelement))
+                    setPower(nature, ElementtimesConfig.general.generaterSoilGen);
+                else if (nature.getItem().equals(ElementtimesItems.Woodelement))
+                    setPower(nature, ElementtimesConfig.general.generaterWoodGen);
+                else if (nature.getItem().equals(ElementtimesItems.Waterelement))
+                    setPower(nature, ElementtimesConfig.general.generaterWaterGen);
+                else if (nature.getItem().equals(ElementtimesItems.Goldelement))
+                    setPower(nature, ElementtimesConfig.general.generaterGoldGen);
+                else if (nature.getItem().equals(ElementtimesItems.Fireelement))
+                    setPower(nature, ElementtimesConfig.general.generaterFireGen);
             }
+        }
 
-            if (powerGening > 0) {
-                int testRec = storage.receiveEnergy(storage.getMaxReceive(), true);
-                if (powerGening > testRec) {
-                    powerGening -= testRec;
-                    storage.receiveEnergy(storage.getMaxReceive(), false);
-                } else {
-                    storage.receiveEnergy(powerGening, false);
-                    powerGening = 0;
-                }
+        if (powerGening > 0) {
+            int testRec = storage.receiveEnergy(storage.getMaxReceive(), true);
+            if (powerGening > testRec) {
+                powerGening -= testRec;
+                storage.receiveEnergy(storage.getMaxReceive(), false);
+            } else {
+                storage.receiveEnergy(powerGening, false);
+                powerGening = 0;
             }
-            /*发送RF*/
-            TileEntity[] all = {
-                    world.getTileEntity(pos.up()),
-                    world.getTileEntity(pos.down()),
-                    world.getTileEntity(pos.south()),
-                    world.getTileEntity(pos.north()),
-                    world.getTileEntity(pos.east()),
-                    world.getTileEntity(pos.west())};
-            for (int a = 0; a < EnumFacing.values().length; a++) {
-                if (all[a] != null) {
-                    receiveRF(all[a], EnumFacing.getFront(a), storage.getMaxExtract());
-                }
-            }
-            if (isOpenGui) {
-                Elementtimes.getNetwork().sendTo(new ElementGenerater(storage.getEnergyStored(), storage.getMaxEnergyStored(), powerGening, maxPowerGen), player);
+        }
+        /*发送RF*/
+        TileEntity[] all = {
+                world.getTileEntity(pos.up()),
+                world.getTileEntity(pos.down()),
+                world.getTileEntity(pos.south()),
+                world.getTileEntity(pos.north()),
+                world.getTileEntity(pos.east()),
+                world.getTileEntity(pos.west())};
+        for (int a = 0; a < EnumFacing.values().length; a++) {
+            if (all[a] != null) {
+                receiveRF(all[a], EnumFacing.getFront(a), storage.getMaxExtract());
             }
         }
     }
@@ -145,6 +142,10 @@ public class TileElementGenerater extends TileMachine implements ISidedInventory
 
     public int getMaxPowerGen() {
         return maxPowerGen;
+    }
+
+    public int getPowerGening() {
+        return powerGening;
     }
 
     //ISidedInventory接口开始

@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 /**
  * @author KSGFK create in 2019/5/6
  */
+@Deprecated
 public class PulMsg implements IMessage {
     private int energy;
     private int maxEnergy;
@@ -55,15 +56,16 @@ public class PulMsg implements IMessage {
         return process;
     }
 
+    @Deprecated
     public static class Handler implements IMessageHandler<PulMsg, IMessage> {
 
         @Override
         public IMessage onMessage(PulMsg message, MessageContext ctx) {
             if (ctx.side == Side.CLIENT) {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Elementtimes.getGui().getPul().setEnergy(message.getEnergy());
-                    Elementtimes.getGui().getPul().setMaxEnergy(message.getMaxEnergy());
-                    Elementtimes.getGui().getPul().setProcess(message.getProcess());
+                    //Elementtimes.getGui().getPul().setEnergy(message.getEnergy());
+                    //Elementtimes.getGui().getPul().setMaxEnergy(message.getMaxEnergy());
+                    //Elementtimes.getGui().getPul().setProcess(message.getProcess());
                 });
             }
             return null;
