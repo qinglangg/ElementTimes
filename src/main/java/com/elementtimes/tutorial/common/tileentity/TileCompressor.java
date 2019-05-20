@@ -1,9 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.network.PulMsg;
 import com.elementtimes.tutorial.util.PowderDictionary;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
@@ -24,11 +22,6 @@ public class TileCompressor extends TileOneToOne {
                 ElementtimesConfig.compressor.compressorMaxExtract);
         setPerItemOutItem(ElementtimesConfig.compressor.compressorPowderCount);
         setPerTime(ElementtimesConfig.compressor.compressorPowderEnergy);
-    }
-
-    @Override
-    protected void sendNetworkMessage() {
-        Elementtimes.getNetwork().sendTo(new PulMsg(storage.getEnergyStored(), storage.getMaxEnergyStored(), schedule), player);
     }
 
     @Override
