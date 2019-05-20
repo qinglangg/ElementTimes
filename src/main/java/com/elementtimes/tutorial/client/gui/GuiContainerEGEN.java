@@ -36,6 +36,7 @@ public class GuiContainerEGEN extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        updateData();
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(TEXTURE);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
@@ -47,11 +48,19 @@ public class GuiContainerEGEN extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        updateData();
         String title = powerGening + "/" + maxPowerGen;
         this.fontRenderer.drawString(title, (this.xSize - this.fontRenderer.getStringWidth(title)) / 2, 6, 0x404040);
 
         String a = energy + "/" + maxEnergy;
         this.fontRenderer.drawString(a, 88 - this.fontRenderer.getStringWidth(a) / 2, 60, 0x404040);
+    }
+
+    protected void updateData() {
+        energy = generater.getTileEntity().getStorage().getEnergyStored();
+        maxEnergy = generater.getTileEntity().getStorage().getMaxEnergyStored();
+        powerGening = generater.getTileEntity().getPowerGening();
+        maxPowerGen = generater.getTileEntity().getMaxPowerGen();
     }
 
     public void setEnergy(int energy) {

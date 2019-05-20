@@ -1,8 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.util.RedStoneEnergy;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -16,7 +19,7 @@ import javax.annotation.Nullable;
  * @author KSGFK create in 2019/3/9
  */
 public abstract class TileMachine extends TileEntity implements ITickable {
-    RedStoneEnergy storage;
+    protected RedStoneEnergy storage;
     protected ItemStackHandler items;
     protected EntityPlayerMP player;
     boolean isOpenGui;
@@ -40,8 +43,31 @@ public abstract class TileMachine extends TileEntity implements ITickable {
         return super.writeToNBT(nbt);
     }
 
+    @Nullable
     @Override
-    public abstract void update();
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.pos, 0, this.serializeNBT());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.deserializeNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public void update() {
+        if (!world.isRemote) {
+            markDirty();
+            logic();
+            IBlockState state = world.getBlockState(pos);
+            world.notifyBlockUpdate(pos, state, state, 2);
+        }
+    }
+
+    /**
+     * 会在update阶段调用
+     */
+    abstract void logic();
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
@@ -54,15 +80,21 @@ public abstract class TileMachine extends TileEntity implements ITickable {
         return CapabilityEnergy.ENERGY.cast(storage);
     }
 
+    @Deprecated
     public void setPlayer(EntityPlayerMP player) {
         this.player = player;
     }
 
+    @Deprecated
     public void setOpenGui(boolean openGui) {
         isOpenGui = openGui;
     }
 
     public int getMaxEnergyStored(EnumFacing facing) {
         return storage.getMaxEnergyStored();
+    }
+
+    public RedStoneEnergy getStorage() {
+        return storage;
     }
 }

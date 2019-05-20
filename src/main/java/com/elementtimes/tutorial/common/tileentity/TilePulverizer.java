@@ -1,8 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.network.PulMsg;
 import com.elementtimes.tutorial.util.PowderDictionary;
 import net.minecraft.item.Item;
 
@@ -16,11 +14,6 @@ public class TilePulverizer extends TileOneToOne {
         super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive, ElementtimesConfig.pul.pulMaxExtract);
         setPerItemOutItem(ElementtimesConfig.pul.pulPowderCount);
         setPerTime(ElementtimesConfig.pul.pulPowderEnergy);
-    }
-
-    @Override
-    protected void sendNetworkMessage() {
-        Elementtimes.getNetwork().sendTo(new PulMsg(storage.getEnergyStored(), storage.getMaxEnergyStored(), schedule), player);
     }
 
     @Override
