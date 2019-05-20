@@ -1,0 +1,1073 @@
+Index: src/main/java/com/elementtimes/tutorial/inventory/ContainerMachine.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/inventory/ContainerMachine.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/inventory/ContainerMachine.java	(date 1558303812509)
+@@ -49,13 +49,25 @@
+         }
+         ItemStack newStack = slot.getStack(), oldStack = newStack.copy();
+         boolean isMerged;
+-        int length = inventorySlots.size() - 36;
+-        if (index < length) {
+-            isMerged = mergeItemStack(newStack, length, 36 + length, true);
+-        } else if (index < 27 + length) {
+-            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, 27 + length, 36 + length, false);
+-        } else {
+-            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, length, 27 + length, false);
++//        int length = inventorySlots.size() - 36;
++//        if (index < length) {
++//            isMerged = mergeItemStack(newStack, length, 36 + length, true);
++//        } else if (index < 27 + length) {
++//            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, 27 + length, 36 + length, false);
++//        } else {
++//            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, length, 27 + length, false);
++//        }
++        int total = inventorySlots.size();
++        // fix: Shift 转移问题
++        // 按执行顺序先添加的是 player 的物品槽，Yaossg 用的应该是 4z 的那套方法，显然在这里判断槽位对应错了
++        if (index < 27) { // 0-26 背包
++            isMerged = mergeItemStack(newStack, 36, total, false)
++                    || mergeItemStack(newStack, 27, 36, false);
++        } else if (index < 36) { // 27-35 物品栏
++            isMerged = mergeItemStack(newStack, 36, total, false)
++                    || mergeItemStack(newStack, 0, 27, false);
++        } else { // 36-total 机器
++            isMerged = mergeItemStack(newStack, 0, 36, true);
+         }
+         if (!isMerged) {
+             return ItemStack.EMPTY;
+Index: src/main/java/com/elementtimes/tutorial/common/item/Fiveelements.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Fiveelements.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Fiveelements.java	(date 1558298757684)
+@@ -1,10 +1,11 @@
+ package com.elementtimes.tutorial.common.item;
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+-
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Fiveelements  extends Item
++public class Fiveelements  extends Item implements IGeneratorFurl
+ {
+ 	public Fiveelements() 
+ 	{
+@@ -12,4 +13,9 @@
+ 		setUnlocalizedName("fiveelements");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterFive;
++	}
+ }
+Index: src/main/java/com/elementtimes/tutorial/inventory/ContainerCompressor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/inventory/ContainerCompressor.java	(date 1558300776033)
++++ src/main/java/com/elementtimes/tutorial/inventory/ContainerCompressor.java	(date 1558300776033)
+@@ -0,0 +1,30 @@
++package com.elementtimes.tutorial.inventory;
++
++import com.elementtimes.tutorial.Elementtimes;
++import com.elementtimes.tutorial.common.tileentity.TileOneToOne;
++import com.elementtimes.tutorial.common.tileentity.TilePulverizer;
++import net.minecraft.entity.player.EntityPlayer;
++import net.minecraft.inventory.Container;
++import net.minecraft.inventory.IContainerListener;
++import net.minecraft.inventory.IInventory;
++import net.minecraft.item.ItemStack;
++import net.minecraft.tileentity.TileEntity;
++import net.minecraft.util.NonNullList;
++
++/**
++ * 压缩机 GUI
++ * 没名字毫无意义 早晚得删的类 在这占位的
++ * @author lq2007 create in 2019/5/19
++ */
++public class ContainerCompressor extends ContainerMachine<TileOneToOne> {
++
++    public ContainerCompressor(TileEntity tileEntity, EntityPlayer player) {
++        super((TileOneToOne) tileEntity, player);
++        if (tileEntity != null) {
++            this.addSlotToContainer(((TileOneToOne) tileEntity).getInputSlot());
++            this.addSlotToContainer(((TileOneToOne) tileEntity).getOutputSlot());
++        } else Elementtimes.getLogger().warn("Maybe god know what happen :)");
++    }
++
++
++}
+Index: src/main/resources/assets/elementtimes/recipes/Elementkniferecipe.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/Elementkniferecipe.json	(date 1558301505706)
++++ src/main/resources/assets/elementtimes/recipes/Elementkniferecipe.json	(date 1558301505706)
+@@ -0,0 +1,23 @@
++{
++  "type": "minecraft:crafting_shaped",
++  "pattern": [
++    "PFE",
++    " F ",
++    " F "
++  ],
++  "key": {
++    "E": {
++      "item": "elementtimes:endelement"
++    },
++    "P": {
++      "item": "elementtimes:photoelement"
++    },
++    "F": {
++      "item": "elementtimes:fiveelements"
++    }
++  },
++  "result": {
++    "item": "elementtimes:elementknife",
++    "count": 1
++    }
++}
+\ No newline at end of file
+Index: src/main/resources/assets/elementtimes/blockstates/compressor.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/blockstates/compressor.json	(date 1558259591225)
++++ src/main/resources/assets/elementtimes/blockstates/compressor.json	(date 1558259591225)
+@@ -0,0 +1,5 @@
++{
++    "variants": {
++        "normal": { "model": "elementtimes:compressor" }
++    }
++}
+Index: src/main/resources/assets/elementtimes/recipes/Elementswordrecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/Elementswordrecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/Elementswordrecipes.json	(date 1558301505712)
+@@ -1,5 +1,5 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     " F ",
+     "EFP",
+Index: src/main/resources/assets/elementtimes/recipes/element_sleeve_helmetrecipres.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/element_sleeve_helmetrecipres.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/element_sleeve_helmetrecipres.json	(date 1558301505726)
+@@ -1,16 +1,10 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "FFF",
+-    "E P"
++    "F F"
+   ],
+   "key": {
+-    "E": {
+-      "item": "elementtimes:endelement"
+-    },
+-    "P": {
+-      "item": "elementtimes:photoelement"
+-    },
+     "F": {
+       "item": "elementtimes:fiveelements"
+     }
+Index: src/main/java/com/elementtimes/tutorial/interface_/item/IGeneratorFurl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/interface_/item/IGeneratorFurl.java	(date 1558298756440)
++++ src/main/java/com/elementtimes/tutorial/interface_/item/IGeneratorFurl.java	(date 1558298756440)
+@@ -0,0 +1,8 @@
++package com.elementtimes.tutorial.interface_.item;
++
++/**
++ * 当物品可在发电机中发电时，实现此接口
++ */
++public interface IGeneratorFurl {
++    int getEnergy();
++}
+Index: src/main/resources/assets/elementtimes/recipes/element_sleeve_bodyrecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/element_sleeve_bodyrecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/element_sleeve_bodyrecipes.json	(date 1558301505716)
+@@ -1,17 +1,11 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "F F",
+-    "FEF",
+-    "FPF"
++    "FFF",
++    "FFF"
+   ],
+   "key": {
+-    "E": {
+-      "item": "elementtimes:endelement"
+-    },
+-    "P": {
+-      "item": "elementtimes:photoelement"
+-    },
+     "F": {
+       "item": "elementtimes:fiveelements"
+     }
+Index: src/main/java/com/elementtimes/tutorial/client/ClientProxy.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/client/ClientProxy.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/client/ClientProxy.java	(date 1558303565327)
+@@ -31,6 +31,7 @@
+         registerItemModel(ElementtimesBlocks.Corncrop);
+         registerItemModel(ElementtimesBlocks.Corncropup);
+         registerItemModel(ElementtimesBlocks.Steelblock);
++        registerItemModel(ElementtimesBlocks.Compressor);
+ 
+         registerItemModel(ElementtimesItems.Saplingessence);
+         registerItemModel(ElementtimesItems.Fiveelements);   
+Index: src/main/java/com/elementtimes/tutorial/common/CommonProxy.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/CommonProxy.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/CommonProxy.java	(date 1558303666526)
+@@ -30,6 +30,7 @@
+         event.getRegistry().register(ElementtimesBlocks.Corncropup);
+         event.getRegistry().register(ElementtimesBlocks.Pul);
+         event.getRegistry().register(ElementtimesBlocks.Steelblock);
++        event.getRegistry().register(ElementtimesBlocks.Compressor);
+     }
+ 
+     @SubscribeEvent
+@@ -51,6 +52,7 @@
+         registerItemBlock(ElementtimesBlocks.Corncropup, event);
+         registerItemBlock(ElementtimesBlocks.Pul, event);
+         registerItemBlock(ElementtimesBlocks.Steelblock, event);
++        registerItemBlock(ElementtimesBlocks.Compressor, event);
+ 
+         event.getRegistry().register(ElementtimesItems.Sucrosecharcoal);
+         event.getRegistry().register(ElementtimesItems.Sulfurpowder);
+Index: src/main/resources/assets/elementtimes/recipes/element_sleeve_bootssrecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/element_sleeve_bootssrecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/element_sleeve_bootssrecipes.json	(date 1558301505723)
+@@ -1,17 +1,11 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     " F ",
+     "F F",
+-    "E P"
++    "F F"
+   ],
+   "key": {
+-    "E": {
+-      "item": "elementtimes:endelement"
+-    },
+-    "P": {
+-      "item": "elementtimes:photoelement"
+-    },
+     "F": {
+       "item": "elementtimes:fiveelements"
+     }
+Index: src/main/java/com/elementtimes/tutorial/common/init/ElementtimesGUI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/init/ElementtimesGUI.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/init/ElementtimesGUI.java	(date 1558303348137)
+@@ -1,8 +1,10 @@
+ package com.elementtimes.tutorial.common.init;
+ 
+ import com.elementtimes.tutorial.Elementtimes;
++import com.elementtimes.tutorial.client.gui.GuiContainerC;
+ import com.elementtimes.tutorial.client.gui.GuiContainerEGEN;
+ import com.elementtimes.tutorial.client.gui.GuiContainerPul;
++import com.elementtimes.tutorial.inventory.ContainerCompressor;
+ import com.elementtimes.tutorial.inventory.ContainerElementGenerater;
+ import com.elementtimes.tutorial.inventory.ContainerPulverizer;
+ import net.minecraft.entity.player.EntityPlayer;
+@@ -21,6 +23,7 @@
+ public class ElementtimesGUI implements IGuiHandler {
+     private GuiContainerEGEN generater;
+     private GuiContainerPul pul;
++    private GuiContainerC compressor;
+ 
+     public void init() {
+         NetworkRegistry.INSTANCE.registerGuiHandler(Elementtimes.instance, this);
+@@ -34,6 +37,8 @@
+                 return new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player);
+             case 1:
+                 return new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player);
++            case 2:
++                return new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player);
+             default:
+                 return null;
+         }
+@@ -47,6 +52,8 @@
+                 return generater = new GuiContainerEGEN(new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player));
+             case 1:
+                 return pul = new GuiContainerPul(new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player));
++            case 2:
++                return compressor = new GuiContainerC(new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player));
+             default:
+                 return null;
+         }
+Index: src/main/resources/assets/elementtimes/recipes/elementhoerecipe.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/elementhoerecipe.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/elementhoerecipe.json	(date 1558301505731)
+@@ -1,5 +1,5 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "FF",
+     " S",
+Index: src/main/java/com/elementtimes/tutorial/common/init/ElementtimesBlocks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/init/ElementtimesBlocks.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/init/ElementtimesBlocks.java	(date 1558303348092)
+@@ -21,4 +21,5 @@
+     public static final Block Corncropup = new CornCropUp();
+     public static final Block Pul = new BlockPulverizer();
+     public static final Block Steelblock = new Steelblock();
++    public static final Block Compressor = new Compressor();
+ }
+Index: src/main/java/com/elementtimes/tutorial/common/init/ElementtimesTile.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/init/ElementtimesTile.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/init/ElementtimesTile.java	(date 1558306672411)
+@@ -1,6 +1,7 @@
+ package com.elementtimes.tutorial.common.init;
+ 
+ import com.elementtimes.tutorial.Elementtimes;
++import com.elementtimes.tutorial.common.tileentity.TileCompressor;
+ import com.elementtimes.tutorial.common.tileentity.TileElementGenerater;
+ import com.elementtimes.tutorial.common.tileentity.TilePulverizer;
+ import net.minecraft.util.ResourceLocation;
+@@ -15,5 +16,6 @@
+     public static void init() {
+         GameRegistry.registerTileEntity(TileElementGenerater.class, new ResourceLocation(Elementtimes.MODID + ":" + "element_generater"));
+         GameRegistry.registerTileEntity(TilePulverizer.class, new ResourceLocation(Elementtimes.MODID + ":" + "pulverizer"));
++        GameRegistry.registerTileEntity(TileCompressor.class, new ResourceLocation(Elementtimes.MODID + ":" + "compressor"));
+     }
+ }
+Index: src/main/java/com/elementtimes/tutorial/common/item/Fireelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Fireelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Fireelement.java	(date 1558298756206)
+@@ -2,16 +2,21 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Fireelement  extends Item
++public class Fireelement  extends Item implements IGeneratorFurl
+ {
+ 	public Fireelement() 
+ 	{
+-		
+-		
+ 		setRegistryName("fireelement");
+ 		setUnlocalizedName("fireelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterFireGen;
++	}
+ }
+Index: src/main/resources/assets/elementtimes/models/block/compressor.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/models/block/compressor.json	(date 1557412193199)
++++ src/main/resources/assets/elementtimes/models/block/compressor.json	(date 1557412193199)
+@@ -0,0 +1,7 @@
++{
++    "parent": "block/cube_column",
++    "textures": {
++        "end": "elementtimes:blocks/elementgeneraterdown",
++        "side": "elementtimes:blocks/pulverizer"
++    }
++}
+\ No newline at end of file
+Index: src/main/resources/assets/elementtimes/recipes/Elementaxerecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/Elementaxerecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/Elementaxerecipes.json	(date 1558301505703)
+@@ -1,5 +1,5 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "EF",
+     "PF",
+Index: src/main/resources/assets/elementtimes/recipes/elementshovelrecipe.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/elementshovelrecipe.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/elementshovelrecipe.json	(date 1558301505734)
+@@ -1,5 +1,5 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "F",
+     "F",
+Index: src/main/resources/assets/elementtimes/models/item/compressor.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/models/item/compressor.json	(date 1558259591151)
++++ src/main/resources/assets/elementtimes/models/item/compressor.json	(date 1558259591151)
+@@ -0,0 +1,3 @@
++{
++    "parent": "elementtimes:block/compressor"
++}
+Index: src/main/java/com/elementtimes/tutorial/common/block/BlockElementGenerater.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/block/BlockElementGenerater.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/block/BlockElementGenerater.java	(date 1558303704625)
+@@ -3,9 +3,11 @@
+ import com.elementtimes.tutorial.Elementtimes;
+ import com.elementtimes.tutorial.common.tileentity.TileElementGenerater;
+ import com.elementtimes.tutorial.common.tileentity.TileMachine;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import com.elementtimes.tutorial.util.IDismantleBlock;
+ import net.minecraft.block.material.Material;
+ import net.minecraft.block.state.IBlockState;
++import net.minecraft.creativetab.CreativeTabs;
+ import net.minecraft.entity.EntityLivingBase;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.entity.player.EntityPlayerMP;
+@@ -15,6 +17,7 @@
+ import net.minecraft.tileentity.TileEntity;
+ import net.minecraft.util.EnumFacing;
+ import net.minecraft.util.EnumHand;
++import net.minecraft.util.NonNullList;
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.World;
+ 
+@@ -90,4 +93,17 @@
+             worldIn.removeTileEntity(pos);
+         }
+     }
++	
++	@Override
++    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
++        super.getSubBlocks(itemIn, items);
++        if (items.isEmpty()) return;
++        items.stream().filter(itemStack -> itemStack.getItem() == Item.getItemFromBlock(this)).findFirst().ifPresent(itemStack -> {
++            ItemStack fullEnergyGenerator = itemStack.copy();
++            NBTTagCompound nbt = new NBTTagCompound();
++            nbt.setInteger("Energy", ElementtimesConfig.general.generaterMaxEnergy);
++            fullEnergyGenerator.setTagCompound(nbt);
++            items.add(fullEnergyGenerator);
++        });
++    }
+ }
+Index: src/main/java/com/elementtimes/tutorial/common/item/Photoelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Photoelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Photoelement.java	(date 1558298757922)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Photoelement extends Item
++public class Photoelement extends Item implements IGeneratorFurl
+ {
+ 	public Photoelement() 
+ 	{
+@@ -12,5 +14,9 @@
+ 		setUnlocalizedName("photoelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
+-	
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterSun;
++	}
+ }
+Index: src/main/java/com/elementtimes/tutorial/util/PowderDictionary.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/util/PowderDictionary.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/util/PowderDictionary.java	(date 1558302963062)
+@@ -35,6 +35,7 @@
+      */
+     public void Init() {
+         machineDict.put("pul", InitOrePowderDicts(new ExtractOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get()));
++        machineDict.put("compressor", InitOrePowderDicts(new ExtractOreDictFactory(ElementtimesConfig.compressor.compressorCanPutIn).get()));
+     }
+ 
+     public Map<Item, Map<Integer, Item>> get(String blockName) {
+Index: src/main/java/com/elementtimes/tutorial/common/item/Woodelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Woodelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Woodelement.java	(date 1558298757138)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Woodelement extends Item
++public class Woodelement extends Item implements IGeneratorFurl
+ {
+ 	public Woodelement() 
+ 	{
+@@ -12,5 +14,9 @@
+ 		setUnlocalizedName("woodelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
+-	
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterWoodGen;
++	}
+ }
+Index: src/main/resources/assets/elementtimes/recipes/Elementpickaxerecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/Elementpickaxerecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/Elementpickaxerecipes.json	(date 1558301505710)
+@@ -1,5 +1,5 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+     "EFP",
+     " F ",
+Index: src/main/java/com/elementtimes/tutorial/util/IDismantleBlock.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/util/IDismantleBlock.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/util/IDismantleBlock.java	(date 1558302946153)
+@@ -2,6 +2,8 @@
+ 
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.item.ItemStack;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.tileentity.TileEntity;
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.World;
+ 
+@@ -9,5 +11,17 @@
+  * @author KSGFK create in 2019/5/1
+  */
+ public interface IDismantleBlock {
+-    ItemStack dismantleBlock(World world, BlockPos pos, IBlockState state, boolean returnDrops);
++    default ItemStack dismantleBlock(World world, BlockPos pos, IBlockState state, boolean returnDrops) {
++        if (!world.isRemote) {
++            TileEntity tile = world.getTileEntity(pos);
++            if (tile != null) {
++                NBTTagCompound tag = tile.serializeNBT();
++                ItemStack stack = new ItemStack(state.getBlock());
++                stack.setCount(1);
++                stack.setTagCompound(tag);
++                return stack;
++            }
++        }
++        return ItemStack.EMPTY;
++    }
+ }
+Index: src/main/java/com/elementtimes/tutorial/common/item/Elementshovel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Elementshovel.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Elementshovel.java	(date 1558249742859)
+@@ -4,7 +4,6 @@
+ import com.elementtimes.tutorial.util.ItemUtil;
+ 
+ import net.minecraft.creativetab.CreativeTabs;
+-import net.minecraft.item.Item;
+ import net.minecraft.item.ItemSpade;
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.util.NonNullList;
+Index: src/main/java/com/elementtimes/tutorial/common/item/Goldelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Goldelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Goldelement.java	(date 1558298757554)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Goldelement extends Item
++public class Goldelement extends Item implements IGeneratorFurl
+ {
+ 	public Goldelement() 
+ 	{
+@@ -12,4 +14,9 @@
+ 		setUnlocalizedName("goldelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterGoldGen;
++	}
+ }
+Index: src/main/resources/assets/elementtimes/recipes/element_sleeve_leggingsrecipes.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/assets/elementtimes/recipes/element_sleeve_leggingsrecipes.json	(date 1558234420000)
++++ src/main/resources/assets/elementtimes/recipes/element_sleeve_leggingsrecipes.json	(date 1558301505729)
+@@ -1,17 +1,11 @@
+ {
+-  "type": "elementtimes:max_enchantment",
++  "type": "minecraft:crafting_shaped",
+   "pattern": [
+-    "EFP",
++    "FFF",
+     "F F",
+     "F F"
+   ],
+   "key": {
+-    "E": {
+-      "item": "elementtimes:endelement"
+-    },
+-    "P": {
+-      "item": "elementtimes:photoelement"
+-    },
+     "F": {
+       "item": "elementtimes:fiveelements"
+     }
+Index: src/main/java/com/elementtimes/tutorial/common/block/BlockTileBase.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/block/BlockTileBase.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/block/BlockTileBase.java	(date 1558303784979)
+@@ -10,6 +10,7 @@
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.entity.player.EntityPlayerMP;
+ import net.minecraft.item.ItemStack;
++import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.tileentity.TileEntity;
+ import net.minecraft.util.EnumBlockRenderType;
+ import net.minecraft.util.EnumFacing;
+@@ -82,7 +83,13 @@
+             TileEntity e = worldIn.getTileEntity(pos);
+             if (e instanceof TileMachine && stack.getTagCompound() != null) {
+                 TileMachine dyn = (TileMachine) e;
+-                dyn.readFromNBT(stack.getTagCompound());
++                // fix: x, y, z
++                NBTTagCompound tagCompound = stack.getTagCompound().copy();
++                tagCompound.setInteger("x", pos.getX());
++                tagCompound.setInteger("y", pos.getY());
++                tagCompound.setInteger("z", pos.getZ());
++
++                dyn.readFromNBT(tagCompound);
+             }
+         }
+     }
+Index: src/main/java/com/elementtimes/tutorial/common/item/Waterelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Waterelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Waterelement.java	(date 1558298757872)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Waterelement  extends Item
++public class Waterelement  extends Item implements IGeneratorFurl
+ {
+ 	public Waterelement() 
+ 	{
+@@ -12,4 +14,9 @@
+ 		setUnlocalizedName("waterelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterWaterGen;
++	}
+ }
+Index: src/main/java/com/elementtimes/tutorial/common/block/Compressor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/block/Compressor.java	(date 1558306672439)
++++ src/main/java/com/elementtimes/tutorial/common/block/Compressor.java	(date 1558306672439)
+@@ -0,0 +1,31 @@
++package com.elementtimes.tutorial.common.block;
++
++import com.elementtimes.tutorial.common.tileentity.TileCompressor;
++import com.elementtimes.tutorial.util.IDismantleBlock;
++import net.minecraft.block.material.Material;
++import net.minecraft.block.state.IBlockState;
++import net.minecraft.item.ItemStack;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.tileentity.TileEntity;
++import net.minecraft.util.math.BlockPos;
++import net.minecraft.world.World;
++
++import javax.annotation.Nullable;
++
++/**
++ * 压缩机
++ * @author lq2007 create in 2019/5/19
++ */
++public class Compressor extends BlockTileBase implements IDismantleBlock {
++    public Compressor() {
++        super(Material.IRON, 2);
++        setRegistryName("compressor");
++        setUnlocalizedName("compressor");
++    }
++
++    @Nullable
++    @Override
++    public TileEntity createNewTileEntity(World worldIn, int meta) {
++        return new TileCompressor();
++    }
++}
+Index: src/main/java/com/elementtimes/tutorial/common/tileentity/TileCompressor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/tileentity/TileCompressor.java	(date 1558253293699)
++++ src/main/java/com/elementtimes/tutorial/common/tileentity/TileCompressor.java	(date 1558253293699)
+@@ -0,0 +1,46 @@
++package com.elementtimes.tutorial.common.tileentity;
++
++import com.elementtimes.tutorial.Elementtimes;
++import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
++import com.elementtimes.tutorial.network.PulMsg;
++import com.elementtimes.tutorial.util.PowderDictionary;
++import net.minecraft.client.resources.I18n;
++import net.minecraft.item.Item;
++
++import java.util.Map;
++
++/**
++ * 打粉机[WIP]
++ * 还不知道机器相关的完整框架，只实现了 Block，TileBlock，Config，GUI
++ * 通信部份没做 感觉。。。可复用的东西还是有点多
++ *
++ * @author lq2007 create in 2019/5/19
++ */
++public class TileCompressor extends TileOneToOne {
++    public TileCompressor() {
++        super(ElementtimesConfig.compressor.compressorMaxEnergy,
++                ElementtimesConfig.compressor.compressorMaxReceive,
++                ElementtimesConfig.compressor.compressorMaxExtract);
++        setPerItemOutItem(ElementtimesConfig.compressor.compressorPowderCount);
++        setPerTime(ElementtimesConfig.compressor.compressorPowderEnergy);
++    }
++
++    @Override
++    protected void sendNetworkMessage() {
++        Elementtimes.getNetwork().sendTo(new PulMsg(storage.getEnergyStored(), storage.getMaxEnergyStored(), schedule), player);
++    }
++
++    @Override
++    protected Map<Item, Map<Integer, Item>> setOrePowder() {
++        return PowderDictionary.getInstance().get("compressor");
++    }
++
++    @Override
++    public String getName() {
++        return I18n.format(ElementtimesBlocks.Compressor.getUnlocalizedName());
++    }
++
++    @Override
++    public boolean hasCustomName() { return false; }
++}
+Index: src/main/java/com/elementtimes/tutorial/common/item/Endelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Endelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Endelement.java	(date 1558298756954)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Endelement  extends Item
++public class Endelement  extends Item implements IGeneratorFurl
+ {
+ 	public Endelement() 
+ 	{
+@@ -12,4 +14,9 @@
+ 		setUnlocalizedName("endelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterEnd;
++	}
+ }
+Index: src/main/java/com/elementtimes/tutorial/config/ElementtimesConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/config/ElementtimesConfig.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/config/ElementtimesConfig.java	(date 1558303021378)
+@@ -18,6 +18,10 @@
+     @Config.LangKey("elementtimes.config.pul")
+     public static final Pul pul = new Pul();
+ 
++    @Config.Name("compressor")
++    @Config.LangKey("elementtimes.config.compressor")
++    public static final Compressor compressor = new Compressor();
++
+     public static final class General {
+         @Config.Comment("设置发电机最大容量")
+         @Config.Name("generaterMaxEnergy")
+@@ -91,4 +95,39 @@
+                 "oreCoal",
+                 "orePlatinum"};
+     }
++
++    public static final class Compressor {
++        @Config.Comment("设置压缩机机最大电容量")
++        @Config.Name("compressorMaxEnergy")
++        public int compressorMaxEnergy = 3200000;
++
++        @Config.Comment("设置压缩机每Tick消耗电量(相当于打粉速度")
++        @Config.Name("compressorMaxExtract")
++        public int compressorMaxExtract = 20;
++
++        @Config.Comment("设置压缩机最大输入")
++        @Config.Name("compressorMaxReceive")
++        public int compressorMaxReceive = 1000000;
++
++        @Config.Comment("设置压缩机每个矿物耗电量")
++        @Config.Name("compressorPowderEnergy")
++        public int compressorPowderEnergy = 2000;
++
++        @Config.Comment("设置压缩机每个矿物产粉量")
++        @Config.Name("compressorPowderCount")
++        public int compressorPowderCount = 5;
++
++        @Config.Comment("设置压缩机可放入的矿石")
++        @Config.Name("compressorCanPutIn")
++        public String[] compressorCanPutIn = new String[]{
++                "oreIron",
++                "oreRedstone",
++                "oreGold",
++                "oreDiamond",
++                "oreLapis",
++                "oreEmerald",
++                "oreCopper",
++                "oreCoal",
++                "orePlatinum"};
++    }
+ }
+Index: src/main/java/com/elementtimes/tutorial/client/gui/GuiContainerC.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/client/gui/GuiContainerC.java	(date 1558303434682)
++++ src/main/java/com/elementtimes/tutorial/client/gui/GuiContainerC.java	(date 1558303434682)
+@@ -0,0 +1,68 @@
++package com.elementtimes.tutorial.client.gui;
++
++import com.elementtimes.tutorial.Elementtimes;
++import com.elementtimes.tutorial.inventory.ContainerCompressor;
++import com.elementtimes.tutorial.inventory.ContainerPulverizer;
++import net.minecraft.client.gui.inventory.GuiContainer;
++import net.minecraft.client.renderer.GlStateManager;
++import net.minecraft.util.ResourceLocation;
++
++/**
++ * 和 ContainerC 一样 早晚得删
++ * 大量重复代码 等待抽象ing
++ * @author lq2007 create in 2019/5/19
++ */
++public class GuiContainerC extends GuiContainer {
++    private static final String TEXTURE_PATH = "textures/gui/5.png";
++    private static final ResourceLocation TEXTURE = new ResourceLocation(Elementtimes.MODID, TEXTURE_PATH);
++
++    private int energy;
++    private int maxEnergy;
++    private int process;
++    private int perTime;
++    private ContainerCompressor pul;
++
++    public GuiContainerC(ContainerCompressor inventorySlotsIn) {
++        super(inventorySlotsIn);
++        this.xSize = 176;
++        this.ySize = 156;
++        this.pul = inventorySlotsIn;
++        maxEnergy = pul.getTileEntity().getMaxEnergyStored(null);
++        perTime = pul.getTileEntity().getPerTime();
++    }
++
++    @Override
++    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
++        GlStateManager.color(1.0F, 1.0F, 1.0F);
++        this.mc.getTextureManager().bindTexture(TEXTURE);
++        int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
++        this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
++        int textureWidth = energy * 90 / maxEnergy;
++        this.drawTexturedModalRect(offsetX + 43, offsetY + 55, 24, 156, textureWidth, 4);//白色条子
++
++        int arrowWidth = process * 24 / perTime;
++        if (process >= perTime) {
++            this.drawTexturedModalRect(offsetX + 80, offsetY + 30, 0, 156, 0, 17);//箭头
++        } else {
++            this.drawTexturedModalRect(offsetX + 80, offsetY + 30, 0, 156, arrowWidth, 17);
++        }
++    }
++
++    @Override
++    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
++        String a = energy + "/" + maxEnergy;
++        this.fontRenderer.drawString(a, 88 - this.fontRenderer.getStringWidth(a) / 2, 60, 0x404040);
++    }
++
++    public void setEnergy(int energy) {
++        this.energy = energy;
++    }
++
++    public void setMaxEnergy(int maxEnergy) {
++        this.maxEnergy = maxEnergy;
++    }
++
++    public void setProcess(int process) {
++        this.process = process;
++    }
++}
+Index: src/main/java/com/elementtimes/tutorial/common/item/Soilelement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/elementtimes/tutorial/common/item/Soilelement.java	(date 1558234420000)
++++ src/main/java/com/elementtimes/tutorial/common/item/Soilelement.java	(date 1558298757454)
+@@ -2,9 +2,11 @@
+ 
+ import com.elementtimes.tutorial.common.init.Elementtimestab;
+ 
++import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
++import com.elementtimes.tutorial.config.ElementtimesConfig;
+ import net.minecraft.item.Item;
+ 
+-public class Soilelement  extends Item
++public class Soilelement  extends Item implements IGeneratorFurl
+ {
+ 	public Soilelement() 
+ 	{
+@@ -12,4 +14,9 @@
+ 		setUnlocalizedName("soilelement");
+ 		setCreativeTab(Elementtimestab.tabBlocks);	
+ 	}
++
++	@Override
++	public int getEnergy() {
++		return ElementtimesConfig.general.generaterSoilGen;
++	}
+ }

@@ -31,6 +31,7 @@ public class ClientProxy extends CommonProxy {
         registerItemModel(ElementtimesBlocks.Corncrop);
         registerItemModel(ElementtimesBlocks.Corncropup);
         registerItemModel(ElementtimesBlocks.Steelblock);
+        registerItemModel(ElementtimesBlocks.Compressor);
 
         registerItemModel(ElementtimesItems.Saplingessence);
         registerItemModel(ElementtimesItems.Fiveelements);   

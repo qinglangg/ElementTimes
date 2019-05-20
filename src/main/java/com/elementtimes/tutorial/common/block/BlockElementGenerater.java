@@ -3,9 +3,11 @@ package com.elementtimes.tutorial.common.block;
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.TileElementGenerater;
 import com.elementtimes.tutorial.common.tileentity.TileMachine;
+import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.util.IDismantleBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -89,5 +92,18 @@ public class BlockElementGenerater extends BlockTileBase implements IDismantleBl
         if (tile != null) {
             worldIn.removeTileEntity(pos);
         }
+    }
+	
+	@Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        super.getSubBlocks(itemIn, items);
+        if (items.isEmpty()) return;
+        items.stream().filter(itemStack -> itemStack.getItem() == Item.getItemFromBlock(this)).findFirst().ifPresent(itemStack -> {
+            ItemStack fullEnergyGenerator = itemStack.copy();
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setInteger("Energy", ElementtimesConfig.general.generaterMaxEnergy);
+            fullEnergyGenerator.setTagCompound(nbt);
+            items.add(fullEnergyGenerator);
+        });
     }
 }

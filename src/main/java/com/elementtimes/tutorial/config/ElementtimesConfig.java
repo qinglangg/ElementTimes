@@ -18,6 +18,10 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.pul")
     public static final Pul pul = new Pul();
 
+    @Config.Name("compressor")
+    @Config.LangKey("elementtimes.config.compressor")
+    public static final Compressor compressor = new Compressor();
+
     public static final class General {
         @Config.Comment("设置发电机最大容量")
         @Config.Name("generaterMaxEnergy")
@@ -81,6 +85,41 @@ public class ElementtimesConfig {
         @Config.Comment("设置打粉机可放入的矿石")
         @Config.Name("pulCanPutIn")
         public String[] pulCanPutIn = new String[]{
+                "oreIron",
+                "oreRedstone",
+                "oreGold",
+                "oreDiamond",
+                "oreLapis",
+                "oreEmerald",
+                "oreCopper",
+                "oreCoal",
+                "orePlatinum"};
+    }
+
+    public static final class Compressor {
+        @Config.Comment("设置压缩机机最大电容量")
+        @Config.Name("compressorMaxEnergy")
+        public int compressorMaxEnergy = 3200000;
+
+        @Config.Comment("设置压缩机每Tick消耗电量(相当于打粉速度")
+        @Config.Name("compressorMaxExtract")
+        public int compressorMaxExtract = 20;
+
+        @Config.Comment("设置压缩机最大输入")
+        @Config.Name("compressorMaxReceive")
+        public int compressorMaxReceive = 1000000;
+
+        @Config.Comment("设置压缩机每个矿物耗电量")
+        @Config.Name("compressorPowderEnergy")
+        public int compressorPowderEnergy = 2000;
+
+        @Config.Comment("设置压缩机每个矿物产粉量")
+        @Config.Name("compressorPowderCount")
+        public int compressorPowderCount = 5;
+
+        @Config.Comment("设置压缩机可放入的矿石")
+        @Config.Name("compressorCanPutIn")
+        public String[] compressorCanPutIn = new String[]{
                 "oreIron",
                 "oreRedstone",
                 "oreGold",

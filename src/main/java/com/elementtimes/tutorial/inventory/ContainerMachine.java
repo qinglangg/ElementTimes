@@ -49,13 +49,25 @@ public abstract class ContainerMachine<T extends TileMachine> extends Container 
         }
         ItemStack newStack = slot.getStack(), oldStack = newStack.copy();
         boolean isMerged;
-        int length = inventorySlots.size() - 36;
-        if (index < length) {
-            isMerged = mergeItemStack(newStack, length, 36 + length, true);
-        } else if (index < 27 + length) {
-            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, 27 + length, 36 + length, false);
-        } else {
-            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, length, 27 + length, false);
+//        int length = inventorySlots.size() - 36;
+//        if (index < length) {
+//            isMerged = mergeItemStack(newStack, length, 36 + length, true);
+//        } else if (index < 27 + length) {
+//            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, 27 + length, 36 + length, false);
+//        } else {
+//            isMerged = mergeItemStack(newStack, 0, length, false) || mergeItemStack(newStack, length, 27 + length, false);
+//        }
+        int total = inventorySlots.size();
+        // fix: Shift 转移问题
+        // 按执行顺序先添加的是 player 的物品槽，Yaossg 用的应该是 4z 的那套方法，显然在这里判断槽位对应错了
+        if (index < 27) { // 0-26 背包
+            isMerged = mergeItemStack(newStack, 36, total, false)
+                    || mergeItemStack(newStack, 27, 36, false);
+        } else if (index < 36) { // 27-35 物品栏
+            isMerged = mergeItemStack(newStack, 36, total, false)
+                    || mergeItemStack(newStack, 0, 27, false);
+        } else { // 36-total 机器
+            isMerged = mergeItemStack(newStack, 0, 36, true);
         }
         if (!isMerged) {
             return ItemStack.EMPTY;

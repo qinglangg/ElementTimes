@@ -4,7 +4,6 @@ import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.util.ItemUtil;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

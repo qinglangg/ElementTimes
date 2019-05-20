@@ -21,4 +21,5 @@ public class ElementtimesBlocks {
     public static final Block Corncropup = new CornCropUp();
     public static final Block Pul = new BlockPulverizer();
     public static final Block Steelblock = new Steelblock();
+    public static final Block Compressor = new Compressor();
 }

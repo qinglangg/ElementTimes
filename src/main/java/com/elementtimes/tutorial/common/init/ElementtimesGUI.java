@@ -1,8 +1,10 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.client.gui.GuiContainerC;
 import com.elementtimes.tutorial.client.gui.GuiContainerEGEN;
 import com.elementtimes.tutorial.client.gui.GuiContainerPul;
+import com.elementtimes.tutorial.inventory.ContainerCompressor;
 import com.elementtimes.tutorial.inventory.ContainerElementGenerater;
 import com.elementtimes.tutorial.inventory.ContainerPulverizer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +23,7 @@ import javax.annotation.Nullable;
 public class ElementtimesGUI implements IGuiHandler {
     private GuiContainerEGEN generater;
     private GuiContainerPul pul;
+    private GuiContainerC compressor;
 
     public void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(Elementtimes.instance, this);
@@ -34,6 +37,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 return new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player);
             case 1:
                 return new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player);
+            case 2:
+                return new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player);
             default:
                 return null;
         }
@@ -47,6 +52,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 return generater = new GuiContainerEGEN(new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player));
             case 1:
                 return pul = new GuiContainerPul(new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player));
+            case 2:
+                return compressor = new GuiContainerC(new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player));
             default:
                 return null;
         }

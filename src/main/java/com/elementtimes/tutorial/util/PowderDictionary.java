@@ -35,6 +35,7 @@ public class PowderDictionary {
      */
     public void Init() {
         machineDict.put("pul", InitOrePowderDicts(new ExtractOreDictFactory(ElementtimesConfig.pul.pulCanPutIn).get()));
+        machineDict.put("compressor", InitOrePowderDicts(new ExtractOreDictFactory(ElementtimesConfig.compressor.compressorCanPutIn).get()));
     }
 
     public Map<Item, Map<Integer, Item>> get(String blockName) {

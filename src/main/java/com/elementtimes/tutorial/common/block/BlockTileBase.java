@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -82,7 +83,13 @@ public abstract class BlockTileBase extends BlockContainer {
             TileEntity e = worldIn.getTileEntity(pos);
             if (e instanceof TileMachine && stack.getTagCompound() != null) {
                 TileMachine dyn = (TileMachine) e;
-                dyn.readFromNBT(stack.getTagCompound());
+                // fix: x, y, z
+                NBTTagCompound tagCompound = stack.getTagCompound().copy();
+                tagCompound.setInteger("x", pos.getX());
+                tagCompound.setInteger("y", pos.getY());
+                tagCompound.setInteger("z", pos.getZ());
+
+                dyn.readFromNBT(tagCompound);
             }
         }
     }

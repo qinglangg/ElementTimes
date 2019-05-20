@@ -1,5 +1,5 @@
 {
-  "type": "elementtimes:max_enchantment",
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     "FF",
     " S",

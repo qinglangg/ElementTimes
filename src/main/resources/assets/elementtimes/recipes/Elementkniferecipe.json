@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "EFP",
+    "PFE",
     " F ",
     " F "
   ],
@@ -17,7 +17,7 @@
     }
   },
   "result": {
-    "item": "elementtimes:elementpickaxe",
+    "item": "elementtimes:elementknife",
     "count": 1
     }
 }
