@@ -18,7 +18,7 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesBlocks.Stoneblock);
         event.getRegistry().register(ElementtimesBlocks.Cement);
         event.getRegistry().register(ElementtimesBlocks.Cementandsteelbarmixture);
-        event.getRegistry().register(ElementtimesBlocks.ElementGenerater);
+        event.getRegistry().register(ElementtimesBlocks.elementGenerator);
         event.getRegistry().register(ElementtimesBlocks.Copperore);
         event.getRegistry().register(ElementtimesBlocks.Copperbillet);
         event.getRegistry().register(ElementtimesBlocks.Sulfurore);
@@ -28,9 +28,9 @@ public class CommonProxy {
         event.getRegistry().register(ElementtimesBlocks.Diamondblock);
         event.getRegistry().register(ElementtimesBlocks.Corncrop);
         event.getRegistry().register(ElementtimesBlocks.Corncropup);
-        event.getRegistry().register(ElementtimesBlocks.Pul);
+        event.getRegistry().register(ElementtimesBlocks.pulverize);
         event.getRegistry().register(ElementtimesBlocks.Steelblock);
-        event.getRegistry().register(ElementtimesBlocks.Compressor);
+        event.getRegistry().register(ElementtimesBlocks.compressor);
     }
 
     @SubscribeEvent
@@ -40,7 +40,7 @@ public class CommonProxy {
         registerItemBlock(ElementtimesBlocks.Stoneblock, event);
         registerItemBlock(ElementtimesBlocks.Cement, event);
         registerItemBlock(ElementtimesBlocks.Cementandsteelbarmixture, event);
-        registerItemBlock(ElementtimesBlocks.ElementGenerater, event);
+        registerItemBlock(ElementtimesBlocks.elementGenerator, event);
         registerItemBlock(ElementtimesBlocks.Copperore, event);
         registerItemBlock(ElementtimesBlocks.Copperbillet, event);
         registerItemBlock(ElementtimesBlocks.Sulfurore, event);
@@ -50,9 +50,9 @@ public class CommonProxy {
         registerItemBlock(ElementtimesBlocks.Diamondblock, event);
         registerItemBlock(ElementtimesBlocks.Corncrop, event);
         registerItemBlock(ElementtimesBlocks.Corncropup, event);
-        registerItemBlock(ElementtimesBlocks.Pul, event);
+        registerItemBlock(ElementtimesBlocks.pulverize, event);
         registerItemBlock(ElementtimesBlocks.Steelblock, event);
-        registerItemBlock(ElementtimesBlocks.Compressor, event);
+        registerItemBlock(ElementtimesBlocks.compressor, event);
 
         event.getRegistry().register(ElementtimesItems.Sucrosecharcoal);
         event.getRegistry().register(ElementtimesItems.Sulfurpowder);

@@ -16,6 +16,9 @@ public interface IDismantleBlock {
             TileEntity tile = world.getTileEntity(pos);
             if (tile != null) {
                 NBTTagCompound tag = tile.serializeNBT();
+                tag.removeTag("x");
+                tag.removeTag("y");
+                tag.removeTag("z");
                 ItemStack stack = new ItemStack(state.getBlock());
                 stack.setCount(1);
                 stack.setTagCompound(tag);

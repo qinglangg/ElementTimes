@@ -1,12 +1,12 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.client.gui.GuiContainerC;
-import com.elementtimes.tutorial.client.gui.GuiContainerEGEN;
-import com.elementtimes.tutorial.client.gui.GuiContainerPul;
-import com.elementtimes.tutorial.inventory.ContainerCompressor;
-import com.elementtimes.tutorial.inventory.ContainerElementGenerater;
-import com.elementtimes.tutorial.inventory.ContainerPulverizer;
+import com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator;
+import com.elementtimes.tutorial.client.gui.base.GuiContainerOneToOne;
+import com.elementtimes.tutorial.common.tileentity.TileCompressor;
+import com.elementtimes.tutorial.common.tileentity.TileElementGenerator;
+import com.elementtimes.tutorial.common.tileentity.TilePulverize;
+import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,9 +21,12 @@ import javax.annotation.Nullable;
  * @author KSGFK create in 2019/2/17
  */
 public class ElementtimesGUI implements IGuiHandler {
-    private GuiContainerEGEN generater;
-    private GuiContainerPul pul;
-    private GuiContainerC compressor;
+
+    public static final int ElementGenerator = 0;
+    public static final int Pulverize = 1;
+    public static final int Compressor = 2;
+    public static final int FuelGenerator = 3;
+    public static final int Furnace = 4;
 
     public void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(Elementtimes.instance, this);
@@ -33,12 +36,12 @@ public class ElementtimesGUI implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
-            case 0:
-                return new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player);
-            case 1:
-                return new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player);
-            case 2:
-                return new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player);
+            case ElementGenerator:
+                return new ContainerMachine((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player);
+            case Pulverize:
+                return new ContainerMachine((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player);
+            case Compressor:
+                return new ContainerMachine((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player);
             default:
                 return null;
         }
@@ -48,22 +51,14 @@ public class ElementtimesGUI implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
-            case 0:
-                return generater = new GuiContainerEGEN(new ContainerElementGenerater(world.getTileEntity(new BlockPos(x, y, z)), player));
-            case 1:
-                return pul = new GuiContainerPul(new ContainerPulverizer(world.getTileEntity(new BlockPos(x, y, z)), player));
-            case 2:
-                return compressor = new GuiContainerC(new ContainerCompressor(world.getTileEntity(new BlockPos(x, y, z)), player));
+            case ElementGenerator:
+                return new GuiContainerGenerator(new ContainerMachine((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player));
+            case Pulverize:
+                return new GuiContainerOneToOne(new ContainerMachine((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player));
+            case Compressor:
+                return new GuiContainerOneToOne(new ContainerMachine((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player));
             default:
                 return null;
         }
-    }
-
-    public GuiContainerEGEN getGenerater() {
-        return generater;
-    }
-
-    public GuiContainerPul getPul() {
-        return pul;
     }
 }

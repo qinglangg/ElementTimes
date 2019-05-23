@@ -4,7 +4,6 @@ import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.event.BreakBlockListener;
 import com.elementtimes.tutorial.common.init.*;
 import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
-import com.elementtimes.tutorial.util.PowderDictionary;
 import com.elementtimes.tutorial.world.gen.WorldGenETOres;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.common.MinecraftForge;
@@ -67,6 +66,5 @@ public class Elementtimes {
         gui.init();
         ElementtimesOreDict.Init();
         ElementtimesRecipe.Init(event);
-        PowderDictionary.getInstance().Init();
     }
 }

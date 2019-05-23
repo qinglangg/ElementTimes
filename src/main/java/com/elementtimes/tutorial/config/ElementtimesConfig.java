@@ -22,6 +22,10 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.compressor")
     public static final Compressor compressor = new Compressor();
 
+    @Config.Name("furnace")
+    @Config.LangKey("elementtimes.config.furnace")
+    public static final Furnace furnace = new Furnace();
+
     public static final class General {
         @Config.Comment("设置发电机最大容量")
         @Config.Name("generaterMaxEnergy")
@@ -129,5 +133,23 @@ public class ElementtimesConfig {
                 "oreCopper",
                 "oreCoal",
                 "orePlatinum"};
+    }
+
+    public static final class Furnace {
+        @Config.Comment("设置熔炉最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 3200000;
+
+        @Config.Comment("设置熔炉每Tick消耗电量(相当于打粉速度")
+        @Config.Name("maxExtract")
+        public int maxExtract = 20;
+
+        @Config.Comment("设置熔炉最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 1000000;
+
+        @Config.Comment("设置每个配方耗电量")
+        @Config.Name("energy")
+        public int energy = 2000;
     }
 }

@@ -2,11 +2,11 @@
 
 import com.elementtimes.tutorial.common.init.Elementtimestab;
 
-import com.elementtimes.tutorial.interface_.item.IGeneratorFurl;
+import com.elementtimes.tutorial.interface_.item.IGeneratorElement;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.item.Item;
 
-public class Woodelement extends Item implements IGeneratorFurl
+public class Woodelement extends Item implements IGeneratorElement
 {
 	public Woodelement() 
 	{
