@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.client.gui.base;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.base.TileGenerator;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.util.RedStoneEnergy;
@@ -34,8 +35,8 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-        int textureWidth = energy * 89 / maxEnergy;
-        this.drawTexturedModalRect(offsetX + 43, offsetY + 55, 0, 156, textureWidth, 4);
+        double textureWidth = energy * 89.0 / maxEnergy;
+        this.drawTexturedModalRect(offsetX + 43, offsetY + 55, 0, 156, (int) textureWidth, 4);
     }
 
     @Override

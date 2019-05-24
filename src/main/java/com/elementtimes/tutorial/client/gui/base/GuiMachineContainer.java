@@ -30,9 +30,14 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
     }
 
     @Override
-    public void onGuiClosed() {
-
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        updateData();
     }
 
+    /*
+       @Override
+       public void onGuiClosed() {
+       }
+    */
     protected void updateData() {}
 }

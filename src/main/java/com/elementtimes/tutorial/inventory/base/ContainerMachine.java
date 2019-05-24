@@ -66,12 +66,12 @@ public class ContainerMachine<T extends TileMachine> extends Container {
         }
         return oldStack;
     }
-
+/*
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
-        tileEntity.setOpenGui(false);
+        //tileEntity.setOpenGui(false);//不需要设置关闭GUI了
     }
-
+*/
     public T getTileEntity() {
         return tileEntity;
     }
