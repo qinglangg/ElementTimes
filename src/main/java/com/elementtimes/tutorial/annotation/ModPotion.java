@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface ModPotion {
     String registerName();
     String name();
-    String creativeTabClass() default "com.lq2007.mymod.creativetab.MyCreativeTab";
+    String creativeTabClass() default "com.elementtimes.tutorial.common.creativetabs.ElementTimesTabs$Main";
 }

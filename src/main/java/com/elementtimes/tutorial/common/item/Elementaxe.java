@@ -1,10 +1,8 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.util.ItemUtil;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -15,9 +13,6 @@ public class Elementaxe  extends ItemAxe
 	public Elementaxe() 
 	{
 		super(EnumHelper.addToolMaterial("elementsword", 4, 3000, 1000.0F, 15.0F, 25),100.0F,0.0F);
-		setRegistryName("elementaxe");
-		setUnlocalizedName("elementaxe");
-		setCreativeTab(Elementtimestab.tabBlocks);	
 	}
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {

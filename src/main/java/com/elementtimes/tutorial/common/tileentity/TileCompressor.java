@@ -23,7 +23,7 @@ public class TileCompressor extends TileOneToOne {
     }
 
     @Override
-    protected void onUpdate(boolean isProc, int schedule, int perTime) {
-
+    public boolean onUpdate() {
+        return true;
     }
 }

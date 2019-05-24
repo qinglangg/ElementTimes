@@ -1,15 +1,18 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.common.block.Furnace;
+import com.elementtimes.tutorial.common.block.machine.Furnace;
 import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
+import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 public class TileFurnace extends TileOneToOne {
 
-    public TileFurnace(int maxEnergy, int maxReceive, int maxExtract, int perTime) {
-        super(maxEnergy, maxReceive, maxExtract, 16000);
+    public TileFurnace() {
+        super(ElementtimesConfig.furnace.maxEnergy,
+                ElementtimesConfig.furnace.maxReceive,
+                ElementtimesConfig.furnace.maxExtract, 16000);
     }
 
     @Override
@@ -19,12 +22,13 @@ public class TileFurnace extends TileOneToOne {
     }
 
     @Override
-    protected void onUpdate(boolean isProc, int schedule, int perTime) {
-        if (!world.isRemote) {
-            if (isProc != world.getBlockState(pos).getValue(Furnace.IS_BURNING)) {
-                IBlockState state = world.getBlockState(pos).withProperty(Furnace.IS_BURNING, isProc);
-                world.setBlockState(pos, state, 4);
-            }
+    public boolean onUpdate() {
+        IBlockState iBlockState = world.getBlockState(pos);
+        if (isProc != iBlockState.getValue(Furnace.BURNING)) {
+            IBlockState iBlockState1 = iBlockState.withProperty(Furnace.BURNING, isProc);
+            world.setBlockState(pos, iBlockState1);
+            return false;
         }
+        return true;
     }
 }

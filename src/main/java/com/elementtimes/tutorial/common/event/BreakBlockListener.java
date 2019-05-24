@@ -24,7 +24,7 @@ public class BreakBlockListener {
 			//几率掉落
 			if (rand.nextInt(20) == 0) {
 				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
-						new ItemStack(ElementtimesItems.Corn)));
+						new ItemStack(ElementtimesItems.corn)));
 			}
 		}
 	}

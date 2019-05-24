@@ -1,372 +1,489 @@
 package com.elementtimes.tutorial.annotation;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import io.netty.util.collection.IntObjectHashMap;
+import io.netty.util.collection.IntObjectMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.statemap.StateMap;
-import net.minecraft.command.CommandBase;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
-import net.minecraft.potion.Potion;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
+import java.io.File;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class Elements {
 
-    private static BiMap<Class, ArrayList<Class>> sElementClasses = HashBiMap.create();
-    private static BiMap<Class, ArrayList<Field>> sElementFields = HashBiMap.create();
-    private static BiMap<Class, Object> sObjects = HashBiMap.create();
+    // block
+    public static Map<Block, ImmutablePair<String, Class>> sTileEntities = new HashMap<>();
+    public static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
+    public static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
+    public static Map<Block, String> sBlockOreDict = new HashMap<>();
+    public static boolean useB3D = false;
+    public static boolean useOBJ = false;
+    // item
+    public static Map<Item, String> sItemOreDict = new HashMap<>();
 
-    private static ArrayList<Item> sItems = null;
-    private static ArrayList<Block> sBlocks = null;
-    private static ArrayList<Block> sMultiBlocks = null;
-    private static ArrayList<BlockFluidClassic> sFluidBlocks = null;
-    private static ArrayList<Enchantment> sEnchantments = null;
-    private static ArrayList<Potion> sPotions = null;
-    private static ArrayList<CommandBase> sCommands = null;
-    private static ArrayList<ItemBucket> sBuckets = null;
-    private static ArrayList<ModCapability> sCapabilities = null;
-    private static BiMap<Integer, BiMap<Side, SimpleNetworkWrapper>> sNetworks = null;
-    private static BiMap<Class, ModTileEntity> sTitleEntities = null;
-    private static BiMap<Class, ModEntity> sEntities = null;
+    private static HashMap<Class, ArrayList<Class>> sElementClasses = new HashMap<>();
+    private static HashMap<Class, ArrayList<Field>> sElementFields = new HashMap<>();
 
-    /**
-     * 添加 Mod 部分
-     */
-    public static void addElement(Class annotation, Class aClass) {
-        if (!sElementClasses.containsKey(annotation))
-            sElementClasses.put(annotation, new ArrayList<>());
-        sElementClasses.get(annotation).add(aClass);
+    public static void init() {
+        Class[] support = new Class[] {
+                ModBlock.class, ModItem.class
+        };
+
+        for (Class aClass : support) {
+            if (!sElementFields.containsKey(aClass))
+                sElementFields.put(aClass, new ArrayList<>());
+            if (!sElementClasses.containsKey(aClass))
+                sElementClasses.put(aClass, new ArrayList<>());
+        }
+
+        try {
+            Set<Class<?>> classes = getClasses("com.elementtimes.tutorial");
+            warn("共计 {} Class", classes.size());
+            for (Class<?> aClass : classes) {
+                for (Class annotation : support) {
+                    if (aClass.getAnnotation(annotation) != null){
+                        sElementClasses.get(annotation).add(aClass);
+                        break;
+                    }
+                }
+                for (Field field : aClass.getDeclaredFields()) {
+                    field.setAccessible(true);
+                    for (Class annotation : support) {
+                        if (field.getAnnotation(annotation) != null){
+                            sElementFields.get(annotation).add(field);
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            warn("Error when load class {}", e.getMessage());
+        }
     }
 
     /**
-     * 添加 Mod 部分(Field)
+     * 从包package中获取所有的Class
+     * 代码来自 http://guoliangqi.iteye.com/blog/644876
      */
-    public static void addElement(Class annotation, Field field) {
-        if (!sElementFields.containsKey(annotation))
-            sElementFields.put(annotation, new ArrayList<>());
-        sElementFields.get(annotation).add(field);
-    }
-
-    /**
-     * 获取所有多 BlockState 方块
-     */
-    public static ArrayList<Block> getMultiBlocks() {
-        if (sMultiBlocks == null) {
-            sMultiBlocks = new ArrayList<>();
-            sElementClasses.get(ModMultiBlock.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModMultiBlock info = (ModMultiBlock) aClass.getAnnotation(ModMultiBlock.class);
-                            Block block = (Block) get(aClass);
-                            block.setRegistryName(info.registerName());
-                            block.setUnlocalizedName(info.unlocalizedName());
-                            // creativeTab
-                            block.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTab())));
-                            BlockUtil.sCreativeTabsMap.put(aClass, info.creativeTab());
-                            // model
-                            BiMap<Integer, String> modelMap = HashBiMap.create();
-                            ModStateMapper mapperInfo = (ModStateMapper) aClass.getAnnotation(ModStateMapper.class);
-                            if (mapperInfo != null) {
-                                Class propertyContainer = Class.forName(mapperInfo.propertyIn());
-                                // suffix
-                                StateMap.Builder builder = new StateMap.Builder().withSuffix(mapperInfo.suffix());
-                                // withName
-                                IProperty property = getField(propertyContainer, mapperInfo.propertyName(), block);
-                                builder.withName(property);
-                                // ignore
-                                IProperty[] ignoreProperties = Arrays.stream(mapperInfo.propertyIgnore())
-                                        .map(ignoreProperty -> getField(propertyContainer, ignoreProperty, block)).toArray(IProperty[]::new);
-                                builder.ignore(ignoreProperties);
-                                BlockUtil.sModelMapperMap.put(aClass, builder.build());
-
-                                for (int i = 0; i < info.metadataToGetModel().length; i++) {
-                                    IBlockState state = block.getStateFromMeta(info.metadataToGetModel()[i]);
-                                    String name = property.getName(state.getValue(property));
-                                    modelMap.put(info.metadataToGetModel()[i], name + mapperInfo.suffix());
-                                }
-                                BlockUtil.sModelMap.put(aClass, modelMap);
-                            } else {
-                                for (int i = 0; i < info.metadataToGetModel().length; i++)
-                                    modelMap.put(info.metadataToGetModel()[i], info.modelByMetadata()[i]);
-                                BlockUtil.sModelMap.put(aClass, modelMap);
+    private static Set<Class<?>> getClasses(String pack) throws Exception {
+        Set<Class<?>> classes = new LinkedHashSet<>();
+        boolean recursive = true;
+        String packageName = pack;
+        String packageDirName = packageName.replace('.', '/');
+        Enumeration<URL> dirs;
+        dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
+        while (dirs.hasMoreElements()) {
+            URL url = dirs.nextElement();
+            String protocol = url.getProtocol();
+            if ("file".equals(protocol)) {
+                System.err.println("file类型的扫描");
+                String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
+                findAndAddClassesInPackageByFile(packageName, filePath, recursive, classes);
+            } else if ("jar".equals(protocol)) {
+                System.err.println("jar类型的扫描");
+                JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
+                Enumeration<JarEntry> entries = jar.entries();
+                while (entries.hasMoreElements()) {
+                    JarEntry entry = entries.nextElement();
+                    String name = entry.getName();
+                    if (name.charAt(0) == '/') name = name.substring(1);
+                    if (name.startsWith(packageDirName)) {
+                        int idx = name.lastIndexOf('/');
+                        if (idx != -1) packageName = name.substring(0, idx).replace('/', '.');
+                        if ((idx != -1) || recursive) {
+                            if (name.endsWith(".class") && !entry.isDirectory()) {
+                                String className = name.substring(packageName.length() + 1, name.length() - 6);
+                                classes.add(Class.forName(packageName + '.' + className));
                             }
-                            if (info.useB3D()) BlockUtil.sB3D.add(aClass);
-                            if (info.useOBJ()) BlockUtil.sOBJ.add(aClass);
-                            // name
-                            BiMap<Integer, String> nameMap = HashBiMap.create();
-                            for (int i = 0; i < info.metadataToGetName().length; i++)
-                                nameMap.put(info.metadataToGetName()[i], info.nameByMetadata()[i]);
-                            BlockUtil.sNameMap.put(aClass, nameMap);
-                            sMultiBlocks.add(block);
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-                    });
+                    }
+                }
+            }
         }
-        return sMultiBlocks;
+
+        return classes;
     }
 
     /**
-     * 获取所有普通方块
+     * 以文件的形式来获取包下的所有Class
      */
-    public static ArrayList<Block> getBlocks() {
-        if (sBlocks == null) {
-            sBlocks = new ArrayList<>();
-            sElementClasses.get(ModBlock.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModBlock info = (ModBlock) aClass.getAnnotation(ModBlock.class);
-                            Block block = (Block) get(aClass);
-                            block.setRegistryName(info.registerName());
-                            block.setUnlocalizedName(info.unlocalizedName());
-                            block.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-                            sBlocks.add(block);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+    private static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive, Set<Class<?>> classes) throws Exception {
+        File dir = new File(packagePath);
+        if (!dir.exists() || !dir.isDirectory()) {
+            return;
         }
-        return sBlocks;
+        File[] dirfiles = dir.listFiles(file -> (recursive && file.isDirectory())
+                || (file.getName().endsWith(".class")));
+        for (File file : dirfiles) {
+            if (file.isDirectory()) {
+                findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), recursive, classes);
+            } else {
+                String className = file.getName().substring(0, file.getName().length() - 6);
+                classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
+            }
+        }
+    }
+
+    /**
+     * 获取所有方块
+     */
+    public static List<Block> getBlocks() {
+        List<Block> blocks = new ArrayList<>();
+        sElementFields.get(ModBlock.class).forEach(field -> initBlock(field, blocks));
+        sElementClasses.get(ModBlock.class).forEach(clazz -> initBlock(clazz, blocks));
+        return blocks;
+    }
+    private static void initBlock(Object blockHolder, List<Block> into) {
+        Block block = null;
+        ModBlock info = null;
+        Map<Class<? extends Annotation>, Annotation> annotationMap = null;
+        // object
+        if (blockHolder instanceof Field) {
+            Field field = (Field) blockHolder;
+            info = field.getAnnotation(ModBlock.class);
+            block = get(field, null);
+            annotationMap = annotationsFilter(field.getAnnotations(), ModOreDict.class, ModBlock.TileEntity.class,
+                    ModBlock.StateMap.class, ModBlock.StateMapper.class, ModBlock.StateMapperCustom.class);
+        } else if (blockHolder instanceof Class) {
+            Class clazz = (Class) blockHolder;
+            info = (ModBlock) clazz.getAnnotation(ModBlock.class);
+            block = (Block) get(clazz);
+            annotationMap = annotationsFilter(clazz.getAnnotations(), ModOreDict.class, ModBlock.TileEntity.class,
+                    ModBlock.StateMap.class, ModBlock.StateMapper.class, ModBlock.StateMapperCustom.class);
+        }
+        if (block == null) block = new Block(Material.ROCK);
+        // init
+        if (block.getRegistryName() == null)
+            block.setRegistryName(info.registerName());
+        block.setUnlocalizedName(info.unlocalizedName());
+        block.setCreativeTab(info.creativeTab().tab);
+        // OreDict
+        if (annotationMap.containsKey(ModOreDict.class))
+            sBlockOreDict.put(block, ((ModOreDict)annotationMap.get(ModOreDict.class)).value());
+        // TileEntity
+        ModBlock.TileEntity teInfo = (ModBlock.TileEntity) annotationMap.get(ModBlock.TileEntity.class);
+        if (teInfo != null) {
+            try {
+                sTileEntities.put(block, ImmutablePair.of(teInfo.name(), Class.forName(teInfo.clazz())));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        // StateMapper
+        ModBlock.StateMapper smInfo = (ModBlock.StateMapper) annotationMap.get(ModBlock.StateMapper.class);
+        try {
+            if (smInfo != null) {
+                Block finalBlock = block;
+                Class propertyContainer = Class.forName(smInfo.propertyIn());
+                net.minecraft.client.renderer.block.statemap.StateMap.Builder builder = new net.minecraft.client.renderer.block.statemap.StateMap.Builder().withSuffix(smInfo.suffix());
+                IProperty property = getField(propertyContainer, smInfo.propertyName(), block);
+                builder.withName(property);
+                IProperty[] ignoreProperties = Arrays.stream(smInfo.propertyIgnore())
+                        .map(ignoreProperty -> getField(propertyContainer, ignoreProperty, finalBlock)).toArray(IProperty[]::new);
+                builder.ignore(ignoreProperties);
+                sStateMaps.put(finalBlock, builder.build());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        // CustomState
+        ModBlock.StateMapperCustom mscInfo = (ModBlock.StateMapperCustom) annotationMap.get(ModBlock.StateMapperCustom.class);
+        if (mscInfo != null) {
+            try {
+                String cn = mscInfo.value();
+                IStateMapper mapper = null;
+                if (!cn.isEmpty())
+                    mapper = (IStateMapper) get(Class.forName(mscInfo.value()));
+                if (mapper == null)
+                    mapper = new DefaultStateMapper();
+                sStateMaps.put(block, mapper);
+            } catch (ClassNotFoundException e) {
+                warn("Cannot load mapper: " + mscInfo.value());
+                e.printStackTrace();
+            }
+        }
+        // IBlockState
+        ModBlock.StateMap bsInfo = (ModBlock.StateMap) annotationMap.get(ModBlock.StateMap.class);
+        if (bsInfo != null) {
+            if (!useB3D) useB3D = bsInfo.useB3D();
+            if (!useOBJ) useOBJ = bsInfo.useOBJ();
+
+            if (bsInfo.metadatas().length > 0) {
+                sBlockStates.put(block, bsInfo);
+            }
+        }
+        into.add(block);
     }
 
     /**
      * 获取所有液体方块
+     * @deprecated 未实现
      */
-    public static ArrayList<BlockFluidClassic> getFluidBlocks() {
-        if (sFluidBlocks == null) {
-            sFluidBlocks = new ArrayList<>();
-            sElementClasses.get(ModFluid.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModFluid info = (ModFluid) aClass.getAnnotation(ModFluid.class);
-                            Fluid fluid = (Fluid) get(aClass);
-                            fluid.setUnlocalizedName(info.unlocalizedName());
-                            FluidUtil.register(fluid);
-                            BlockFluidClassic block = (BlockFluidClassic) get(Class.forName(info.blockClass()));
-                            block.setRegistryName(info.registerName());
-                            block.setUnlocalizedName(info.unlocalizedName());
-                            block.setFluidStack(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
-                            block.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-                            sFluidBlocks.add(block);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sFluidBlocks;
+    @Deprecated
+    public static List<Fluid> getFluidBlocks() {
+        List<Fluid> fluids = new ArrayList<>();
+        sElementFields.get(ModFluid.class).forEach(field -> initFluid(field, fluids));
+        sElementClasses.get(ModFluid.class).forEach(clazz -> initFluid(clazz, fluids));
+        return fluids;
+    }
+    private static void initFluid(Object fluidHolder, List<Fluid> into) {
+        Fluid fluid = null;
+        ModFluid info = null;
+//        into.add(fluid);
     }
 
     /**
      * 获取所有物品
      */
-    public static ArrayList<Item> getItems() {
-        if (sItems == null) {
-            sItems = new ArrayList<>();
-            sElementClasses.get(ModItem.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModItem info = (ModItem) aClass.getAnnotation(ModItem.class);
-                            Item item = (Item) get(aClass);
-                            item.setRegistryName(info.registerName());
-                            item.setUnlocalizedName(info.unlocalizedName());
-                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-                            sItems.add(item);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sItems;
+    public static List<Item> getItems() {
+        List<Item> items = new ArrayList<>();
+        sElementFields.get(ModItem.class).forEach(field -> initItem(field, items));
+        sElementClasses.get(ModItem.class).forEach(clazz -> initItem(clazz, items));
+        return items;
     }
+    private static void initItem(Object itemHolder, List<Item> into) {
+        Item item = null;
+        ModItem info = null;
+        Map<Class<? extends Annotation>, Annotation> annotationMap = null;
+        // object
+        if (itemHolder instanceof Field) {
+            Field field = (Field) itemHolder;
+            info = field.getAnnotation(ModItem.class);
+            if (info == null) return;
+            item = get(field, null);
+            annotationMap = annotationsFilter(field.getAnnotations(), ModOreDict.class);
+        } else if (itemHolder instanceof Class) {
+            Class clazz = (Class) itemHolder;
+            info = (ModItem) clazz.getAnnotation(ModItem.class);
+            if (info == null) return;
+            item = (Item) get(clazz);
+            annotationMap = annotationsFilter(clazz.getAnnotations(), ModOreDict.class);
+        }
+        if (item == null) item = new Item();
 
-    /**
-     * 获取所有命令
-     */
-    public static ArrayList<CommandBase> getCommands() {
-        if (sCommands == null) {
-            sCommands = new ArrayList<>();
-            sElementClasses.get(ModCommand.class)
-                    .forEach(aClass -> {
-                        try {
-                            sCommands.add((CommandBase) get(aClass));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+        // OreDict
+        if (annotationMap.containsKey(ModOreDict.class))
+            sItemOreDict.put(item, ((ModOreDict)annotationMap.get(ModOreDict.class)).value());
+        if (item.getRegistryName() == null) {
+            item.setRegistryName(info.registerName());
+        } else  {
+            warn("Item has registryName: {}", item.getRegistryName());
         }
-        return sCommands;
+        item.setUnlocalizedName(info.unlocalizedName());
+        item.setCreativeTab(info.creativeTab().tab);
+        into.add(item);
     }
-
-    /**
-     * 获取所有附魔
-     */
-    public static ArrayList<Enchantment> getEnchantments() {
-        if (sEnchantments == null) {
-            sEnchantments = new ArrayList<>();
-            sElementClasses.get(ModEnchantment.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModEnchantment info = (ModEnchantment) aClass.getAnnotation(ModEnchantment.class);
-                            Enchantment enchantment = (Enchantment) get(aClass);
-                            enchantment.setName(info.name());
-                            enchantment.setRegistryName(info.registerName());
-                            sEnchantments.add(enchantment);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sEnchantments;
-    }
-
-    /**
-     * 获取所有药水效果
-     */
-    public static ArrayList<Potion> getPotions() {
-        if (sPotions == null) {
-            sPotions = new ArrayList<>();
-            sElementClasses.get(ModPotion.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModPotion info = (ModPotion) aClass.getAnnotation(ModPotion.class);
-                            Potion potion = (Potion) get(aClass);
-                            potion.setPotionName(info.name());
-                            potion.setRegistryName(info.registerName());
-                            sPotions.add(potion);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sPotions;
-    }
-
-    /**
-     * 获取所有桶
-     */
-    public static ArrayList<ItemBucket> getBuckets() {
-        if (sBuckets == null) {
-            sBuckets = new ArrayList<>();
-            sElementClasses.get(ModBucket.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModBucket info = (ModBucket) aClass.getAnnotation(ModBucket.class);
-                            ItemBucket item = (ItemBucket) get(aClass);
-                            item.setRegistryName(info.registerName());
-                            item.setUnlocalizedName(info.unlocalizedName());
-                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-                            sBuckets.add(item);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sBuckets;
-    }
-
-    /**
-     * 获取所有实体
-     */
-    public static BiMap<Class, ModEntity> getEntities() {
-        if (sEntities == null) {
-            sEntities = HashBiMap.create();
-            sElementClasses.get(ModEntity.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModEntity entity = (ModEntity) aClass.getAnnotation(ModEntity.class);
-                            sEntities.put(aClass, entity);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sEntities;
-    }
-
-    /**
-     * 获取所有 Capability
-     */
-    public static ArrayList<ModCapability> getCapabilities() {
-        if (sCapabilities == null) {
-            sCapabilities = new ArrayList<>();
-            sElementClasses.get(ModCapability.class)
-                    .forEach(aClass -> sCapabilities.add((ModCapability) aClass.getAnnotation(ModCapability.class)));
-        }
-        return sCapabilities;
-    }
-
-    /**
-     * 获取通信
-     * 注意: 本操作附带有注册过程 调用后无需注册
-     */
-    public static BiMap<Integer, BiMap<Side, SimpleNetworkWrapper>> getNetworks() {
-        if (sNetworks == null) {
-            sNetworks = HashBiMap.create();
-            sElementClasses.get(ModNetwork.class)
-                    .forEach(aClass -> {
-                        try {
-                            ModNetwork info = (ModNetwork) aClass.getAnnotation(ModNetwork.class);
-                            IMessageHandler handler = getNew(Class.forName(info.handlerClass()));
-                            for (Side side : info.side()) {
-                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(Elementtimes.MODID);
-                                instance.registerMessage(handler, aClass, info.id(), side);
-                                if (!sNetworks.containsKey(info.id()))
-                                    sNetworks.put(info.id(), HashBiMap.create());
-                                sNetworks.get(info.id()).put(side, instance);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-        return sNetworks;
-    }
-
-    /**
-     * 获取所有 TitleEntity
-     */
-    public static BiMap<Class, ModTileEntity> getTitleEntities() {
-        if (sTitleEntities == null) {
-            sTitleEntities = HashBiMap.create();
-            sElementClasses.get(ModTileEntity.class)
-                    .forEach(aClass -> {
-                        ModTileEntity info = (ModTileEntity) aClass.getAnnotation(ModTileEntity.class);
-                        sTitleEntities.put(aClass, info);
-                    });
-        }
-        return sTitleEntities;
-    }
+//
+//    /**
+//     * 获取所有命令
+//     */
+//    public static ArrayList<CommandBase> getCommands() {
+//        if (sCommands == null) {
+//            sCommands = new ArrayList<>();
+//            sElementClasses.get(ModCommand.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            sCommands.add((CommandBase) get(aClass));
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sCommands;
+//    }
+//
+//    /**
+//     * 获取所有附魔
+//     */
+//    public static ArrayList<Enchantment> getEnchantments() {
+//        if (sEnchantments == null) {
+//            sEnchantments = new ArrayList<>();
+//            sElementClasses.get(ModEnchantment.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            ModEnchantment info = (ModEnchantment) aClass.getAnnotation(ModEnchantment.class);
+//                            Enchantment enchantment = (Enchantment) get(aClass);
+//                            enchantment.setName(info.name());
+//                            enchantment.setRegistryName(info.registerName());
+//                            sEnchantments.add(enchantment);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sEnchantments;
+//    }
+//
+//    /**
+//     * 获取所有药水效果
+//     */
+//    public static ArrayList<Potion> getPotions() {
+//        if (sPotions == null) {
+//            sPotions = new ArrayList<>();
+//            sElementClasses.get(ModPotion.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            ModPotion info = (ModPotion) aClass.getAnnotation(ModPotion.class);
+//                            Potion potion = (Potion) get(aClass);
+//                            potion.setPotionName(info.name());
+//                            potion.setRegistryName(info.registerName());
+//                            sPotions.add(potion);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sPotions;
+//    }
+//
+//    /**
+//     * 获取所有桶
+//     * @deprecated 有万能桶了。该注解可能会被删除，也可能会保留（自定义桶，比如某些液体一桶的容量）
+//     */
+//    @Deprecated
+//    public static ArrayList<ItemBucket> getBuckets() {
+//        if (sBuckets == null) {
+//            sBuckets = new ArrayList<>();
+//            sElementClasses.get(ModFluid.ModBucket.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            ModFluid.ModBucket info = (ModFluid.ModBucket) aClass.getAnnotation(ModFluid.ModBucket.class);
+//                            ItemBucket item = (ItemBucket) get(aClass);
+//                            item.setRegistryName(info.registerName());
+//                            item.setUnlocalizedName(info.unlocalizedName());
+//                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
+//                            sBuckets.add(item);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sBuckets;
+//    }
+//
+//    /**
+//     * 获取所有实体
+//     */
+//    public static BiMap<Class, ModEntity> getEntities() {
+//        if (sEntities == null) {
+//            sEntities = HashBiMap.create();
+//            sElementClasses.get(ModEntity.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            ModEntity entity = (ModEntity) aClass.getAnnotation(ModEntity.class);
+//                            sEntities.put(aClass, entity);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sEntities;
+//    }
+//
+//    /**
+//     * 获取所有 Capability
+//     */
+//    public static ArrayList<ModCapability> getCapabilities() {
+//        if (sCapabilities == null) {
+//            sCapabilities = new ArrayList<>();
+//            sElementClasses.get(ModCapability.class)
+//                    .forEach(aClass -> sCapabilities.add((ModCapability) aClass.getAnnotation(ModCapability.class)));
+//        }
+//        return sCapabilities;
+//    }
+//
+//    /**
+//     * 获取通信
+//     * 注意: 本操作附带有注册过程 调用后无需注册
+//     */
+//    public static BiMap<Integer, BiMap<Side, SimpleNetworkWrapper>> getNetworks() {
+//        if (sNetworks == null) {
+//            sNetworks = HashBiMap.create();
+//            sElementClasses.get(ModNetwork.class)
+//                    .forEach(aClass -> {
+//                        try {
+//                            ModNetwork info = (ModNetwork) aClass.getAnnotation(ModNetwork.class);
+//                            IMessageHandler handler = (IMessageHandler) get(Class.forName(info.handlerClass()));
+//                            for (Side side : info.side()) {
+//                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(Elementtimes.MODID);
+//                                instance.registerMessage(handler, aClass, info.id(), side);
+//                                if (!sNetworks.containsKey(info.id()))
+//                                    sNetworks.put(info.id(), HashBiMap.create());
+//                                sNetworks.get(info.id()).put(side, instance);
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        }
+//        return sNetworks;
+//    }
 
     // 通过空白构造获取对应对象
-    // 与 getNew 方法不同的是 此方法会维护一个缓存列表, 避免创建重复对象
-    public static <T> T get(Class<? extends T> blockClass) {
+    public static <T> T get(Class<? extends T> aClass) {
         try {
-            if (sObjects.containsKey(blockClass))
-                return (T) sObjects.get(blockClass);
-            T instance = getNew(blockClass);
-            if (instance != null)
-                sObjects.put(blockClass, instance);
-            return instance;
+            if (aClass == null) return null;
+            return aClass.newInstance();
         } catch (Exception e) {
+            warn("Cannot create instance: {}", aClass.getSimpleName());
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static <T> T get(Field field, Class<? extends T> defaultClass) {
+        if (field == null) return null;
+        field.setAccessible(true);
+        T obj = null;
+        try {
+            obj = (T) field.get(null);
+        } catch (Exception e) {
+            warn("Field {} has no value", field.getName());
+            e.printStackTrace();
+        }
+        if (obj != null) return obj;
+        obj = (T) get(field.getType());
+        if (obj == null && defaultClass != null) obj = get(defaultClass);
+        try {
+            field.set(null, obj);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            warn("Field {} cannot set value \n\t{}", field.getName(), obj);
+        }
+        return obj;
+    }
+
+    private static void warn(String message, Object... params) {
+        Elementtimes.getLogger().warn("[Elementtimes] " + message, params);
+    }
+
+    private static Map<Class<? extends Annotation>, Annotation> annotationsFilter(Annotation[] annotations, Class<? extends Annotation>... find) {
+        Map<Class<? extends Annotation>, Annotation> annotationMap = new HashMap<>();
+        for (Annotation annotation : annotations) {
+            for (Class<? extends Annotation> aClass : find) {
+                if (aClass.isAssignableFrom(annotation.getClass())) {
+                    annotationMap.put(aClass, annotation);
+                    break;
+                }
+            }
+            if (annotationMap.size() == find.length) break;
+        }
+        return annotationMap;
     }
 
     // 获取类的成员
@@ -391,15 +508,7 @@ public class Elements {
             }
             return field;
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static <T> T getNew(Class clazz) {
-        try {
-            return (T) clazz.newInstance();
-        } catch (Exception e) {
+            warn("Cannot get field {} from {}", fieldName, clazz.getSimpleName());
             e.printStackTrace();
             return null;
         }

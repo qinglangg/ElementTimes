@@ -24,4 +24,9 @@ public class TileElementGenerator extends TileGenerator {
             return ((IGeneratorElement) item).getEnergy();
         return 0;
     }
+
+    @Override
+    public boolean onUpdate() {
+        return true;
+    }
 }

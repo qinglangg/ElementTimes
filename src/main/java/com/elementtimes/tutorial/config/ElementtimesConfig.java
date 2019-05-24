@@ -142,7 +142,7 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置熔炉每Tick消耗电量(相当于打粉速度")
         @Config.Name("maxExtract")
-        public int maxExtract = 20;
+        public int maxExtract = 1000;
 
         @Config.Comment("设置熔炉最大输入")
         @Config.Name("maxReceive")

@@ -89,8 +89,10 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
         if (!world.isRemote) {
             markDirty();
             logic();
-            IBlockState state = world.getBlockState(pos);
-            world.notifyBlockUpdate(pos, state, state, 2);
+            if (onUpdate()) {
+                IBlockState state = world.getBlockState(pos);
+                world.notifyBlockUpdate(pos, state, state, 2);
+            }
         }
     }
 
@@ -129,7 +131,13 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
      */
     abstract void logic();
 
-    public static enum ItemHandlerType {
+    /**
+     * 在执行完 logic 后执行
+     * @return 执行完成后方块更新是否同步数据。主要考虑 IBlockState 状态更新
+     */
+    public abstract boolean onUpdate();
+
+    public enum ItemHandlerType {
         INPUT, OUTPUT, NONE
     }
 }

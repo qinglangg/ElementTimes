@@ -3,9 +3,7 @@ package com.elementtimes.tutorial.common.init;
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator;
 import com.elementtimes.tutorial.client.gui.base.GuiContainerOneToOne;
-import com.elementtimes.tutorial.common.tileentity.TileCompressor;
-import com.elementtimes.tutorial.common.tileentity.TileElementGenerator;
-import com.elementtimes.tutorial.common.tileentity.TilePulverize;
+import com.elementtimes.tutorial.common.tileentity.*;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -37,11 +35,15 @@ public class ElementtimesGUI implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case ElementGenerator:
-                return new ContainerMachine((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player);
+                return new ContainerMachine<>((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player);
             case Pulverize:
-                return new ContainerMachine((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player);
+                return new ContainerMachine<>((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player);
             case Compressor:
-                return new ContainerMachine((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player);
+                return new ContainerMachine<>((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player);
+            case FuelGenerator:
+                return new ContainerMachine<>((TileFuelGenerator) world.getTileEntity(new BlockPos(x, y, z)), player);
+            case Furnace:
+                return new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player);
             default:
                 return null;
         }
@@ -52,11 +54,15 @@ public class ElementtimesGUI implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case ElementGenerator:
-                return new GuiContainerGenerator(new ContainerMachine((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player));
+                return new GuiContainerGenerator<>(new ContainerMachine<>((TileElementGenerator) world.getTileEntity(new BlockPos(x, y, z)), player));
             case Pulverize:
-                return new GuiContainerOneToOne(new ContainerMachine((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player));
+                return new GuiContainerOneToOne<>(new ContainerMachine<>((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player));
             case Compressor:
-                return new GuiContainerOneToOne(new ContainerMachine((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player));
+                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player));
+            case FuelGenerator:
+                return new GuiContainerGenerator<>(new ContainerMachine<>((TileFuelGenerator) world.getTileEntity(new BlockPos(x, y, z)), player));
+            case Furnace:
+                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player));
             default:
                 return null;
         }

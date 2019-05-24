@@ -1,29 +1,19 @@
 package com.elementtimes.tutorial.common.block;
 
-import java.util.List;
-import java.util.Random;
-
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.sun.jna.platform.win32.WinDef.WORD;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntitySpectralArrow;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -31,6 +21,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class CornCrop extends BlockBush implements IGrowable {
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
@@ -46,21 +38,19 @@ public class CornCrop extends BlockBush implements IGrowable {
 
 	public CornCrop() {
 		super(Material.ROCK);
-		this.setRegistryName("corn_crop");
-		this.setUnlocalizedName("cornCrop");
 		this.setTickRandomly(true);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), Integer.valueOf(0)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), 0));
 		this.disableStats();
 	}
 
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return CROPS_AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
+		return CROPS_AABB[state.getValue(this.getAgeProperty()).intValue()];
 	}
 
 	@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
 
-		if (worldIn.getBlockState(pos.up()).getBlock() == ElementtimesBlocks.Corncropup && !worldIn.isRemote) {
+		if (worldIn.getBlockState(pos.up()).getBlock() == ElementtimesBlocks.cornCropUp && !worldIn.isRemote) {
 			worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
 			int count = 1;
 			if (this.getAge(state) >= 7) {
@@ -68,7 +58,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 				count = worldIn.rand.nextInt(2) + 5;
 			}
 			worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(),
-					new ItemStack(ElementtimesItems.Corn, count)));
+					new ItemStack(ElementtimesItems.corn, count)));
 		}
 
 		super.onBlockHarvested(worldIn, pos, state, player);
@@ -90,7 +80,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	}
 
 	protected int getAge(IBlockState state) {
-		return ((Integer) state.getValue(this.getAgeProperty())).intValue();
+		return state.getValue(this.getAgeProperty()).intValue();
 	}
 
 	public IBlockState withAge(int age) {
@@ -98,7 +88,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	}
 
 	public boolean isMaxAge(IBlockState state) {
-		return ((Integer) state.getValue(this.getAgeProperty())).intValue() >= this.getMaxAge();
+		return state.getValue(this.getAgeProperty()).intValue() >= this.getMaxAge();
 	}
 
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -125,7 +115,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	public void growAge(World world, BlockPos pos, int age, int flags) {
 		int upAge = -(4 - age);
 		if (upAge >= 0) {
-			CornCropUp up = (CornCropUp) ElementtimesBlocks.Corncropup;
+			CornCropUp up = (CornCropUp) ElementtimesBlocks.cornCropUp;
 			world.setBlockState(pos.up(), up.getAgeBlockState(upAge), 2);
 		}
 		world.setBlockState(pos, this.withAge(age), flags);
@@ -236,7 +226,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	}
 
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { AGE });
+		return new BlockStateContainer(this, AGE);
 	}
 
 	@SideOnly(Side.CLIENT)

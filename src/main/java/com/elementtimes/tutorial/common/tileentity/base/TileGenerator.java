@@ -106,6 +106,10 @@ public abstract class TileGenerator extends TileMachine {
         return powerGening;
     }
 
+    public boolean isClosed() {
+        return maxPowerGen == 0 && inputSlot.getStack().isEmpty();
+    }
+
     @Override
     public Slot[] getSlots() {
         return new Slot[] {inputSlot};

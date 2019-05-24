@@ -20,15 +20,15 @@ public class TilePulverize extends TileOneToOne {
                 ElementtimesConfig.pul.pulMaxExtract,
                 ElementtimesConfig.pul.pulPowderEnergy);
 
-        dict.put("oreIron", ElementtimesItems.Ironpower);
-        dict.put("oreRedstone", ElementtimesItems.Redstonepowder);
-        dict.put("oreGold", ElementtimesItems.Goldpowder);
-        dict.put("oreDiamond", ElementtimesItems.Diamondpowder);
-        dict.put("oreLapis", ElementtimesItems.Bluestonepowder);
-        dict.put("oreEmerald", ElementtimesItems.Greenstonepowder);
-        dict.put("oreCopper", ElementtimesItems.Copperpowder);
-        dict.put("oreCoal", ElementtimesItems.Coalpowder);
-        dict.put("orePlatinum", ElementtimesItems.Platinumorepowder);
+        dict.put("oreIron", ElementtimesItems.ironPower);
+        dict.put("oreRedstone", ElementtimesItems.redstonePowder);
+        dict.put("oreGold", ElementtimesItems.goldPowder);
+        dict.put("oreDiamond", ElementtimesItems.diamondPowder);
+        dict.put("oreLapis", ElementtimesItems.bluestonePowder);
+        dict.put("oreEmerald", ElementtimesItems.greenstonePowder);
+        dict.put("oreCopper", ElementtimesItems.copperPowder);
+        dict.put("oreCoal", ElementtimesItems.coalPowder);
+        dict.put("orePlatinum", ElementtimesItems.platinumOrePowder);
     }
 
     private Map<String, Item> dict = new HashMap<>();
@@ -46,7 +46,7 @@ public class TilePulverize extends TileOneToOne {
     }
 
     @Override
-    protected void onUpdate(boolean isProc, int schedule, int perTime) {
-
+    public boolean onUpdate() {
+        return true;
     }
 }

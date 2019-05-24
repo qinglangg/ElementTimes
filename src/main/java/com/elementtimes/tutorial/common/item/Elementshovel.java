@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.util.ItemUtil;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,9 +13,6 @@ public class Elementshovel  extends ItemSpade
 	public Elementshovel() 
 	{
 		super(EnumHelper.addToolMaterial("elementshovel", 4, 1000, 1000.0F, 15.0F, 100));
-		setRegistryName("elementshovel");
-		setUnlocalizedName("elementshovel");
-		setCreativeTab(Elementtimestab.tabBlocks);	
 	}
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {

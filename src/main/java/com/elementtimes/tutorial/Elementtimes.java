@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial;
 
+import com.elementtimes.tutorial.annotation.ElementRegister;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.event.BreakBlockListener;
 import com.elementtimes.tutorial.common.init.*;
@@ -26,12 +27,6 @@ public class Elementtimes {
     @SidedProxy(serverSide = "com.elementtimes.tutorial.common.CommonProxy", clientSide = "com.elementtimes.tutorial.client.ClientProxy")
     public static CommonProxy proxy;
 
-    private static SimpleNetworkWrapper network;
-
-    public static SimpleNetworkWrapper getNetwork() {
-        return network;
-    }
-
     @Mod.Instance(Elementtimes.MODID)
     public static Elementtimes instance;
 
@@ -49,9 +44,8 @@ public class Elementtimes {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(proxy);
+        ElementRegister.init();
         MinecraftForge.EVENT_BUS.register(new BreakBlockListener());
-        ElementtimesTile.init();
         if (Loader.isModLoaded("flammpfeil.slashblade")) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
@@ -60,11 +54,8 @@ public class Elementtimes {
     @EventHandler
     public void Init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new WorldGenETOres(), 0);
-        ElementtimesRecipes.init();
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-        ElementtimesNetwork.init();
         gui.init();
-        ElementtimesOreDict.Init();
+        ElementtimesRecipe.init();
         ElementtimesRecipe.Init(event);
     }
 }

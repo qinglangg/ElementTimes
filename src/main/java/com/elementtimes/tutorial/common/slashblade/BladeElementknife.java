@@ -49,8 +49,6 @@ public class BladeElementknife {
             ItemStack reqiredBlade = SlashBlade.findItemStack("flammpfeil.slashblade", "slashbladeWrapper", 1);
             ItemStack Blade = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameWhite);
             ItemStack Blade2 = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameBlack);
-            SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"), SlashBlade.getCustomBlade("flammpfeil.slashblade","elementknife"), reqiredBlade, new Object[]{"VXW", "XXX", "AXB", 'X', new ItemStack(ElementtimesItems.Fiveelements), 'B', Blade2,'A', Blade,'V',new ItemStack(ElementtimesItems.Photoelement),'W',new ItemStack(ElementtimesItems.Endelement)}));
-
-        
+            SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"), SlashBlade.getCustomBlade("flammpfeil.slashblade","elementknife"), reqiredBlade, "VXW", "XXX", "AXB", 'X', new ItemStack(ElementtimesItems.fiveElements), 'B', Blade2,'A', Blade,'V',new ItemStack(ElementtimesItems.photoElement),'W',new ItemStack(ElementtimesItems.endElement)));
     }
 }

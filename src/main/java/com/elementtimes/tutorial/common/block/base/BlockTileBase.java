@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.block.base;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.util.IDismantleBlock;
@@ -35,24 +34,21 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
 
-    protected BlockTileBase(String registryName, String unlocalizedName, Material materialIn, int gui, boolean addFullEnergyBlock) {
+    protected BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
         super(materialIn);
-        setCreativeTab(Elementtimestab.tabBlocks);
         setHardness(15.0F);
         setResistance(25.0F);
-        setRegistryName(registryName);
-        setUnlocalizedName(unlocalizedName);
         this.gui = gui;
         this.addFullEnergyBlock = addFullEnergyBlock;
     }
 
-    public BlockTileBase(String registryName, String unlocalizedName, int gui, Class<T> entityClass, Material material, boolean addFullEnergyBlock) {
-        this(registryName, unlocalizedName, material, gui, addFullEnergyBlock);
+    public BlockTileBase(int gui, Class<T> entityClass, Material material, boolean addFullEnergyBlock) {
+        this(material, gui, addFullEnergyBlock);
         this.mEntityClass = entityClass;
     }
 
-    public BlockTileBase(String registryName, String unlocalizedName, int gui, Class<T> entityClass, boolean addFullEnergyBlock) {
-        this(registryName, unlocalizedName, gui, entityClass, Material.IRON, addFullEnergyBlock);
+    public BlockTileBase(int gui, Class<T> entityClass, boolean addFullEnergyBlock) {
+        this(gui, entityClass, Material.IRON, addFullEnergyBlock);
     }
 
     @Nullable
@@ -105,6 +101,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
             if (e instanceof TileMachine && stack.getTagCompound() != null) {

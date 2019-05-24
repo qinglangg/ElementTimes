@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.common.init.Elementtimestab;
 import com.elementtimes.tutorial.util.IDismantleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,11 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Spanner extends Item {
-    public Spanner() {
-        setRegistryName("spanner");
-        setUnlocalizedName("spanner");
-        setCreativeTab(Elementtimestab.tabBlocks);
-    }
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

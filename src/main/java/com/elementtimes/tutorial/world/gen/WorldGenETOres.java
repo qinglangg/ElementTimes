@@ -1,8 +1,6 @@
 package com.elementtimes.tutorial.world.gen;
 
-import java.util.Random;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,6 +8,8 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
+
+import java.util.Random;
 
 public class WorldGenETOres implements IWorldGenerator{
 	
@@ -23,10 +23,10 @@ public class WorldGenETOres implements IWorldGenerator{
 
 	private void generateOverworld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
 		
- 		generateOre(ElementtimesBlocks.Copperore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
-		generateOre(ElementtimesBlocks.Sulfurore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
-		generateOre(ElementtimesBlocks.Calciumfluoride.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
-		generateOre(ElementtimesBlocks.Platinumore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
+ 		generateOre(ElementtimesBlocks.copperOre.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
+		generateOre(ElementtimesBlocks.sulfurOre.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
+		generateOre(ElementtimesBlocks.calciumFluoride.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
+		generateOre(ElementtimesBlocks.platinumOre.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, random.nextInt(7) + 4, 18);
 
 
 	}

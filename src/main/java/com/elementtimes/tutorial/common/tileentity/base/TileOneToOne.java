@@ -29,17 +29,17 @@ public abstract class TileOneToOne extends TileMachine {
     /**
      * 是否在处理
      */
-    private boolean isProc = false;
+    protected boolean isProc = false;
 
     /**
      * 处理进度
      */
-    private int schedule = 0;
+    protected int schedule = 0;
 
     /**
      * 每次处理时间
      */
-    private int perTime;
+    protected int perTime;
 
     public TileOneToOne(int maxEnergy, int maxReceive, int maxExtract, int perTime) {
         super(new RedStoneEnergy(maxEnergy, maxReceive, maxExtract),
@@ -86,12 +86,6 @@ public abstract class TileOneToOne extends TileMachine {
     }
 
     @Override
-    public void update() {
-        super.update();
-        onUpdate(isProc, schedule, perTime);
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("schedule"))
@@ -121,12 +115,4 @@ public abstract class TileOneToOne extends TileMachine {
     public int getSchedule() {
         return schedule;
     }
-
-    /**
-     * 每次 update 后调用
-     * @param isProc 机器是否正在处理
-     * @param schedule 当前已处理时间
-     * @param perTime 处理该物品需要总时间
-     */
-    protected abstract void onUpdate(boolean isProc, int schedule, int perTime);
 }

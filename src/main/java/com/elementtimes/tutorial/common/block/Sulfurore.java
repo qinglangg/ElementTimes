@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.block;
 
-import com.elementtimes.tutorial.common.init.Elementtimesoretab;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
 import java.util.Random;
@@ -15,16 +14,13 @@ public class Sulfurore extends Block
 	public Sulfurore()
 	{
 		super(Material.ROCK);
-		setRegistryName("sulfurore");
-		setUnlocalizedName("sulfurore");
-		setCreativeTab(Elementtimesoretab.tabBlocks);
         setHardness(20.0F); 
         setResistance(10.0F); 
         setHarvestLevel("pickaxe", 2); 
 	}
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune){
-		return ElementtimesItems.Sulfurpowder; //返回物品
+		return ElementtimesItems.sulfurPowder; //返回物品
 	}
 
 	@Override
