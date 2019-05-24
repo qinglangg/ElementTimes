@@ -35,9 +35,10 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
     }
 
     /*
-       @Override
-       public void onGuiClosed() {
-       }
-    */
+        @Override
+        public void onGuiClosed() {
+
+        }
+     */
     protected void updateData() {}
 }
