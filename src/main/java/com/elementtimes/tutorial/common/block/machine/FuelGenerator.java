@@ -20,7 +20,7 @@ public class FuelGenerator extends BlockTileBase<TileFuelGenerator> {
     public static IProperty<Boolean> BURNING = PropertyBool.create("burning");
 
     public FuelGenerator() {
-        super(ElementtimesGUI.Furnace, TileFuelGenerator.class, true);
+        super(ElementtimesGUI.FuelGenerator, TileFuelGenerator.class, true);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
     }

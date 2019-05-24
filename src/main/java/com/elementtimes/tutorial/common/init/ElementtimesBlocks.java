@@ -17,11 +17,11 @@ public class ElementtimesBlocks {
     public static Block woodesSence = new Woodessence();
     @ModBlock(registerName = "leafessence", unlocalizedName = "leafessence")
     public static Block leafesSence = new Leafessence();
-    @ModBlock(registerName = "stoneblock", unlocalizedName = "stoneblock")
+    @ModBlock(registerName = "stoneblock", unlocalizedName = "stoneblock", creativeTab = ModCreativeTabs.Chemical)
     public static Block stoneBlock = new Stoneblock();
-    @ModBlock(registerName = "cement", unlocalizedName = "cement")
+    @ModBlock(registerName = "cement", unlocalizedName = "cement", creativeTab = ModCreativeTabs.Chemical)
     public static Block cement = new Cement();
-    @ModBlock(registerName = "cementandsteelbarmixture", unlocalizedName = "cementandsteelbarmixture")
+    @ModBlock(registerName = "cementandsteelbarmixture", unlocalizedName = "cementandsteelbarmixture", creativeTab = ModCreativeTabs.Chemical)
     public static Block cementAndSteelBarMixture = new Cementandsteelbarmixture();
     @ModBlock(registerName = "copperore", unlocalizedName = "copperore", creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreCopper")
@@ -39,13 +39,13 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "platinumblock", unlocalizedName = "platinumblock", creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockPlatinum")
     public static Block platinumBlock = new Platinumblock();
-    @ModBlock(registerName = "diamondblock", unlocalizedName = "diamondblock", creativeTab = ModCreativeTabs.Ore)
+    @ModBlock(registerName = "diamondblock", unlocalizedName = "diamondblock", creativeTab = ModCreativeTabs.Industry)
     public static Block diamondBlock = new Diamondblock();
     @ModBlock(registerName = "corn_crop", unlocalizedName = "cornCrop", creativeTab = ModCreativeTabs.None)
     public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();
     @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
     public static Block cornCropUp = new CornCropUp();
-    @ModBlock(registerName = "steelblock", unlocalizedName = "steelblock", creativeTab = ModCreativeTabs.Ore)
+    @ModBlock(registerName = "steelblock", unlocalizedName = "steelblock", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("blockSteel")
     public static Block steelBlock = new Steelblock();
     @ModBlock(registerName = "pulverizer", unlocalizedName = "pulverizer", creativeTab = ModCreativeTabs.Industry)

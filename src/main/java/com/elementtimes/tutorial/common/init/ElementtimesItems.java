@@ -45,18 +45,18 @@ public class ElementtimesItems {
     public static Item corn = new Corn();
     @ModItem(registerName = "bakedcorn", unlocalizedName = "bakedcorn")
     public static Item bakedCorn = new Bakedcorn();
-    @ModItem(registerName = "stoneingot", unlocalizedName = "stoneingot")
+    @ModItem(registerName = "stoneingot", unlocalizedName = "stoneingot", creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot;
-    @ModItem(registerName = "steelingot", unlocalizedName = "steelingot")
+    @ModItem(registerName = "steelingot", unlocalizedName = "steelingot", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("ingotSteel")
     public static Item steelIngot;
-    @ModItem(registerName = "calciumcarbonate", unlocalizedName = "calciumcarbonate")
+    @ModItem(registerName = "calciumcarbonate", unlocalizedName = "calciumcarbonate", creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumCarbonate;
-    @ModItem(registerName = "calciumoxide", unlocalizedName = "calciumoxide")
+    @ModItem(registerName = "calciumoxide", unlocalizedName = "calciumoxide", creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumOxide;
-    @ModItem(registerName = "ingotcolumn", unlocalizedName = "ingotcolumn")
+    @ModItem(registerName = "ingotcolumn", unlocalizedName = "ingotcolumn", creativeTab = ModCreativeTabs.Industry)
     public static Item ingotColumn;
-    @ModItem(registerName = "concrete", unlocalizedName = "concrete")
+    @ModItem(registerName = "concrete", unlocalizedName = "concrete", creativeTab = ModCreativeTabs.Chemical)
     public static Item concrete;
     @ModItem(registerName = "element_sleeve_helmet", unlocalizedName = "elementsleevehelmet")
     public static Item elementSleeveHelmet = new ElementSleeveHelmet();
@@ -133,7 +133,7 @@ public class ElementtimesItems {
     @ModItem(registerName = "platinumorepowder", unlocalizedName = "platinumorepowder", creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustPlatinum")
     public static Item platinumOrePowder;
-    @ModItem(registerName = "diamondingot", unlocalizedName = "diamondingot", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(registerName = "diamondingot", unlocalizedName = "diamondingot", creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot;
     @ModItem(registerName = "hydrogen", unlocalizedName = "hydrogen", creativeTab = ModCreativeTabs.Chemical)
     public static Item hydrogen = new Hydrogen();
