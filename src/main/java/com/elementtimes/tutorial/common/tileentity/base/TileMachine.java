@@ -96,7 +96,11 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
             logic();
             markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             IBlockState state = world.getBlockState(pos);
-            world.notifyBlockUpdate(pos, state, updateState(state), 3);
+            IBlockState newState = updateState(state);
+            world.notifyBlockUpdate(pos, state, newState, 2);
+            if (state != newState) {
+                world.markBlockRangeForRenderUpdate(pos, pos);
+            }
         }
     }
 

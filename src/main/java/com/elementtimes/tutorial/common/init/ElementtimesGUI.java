@@ -25,6 +25,7 @@ public class ElementtimesGUI implements IGuiHandler {
     public static final int Compressor = 2;
     public static final int FuelGenerator = 3;
     public static final int Furnace = 4;
+    public static final int Rebuild = 5;
 
     public void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(Elementtimes.instance, this);
@@ -44,6 +45,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 return new ContainerMachine<>((TileFuelGenerator) world.getTileEntity(new BlockPos(x, y, z)), player);
             case Furnace:
                 return new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player);
+            case Rebuild:
+                return new ContainerMachine<>((TileRebuild) world.getTileEntity(new BlockPos(x, y, z)), player);
             default:
                 return null;
         }
@@ -63,6 +66,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 return new GuiContainerGenerator<>(new ContainerMachine<>((TileFuelGenerator) world.getTileEntity(new BlockPos(x, y, z)), player));
             case Furnace:
                 return new GuiContainerOneToOne<>(new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player));
+            case Rebuild:
+                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileRebuild) world.getTileEntity(new BlockPos(x, y, z)), player));
             default:
                 return null;
         }

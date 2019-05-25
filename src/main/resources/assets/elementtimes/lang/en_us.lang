@@ -100,5 +100,5 @@ tile.diamondblock.name=diamondblock
 tile.pulverizer.name=pulverizer
 tile.steelblock.name=steelblock
 tile.compressor.name=Compressor
-tile.furnace.name=Furnace
+tile.efurnace.name=Furnace
 tile.fuelGenerator.name=Fuel Generator

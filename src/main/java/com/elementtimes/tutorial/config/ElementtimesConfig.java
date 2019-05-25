@@ -14,7 +14,7 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.general")
     public static final General general = new General();
 
-    @Config.Name("General")
+    @Config.Name("GeneralFuel")
     @Config.LangKey("elementtimes.config.general.fuel")
     public static final FuelGeneral fuelGeneral = new FuelGeneral();
 
@@ -29,6 +29,10 @@ public class ElementtimesConfig {
     @Config.Name("furnace")
     @Config.LangKey("elementtimes.config.furnace")
     public static final Furnace furnace = new Furnace();
+
+    @Config.Name("rebuild")
+    @Config.LangKey("elementtimes.config.rebuild")
+    public static final Rebuild rebuild = new Rebuild();
 
     public static final class General {
         @Config.Comment("设置发电机最大容量")
@@ -163,6 +167,24 @@ public class ElementtimesConfig {
         public int maxExtract = 10;
 
         @Config.Comment("设置熔炉最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 10000;
+
+        @Config.Comment("设置每个配方所需加工时间(tick)")
+        @Config.Name("totalTime")
+        public int totalTime = 10;
+    }
+
+    public static final class Rebuild {
+        @Config.Comment("设置重构机最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 1000000;
+
+        @Config.Comment("设置重构机每Tick消耗电量")
+        @Config.Name("maxExtract")
+        public int maxExtract = 10;
+
+        @Config.Comment("设置重构机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
 

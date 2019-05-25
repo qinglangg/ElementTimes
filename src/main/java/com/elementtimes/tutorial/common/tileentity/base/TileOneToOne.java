@@ -83,7 +83,6 @@ public abstract class TileOneToOne extends TileMachine {
             // 检查输入是否变更
             ItemStack input = inputHandler.extractItem(0, 1, true);
             if (input.isEmpty() || !processItem.isItemEqual(input)) {
-//                Elementtimes.getLogger().warn("input change");
                 stop();
                 return;
             }
@@ -91,42 +90,34 @@ public abstract class TileOneToOne extends TileMachine {
             if (schedule >= perTime) {
                 ItemStack output = getOutput(input);
                 ItemStack outputTest = outputHandler.insertItem(0, output, true);
-//                Elementtimes.getLogger().warn("output error");
                 if (!outputTest.isEmpty()) return;
                 // 处理完成
                 inputHandler.extractItem(0, 1, false);
                 outputHandler.insertItem(0, output, false);
                 stop();
-//                Elementtimes.getLogger().warn("finished");
                 return;
             }
             // 检查能量消耗
             if (mEnergyHandler.extractEnergy(rfConsumePerTick, true) < rfConsumePerTick) {
-//                Elementtimes.getLogger().warn("energy error");
                 isProc = false;
                 return;
             }
             // 处理进度+1
             schedule++;
             mEnergyHandler.extractEnergy(rfConsumePerTick, false);
-//            Elementtimes.getLogger().warn("next loop");
         } else {
             // 暂停：能源不足/从 NBT 恢复
             if (!processItem.isEmpty()) {
-//                Elementtimes.getLogger().warn(mEnergyHandler.extractEnergy(rfConsumePerTick, true));
                 if (mEnergyHandler.extractEnergy(rfConsumePerTick, true) < rfConsumePerTick) return;
                 isProc = true;
-//                Elementtimes.getLogger().warn("continue");
                 logic();
                 return;
             }
             // 新任务
             ItemStack extract = inputHandler.extractItem(0, 1, true);
             if (extract.isEmpty()) return;
-//            Elementtimes.getLogger().warn("new task check");
             ItemStack output = getOutput(extract);
             if (output.isEmpty()) return;
-//            Elementtimes.getLogger().warn("new task");
             schedule = 0;
             perTime = getTotalTime(extract);
             rfConsumePerTick = getEnergyConsumePerTick(extract);

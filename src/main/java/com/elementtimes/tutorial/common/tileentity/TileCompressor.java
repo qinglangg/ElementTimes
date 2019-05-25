@@ -18,7 +18,7 @@ public class TileCompressor extends TileOneToOne {
         super(ElementtimesConfig.compressor.maxEnergy,
                 ElementtimesConfig.compressor.maxReceive);
 
-        // TODO: 添加打粉机合成表
+        // TODO: 添加压缩机合成表
     }
 
     // key: OreDictionaryName or Item

@@ -36,10 +36,5 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
     }
 
-    @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-    }
-
     protected void updateData() {}
 }
