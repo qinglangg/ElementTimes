@@ -48,9 +48,7 @@ public class ElementtimesRecipe {
 				return new ItemStack(Items.AIR);
 			}
 		});
-    }
 
-	public static void init() {
 		GameRegistry.addSmelting(Blocks.STONE, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.stoneBlock, new ItemStack(ElementtimesItems.calciumCarbonate, 1), 3.0f);
 		GameRegistry.addSmelting(ElementtimesItems.calciumCarbonate, new ItemStack(ElementtimesItems.calciumOxide, 2), 4.0f);
@@ -72,5 +70,5 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.platinumOrePowder, new ItemStack(ElementtimesItems.platinumIngot, 1), 4.0f);
 		GameRegistry.addSmelting(Items.POTIONITEM, new ItemStack(ElementtimesItems.steam, 1), 3.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sulfiteSolution, new ItemStack(ElementtimesItems.sulphuricAcid, 2), 3.0f);
-	}
+    }
 }

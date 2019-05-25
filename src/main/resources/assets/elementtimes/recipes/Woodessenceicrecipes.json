@@ -1,34 +1,37 @@
 {
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": 
-    [
-	{
-        "item": "minecraft:log",
-        "data": 0
-    },
-	{
-        "item": "minecraft:log",
-        "data": 1
-    },
-	{
-        "item": "minecraft:log",
-        "data": 2
-    },
-	{
-        "item": "ic2:rubber_wood"
-    },
-	{
-        "item": "minecraft:log2",
-        "data": 0
-    },
-	{
-        "item": "minecraft:log2",
-        "data": 1
-    }
-	],
-    "result": 
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
     {
-        "item": "elementtimes:woodessence",
-        "count": 1
+      "item": "minecraft:log",
+      "data": 0
+    },
+    {
+      "item": "minecraft:log",
+      "data": 1
+    },
+    {
+      "item": "minecraft:log",
+      "data": 2
+    },
+    {
+      "item": "ic2:rubber_wood"
+    },
+    {
+      "item": "minecraft:log2",
+      "data": 0
+    },
+    {
+      "item": "minecraft:log2",
+      "data": 1
     }
+  ],
+  "result": {
+    "item": "elementtimes:woodessence",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "type": "elementtimes:ic2"
+    }
+  ]
 }

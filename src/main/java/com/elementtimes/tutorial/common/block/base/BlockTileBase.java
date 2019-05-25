@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.block.base;
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.util.IDismantleBlock;
+import com.elementtimes.tutorial.interface_.block.IDismantleBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -125,7 +125,9 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
             items.stream().filter(itemStack -> itemStack.getItem() == Item.getItemFromBlock(this)).findFirst().ifPresent(itemStack -> {
                 ItemStack fullEnergyGenerator = itemStack.copy();
                 NBTTagCompound nbt = new NBTTagCompound();
-                nbt.setInteger("Energy", ElementtimesConfig.general.generaterMaxEnergy);
+                NBTTagCompound eNBT = new NBTTagCompound();
+                eNBT.setBoolean("full", true);
+                nbt.setTag("energy", eNBT);
                 fullEnergyGenerator.setTagCompound(nbt);
                 items.add(fullEnergyGenerator);
             });

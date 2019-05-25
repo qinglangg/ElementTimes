@@ -55,7 +55,6 @@ public class Elementtimes {
     public void Init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new WorldGenETOres(), 0);
         gui.init();
-        ElementtimesRecipe.init();
         ElementtimesRecipe.Init(event);
     }
 }

@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.util.ItemUtil;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,6 +21,9 @@ public class ElementSleeveBody extends ItemArmor
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		super.getSubItems(tab, items); //  Item 实现：判断 添加一个物品
-		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(ItemUtil::addMaxEnchantments);
+		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(itemStack -> {
+			ItemUtil.addMaxEnchantments(itemStack);
+			Elementtimes.getLogger().warn("find {}[{}] in {}", itemStack.getDisplayName(), itemStack.getItem().toString(), this.getRegistryName());
+		});
 	}
 }

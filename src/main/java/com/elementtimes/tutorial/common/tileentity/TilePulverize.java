@@ -15,10 +15,7 @@ import java.util.Map;
  */
 public class TilePulverize extends TileOneToOne {
     public TilePulverize() {
-        super(ElementtimesConfig.pul.pulMaxEnergy,
-                ElementtimesConfig.pul.pulMaxReceive,
-                ElementtimesConfig.pul.pulMaxExtract,
-                ElementtimesConfig.pul.pulPowderEnergy);
+        super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive);
 
         dict.put("oreIron", ElementtimesItems.ironPower);
         dict.put("oreRedstone", ElementtimesItems.redstonePowder);
@@ -46,7 +43,13 @@ public class TilePulverize extends TileOneToOne {
     }
 
     @Override
-    public boolean onUpdate() {
-        return true;
+    protected int getTotalTime(ItemStack input) {
+        return ElementtimesConfig.pul.pulPowderEnergy / ElementtimesConfig.pul.pulMaxExtract;
     }
+
+    @Override
+    protected int getEnergyConsumePerTick(ItemStack input) {
+        return ElementtimesConfig.pul.pulMaxExtract;
+    }
+
 }

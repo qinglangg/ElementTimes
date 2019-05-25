@@ -1,21 +1,21 @@
 package com.elementtimes.tutorial.common.tileentity.base;
 
-import com.elementtimes.tutorial.common.tileentity.TileElementGenerator;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.util.RedStoneEnergy;
+import com.elementtimes.tutorial.common.capability.RFEnergy;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 
 public abstract class TileGenerator extends TileMachine {
-    private SlotItemHandler inputSlot = new SlotItemHandler(mHandlers.get(ItemHandlerType.INPUT), 0, 80, 30) {
+    private SlotItemHandler inputSlot = new SlotItemHandler(mItemHandlers.get(SideHandlerType.INPUT), 0, 80, 30) {
         @Override
         public boolean isItemValid(@Nonnull ItemStack stack) {
             return getRFFromItem(stack) > 0 && super.isItemValid(stack);
@@ -30,10 +30,19 @@ public abstract class TileGenerator extends TileMachine {
     private int powerGening = 0;
     private int maxPowerGen = 0;
 
-    public TileGenerator(int maxExtract, int maxReceive) {
-        super(new RedStoneEnergy(ElementtimesConfig.general.generaterMaxEnergy), new ItemStackHandler(1), new ItemStackHandler(0));
-        storage.setMaxExtract(maxExtract);
-        storage.setMaxReceive(maxReceive);
+    public TileGenerator(int energyCapacity) {
+        super(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE, new ItemStackHandler(1), new ItemStackHandler(0));
+        for (EnumFacing value : EnumFacing.values()) {
+            mEnergyHandlerTypes.put(value, SideHandlerType.OUTPUT);
+        }
+    }
+
+    @Override
+    protected RFEnergy.EnergyProxy getEnergyProxy(EnumFacing facing) {
+        SideHandlerType type = mEnergyHandlerTypes.get(facing);
+        if (type == SideHandlerType.IN_OUT || type == SideHandlerType.OUTPUT)
+            return mEnergyHandler.new EnergyProxy(0, getMaxExtractRFPerTick(facing));
+        return mEnergyHandler.new EnergyProxy(0, 0);
     }
 
     @Override
@@ -53,49 +62,39 @@ public abstract class TileGenerator extends TileMachine {
     @Override
     public void logic() {
         if (powerGening == 0) {
-            ItemStack input = mHandlers.get(ItemHandlerType.INPUT).extractItem(0, 1, true);
-            if (input.isEmpty()) return;
-            input = mHandlers.get(ItemHandlerType.INPUT).extractItem(0, 1, false);
-            maxPowerGen = getRFFromItem(input);
-            powerGening = maxPowerGen;
+            maxPowerGen = 0;
+            ItemStack input = mItemHandlers.get(SideHandlerType.INPUT).extractItem(0, 1, true);
+            if (!input.isEmpty()) {
+                input = mItemHandlers.get(SideHandlerType.INPUT).extractItem(0, 1, false);
+                maxPowerGen = getRFFromItem(input);
+                powerGening = maxPowerGen;
+            }
         }
 
         if (powerGening > 0) {
-            int testRec = storage.receiveEnergy(storage.getMaxReceive(), true);
-            if (powerGening > testRec) {
+            int generatorEnergy = Math.min(getMaxGenerateRFPerTick(), powerGening);
+            int testRec = mEnergyHandler.receiveEnergy(generatorEnergy, true);
+            if (testRec > 0) {
+                testRec = mEnergyHandler.receiveEnergy(generatorEnergy, false);
                 powerGening -= testRec;
-                storage.receiveEnergy(storage.getMaxReceive(), false);
-            } else {
-                storage.receiveEnergy(powerGening, false);
-                powerGening = 0;
             }
         }
-        /*发送RF*/
-        TileEntity[] all = {
-                world.getTileEntity(pos.up()),
-                world.getTileEntity(pos.down()),
-                world.getTileEntity(pos.south()),
-                world.getTileEntity(pos.north()),
-                world.getTileEntity(pos.east()),
-                world.getTileEntity(pos.west())};
-        for (int a = 0; a < EnumFacing.values().length; a++) {
-            if (all[a] != null) {
-                receiveRF(all[a], EnumFacing.getFront(a), storage.getMaxExtract());
-            }
-        }
-    }
 
-    private void receiveRF(TileEntity tileEntity, EnumFacing to, int ext) {
-        if (tileEntity.hasCapability(CapabilityEnergy.ENERGY, to) && !(tileEntity instanceof TileElementGenerator)) {
-            if (tileEntity.getCapability(CapabilityEnergy.ENERGY, to).canReceive()) {
-                int testRec = tileEntity.getCapability(CapabilityEnergy.ENERGY, to).receiveEnergy(ext, true);
-                int testExt = storage.extractEnergy(ext, true);
-                if (testRec > 0 && testExt > 0) {
-                    tileEntity.getCapability(CapabilityEnergy.ENERGY, to).receiveEnergy(testRec, false);
-                    storage.extractEnergy(testRec, false);
+        /*发送RF*/
+        Arrays.stream(EnumFacing.values()).forEach(facing -> {
+            TileEntity te = world.getTileEntity(pos.offset(facing, 1));
+            if (te != null && mEnergyHandler.getEnergyStored() != 0 && te.hasCapability(CapabilityEnergy.ENERGY, facing)) {
+                IEnergyStorage energyStorage = te.getCapability(CapabilityEnergy.ENERGY, facing);
+                int maxExtract = mEnergyHandler.extractEnergy(getMaxExtractRFPerTick(facing), true);
+                if (maxExtract > 0) {
+                    int test = energyStorage.receiveEnergy(maxExtract, true);
+                    if (test > 0) {
+                        energyStorage.receiveEnergy(test, false);
+                        mEnergyHandler.extractEnergy(test, false);
+                    }
                 }
             }
-        }
+        });
     }
 
     public int getMaxPowerGen() {
@@ -116,5 +115,9 @@ public abstract class TileGenerator extends TileMachine {
     }
 
     protected abstract int getRFFromItem(ItemStack item);
+
+    protected abstract int getMaxGenerateRFPerTick();
+
+    protected abstract int getMaxExtractRFPerTick(EnumFacing facing);
 }
 

@@ -1,9 +1,9 @@
 package com.elementtimes.tutorial.client.gui.base;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.base.TileGenerator;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
-import com.elementtimes.tutorial.util.RedStoneEnergy;
+import com.elementtimes.tutorial.common.capability.RFEnergy;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,10 +25,6 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
         this.xSize = 176;
         this.ySize = 156;
         this.machine = inventorySlotsIn;
-
-        RedStoneEnergy rfEnergy = (RedStoneEnergy) machine.getTileEntity().getCapability(CapabilityEnergy.ENERGY, null);
-        maxEnergy = rfEnergy.getMaxEnergyStored();
-        maxPowerGen = machine.getTileEntity().getMaxPowerGen();
     }
 
     @Override
@@ -42,7 +38,8 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        String title = powerGening + "/" + maxPowerGen;
+        String title = I18n.format(machine.tileEntity.getBlockType().getUnlocalizedName() + ".name") +
+                 "  " + powerGening + "/" + maxPowerGen;
         this.fontRenderer.drawString(title, (this.xSize - this.fontRenderer.getStringWidth(title)) / 2, 6, 0x404040);
         String a = energy + "/" + maxEnergy;
         this.fontRenderer.drawString(a, 88 - this.fontRenderer.getStringWidth(a) / 2, 60, 0x404040);
@@ -50,7 +47,7 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
 
     @Override
     protected void updateData() {
-        RedStoneEnergy rfEnergy = (RedStoneEnergy) machine.getTileEntity().getCapability(CapabilityEnergy.ENERGY, null);
+        RFEnergy.EnergyProxy rfEnergy = machine.getTileEntity().getReadonlyEnergyProxy();
         energy = rfEnergy.getEnergyStored();
         maxEnergy = rfEnergy.getMaxEnergyStored();
         powerGening = machine.getTileEntity().getPowerGening();

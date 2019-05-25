@@ -10,25 +10,30 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 public class TileFurnace extends TileOneToOne {
 
     public TileFurnace() {
-        super(ElementtimesConfig.furnace.maxEnergy,
-                ElementtimesConfig.furnace.maxReceive,
-                ElementtimesConfig.furnace.maxExtract, 16000);
+        super(ElementtimesConfig.furnace.maxEnergy, ElementtimesConfig.furnace.maxReceive);
     }
 
     @Override
     protected ItemStack getOutput(ItemStack input) {
         if (input.isEmpty()) return ItemStack.EMPTY;
-        return FurnaceRecipes.instance().getSmeltingResult(input);
+        return FurnaceRecipes.instance().getSmeltingResult(input).copy();
     }
 
     @Override
-    public boolean onUpdate() {
-        IBlockState iBlockState = world.getBlockState(pos);
-        if (isProc != iBlockState.getValue(Furnace.BURNING)) {
-            IBlockState iBlockState1 = iBlockState.withProperty(Furnace.BURNING, isProc);
-            world.setBlockState(pos, iBlockState1);
-            return false;
+    protected int getTotalTime(ItemStack input) {
+        return ElementtimesConfig.furnace.totalTime;
+    }
+
+    @Override
+    protected int getEnergyConsumePerTick(ItemStack input) {
+        return ElementtimesConfig.furnace.maxExtract;
+    }
+
+    @Override
+    protected IBlockState updateState(IBlockState old) {
+        if (isProc != old.getValue(Furnace.BURNING)) {
+            return old.withProperty(Furnace.BURNING, isProc);
         }
-        return true;
+        return super.updateState(old);
     }
 }

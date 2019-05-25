@@ -14,6 +14,10 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.general")
     public static final General general = new General();
 
+    @Config.Name("General")
+    @Config.LangKey("elementtimes.config.general.fuel")
+    public static final FuelGeneral fuelGeneral = new FuelGeneral();
+
     @Config.Name("Pul")
     @Config.LangKey("elementtimes.config.pul")
     public static final Pul pul = new Pul();
@@ -29,40 +33,54 @@ public class ElementtimesConfig {
     public static final class General {
         @Config.Comment("设置发电机最大容量")
         @Config.Name("generaterMaxEnergy")
-        public int generaterMaxEnergy = 1000000000;
+        public int generaterMaxEnergy = 100000000;
 
         @Config.Comment("设置发电机最大输出")
         @Config.Name("generaterMaxExtract")
-        public int generaterMaxExtract = 1000000;
+        public int generaterMaxExtract = 500000;
 
-        @Config.Comment("设置发电机最大输入(发电速度等于最大输入)")
+        @Config.Comment("设置发电机发电速度")
         @Config.Name("generaterMaxReceive")
         public int generaterMaxReceive = 1000000;
 
         @Config.Comment("设置火元素发电量")
         @Config.Name("generaterFireGen")
-        public int generaterFireGen = 90000000;
+        public int generaterFireGen = 2000000;
         @Config.Comment("设置水元素发电量")
         @Config.Name("generaterWaterGen")
         public int generaterWaterGen = 90000000;
         @Config.Comment("设置木元素发电量")
         @Config.Name("generaterWoodGen")
-        public int generaterWoodGen = 30000000;
+        public int generaterWoodGen = 1500000;
         @Config.Comment("设置土元素发电量")
         @Config.Name("generaterSoilGen")
-        public int generaterSoilGen = 30000000;
+        public int generaterSoilGen = 1000000;
         @Config.Comment("设置金元素发电量")
         @Config.Name("generaterGoldGen")
-        public int generaterGoldGen = 60000000;
+        public int generaterGoldGen = 4000000;
         @Config.Comment("设置五行元素发电量")
         @Config.Name("generaterFive")
-        public int generaterFive = 324000000;
+        public int generaterFive = 15000000;
         @Config.Comment("设置光元素发电量")
-        @Config.Name("generaterFive")
-        public int generaterSun = 324000000;
+        @Config.Name("generaterSun")
+        public int generaterSun = 15000000;
         @Config.Comment("设置影元素发电量")
         @Config.Name("generaterEnd")
-        public int generaterEnd = 324000000;
+        public int generaterEnd = 15000000;
+    }
+
+    public static final class FuelGeneral {
+        @Config.Comment("设置火力发电机最大容量")
+        @Config.Name("generaterMaxEnergy")
+        public int generaterMaxEnergy = 1000000;
+
+        @Config.Comment("设置火力发电机最大输出")
+        @Config.Name("generaterMaxExtract")
+        public int generaterMaxExtract = 10000;
+
+        @Config.Comment("设置火力发电机发电速度")
+        @Config.Name("generaterMaxReceive")
+        public int generaterMaxReceive = 10000;
     }
 
     public static final class Pul {
@@ -103,27 +121,27 @@ public class ElementtimesConfig {
     public static final class Compressor {
         @Config.Comment("设置压缩机机最大电容量")
         @Config.Name("compressorMaxEnergy")
-        public int compressorMaxEnergy = 3200000;
+        public int maxEnergy = 3200000;
 
         @Config.Comment("设置压缩机每Tick消耗电量(相当于打粉速度")
         @Config.Name("compressorMaxExtract")
-        public int compressorMaxExtract = 20;
+        public int maxExtract = 20;
 
         @Config.Comment("设置压缩机最大输入")
         @Config.Name("compressorMaxReceive")
-        public int compressorMaxReceive = 1000000;
+        public int maxReceive = 1000000;
 
         @Config.Comment("设置压缩机每个矿物耗电量")
         @Config.Name("compressorPowderEnergy")
-        public int compressorPowderEnergy = 2000;
+        public int powderEnergy = 2000;
 
         @Config.Comment("设置压缩机每个矿物产粉量")
         @Config.Name("compressorPowderCount")
-        public int compressorPowderCount = 5;
+        public int powderCount = 5;
 
         @Config.Comment("设置压缩机可放入的矿石")
         @Config.Name("compressorCanPutIn")
-        public String[] compressorCanPutIn = new String[]{
+        public String[] canPutIn = new String[]{
                 "oreIron",
                 "oreRedstone",
                 "oreGold",
@@ -138,18 +156,18 @@ public class ElementtimesConfig {
     public static final class Furnace {
         @Config.Comment("设置熔炉最大电容量")
         @Config.Name("maxEnergy")
-        public int maxEnergy = 3200000;
+        public int maxEnergy = 1000000;
 
-        @Config.Comment("设置熔炉每Tick消耗电量(相当于打粉速度")
+        @Config.Comment("设置熔炉每Tick消耗电量")
         @Config.Name("maxExtract")
-        public int maxExtract = 1000;
+        public int maxExtract = 10;
 
         @Config.Comment("设置熔炉最大输入")
         @Config.Name("maxReceive")
-        public int maxReceive = 1000000;
+        public int maxReceive = 10000;
 
-        @Config.Comment("设置每个配方耗电量")
-        @Config.Name("energy")
-        public int energy = 2000;
+        @Config.Comment("设置每个配方所需加工时间(tick)")
+        @Config.Name("totalTime")
+        public int totalTime = 100;
     }
 }

@@ -1,5 +1,10 @@
 {
   "recipes": {
-    "max_enchantment": "com.elementtimes.tutorial.util.MaxEnchantmentLevelFactory"
+    "max_enchantment": "com.elementtimes.tutorial.util.recipe.MaxEnchantmentLevelFactory"
+  },
+  "conditions": {
+    "ic2": "com.elementtimes.tutorial.util.condition.RecipeRequireOtherMod$IC2",
+    "tr": "com.elementtimes.tutorial.util.condition.RecipeRequireOtherMod$TR",
+    "gt": "com.elementtimes.tutorial.util.condition.RecipeRequireOtherMod$GT"
   }
 }

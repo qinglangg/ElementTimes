@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity.base;
 
+import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.interface_.tileentity.ISlotProvider;
-import com.elementtimes.tutorial.util.RedStoneEnergy;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,54 +23,55 @@ import java.util.Map;
  * @author KSGFK create in 2019/3/9
  */
 public abstract class TileMachine extends TileEntity implements ITickable, ISlotProvider {
-    protected RedStoneEnergy storage;
-    protected Map<ItemHandlerType, ItemStackHandler> mHandlers;
-    protected Map<EnumFacing, ItemHandlerType> mHandlerType;
+    protected RFEnergy mEnergyHandler;
+    protected Map<SideHandlerType, ItemStackHandler> mItemHandlers = new HashMap<>();
+    protected Map<EnumFacing, SideHandlerType> mItemHandlerTypes = new HashMap<>();
+    protected Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
     protected EntityPlayerMP player;
-    boolean isOpenGui;
+    protected boolean isOpenGui;
 
-    TileMachine(RedStoneEnergy storage, ItemStackHandler input, ItemStackHandler output) {
-        this.storage = storage;
-        mHandlers = new HashMap<>();
-        mHandlerType = new HashMap<>();
+    TileMachine(int energyCapacity, int energyReceiver, int energyExtract, ItemStackHandler input, ItemStackHandler output) {
+        mEnergyHandler = new RFEnergy(energyCapacity, energyReceiver, energyExtract);
 
-        mHandlers.put(ItemHandlerType.INPUT, input);
-        mHandlers.put(ItemHandlerType.OUTPUT, output);
-        mHandlers.put(ItemHandlerType.NONE, new ItemStackHandler(0));
+        mItemHandlers.put(SideHandlerType.INPUT, input);
+        mItemHandlers.put(SideHandlerType.OUTPUT, output);
+        mItemHandlers.put(SideHandlerType.NONE, new ItemStackHandler(0));
 
         for (EnumFacing facing : EnumFacing.values()) {
-            if (facing == EnumFacing.DOWN) mHandlerType.put(facing, ItemHandlerType.OUTPUT);
-            else mHandlerType.put(facing, ItemHandlerType.INPUT);
+            if (facing == EnumFacing.DOWN) mItemHandlerTypes.put(facing, SideHandlerType.OUTPUT);
+            else mItemHandlerTypes.put(facing, SideHandlerType.INPUT);
+            mEnergyHandlerTypes.put(facing, SideHandlerType.INPUT);
         }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-        storage.readFromNBT(nbt);
         if (nbt.hasKey("items")) {
             // 旧版本兼容
             ItemStackHandler older = new ItemStackHandler();
             older.deserializeNBT(nbt.getCompoundTag("items"));
-            if (mHandlers.get(ItemHandlerType.INPUT).getSlots() > 0)
-                mHandlers.get(ItemHandlerType.INPUT).setStackInSlot(0, older.getStackInSlot(0));
-            if (older.getSlots() > 1 && mHandlers.get(ItemHandlerType.OUTPUT).getSlots() > 0)
-                mHandlers.get(ItemHandlerType.OUTPUT).setStackInSlot(1, older.getStackInSlot(1));
+            if (mItemHandlers.get(SideHandlerType.INPUT).getSlots() > 0)
+                mItemHandlers.get(SideHandlerType.INPUT).setStackInSlot(0, older.getStackInSlot(0));
+            if (older.getSlots() > 1 && mItemHandlers.get(SideHandlerType.OUTPUT).getSlots() > 0)
+                mItemHandlers.get(SideHandlerType.OUTPUT).setStackInSlot(1, older.getStackInSlot(1));
             nbt.removeTag("items");
-        } else {
-            if (nbt.hasKey("inputs"))
-                mHandlers.get(ItemHandlerType.INPUT).deserializeNBT(nbt.getCompoundTag("input"));
-            if (nbt.hasKey("outputs"))
-                mHandlers.get(ItemHandlerType.OUTPUT).deserializeNBT(nbt.getCompoundTag("output"));
         }
+        if (nbt.hasKey("inputs"))
+            mItemHandlers.get(SideHandlerType.INPUT).deserializeNBT(nbt.getCompoundTag("inputs"));
+        if (nbt.hasKey("outputs"))
+            mItemHandlers.get(SideHandlerType.OUTPUT).deserializeNBT(nbt.getCompoundTag("outputs"));
+        if (nbt.hasKey("energy"))
+            mEnergyHandler.deserializeNBT(nbt.getCompoundTag("energy"));
+        super.readFromNBT(nbt);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        storage.writeToNBT(nbt);
-        nbt.setTag("inputs", mHandlers.get(ItemHandlerType.INPUT).serializeNBT());
-        nbt.setTag("outputs", mHandlers.get(ItemHandlerType.OUTPUT).serializeNBT());
-        return super.writeToNBT(nbt);
+        super.writeToNBT(nbt);
+        nbt.setTag("inputs", mItemHandlers.get(SideHandlerType.INPUT).serializeNBT());
+        nbt.setTag("outputs", mItemHandlers.get(SideHandlerType.OUTPUT).serializeNBT());
+        nbt.setTag("energy", mEnergyHandler.serializeNBT());
+        return nbt;
     }
 
     @Nullable
@@ -85,20 +86,23 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
     }
 
     @Override
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
     public void update() {
         if (!world.isRemote) {
-            markDirty();
             logic();
-            if (onUpdate()) {
-                IBlockState state = world.getBlockState(pos);
-                world.notifyBlockUpdate(pos, state, state, 2);
-            }
+            markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
+            IBlockState state = world.getBlockState(pos);
+            world.notifyBlockUpdate(pos, state, updateState(state), 3);
         }
     }
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityEnergy.ENERGY
+        return (capability == CapabilityEnergy.ENERGY && mEnergyHandlerTypes.get(facing) != SideHandlerType.NONE)
                 || (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && hasItemHandler(facing))
                 || super.hasCapability(capability, facing);
     }
@@ -107,8 +111,24 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return capability.cast((T) mHandlers.get(mHandlerType.get(facing)));
-        return CapabilityEnergy.ENERGY.cast(storage);
+            return capability.cast((T) mItemHandlers.get(mItemHandlerTypes.get(facing)));
+        if (capability == CapabilityEnergy.ENERGY)
+            return capability.cast((T) getEnergyProxy(facing));
+        return super.getCapability(capability, facing);
+    }
+
+    protected RFEnergy.EnergyProxy getEnergyProxy(EnumFacing facing) {
+        SideHandlerType type = mEnergyHandlerTypes.get(facing);
+        switch (type) {
+            case NONE: mEnergyHandler.new EnergyProxy(false, false);
+            case IN_OUT: return mEnergyHandler.new EnergyProxy(true, true);
+            case OUTPUT: return mEnergyHandler.new EnergyProxy(false, true);
+            default: return mEnergyHandler.new EnergyProxy(true, false);
+        }
+    }
+
+    public RFEnergy.EnergyProxy getReadonlyEnergyProxy() {
+        return mEnergyHandler.new EnergyProxy(false, false);
     }
 
     @Deprecated
@@ -122,8 +142,8 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
     }
 
     private boolean hasItemHandler(EnumFacing facing) {
-        ItemHandlerType type = mHandlerType.get(facing);
-        return mHandlers.get(type).getSlots() > 0;
+        SideHandlerType type = mItemHandlerTypes.get(facing);
+        return mItemHandlers.get(type).getSlots() > 0;
     }
 
     /**
@@ -131,13 +151,12 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
      */
     abstract void logic();
 
-    /**
-     * 在执行完 logic 后执行
-     * @return 执行完成后方块更新是否同步数据。主要考虑 IBlockState 状态更新
-     */
-    public abstract boolean onUpdate();
+    protected IBlockState updateState(IBlockState old) { return old; }
 
-    public enum ItemHandlerType {
-        INPUT, OUTPUT, NONE
+    public enum SideHandlerType {
+        INPUT, // 物品：输入槽；能量：可输入
+        OUTPUT, // 物品：输出槽；能量：可输出
+        NONE, // 物品&能量：不可输入/输出
+        IN_OUT; // 物品&能量：可输入/输出
     }
 }

@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.interface_.item.IGeneratorElement;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 
 /**
  * 发电机的TileEntity
@@ -14,7 +15,7 @@ import net.minecraft.item.ItemStack;
 public class TileElementGenerator extends TileGenerator {
 
     public TileElementGenerator() {
-        super(ElementtimesConfig.general.generaterMaxExtract, ElementtimesConfig.general.generaterMaxReceive);
+        super(ElementtimesConfig.general.generaterMaxEnergy);
     }
 
     @Override
@@ -26,7 +27,12 @@ public class TileElementGenerator extends TileGenerator {
     }
 
     @Override
-    public boolean onUpdate() {
-        return true;
+    protected int getMaxGenerateRFPerTick() {
+        return ElementtimesConfig.general.generaterMaxReceive;
+    }
+
+    @Override
+    protected int getMaxExtractRFPerTick(EnumFacing facing) {
+        return ElementtimesConfig.general.generaterMaxExtract;
     }
 }

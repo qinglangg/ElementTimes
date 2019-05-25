@@ -1,34 +1,37 @@
 {
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": 
-    [
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
     {
-        "item": "minecraft:log",
-        "data": 0
+      "item": "minecraft:log",
+      "data": 0
     },
     {
-        "item": "minecraft:log",
-        "data": 1
+      "item": "minecraft:log",
+      "data": 1
     },
     {
-        "item": "minecraft:log",
-        "data": 2
+      "item": "minecraft:log",
+      "data": 2
     },
     {
-        "item": "gregtech:log"
+      "item": "gregtech:log"
     },
     {
-        "item": "minecraft:log2",
-        "data": 0
+      "item": "minecraft:log2",
+      "data": 0
     },
     {
-        "item": "minecraft:log2",
-        "data": 1
+      "item": "minecraft:log2",
+      "data": 1
     }
-    ],
-    "result": 
+  ],
+  "result": {
+    "item": "elementtimes:woodessence",
+    "count": 1
+  },
+  "conditions": [
     {
-        "item": "elementtimes:woodessence",
-        "count": 1
+      "type": "elementtimes:gt"
     }
+  ]
 }

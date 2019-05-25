@@ -1,5 +1,7 @@
-package com.elementtimes.tutorial.util;
+package com.elementtimes.tutorial.util.recipe;
 
+import com.elementtimes.tutorial.util.ItemUtil;
+import com.elementtimes.tutorial.util.RecipeUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.util.IDismantleBlock;
+import com.elementtimes.tutorial.interface_.block.IDismantleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;

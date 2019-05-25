@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.util;
+package com.elementtimes.tutorial.interface_.block;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;

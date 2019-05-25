@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
@@ -21,6 +22,12 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         updateData();
         GlStateManager.color(1.0F, 1.0F, 1.0F);
@@ -30,15 +37,9 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        updateData();
+    public void onGuiClosed() {
+        super.onGuiClosed();
     }
 
-    /*
-        @Override
-        public void onGuiClosed() {
-
-        }
-     */
     protected void updateData() {}
 }
