@@ -17,7 +17,7 @@
 
 农业:金竹
 
-工业:KSGFK luqin2007（luiqn2007）
+工业:KSGFK luqin2007
 
 护甲与武器:豆焰
 
