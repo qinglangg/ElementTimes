@@ -23,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 // TODO: add: 酿造台 1000000-10000(io)-16000(/item)
 // TODO: fix: IBlockState 不更新
 // TODO: add: 锤子耐久 1-10
-// TODO: fix: 机器槽位使用管道输入，过滤失效
 // TODO: add: 1.7.10 兼容
 
 @Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
