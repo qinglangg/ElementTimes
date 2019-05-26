@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.block.machine.Furnace;
 import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
@@ -19,9 +20,15 @@ public class TileFurnace extends TileOneToOne {
     @Override
     protected IBlockState updateState(IBlockState old) {
         if (isProc != old.getValue(Furnace.BURNING)) {
+            Elementtimes.getLogger().warn("furnace: change {} -> {}", old.getValue(Furnace.BURNING), isProc);
             return old.withProperty(Furnace.BURNING, isProc);
         }
         return super.updateState(old);
+    }
+
+    @Override
+    protected ItemStack getInput(ItemStackHandler handler) {
+        return handler.extractItem(0, 1, true);
     }
 
     @Override

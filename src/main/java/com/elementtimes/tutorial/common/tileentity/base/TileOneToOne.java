@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity.base;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.capability.RFEnergy;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -7,6 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author KSGFK create in 2019/5/12
@@ -37,9 +40,14 @@ public abstract class TileOneToOne extends TileMachine {
     private int consumePerTick = 0;
 
     /**
-     * 正在处理的物品
+     * 当前合成的输入
      */
     private ItemStack processItem = ItemStack.EMPTY;
+
+    /**
+     * 当前合成的产物
+     */
+    private ItemStack processOutputCache = ItemStack.EMPTY;
 
     public TileOneToOne(int maxEnergy, int maxReceive) {
         super(maxEnergy, maxReceive, Integer.MAX_VALUE, 1, 1);
@@ -63,66 +71,62 @@ public abstract class TileOneToOne extends TileMachine {
 
     @Override
     public void logic() {
-        ItemStackHandler inputHandler = mItemHandlers.get(SideHandlerType.INPUT);
-        ItemStackHandler outputHandler = mItemHandlers.get(SideHandlerType.OUTPUT);
         if (isProc) {
-            // 检查输入是否变更
-            ItemStack input = inputHandler.extractItem(0, 1, true);
-            if (input.isEmpty() || !processItem.isItemEqual(input)) {
-                stop();
-                return;
-            }
-            // 检查能否完成
             if (consume >= consumeTotal) {
-                ItemStack output = getOutput(inputHandler, true);
-                ItemStack outputTest = outputHandler.insertItem(0, output, true);
-                if (!outputTest.isEmpty()) return;
-                // 处理完成
-                getOutput(inputHandler, false);
-                outputHandler.insertItem(0, output, false);
-                stop();
-                return;
-            }
-            // 检查能量消耗
-            if (mEnergyHandler.extractEnergy(consumePerTick, true) < consumePerTick) {
+                // 已完成
+                processItem = ItemStack.EMPTY;
+                ItemStackHandler outputHandler = mItemHandlers.get(SideHandlerType.OUTPUT);
+                processOutputCache = outputHandler.insertItem(0, processOutputCache, false);
                 isProc = false;
-                return;
+                newRecipeLoop();
+            } else if (mEnergyHandler.extractEnergy(consumePerTick, true) < consumePerTick) {
+                // 能量不足
+                isProc = false;
+            } else {
+                // 处理进度++
+                consume += consumePerTick;
+                mEnergyHandler.extractEnergy(consumePerTick, false);
             }
-            // 处理进度+1
-            consume += consumePerTick;
-            mEnergyHandler.extractEnergy(consumePerTick, false);
         } else {
-            // 暂停：能源不足/从 NBT 恢复
             if (!processItem.isEmpty()) {
-                if (mEnergyHandler.extractEnergy(consumePerTick, true) < consumePerTick) return;
-                isProc = true;
-                logic();
-                return;
+                // 尝试从能量不足恢复
+                isProc = mEnergyHandler.extractEnergy(consumePerTick, true) >= consumePerTick;
+            } else {
+                if (!processOutputCache.isEmpty())
+                    Elementtimes.getLogger().warn("{} has exist!", processOutputCache);
+                // 尝试从产物阻塞恢复
+                if (!processOutputCache.isEmpty()) {
+                    ItemStackHandler outputHandler = mItemHandlers.get(SideHandlerType.OUTPUT);
+                    processOutputCache = outputHandler.insertItem(0, processOutputCache, false);
+                }
+                if (processOutputCache.isEmpty()) {
+                    newRecipeLoop();
+                }
             }
-            // 新任务
-            ItemStack extract = inputHandler.extractItem(0, 1, true);
-            if (extract.isEmpty()) return;
-            ItemStack output = getOutput(inputHandler, true);
-            if (output.isEmpty()) return;
-            consume = 0;
-            processItem = extract;
-            isProc = true;
         }
-        consumeTotal = getTotalEnergyCost(inputHandler);
-        consumePerTick = getEnergyCostPerTick(inputHandler);
     }
 
-    private void stop() {
-        isProc = false;
+    private void newRecipeLoop() {
+        // 检查能否进行下一轮合成
+        ItemStackHandler input = mItemHandlers.get(SideHandlerType.INPUT);
+        int energyCost = getEnergyCostPerTick(input);
+        if (mEnergyHandler.extractEnergy(energyCost, true) < energyCost) return;
+        ItemStack output = getOutput(input, true);
+        if (output.isEmpty()) return;
+        // 初始化合成环境
         consume = 0;
-        consumeTotal = 0;
-        consumePerTick = 0;
-        processItem = ItemStack.EMPTY;
+        consumeTotal = getTotalEnergyCost(input);
+        consumePerTick = getEnergyCostPerTick(input);
+        processItem = getInput(input);
+        processOutputCache = getOutput(input, false);
+        isProc = true;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        if (nbt.hasKey("isProc"))
+            isProc = nbt.getBoolean("isProc");
         if (nbt.hasKey("consume"))
             consume = nbt.getInteger("consume");
         if (nbt.hasKey("consumeTotal"))
@@ -131,14 +135,19 @@ public abstract class TileOneToOne extends TileMachine {
             consumePerTick = nbt.getInteger("consumeTick");
         if (nbt.hasKey("pItem"))
             processItem = new ItemStack(nbt.getCompoundTag("pItem"));
+        if (nbt.hasKey("oItem"))
+            processOutputCache = new ItemStack(nbt.getCompoundTag("oItem"));
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        nbt.setBoolean("isProc", isProc);
         nbt.setInteger("consume", consume);
         nbt.setInteger("consumeTotal", consumeTotal);
         nbt.setInteger("consumeTick", consumePerTick);
         nbt.setTag("pItem", processItem.serializeNBT());
+        nbt.setTag("oItem", processOutputCache.serializeNBT());
         return super.writeToNBT(nbt);
     }
 
@@ -147,7 +156,18 @@ public abstract class TileOneToOne extends TileMachine {
         return new Slot[]{inputSlot, outputSlot};
     }
 
+    /**
+     * 获取合成产物
+     * @param handler 输入物品
+     * @param simulate 是否模拟。该值为 true 时会修改 handler 的内容
+     */
     protected abstract ItemStack getOutput(ItemStackHandler handler, boolean simulate);
+
+    /**
+     * 获取合成实际消耗的物品
+     * @param handler 输入物品
+     */
+    protected abstract ItemStack getInput(ItemStackHandler handler);
 
     /**
      * 获取处理总时间

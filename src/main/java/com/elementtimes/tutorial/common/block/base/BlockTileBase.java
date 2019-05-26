@@ -28,6 +28,8 @@ import javax.annotation.Nullable;
  * @author KSGFK create in 2019/2/17
  */
 public class BlockTileBase<T extends TileEntity> extends BlockContainer implements IDismantleBlock {
+//    private static List<Class> keepInventory = new ArrayList<>();
+
     private int gui;
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;

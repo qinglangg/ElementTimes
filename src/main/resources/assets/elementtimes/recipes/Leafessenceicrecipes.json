@@ -32,7 +32,8 @@
   },
   "conditions": [
     {
-      "type": "elementtimes:ic2"
+      "type": "minecraft:item_exists",
+      "item": "ic2:leaves"
     }
   ]
 }

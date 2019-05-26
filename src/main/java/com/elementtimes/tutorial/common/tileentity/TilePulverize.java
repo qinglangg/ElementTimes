@@ -38,6 +38,11 @@ public class TilePulverize extends TileOneToOne {
     }
 
     @Override
+    protected ItemStack getInput(ItemStackHandler handler) {
+        return handler.extractItem(0, 1, true);
+    }
+
+    @Override
     protected ItemStack getOutput(ItemStackHandler handler, boolean simulate) {
         ItemStack input = handler.extractItem(0, 1, simulate);
         if (input.isEmpty()) return ItemStack.EMPTY;

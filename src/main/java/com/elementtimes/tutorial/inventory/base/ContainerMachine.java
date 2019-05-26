@@ -5,19 +5,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * @author KSGFK create in 2019/3/9
  */
 public class ContainerMachine<T extends TileMachine> extends Container {
-    public final T tileEntity;
+    private BlockPos pos;
 
     public ContainerMachine(T tileEntity, EntityPlayer player) {
         this(tileEntity, player, 8, 74, 8, 132);
     }
 
     private ContainerMachine(T tileEntity, EntityPlayer player, int xOffsetA, int yOffsetA, int xOffsetB, int yOffsetB) {
-        this.tileEntity = tileEntity;
+        this.pos = tileEntity.getPos();
         for (int i = 0; i < 3; ++i)
             for (int j = 0; j < 9; ++j)
                 this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, xOffsetA + j * 18, yOffsetA + i * 18));
@@ -33,7 +34,7 @@ public class ContainerMachine<T extends TileMachine> extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return playerIn.getDistanceSq(tileEntity.getPos()) <= 64;
+        return playerIn.getDistanceSq(pos) <= 64;
     }
 
     @Override//来源于https://github.com/Yaossg/SausageCore的开源代码
@@ -66,13 +67,8 @@ public class ContainerMachine<T extends TileMachine> extends Container {
         }
         return oldStack;
     }
-/*
-    @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
-        //tileEntity.setOpenGui(false);//不需要设置关闭GUI了
-    }
-*/
-    public T getTileEntity() {
-        return tileEntity;
+
+    public BlockPos getPos() {
+        return pos;
     }
 }

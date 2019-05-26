@@ -5,7 +5,6 @@ import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {

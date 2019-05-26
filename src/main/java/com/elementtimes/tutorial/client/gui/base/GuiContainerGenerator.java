@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.client.gui.base;
 
+import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.common.tileentity.base.TileGenerator;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
-import com.elementtimes.tutorial.common.capability.RFEnergy;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,7 +38,8 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        String title = I18n.format(machine.tileEntity.getBlockType().getUnlocalizedName() + ".name") +
+        T tileEntity = (T) Minecraft.getMinecraft().world.getTileEntity(machine.getPos());
+        String title = I18n.format(tileEntity.getBlockType().getUnlocalizedName() + ".name") +
                  "  " + powerGening + "/" + maxPowerGen;
         this.fontRenderer.drawString(title, (this.xSize - this.fontRenderer.getStringWidth(title)) / 2, 6, 0x404040);
         String a = energy + "/" + maxEnergy;
@@ -47,10 +48,11 @@ public class GuiContainerGenerator<T extends TileGenerator> extends GuiMachineCo
 
     @Override
     protected void updateData() {
-        RFEnergy.EnergyProxy rfEnergy = machine.getTileEntity().getReadonlyEnergyProxy();
+        T tileEntity = (T) Minecraft.getMinecraft().world.getTileEntity(machine.getPos());
+        RFEnergy.EnergyProxy rfEnergy = tileEntity.getReadonlyEnergyProxy();
         energy = rfEnergy.getEnergyStored();
         maxEnergy = rfEnergy.getMaxEnergyStored();
-        powerGening = machine.getTileEntity().getPowerGening();
-        maxPowerGen = machine.getTileEntity().getMaxPowerGen();
+        powerGening = tileEntity.getPowerGening();
+        maxPowerGen = tileEntity.getMaxPowerGen();
     }
 }

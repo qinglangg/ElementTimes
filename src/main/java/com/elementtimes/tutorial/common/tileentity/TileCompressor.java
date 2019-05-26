@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +59,12 @@ public class TileCompressor extends TileOneToOne {
     }
 
     @Override
-    protected boolean isInputItemValid(int slot, ItemStack itemStack) {
+    protected ItemStack getInput(ItemStackHandler handler) {
+        return handler.extractItem(0, 1, true);
+    }
+
+    @Override
+    protected boolean isInputItemValid(int slot, @Nonnull ItemStack itemStack) {
         // Item
         if (recipes.containsKey(itemStack.getItem())) return true;
         // OreDictionary

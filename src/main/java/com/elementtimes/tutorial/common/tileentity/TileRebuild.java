@@ -37,6 +37,8 @@ public class TileRebuild extends TileOneToOne {
         if (rebuildMap.isEmpty()) {
             rebuildMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.starchPowder), new ItemStack(ElementtimesItems.sucroseCharCoal)));
             energyMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.starchPowder), 4000));
+            rebuildMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.amylum, 2), new ItemStack(ElementtimesItems.sucroseCharCoal)));
+            energyMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.starchPowder), 4000));
             rebuildMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.sucroseCharCoal, 2), new ItemStack(Items.COAL, 1, 1)));
             energyMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.sucroseCharCoal, 2), 4000));
             rebuildMap.add(new ImmutablePair<>(new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0)));
@@ -67,6 +69,17 @@ public class TileRebuild extends TileOneToOne {
             handler.extractItem(0, pair1.left.getCount(), simulate);
             return pair1.right;
         }).orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    protected ItemStack getInput(ItemStackHandler handler) {
+        ItemStack input = handler.extractItem(0, 1, true);
+        if (input.isEmpty()) return ItemStack.EMPTY;
+        return rebuildMap.stream()
+                .filter(entry -> entry.left.isItemEqual(input))
+                .findFirst()
+                .map(pair -> pair.left)
+                .orElse(ItemStack.EMPTY);
     }
 
     @Override

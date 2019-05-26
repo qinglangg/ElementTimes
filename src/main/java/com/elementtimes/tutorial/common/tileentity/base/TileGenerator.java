@@ -41,6 +41,7 @@ public abstract class TileGenerator extends TileMachine {
         maxPowerGen = nbt.getInteger("maxPowerGen");
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setInteger("Gening", powerGening);

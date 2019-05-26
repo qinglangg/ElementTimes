@@ -11,6 +11,6 @@ public class Amylum extends ItemFood
 	}
 	@Override
 	public int getItemBurnTime(ItemStack itemStack) {
-		return 600;
+		return 400;
 	}
 }

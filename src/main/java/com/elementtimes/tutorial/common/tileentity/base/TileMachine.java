@@ -1,9 +1,10 @@
 package com.elementtimes.tutorial.common.tileentity.base;
 
+import com.elementtimes.tutorial.common.block.base.BlockTileBase;
 import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.interface_.tileentity.ISlotProvider;
+import com.elementtimes.tutorial.util.BlockUtil;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -25,12 +26,10 @@ import java.util.Map;
  * @author KSGFK create in 2019/3/9
  */
 public abstract class TileMachine extends TileEntity implements ITickable, ISlotProvider {
-    protected RFEnergy mEnergyHandler;
-    protected Map<SideHandlerType, ItemStackHandler> mItemHandlers = new HashMap<>();
-    protected Map<EnumFacing, SideHandlerType> mItemHandlerTypes = new HashMap<>();
-    protected Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
-    protected EntityPlayerMP player;
-    protected boolean isOpenGui;
+    RFEnergy mEnergyHandler;
+    Map<SideHandlerType, ItemStackHandler> mItemHandlers = new HashMap<>();
+    Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
+    private Map<EnumFacing, SideHandlerType> mItemHandlerTypes = new HashMap<>();
 
     TileMachine(int energyCapacity, int energyReceiver, int energyExtract, int inputCount, int outputCount) {
         mEnergyHandler = new RFEnergy(energyCapacity, energyReceiver, energyExtract);
@@ -84,7 +83,14 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
         super.readFromNBT(nbt);
     }
 
+    @Nonnull
     @Override
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    @SuppressWarnings("NullableProblems")
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setTag("inputs", mItemHandlers.get(SideHandlerType.INPUT).serializeNBT());
@@ -105,20 +111,17 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
     public void update() {
         if (!world.isRemote) {
             logic();
-            markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             IBlockState state = world.getBlockState(pos);
             IBlockState newState = updateState(state);
-            world.notifyBlockUpdate(pos, state, newState, 2);
             if (state != newState) {
+                BlockUtil.setState(newState, world, pos);
                 world.markBlockRangeForRenderUpdate(pos, pos);
+            } else {
+                markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
+                world.notifyBlockUpdate(pos, state, newState, 3);
             }
         }
     }
@@ -166,11 +169,10 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
 
     /**
      * 用于校验输入区是否可以放入某物品栈
-     * @param itemStack 要输入的物品栈
+     * @param stack 要输入的物品栈
      * @param slot 输入的槽位
      */
-    protected abstract boolean isInputItemValid(int slot, @Nonnull ItemStack stack);
-
+    protected abstract boolean isInputItemValid(int slot, ItemStack stack);
 
     protected IBlockState updateState(IBlockState old) { return old; }
 
