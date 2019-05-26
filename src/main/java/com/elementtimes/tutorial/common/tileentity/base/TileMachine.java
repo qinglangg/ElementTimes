@@ -4,6 +4,7 @@ import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.interface_.tileentity.ISlotProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -15,6 +16,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +32,28 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
     protected EntityPlayerMP player;
     protected boolean isOpenGui;
 
-    TileMachine(int energyCapacity, int energyReceiver, int energyExtract, ItemStackHandler input, ItemStackHandler output) {
+    TileMachine(int energyCapacity, int energyReceiver, int energyExtract, int inputCount, int outputCount) {
         mEnergyHandler = new RFEnergy(energyCapacity, energyReceiver, energyExtract);
 
-        mItemHandlers.put(SideHandlerType.INPUT, input);
-        mItemHandlers.put(SideHandlerType.OUTPUT, output);
+        mItemHandlers.put(SideHandlerType.INPUT, new ItemStackHandler(inputCount) {
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return isInputItemValid(slot, stack);
+            }
+
+            @Nonnull
+            @Override
+            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                if (!isItemValid(slot, stack)) return ItemStack.EMPTY;
+                return super.insertItem(slot, stack, simulate);
+            }
+        });
+        mItemHandlers.put(SideHandlerType.OUTPUT, new ItemStackHandler(outputCount) {
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return false;
+            }
+        });
         mItemHandlers.put(SideHandlerType.NONE, new ItemStackHandler(0));
 
         for (EnumFacing facing : EnumFacing.values()) {
@@ -135,16 +154,6 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
         return mEnergyHandler.new EnergyProxy(false, false);
     }
 
-    @Deprecated
-    public void setPlayer(EntityPlayerMP player) {
-        this.player = player;
-    }
-
-    @Deprecated
-    public void setOpenGui(boolean openGui) {
-        isOpenGui = openGui;
-    }
-
     private boolean hasItemHandler(EnumFacing facing) {
         SideHandlerType type = mItemHandlerTypes.get(facing);
         return mItemHandlers.get(type).getSlots() > 0;
@@ -154,6 +163,14 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
      * 会在update阶段调用
      */
     abstract void logic();
+
+    /**
+     * 用于校验输入区是否可以放入某物品栈
+     * @param itemStack 要输入的物品栈
+     * @param slot 输入的槽位
+     */
+    protected abstract boolean isInputItemValid(int slot, @Nonnull ItemStack stack);
+
 
     protected IBlockState updateState(IBlockState old) { return old; }
 

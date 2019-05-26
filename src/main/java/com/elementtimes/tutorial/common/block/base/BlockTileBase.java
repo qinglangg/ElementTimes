@@ -2,7 +2,6 @@ package com.elementtimes.tutorial.common.block.base;
 
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.interface_.block.IDismantleBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -10,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,11 +28,11 @@ import javax.annotation.Nullable;
  * @author KSGFK create in 2019/2/17
  */
 public class BlockTileBase<T extends TileEntity> extends BlockContainer implements IDismantleBlock {
-    protected int gui;
+    private int gui;
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
 
-    protected BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
+    private BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
         super(materialIn);
         setHardness(15.0F);
         setResistance(25.0F);
@@ -42,18 +40,14 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         this.addFullEnergyBlock = addFullEnergyBlock;
     }
 
-    public BlockTileBase(int gui, Class<T> entityClass, Material material, boolean addFullEnergyBlock) {
-        this(material, gui, addFullEnergyBlock);
-        this.mEntityClass = entityClass;
-    }
-
     public BlockTileBase(int gui, Class<T> entityClass, boolean addFullEnergyBlock) {
-        this(gui, entityClass, Material.IRON, addFullEnergyBlock);
+        this(Material.IRON, gui, addFullEnergyBlock);
+        this.mEntityClass = entityClass;
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(@SuppressWarnings("NullableProblems") World worldIn, int meta) {
         try {
             return mEntityClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
@@ -63,21 +57,25 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public EnumBlockRenderType getRenderType(IBlockState state) {//渲染类型设为普通方块
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile != null) {
@@ -90,10 +88,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
             if (e instanceof TileMachine) {
-                TileMachine machine = (TileMachine) e;
-                machine.setPlayer((EntityPlayerMP) playerIn);
                 playerIn.openGui(Elementtimes.instance, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
-                machine.setOpenGui(true);
             }
         }
         return true;
@@ -135,6 +130,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         if (worldIn.isRemote) return;
         worldIn.setBlockToAir(pos);

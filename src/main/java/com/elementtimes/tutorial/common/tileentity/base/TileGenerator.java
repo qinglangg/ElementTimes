@@ -8,30 +8,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 public abstract class TileGenerator extends TileMachine {
-    private SlotItemHandler inputSlot = new SlotItemHandler(mItemHandlers.get(SideHandlerType.INPUT), 0, 80, 30) {
-        @Override
-        public boolean isItemValid(@Nonnull ItemStack stack) {
-            return getRFFromItem(stack) > 0 && super.isItemValid(stack);
-        }
-
-        @Override
-        public int getSlotStackLimit() {
-            return 64;
-        }
-    };
+    private SlotItemHandler inputSlot = new SlotItemHandler(mItemHandlers.get(SideHandlerType.INPUT), 0, 80, 30);
 
     private int powerGening = 0;
     private int maxPowerGen = 0;
 
     public TileGenerator(int energyCapacity) {
-        super(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE, new ItemStackHandler(1), new ItemStackHandler(0));
+        super(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, 0);
         for (EnumFacing value : EnumFacing.values()) {
             mEnergyHandlerTypes.put(value, SideHandlerType.OUTPUT);
         }
@@ -107,6 +96,11 @@ public abstract class TileGenerator extends TileMachine {
 
     public boolean isClosed() {
         return maxPowerGen == 0 && inputSlot.getStack().isEmpty();
+    }
+
+    @Override
+    protected boolean isInputItemValid(int slot, @Nonnull ItemStack stack) {
+        return getRFFromItem(stack) > 0;
     }
 
     @Override

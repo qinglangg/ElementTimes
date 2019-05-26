@@ -182,14 +182,10 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置重构机每Tick消耗电量")
         @Config.Name("maxExtract")
-        public int maxExtract = 10;
+        public int maxExtract = 200;
 
         @Config.Comment("设置重构机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
-
-        @Config.Comment("设置每个配方所需加工时间(tick)")
-        @Config.Name("totalTime")
-        public int totalTime = 100;
     }
 }

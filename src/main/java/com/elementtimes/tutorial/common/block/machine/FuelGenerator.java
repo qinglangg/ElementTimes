@@ -38,6 +38,7 @@ public class FuelGenerator extends BlockTileBase<TileFuelGenerator> {
     }
 
     @Override
+    @SuppressWarnings({"NullableProblems", "deprecation"})
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getHorizontal(meta & 0b0011);
         boolean burning = (meta & 0b0100) == 0b0100;

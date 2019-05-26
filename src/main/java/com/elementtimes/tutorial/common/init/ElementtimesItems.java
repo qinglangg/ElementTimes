@@ -191,4 +191,36 @@ public class ElementtimesItems {
     @ModItem(registerName = "gearcopper", unlocalizedName = "gearcopper", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearCopper")
     public static Item gearCopper;
+
+    // plate
+    @ModItem(registerName = "platewood", unlocalizedName = "platewood", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateWood")
+    public static Item platewood;
+    @ModItem(registerName = "platestone", unlocalizedName = "platestone", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("platestone")
+    public static Item plateStone;
+    @ModItem(registerName = "plateiron", unlocalizedName = "plateiron", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateIron")
+    public static Item plateIron;
+    @ModItem(registerName = "platesteel", unlocalizedName = "platesteel", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateSteel")
+    public static Item plateSteel;
+    @ModItem(registerName = "plategold", unlocalizedName = "plategold", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateGold")
+    public static Item plateGold;
+    @ModItem(registerName = "platediamond", unlocalizedName = "platediamond", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateDiamond")
+    public static Item plateDiamond;
+    @ModItem(registerName = "plateplatinum", unlocalizedName = "plateplatinum", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("platePlatinum")
+    public static Item platePlatinum;
+    @ModItem(registerName = "platecopper", unlocalizedName = "platecopper", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateCopper")
+    public static Item plateCopper;
+    @ModItem(registerName = "platequartz", unlocalizedName = "platequartz", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateQuartz")
+    public static Item plateQuartz;
+    @ModItem(registerName = "platecarbon", unlocalizedName = "platecarbon", creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateCarbon")
+    public static Item plateCarbon;
 }

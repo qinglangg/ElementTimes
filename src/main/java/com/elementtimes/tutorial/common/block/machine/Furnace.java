@@ -20,7 +20,7 @@ public class Furnace extends BlockTileBase<TileFurnace> {
     public static IProperty<Boolean> BURNING = PropertyBool.create("burning");
 
     public Furnace() {
-        super(ElementtimesGUI.Furnace, TileFurnace.class, true);
+        super(ElementtimesGUI.Furnace, TileFurnace.class, false);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
     }
@@ -38,6 +38,7 @@ public class Furnace extends BlockTileBase<TileFurnace> {
     }
 
     @Override
+    @SuppressWarnings({"NullableProblems", "deprecation"})
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getHorizontal(meta & 0b0011);
         boolean burning = (meta & 0b0100) == 0b0100;

@@ -48,15 +48,16 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "steelblock", unlocalizedName = "steelblock", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("blockSteel")
     public static Block steelBlock = new Steelblock();
+
     @ModBlock(registerName = "pulverizer", unlocalizedName = "pulverizer", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "pulverizer", clazz = "com.elementtimes.tutorial.common.tileentity.TilePulverize")
-    public static Block pulverize = new BlockTileBase<>(ElementtimesGUI.Pulverize, TilePulverize.class, true);
+    public static Block pulverize = new BlockTileBase<>(ElementtimesGUI.Pulverize, TilePulverize.class, false);
     @ModBlock(registerName = "compressor", unlocalizedName = "compressor", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "compressor", clazz = "com.elementtimes.tutorial.common.tileentity.TileCompressor")
-    public static Block compressor = new BlockTileBase<>(ElementtimesGUI.Compressor, TileCompressor.class, true);
-    @ModBlock(registerName = "rebuild", unlocalizedName = "rebuild", creativeTab = ModCreativeTabs.None) // TODO
+    public static Block compressor = new BlockTileBase<>(ElementtimesGUI.Compressor, TileCompressor.class, false);
+    @ModBlock(registerName = "rebuild", unlocalizedName = "rebuild", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
-    public static Block rebuild = new BlockTileBase<>(ElementtimesGUI.Rebuild, TileRebuild.class, true);
+    public static Block rebuild = new BlockTileBase<>(ElementtimesGUI.Rebuild, TileRebuild.class, false);
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileElementGenerator")
     public static Block elementGenerator = new BlockTileBase<>(ElementtimesGUI.ElementGenerator, TileElementGenerator.class, true);
@@ -65,7 +66,7 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static FuelGenerator fuelGenerator;
-    @ModBlock(registerName = "furnace", unlocalizedName = "efurnace", creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(registerName = "furnace", unlocalizedName = "furnace", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "furnace", clazz = "com.elementtimes.tutorial.common.tileentity.TileFurnace")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap

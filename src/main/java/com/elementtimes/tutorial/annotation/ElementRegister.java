@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +27,17 @@ public class ElementRegister {
 
     private static List<Block> sBlocks;
     private static List<Item> sItems;
+    private static boolean sInInit = false;
 
     // 初始化所有被注解元素，请在 register 事件前调用
     public static void init() {
+        if (sInInit) return;
         Elements.init();
         sBlocks = Elements.getBlocks();
         Elementtimes.getLogger().warn("[Elementtimes] 共计 {} Block", sBlocks.size());
         sItems = Elements.getItems();
         Elementtimes.getLogger().warn("[Elementtimes] 共计 {} Item", sItems.size());
+        sInInit = true;
     }
 
     @SubscribeEvent
@@ -54,6 +56,7 @@ public class ElementRegister {
         });
         sBlocks.forEach(block -> {
             ItemBlock itemBlock = new ItemBlock(block);
+            //noinspection ConstantConditions
             itemBlock.setRegistryName(block.getRegistryName());
             registry.register(itemBlock);
             if (Elements.sBlockOreDict.containsKey(block))
@@ -70,6 +73,7 @@ public class ElementRegister {
         if (Elements.useOBJ) OBJLoader.INSTANCE.addDomain(Elementtimes.MODID);
         if (Elements.useB3D) B3DLoader.INSTANCE.addDomain(Elementtimes.MODID);
         // 注册渲染
+        //noinspection ConstantConditions
         sItems.forEach(item -> ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory")));
         sBlocks.forEach(block -> {
             if (Elements.sStateMaps.containsKey(block)) {
@@ -89,6 +93,7 @@ public class ElementRegister {
                     ModBlock.StateMap stateMap = Elements.sBlockStates.get(block);
                     applyResourceByStateMap(block, stateMap, null);
                 } else
+                    //noinspection ConstantConditions
                     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
             }
         });
@@ -97,6 +102,7 @@ public class ElementRegister {
     private static void applyResourceByStateMap(Block block, ModBlock.StateMap map, IStateMapper mapper) {
         Item item = Item.getItemFromBlock(block);
         Map<IBlockState, ModelResourceLocation> locationMap = null;
+        //noinspection ConstantConditions
         ModelResourceLocation defLocation = new ModelResourceLocation(block.getRegistryName(), "inventory");
         if (mapper != null) locationMap = mapper.putStateModelLocations(block);
         if (map.metadatas().length == 0) {
@@ -106,6 +112,7 @@ public class ElementRegister {
                 ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, block.getDefaultState()));
             }
             // metadata from 0b0000
+            //noinspection deprecation
             IBlockState stateZero = block.getStateFromMeta(0b0000);
             ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, stateZero));
             return;
@@ -116,6 +123,7 @@ public class ElementRegister {
             String location = map.models()[i];
             String value = map.properties()[i];
             if (location == null || location.isEmpty() || value == null || value.isEmpty()) {
+                //noinspection deprecation
                 ModelLoader.setCustomModelResourceLocation(item, meta, getLocationFromState(locationMap, defLocation, block.getStateFromMeta(meta)));
             } else {
                 ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(location, value));

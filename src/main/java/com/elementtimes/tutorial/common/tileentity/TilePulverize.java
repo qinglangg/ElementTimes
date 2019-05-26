@@ -5,8 +5,10 @@ import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +16,11 @@ import java.util.Map;
  * @author KSGFK create in 2019/5/6
  */
 public class TilePulverize extends TileOneToOne {
-    public TilePulverize() {
-        super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive);
 
+    public static Map<String, Item> dict = new HashMap<>();
+
+    public static void init() {
+        if (!dict.isEmpty()) return;
         dict.put("oreIron", ElementtimesItems.ironPower);
         dict.put("oreRedstone", ElementtimesItems.redstonePowder);
         dict.put("oreGold", ElementtimesItems.goldPowder);
@@ -28,10 +32,14 @@ public class TilePulverize extends TileOneToOne {
         dict.put("orePlatinum", ElementtimesItems.platinumOrePowder);
     }
 
-    private Map<String, Item> dict = new HashMap<>();
+    public TilePulverize() {
+        super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive);
+        init();
+    }
 
     @Override
-    protected ItemStack getOutput(ItemStack input) {
+    protected ItemStack getOutput(ItemStackHandler handler, boolean simulate) {
+        ItemStack input = handler.extractItem(0, 1, simulate);
         if (input.isEmpty()) return ItemStack.EMPTY;
         for (int id : OreDictionary.getOreIDs(input)) {
             String name = OreDictionary.getOreName(id);
@@ -43,13 +51,21 @@ public class TilePulverize extends TileOneToOne {
     }
 
     @Override
-    protected int getTotalTime(ItemStack input) {
-        return ElementtimesConfig.pul.pulPowderEnergy / ElementtimesConfig.pul.pulMaxExtract;
+    protected int getTotalEnergyCost(ItemStackHandler handler) {
+        return ElementtimesConfig.pul.pulPowderEnergy;
     }
 
     @Override
-    protected int getEnergyConsumePerTick(ItemStack input) {
+    protected int getEnergyCostPerTick(ItemStackHandler handler) {
         return ElementtimesConfig.pul.pulMaxExtract;
     }
 
+    @Override
+    protected boolean isInputItemValid(int slot, @Nonnull ItemStack stack) {
+        for (int oreID : OreDictionary.getOreIDs(stack)) {
+            if (dict.containsKey(OreDictionary.getOreName(oreID)))
+                return true;
+        }
+        return false;
+    }
 }

@@ -4,6 +4,8 @@ import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.util.recipe.MaxEnchantmentLevelFactory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -21,17 +23,17 @@ public class GuiContainerOneToOne<T extends TileOneToOne> extends GuiMachineCont
         RFEnergy.EnergyProxy rfEnergy = machine.tileEntity.getReadonlyEnergyProxy();
         energy = rfEnergy.getEnergyStored();
         maxEnergy = rfEnergy.getMaxEnergyStored();
-        int process = machine.tileEntity.getSchedule();
-        int perTime = machine.getTileEntity().getPerTime();
+        int process = machine.tileEntity.getConsume();
+        int total = machine.getTileEntity().getConsumeTotal();
 
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
         int textureWidth = energy * 90 / maxEnergy;
         this.drawTexturedModalRect(offsetX + 43, offsetY + 55, 24, 156, textureWidth, 4);//白色条子
 
-        if (perTime == 0) return;
-        int arrowWidth = process * 24 / perTime;
-        if (process >= perTime) {
+        if (total == 0) return;
+        int arrowWidth = process * 24 / total;
+        if (process >= total) {
             this.drawTexturedModalRect(offsetX + 80, offsetY + 30, 0, 156, 0, 17);//箭头
         } else {
             this.drawTexturedModalRect(offsetX + 80, offsetY + 30, 0, 156, arrowWidth, 17);

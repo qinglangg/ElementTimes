@@ -17,13 +17,14 @@ public class Leafessence extends Block
 	
 	
 	@Override
-	public BlockRenderLayer getBlockLayer()
-	{
+	@SuppressWarnings("NullableProblems")
+	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 	
 	
 	@Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state)
 	{
         return false;

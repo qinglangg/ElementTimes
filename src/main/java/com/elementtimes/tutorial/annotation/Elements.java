@@ -1,14 +1,13 @@
 package com.elementtimes.tutorial.annotation;
 
 import com.elementtimes.tutorial.Elementtimes;
-import io.netty.util.collection.IntObjectHashMap;
-import io.netty.util.collection.IntObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.Fluid;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -26,7 +25,7 @@ import java.util.jar.JarFile;
 public class Elements {
 
     // block
-    public static Map<Block, ImmutablePair<String, Class>> sTileEntities = new HashMap<>();
+    public static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> sTileEntities = new HashMap<>();
     public static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
     public static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
     public static Map<Block, String> sBlockOreDict = new HashMap<>();
@@ -170,7 +169,7 @@ public class Elements {
         // init
         if (block.getRegistryName() == null)
             block.setRegistryName(info.registerName());
-        block.setUnlocalizedName(info.unlocalizedName());
+        block.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
         block.setCreativeTab(info.creativeTab().tab);
         // OreDict
         if (annotationMap.containsKey(ModOreDict.class))
@@ -179,7 +178,7 @@ public class Elements {
         ModBlock.TileEntity teInfo = (ModBlock.TileEntity) annotationMap.get(ModBlock.TileEntity.class);
         if (teInfo != null) {
             try {
-                sTileEntities.put(block, ImmutablePair.of(teInfo.name(), Class.forName(teInfo.clazz())));
+                sTileEntities.put(block, ImmutablePair.of(teInfo.name(), (Class<? extends TileEntity>) Class.forName(teInfo.clazz())));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -284,7 +283,7 @@ public class Elements {
         } else  {
             warn("Item has registryName: {}", item.getRegistryName());
         }
-        item.setUnlocalizedName(info.unlocalizedName());
+        item.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
         item.setCreativeTab(info.creativeTab().tab);
         into.add(item);
     }

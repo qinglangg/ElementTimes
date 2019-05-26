@@ -20,14 +20,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// TODO: 酿造台 1000000-10000(io)-16000(/item)
-// TODO: 物质重构机本体合成 配方读取 ** 要改 TileOneToOne
-// TODO: 压缩机本体合成，合成表
-// TODO: 删除 草径/耕地合成
-// TODO: fix: Blockstate 不更新
-// TODO: 锤子耐久 1-10
-// TODO: unlocalizedName 增加 Modid 前缀，防止与其他 mod 物品同名造成的名称覆盖
-// TODO: JEI 支持
+// TODO: add: 酿造台 1000000-10000(io)-16000(/item)
+// TODO: fix: IBlockState 不更新
+// TODO: add: 锤子耐久 1-10
+// TODO: fix: 机器槽位使用管道输入，过滤失效
+// TODO: add: 1.7.10 兼容
 
 @Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
 public class Elementtimes {
