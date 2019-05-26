@@ -44,7 +44,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (!isItemValid(slot, stack)) return ItemStack.EMPTY;
+                if (!isItemValid(slot, stack)) return stack;
                 return super.insertItem(slot, stack, simulate);
             }
         });
