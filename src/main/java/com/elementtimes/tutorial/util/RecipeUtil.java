@@ -1,11 +1,19 @@
 package com.elementtimes.tutorial.util;
 
+import cofh.core.util.helpers.ItemHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -61,4 +69,29 @@ public class RecipeUtil {
         return getIRecipeFactoryByType("forge:ore_shapeless");
     }
 
+    private static InventoryCrafting tempCrafting = new InventoryCrafting(new Container() {
+        @Override
+        public boolean canInteractWith(@Nonnull EntityPlayer playerIn) { return false; }
+        @Override
+        public void onCraftMatrixChanged(IInventory inventoryIn) { }
+    }, 3, 3);
+
+    public static ItemStack getCraftingResult(@Nonnull NonNullList<ItemStack> input) {
+        tempCrafting.clear();
+        for (int i = 0; i < input.size(); i++) {
+            tempCrafting.setInventorySlotContents(i, input.get(i));
+        }
+        ItemStack resultEntry = ItemHelper.getCraftingResult(tempCrafting, null).copy();
+        tempCrafting.clear();
+        return resultEntry;
+    }
+
+    public static void collectOneBlockCraftingResult(String oreName, Map<ItemStack, ItemStack> receiver) {
+        BlockUtil.getAllBlocks(oreName).forEach(itemStack -> {
+            ItemStack input = itemStack.copy();
+            input.setCount(1);
+            ItemStack result = RecipeUtil.getCraftingResult(NonNullList.withSize(1, input));
+            receiver.put(input, result);
+        });
+    }
 }

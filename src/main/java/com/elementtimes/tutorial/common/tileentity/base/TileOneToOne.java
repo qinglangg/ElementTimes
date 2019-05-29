@@ -123,6 +123,17 @@ public abstract class TileOneToOne extends TileMachine {
     }
 
     @Override
+    public void interrupt() {
+        isProc = false;
+        mItemHandlers.get(SideHandlerType.INPUT).insertItem(0, processItem, false);
+        processItem = ItemStack.EMPTY;
+        processOutputCache = ItemStack.EMPTY;
+        consume = 0;
+        consumeTotal = 0;
+        consumePerTick = 0;
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if (nbt.hasKey("isProc"))

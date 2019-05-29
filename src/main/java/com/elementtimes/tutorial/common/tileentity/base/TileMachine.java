@@ -2,6 +2,7 @@ package com.elementtimes.tutorial.common.tileentity.base;
 
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
 import com.elementtimes.tutorial.common.capability.RFEnergy;
+import com.elementtimes.tutorial.interface_.tileentity.IButtonProvider;
 import com.elementtimes.tutorial.interface_.tileentity.ISlotProvider;
 import com.elementtimes.tutorial.util.BlockUtil;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ import java.util.Map;
 /**
  * @author KSGFK create in 2019/3/9
  */
-public abstract class TileMachine extends TileEntity implements ITickable, ISlotProvider {
+public abstract class TileMachine extends TileEntity implements ITickable, ISlotProvider, IButtonProvider {
     RFEnergy mEnergyHandler;
     Map<SideHandlerType, ItemStackHandler> mItemHandlers = new HashMap<>();
     Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
@@ -166,6 +167,11 @@ public abstract class TileMachine extends TileEntity implements ITickable, ISlot
      * 会在update阶段调用
      */
     abstract void logic();
+
+    /**
+     * 终止当前任务
+     */
+    abstract void interrupt();
 
     /**
      * 用于校验输入区是否可以放入某物品栈

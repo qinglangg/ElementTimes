@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern": [
-    "BAB",
-    " C ",
-    " C "
+    "AAA",
+    " B ",
+    " B "
   ],
   "key": {
     "A": {
@@ -11,15 +11,10 @@
     },
     "B": {
       "type":"forge:ore_dict",
-      "ore":"ingotSteel"
-    },
-    "C": {
-      "type":"forge:ore_dict",
       "ore":"ingotCopper"
     }
   },
   "result": {
-    "item": "elementtimes:bighammer",
-    "count": 10
-    }
+    "item": "elementtimes:bighammer"
+  }
 }

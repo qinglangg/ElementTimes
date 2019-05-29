@@ -11,11 +11,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static org.jline.utils.Log.warn;
+
+@Mod.EventBusSubscriber
 public class BreakBlockListener {
+
 	@SubscribeEvent
-	public void onBreakGrass(BlockEvent.BreakEvent e) {
+	public static void onBreakGrass(BlockEvent.BreakEvent e) {
 		IBlockState state = e.getState();
 		World world = e.getWorld();
 		Random rand = world.rand;
@@ -29,4 +35,8 @@ public class BreakBlockListener {
 		}
 	}
 
+	@SubscribeEvent
+	public static void on(ConfigChangedEvent event) {
+		warn("Config change: {} -> {}", event.getModID(), event.getConfigID());
+	}
 }

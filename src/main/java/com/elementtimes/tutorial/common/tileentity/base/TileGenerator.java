@@ -87,6 +87,12 @@ public abstract class TileGenerator extends TileMachine {
         });
     }
 
+    @Override
+    void interrupt() {
+        powerGening = 0;
+        maxPowerGen = 0;
+    }
+
     public int getMaxPowerGen() {
         return maxPowerGen;
     }

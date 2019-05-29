@@ -1,15 +1,16 @@
 package com.elementtimes.tutorial.util;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
  * 物品/物品栈有关方法
@@ -40,5 +41,16 @@ public class ItemUtil {
                         .collect(Collectors.toMap(ImmutablePair::getKey, ImmutablePair::getValue)),
                 itemStack
         );
+    }
+
+    public static NonNullList<ItemStack> getAllItems(String oreName) {
+        NonNullList list = NonNullList.create();
+        for (ItemStack itemstack : OreDictionary.getOres(oreName)) {
+            if (itemstack.getMetadata() == OreDictionary.WILDCARD_VALUE)
+                itemstack.getItem().getSubItems(CreativeTabs.SEARCH, list);
+            else
+                list.add(itemstack);
+        }
+        return list;
     }
 }

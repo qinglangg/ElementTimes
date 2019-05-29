@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.client.gui.base;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.capability.RFEnergy;
 import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;

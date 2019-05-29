@@ -34,6 +34,10 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.rebuild")
     public static final Rebuild rebuild = new Rebuild();
 
+    @Config.Name("forming")
+    @Config.LangKey("elementtimes.config.forming")
+    public static final Forming forming = new Forming();
+
     public static final class General {
         @Config.Comment("设置发电机最大容量")
         @Config.Name("generaterMaxEnergy")
@@ -143,18 +147,18 @@ public class ElementtimesConfig {
         @Config.Name("compressorPowderCount")
         public int powderCount = 5;
 
-        @Config.Comment("设置压缩机可放入的矿石")
-        @Config.Name("compressorCanPutIn")
-        public String[] canPutIn = new String[]{
-                "oreIron",
-                "oreRedstone",
-                "oreGold",
-                "oreDiamond",
-                "oreLapis",
-                "oreEmerald",
-                "oreCopper",
-                "oreCoal",
-                "orePlatinum"};
+//        @Config.Comment("设置压缩机可放入的矿石")
+//        @Config.Name("compressorCanPutIn")
+//        public String[] canPutIn = new String[]{
+//                "oreIron",
+//                "oreRedstone",
+//                "oreGold",
+//                "oreDiamond",
+//                "oreLapis",
+//                "oreEmerald",
+//                "oreCopper",
+//                "oreCoal",
+//                "orePlatinum"};
     }
 
     public static final class Furnace {
@@ -187,5 +191,23 @@ public class ElementtimesConfig {
         @Config.Comment("设置重构机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
+    }
+
+    public static final class Forming {
+        @Config.Comment("设置整形机最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 1000000;
+
+        @Config.Comment("设置整形机每Tick消耗电量")
+        @Config.Name("maxExtract")
+        public int maxExtract = 200;
+
+        @Config.Comment("设置整形机最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 10000;
+
+        @Config.Comment("设置每个配方所需加工时间(tick)")
+        @Config.Name("totalTime")
+        public int totalTime = 10;
     }
 }

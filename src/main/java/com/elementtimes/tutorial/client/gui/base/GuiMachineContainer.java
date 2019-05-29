@@ -2,7 +2,9 @@ package com.elementtimes.tutorial.client.gui.base;
 
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
+import com.elementtimes.tutorial.interface_.tileentity.IButtonProvider;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +26,16 @@ public class GuiMachineContainer<T extends TileMachine> extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
+    public void initGui() {
+        super.initGui();
+        if (machine instanceof IButtonProvider) {
+            for (GuiButton button : ((IButtonProvider) machine).getButtons()) {
+                addButton(button);
+            }
+        }
     }
 
     @Override

@@ -8,12 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class Elementhoe  extends ItemHoe
-{
+public class Elementhoe  extends ItemHoe {
+
 	public Elementhoe() 
 	{
 		super(EnumHelper.addToolMaterial("elementhoe", 4, 1000, 1000.0F, 15.0F, 100));
 	}
+
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		super.getSubItems(tab, items); //  Item 实现：判断 添加一个物品

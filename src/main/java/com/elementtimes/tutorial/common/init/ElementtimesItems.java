@@ -4,27 +4,29 @@ import com.elementtimes.tutorial.annotation.ModItem;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.item.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemGlassBottle;
-import net.minecraft.item.ItemSoup;
+import com.elementtimes.tutorial.config.ElementtimesConfig;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.*;
+import net.minecraftforge.common.util.EnumHelper;
 
+@SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "ConstantConditions"})
 public class ElementtimesItems {
 
     @ModItem(registerName = "fiveelements", unlocalizedName = "fiveelements")
-    public static Item fiveElements = new Fiveelements();
+    public static Item fiveElements = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterFive);
     @ModItem(registerName = "endelement", unlocalizedName = "endelement")
-    public static Item endElement = new Endelement();
+    public static Item endElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterEnd);
     @ModItem(registerName = "soilelement", unlocalizedName = "soilelement")
-    public static Item soilElement = new Soilelement();
+    public static Item soilElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterSoilGen);
     @ModItem(registerName = "woodelement", unlocalizedName = "woodelement")
-    public static Item woodElement = new Woodelement();
+    public static Item woodElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterWoodGen);
     @ModItem(registerName = "waterelement", unlocalizedName = "waterelement")
-    public static Item waterElement = new Waterelement();
+    public static Item waterElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterWaterGen);
     @ModItem(registerName = "fireelement", unlocalizedName = "fireelement")
-    public static Item fireElement = new Fireelement();
+    public static Item fireElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterFireGen);
     @ModItem(registerName = "goldelement", unlocalizedName = "goldelement")
-    public static Item goldElement = new Goldelement();
+    public static Item goldElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterGoldGen);
     @ModItem(registerName = "saplingessence", unlocalizedName = "saplingessence")
     public static Item saplingEssence;
     @ModItem(registerName = "cropessence", unlocalizedName = "cropessence")
@@ -36,7 +38,7 @@ public class ElementtimesItems {
     @ModItem(registerName = "elementpickaxe", unlocalizedName = "elementpickaxe")
     public static Item elementPickaxe = new Elementpickaxe();
     @ModItem(registerName = "starchpowder", unlocalizedName = "starchpowder")
-    public static Item starchPowder = new Starchpowder();
+    public static Item starchPowder = new ItemFood(1, 0.0F, false);
     @ModItem(registerName = "amylum", unlocalizedName = "amylum")
     public static Item amylum = new Amylum();
     @ModItem(registerName = "puremeat", unlocalizedName = "puremeat")
@@ -44,7 +46,7 @@ public class ElementtimesItems {
     @ModItem(registerName = "corn", unlocalizedName = "corn")
     public static Item corn = new Corn();
     @ModItem(registerName = "bakedcorn", unlocalizedName = "bakedcorn")
-    public static Item bakedCorn = new Bakedcorn();
+    public static Item bakedCorn = new ItemFood(5, 2.0F, false);
     @ModItem(registerName = "stoneingot", unlocalizedName = "stoneingot", creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot;
     @ModItem(registerName = "steelingot", unlocalizedName = "steelingot", creativeTab = ModCreativeTabs.Industry)
@@ -67,13 +69,13 @@ public class ElementtimesItems {
     @ModItem(registerName = "element_sleeve_boots", unlocalizedName = "elementsleeveboots")
     public static Item elementSleeveBoots = new ElementSleeveBoots();
     @ModItem(registerName = "platinum_sleeve_helmet", unlocalizedName = "platinumsleevehelmet")
-    public static Item platinumSleeveHelmet = new PlatinumSleeveHelmet();
+    public static Item platinumSleeveHelmet = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.HEAD);
     @ModItem(registerName = "platinum_sleeve_body", unlocalizedName = "platinumsleevebody")
-    public static Item platinumSleeveBody = new PlatinumSleeveBody();
+    public static Item platinumSleeveBody = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleevebody", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 16.0F), 1, EntityEquipmentSlot.CHEST);
     @ModItem(registerName = "platinum_sleeve_leggings", unlocalizedName = "platinumsleeveleggings")
-    public static Item platinumSleeveLeggings = new PlatinumSleeveLeggings();
+    public static Item platinumSleeveLeggings = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 12.0F), 1, EntityEquipmentSlot.LEGS);
     @ModItem(registerName = "platinum_sleeve_boots", unlocalizedName = "platinumsleeveboots")
-    public static Item platinumSleeveBoots = new PlatinumSleeveBoots();
+    public static Item platinumSleeveBoots = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.FEET);
     @ModItem(registerName = "copper", unlocalizedName = "copper", creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotCopper")
     public static Item copper;
@@ -110,13 +112,17 @@ public class ElementtimesItems {
     @ModItem(registerName = "largerubbingsuncompound", unlocalizedName = "largerubbingsuncompound")
     public static Item largeRubbingSunCompound;
     @ModItem(registerName = "photoelement", unlocalizedName = "photoelement")
-    public static Item photoElement = new Photoelement();
+    public static Item photoElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterSun);
     @ModItem(registerName = "quartzpowder", unlocalizedName = "quartzpowder")
     public static Item quartzPowder;
     @ModItem(registerName = "bighammer", unlocalizedName = "bighammer", creativeTab = ModCreativeTabs.Ore)
-    public static Item bigHammer = new Bighammer();
-    @ModItem(registerName = "smallhammer", unlocalizedName = "smallhammer")
-    public static Item smallHammer = new Smallhammer();
+    @ModItem.Damageable(100)
+    @ModItem.RetainInCrafting
+    public static Item bigHammer = new Hammer();
+    @ModItem(registerName = "smallhammer", unlocalizedName = "smallhammer", creativeTab = ModCreativeTabs.Ore)
+    @ModItem.Damageable(10)
+    @ModItem.RetainInCrafting
+    public static Item smallHammer = new Hammer();
     @ModItem(registerName = "cornbroth", unlocalizedName = "cornbroth")
     public static Item cornBroth = new ItemSoup(20);
     @ModItem(registerName = "money", unlocalizedName = "money")
@@ -124,9 +130,9 @@ public class ElementtimesItems {
     @ModItem(registerName = "sulfurorepowder", unlocalizedName = "sulfurorepowder", creativeTab = ModCreativeTabs.Ore)
     public static Item sulfurOrePowder;
     @ModItem(registerName = "sulfurpowder", unlocalizedName = "sulfurpowder", creativeTab = ModCreativeTabs.Ore)
-    public static Item sulfurPowder = new Sulfurpowder();
+    public static Item sulfurPowder = new ItemFuel(800);
     @ModItem(registerName = "sucrosecharcoal", unlocalizedName = "sucrosecharcoal")
-    public static Item sucroseCharCoal = new Sucrosecharcoal();
+    public static Item sucroseCharCoal = new ItemFuel(800);
     @ModItem(registerName = "platinumingot", unlocalizedName = "platinumingot", creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotPlatinum")
     public static Item platinumIngot;
@@ -136,7 +142,7 @@ public class ElementtimesItems {
     @ModItem(registerName = "diamondingot", unlocalizedName = "diamondingot", creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot;
     @ModItem(registerName = "hydrogen", unlocalizedName = "hydrogen", creativeTab = ModCreativeTabs.Chemical)
-    public static Item hydrogen = new Hydrogen();
+    public static Item hydrogen = new ItemBottleFuel(1600);
     @ModItem(registerName = "steam", unlocalizedName = "steam", creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle steam;
     @ModItem(registerName = "sulfitesolution", unlocalizedName = "sulfitesolution", creativeTab = ModCreativeTabs.Chemical)
@@ -150,15 +156,15 @@ public class ElementtimesItems {
     @ModItem(registerName = "elementhoe", unlocalizedName = "elementhoe")
     public static Item elementHoe = new Elementhoe();
     @ModItem(registerName = "platinumsword", unlocalizedName = "platinumsword")
-    public static Item platinumSword = new Platinumsword();
+    public static Item platinumSword = new ItemSword(EnumHelper.addToolMaterial("platinumsword", 4, 500, 10.0F, 20.0F, 20));
     @ModItem(registerName = "platinumhoe", unlocalizedName = "platinumhoe")
-    public static Item platinumHoe = new Platinumhoe();
+    public static Item platinumHoe = new ItemHoe(EnumHelper.addToolMaterial("platinumhoe", 4, 500, 300.0F, 15.0F, 100));
     @ModItem(registerName = "platinumshovel", unlocalizedName = "platinumshovel")
-    public static Item platinumShovel = new Platinumshovel();
+    public static Item platinumShovel = new ItemSpade(EnumHelper.addToolMaterial("platinumshovel", 4, 500, 300.0F, 15.0F, 100));
     @ModItem(registerName = "platinumaxe", unlocalizedName = "platinumaxe")
-    public static Item platinumAxe = new Platinumaxe();
+    public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
     @ModItem(registerName = "platinumpick", unlocalizedName = "platinumpick")
-    public static Item platinumPick = new Platinumpick();
+    public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
 
     // gear
     @ModItem(registerName = "gearwood", unlocalizedName = "gearwood", creativeTab = ModCreativeTabs.Industry)
@@ -223,4 +229,6 @@ public class ElementtimesItems {
     @ModItem(registerName = "platecarbon", unlocalizedName = "platecarbon", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCarbon")
     public static Item plateCarbon;
+
+
 }
