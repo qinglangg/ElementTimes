@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 // 客户端与服务端通信 用于 IMessage 接口实现类
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Deprecated
 public @interface ModNetwork {
 
     // 频道 ID

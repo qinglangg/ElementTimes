@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "check_decay=true,decayable=false": {
+      "model": "elementtimes:rubber_leaf"
+    },
+    "check_decay=true,decayable=true": {
+      "model": "elementtimes:rubber_leaf"
+    },
+    "check_decay=false,decayable=false": {
+      "model": "elementtimes:rubber_leaf"
+    },
+    "check_decay=false,decayable=true": {
+      "model": "elementtimes:rubber_leaf"
+    }
+  }
+}

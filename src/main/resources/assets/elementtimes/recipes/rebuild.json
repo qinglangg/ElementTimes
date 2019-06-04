@@ -5,7 +5,31 @@
     "item": "elementtimes:rebuild"
   },
   "pattern": [
+    "AAA",
+    "BCB",
+    "DEF"
   ],
   "key": {
+    "A": {
+      "item": "elementtimes:diamondblock"
+    },
+    "B": {
+      "item": "elementtimes:pulverizer"
+    },
+    "C": {
+      "item": "elementtimes:furnace"
+    },
+    "D": {
+      "type": "forge:ore_dict",
+      "ore": "gearPlatinum"
+    },
+    "E": {
+      "type": "forge:ore_dict",
+      "ore": "gearQuartz"
+    },
+    "F": {
+      "type": "forge:ore_dict",
+      "ore": "gearDiamond"
+    }
   }
 }

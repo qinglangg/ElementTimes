@@ -32,7 +32,8 @@
   },
   "conditions": [
     {
-      "type": "elementtimes:tr"
+      "type": "minecraft:item_exists",
+      "item": "techreborn:rubber_sapling"
     }
   ]
 }

@@ -16,6 +16,6 @@ public class Elementsword  extends ItemSword
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		super.getSubItems(tab, items); //  Item 实现：判断 添加一个物品
-		items.forEach(ItemUtil::addMaxEnchantments);
+		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(ItemUtil::addMaxEnchantments);
 	}
 }

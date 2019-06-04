@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.tutorial.annotation.ModRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -11,8 +12,12 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+/**
+ * 所有合成表
+ * @author KSGFK
+ */
 public class ElementtimesRecipe {
-    public static void Init(FMLInitializationEvent event) {
+    public static void init(FMLInitializationEvent event) {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder),new ItemStack(ElementtimesItems.sulfiteSolution,2));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT),new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper",new ItemStack(ElementtimesItems.hydrogen));
@@ -43,8 +48,9 @@ public class ElementtimesRecipe {
 			@Override
 			public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 				//返回的材料
-				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK))
-				return new ItemStack(ElementtimesItems.diamondIngot);
+				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)) {
+                    return new ItemStack(ElementtimesItems.diamondIngot);
+                }
 				return new ItemStack(Items.AIR);
 			}
 		});
@@ -71,4 +77,54 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(Items.POTIONITEM, new ItemStack(ElementtimesItems.steam, 1), 3.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sulfiteSolution, new ItemStack(ElementtimesItems.sulphuricAcid, 2), 3.0f);
     }
+
+    @ModRecipe
+	@ModRecipe.Ore(value = "ironpower", output = "elementtimes:ironpower")
+    public static String oreIron = "oreIron";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "goldpowder", output = "elementtimes:goldpowder")
+	public static String oreGold = "oreGold";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "copperpowder", output = "elementtimes:copperpowder")
+	public static String oreCopper = "oreCopper";
+
+//	@ModRecipe
+//	@ModRecipe.Ore(output = "elementtimes:copperpowder")
+//	public static String oreSalt = "oreSalt";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
+	public static String orePlatinum = "orePlatinum";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "quartz", output = "minecraft:quartz")
+	public static String oreQuartz = "oreQuartz";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "lapis", damage = 2, output = "minecraft:dye:4")
+	public static String oreLapis = "oreLapis";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
+	public static String oreRedstone = "oreRedstone";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
+	public static String oreDiamond = "oreDiamond";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
+	public static String blazeRod = "minecraft:blaze_rod";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "wood", dustCount = 10, output = "")
+	public static String logWood = "logWood";
+//
+//	@ModRecipe
+//	@ModRecipe.Ore(output = "elementtimes:ironpower")
+//	public static String log;
+
+
 }

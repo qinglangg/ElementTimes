@@ -1,69 +1,56 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.other.MachineRecipeHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.annotation.Nonnull;
 
-public class TileRebuild extends TileOneToOne {
+/**
+ * 物质重构机
+ * @author luqin2007
+ */
+@ModElement
+@ModElement.ModInvokeStatic("init")
+public class TileRebuild extends BaseOneToOne {
 
-    public TileRebuild(int maxEnergy, int maxReceive) {
-        super(ElementtimesConfig.rebuild.maxEnergy, ElementtimesConfig.rebuild.maxReceive);
+    public static MachineRecipeHandler sRecipeHandler;
 
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.starchPowder), new ItemStack(ElementtimesItems.sucroseCharCoal)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.starchPowder), 4000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.sucroseCharCoal, 2), new ItemStack(Items.COAL, 1, 1)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(ElementtimesItems.sucroseCharCoal, 2), 4000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Items.COAL, 1, 1), 4000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Items.COAL, 1, 0), new ItemStack(Items.DIAMOND)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Items.COAL, 1, 0), 50000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(ElementtimesItems.diamondIngot)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Blocks.DIAMOND_BLOCK), 50000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Blocks.DIRT), new ItemStack(Blocks.FARMLAND)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Blocks.DIRT),100000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Blocks.GRASS), new ItemStack(Blocks.GRASS_PATH)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Blocks.GRASS), 100000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Blocks.SAND), new ItemStack(Blocks.SOUL_SAND)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Blocks.SAND), 20000));
-        rebuildMap.add(new ImmutablePair<>(new ItemStack(Blocks.GLASS), new ItemStack(Items.QUARTZ)));
-        energyMap.add(new ImmutablePair<>(new ItemStack(Blocks.GLASS), 20000));
+    public static void init() {
+        sRecipeHandler = new MachineRecipeHandler()
+                .set("0", 4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal), 1)
+                .set("1", 4000, ElementtimesItems.amylum, 2, ElementtimesItems.sucroseCharCoal, 1)
+                .set("2", 4000, ElementtimesItems.sucroseCharCoal, 2, new ItemStack(Items.COAL, 1, 1), 1)
+                .set("3", 4000, new ItemStack(Items.COAL, 1, 1), 1, new ItemStack(Items.COAL, 1, 0), 1)
+                .set("4", 50000, new ItemStack(Items.COAL, 1, 0), 1, Items.DIAMOND, 1)
+                .set("5", 50000, Blocks.DIAMOND_BLOCK, 1, ElementtimesItems.diamondIngot, 1)
+                .set("6", 100000, Blocks.DIRT, 1, Blocks.FARMLAND, 1)
+                .set("7", 100000, Blocks.GRASS, 1, Blocks.GRASS_PATH, 1)
+                .set("8", 20000, Blocks.SAND, 1, Blocks.SOUL_SAND, 1)
+                .set("9", 20000, Blocks.GLASS, 1, Items.QUARTZ, 1);
     }
 
-    // key: OreDictionaryName or Item
-    private List<ImmutablePair<ItemStack, ItemStack>> rebuildMap = new ArrayList<>();
-    private List<ImmutablePair<ItemStack, Integer>> energyMap = new ArrayList<>();
+    public TileRebuild() {
+        super(ElementtimesConfig.REBUILD.maxEnergy);
+    }
 
+    @Nonnull
     @Override
-    protected ItemStack getOutput(ItemStack input) {
-        if (input.isEmpty()) return ItemStack.EMPTY;
-        Optional<ImmutablePair<ItemStack, ItemStack>> first = rebuildMap.stream()
-                .filter(immutablePair -> immutablePair.left.isItemEqual(input)
-                        && immutablePair.left.getCount() <= input.getCount()).findFirst();
-        if (first.isPresent()) return first.get().right;
-        return ItemStack.EMPTY;
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return sRecipeHandler;
     }
 
     @Override
-    protected int getTotalTime(ItemStack input) {
-        if (input.isEmpty()) return 0;
-        Optional<ImmutablePair<ItemStack, Integer>> first = energyMap.stream()
-                .filter(immutablePair -> immutablePair.left.isItemEqual(input)
-                        && immutablePair.left.getCount() <= input.getCount()).findFirst();
-        if (first.isPresent()) return first.get().right;
-        return 0;
+    public void applyConfig() {
+        setMaxTransfer(ElementtimesConfig.REBUILD.maxReceive);
     }
 
     @Override
-    protected int getEnergyConsumePerTick(ItemStack input) {
-        return ElementtimesConfig.rebuild.maxExtract;
+    public int getMaxEnergyChange() {
+        return ElementtimesConfig.REBUILD.maxExtract;
     }
 }

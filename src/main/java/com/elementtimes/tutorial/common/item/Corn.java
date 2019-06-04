@@ -12,8 +12,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class Corn extends ItemFood
-{
+public class Corn extends ItemFood {
+
 	public Corn() 
 	{
 		super(5, 0.0F, false);
@@ -23,14 +23,13 @@ public class Corn extends ItemFood
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote) {
-		IBlockState state = worldIn.getBlockState(pos);
-		if(state.getBlock()==Blocks.FARMLAND&&state.getValue(BlockFarmland.MOISTURE)>0) {
-		worldIn.setBlockState(pos.up(),ElementtimesBlocks.cornCrop.getDefaultState());//设置玉米为第一个形态
-		player.getHeldItem(hand).shrink(1);//对手持物品-1
-		}
+			IBlockState state = worldIn.getBlockState(pos);
+			if(state.getBlock()==Blocks.FARMLAND&&state.getValue(BlockFarmland.MOISTURE)>0) {
+				worldIn.setBlockState(pos.up(),ElementtimesBlocks.cornCrop.getDefaultState());//设置玉米为第一个形态
+				player.getHeldItem(hand).shrink(1);//对手持物品-1
+			}
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-
 	}
 
 }

@@ -32,7 +32,8 @@
   },
   "conditions": [
     {
-      "type": "elementtimes:gt"
+      "type": "minecraft:item_exists",
+      "item": "gregtech:leaves"
     }
   ]
 }

@@ -43,6 +43,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 		this.disableStats();
 	}
 
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return CROPS_AABB[state.getValue(this.getAgeProperty()).intValue()];
 	}
@@ -53,7 +54,8 @@ public class CornCrop extends BlockBush implements IGrowable {
 		if (worldIn.getBlockState(pos.up()).getBlock() == ElementtimesBlocks.cornCropUp && !worldIn.isRemote) {
 			worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
 			int count = 1;
-			if (this.getAge(state) >= 7) {
+			int ageState = 7;
+			if (this.getAge(state) >= ageState) {
 				// 5-7
 				count = worldIn.rand.nextInt(2) + 5;
 			}
@@ -67,6 +69,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	/**
 	 * Return true if the block can sustain a Bush
 	 */
+	@Override
 	protected boolean canSustainBush(IBlockState state) {
 		return state.getBlock() == Blocks.FARMLAND;
 	}
@@ -91,22 +94,24 @@ public class CornCrop extends BlockBush implements IGrowable {
 		return state.getValue(this.getAgeProperty()).intValue() >= this.getMaxAge();
 	}
 
+	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
 
-		if (!worldIn.isAreaLoaded(pos, 1))
-			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-		if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
-			int i = this.getAge(state);
+		if (worldIn.isAreaLoaded(pos, 1)) {
+			int nine = 9;
+			if (worldIn.getLightFromNeighbors(pos.up()) >= nine) {
+				int i = this.getAge(state);
 
-			if (i < this.getMaxAge()) {
-				float f = getGrowthChance(this, worldIn, pos);
+				if (i < this.getMaxAge()) {
+					float f = getGrowthChance(this, worldIn, pos);
 
-				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state,
-						rand.nextInt((int) (25.0F / f) + 1) == 0)) {
-					growAge(worldIn, pos, i + 1, 2);
-					net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state,
-							worldIn.getBlockState(pos));
+					if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state,
+							rand.nextInt((int) (25.0F / f) + 1) == 0)) {
+						growAge(worldIn, pos, i + 1, 2);
+						net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state,
+								worldIn.getBlockState(pos));
+					}
 				}
 			}
 		}
@@ -196,17 +201,20 @@ public class CornCrop extends BlockBush implements IGrowable {
 	 * if (age >= getMaxAge()) { int k = 3 + fortune;
 	 * 
 	 * for (int i = 0; i < 3 + fortune; ++i) { if (rand.nextInt(2 * getMaxAge()) <=
-	 * age) { drops.add(new ItemStack(this.getSeed(), 1, 0)); } } } }
+	 * age) { drops.set(new ItemStack(this.getSeed(), 1, 0)); } } } }
 	 */
 
+	@Override
 	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
 		return !this.isMaxAge(state);
 	}
 
+	@Override
 	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
 		return true;
 	}
 
+	@Override
 	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
 		this.grow(worldIn, pos, state);
 	}
@@ -214,6 +222,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	/**
 	 * Convert the given metadata into a BlockState for this Block
 	 */
+	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.withAge(meta);
 	}
@@ -221,23 +230,28 @@ public class CornCrop extends BlockBush implements IGrowable {
 	/**
 	 * Convert the BlockState into the correct metadata value
 	 */
+	@Override
 	public int getMetaFromState(IBlockState state) {
 		return this.getAge(state);
 	}
 
+	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, AGE);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 
+	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
+	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}

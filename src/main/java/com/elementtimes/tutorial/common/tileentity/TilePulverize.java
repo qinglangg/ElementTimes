@@ -1,55 +1,52 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import com.elementtimes.tutorial.other.MachineRecipeHandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 /**
+ * 打粉机
  * @author KSGFK create in 2019/5/6
  */
-public class TilePulverize extends TileOneToOne {
+@ModElement
+@ModElement.ModInvokeStatic("init")
+public class TilePulverize extends BaseOneToOne {
+
     public TilePulverize() {
-        super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive);
-
-        dict.put("oreIron", ElementtimesItems.ironPower);
-        dict.put("oreRedstone", ElementtimesItems.redstonePowder);
-        dict.put("oreGold", ElementtimesItems.goldPowder);
-        dict.put("oreDiamond", ElementtimesItems.diamondPowder);
-        dict.put("oreLapis", ElementtimesItems.bluestonePowder);
-        dict.put("oreEmerald", ElementtimesItems.greenstonePowder);
-        dict.put("oreCopper", ElementtimesItems.copperPowder);
-        dict.put("oreCoal", ElementtimesItems.coalPowder);
-        dict.put("orePlatinum", ElementtimesItems.platinumOrePowder);
+        super(ElementtimesConfig.PUL.pulMaxEnergy);
     }
 
-    private Map<String, Item> dict = new HashMap<>();
+    public static MachineRecipeHandler sRecipeHandler;
 
+    public static void init() {
+        sRecipeHandler = new MachineRecipeHandler()
+                .set("0", ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironPower, ElementtimesConfig.PUL.pulPowderCount)
+                .set("1", ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("2", ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("3", ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("4", ElementtimesConfig.PUL.pulPowderEnergy, "oreLapis", 1, ElementtimesItems.bluestonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("5", ElementtimesConfig.PUL.pulPowderEnergy, "oreEmerald", 1, ElementtimesItems.greenstonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("6", ElementtimesConfig.PUL.pulPowderEnergy, "oreCopper", 1, ElementtimesItems.copperPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("7", ElementtimesConfig.PUL.pulPowderEnergy, "oreCoal", 1, ElementtimesItems.coalPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .set("8", ElementtimesConfig.PUL.pulPowderEnergy, "orePlatinum", 1, ElementtimesItems.platinumOrePowder, ElementtimesConfig.PUL.pulPowderCount);
+    }
+
+    @Nonnull
     @Override
-    protected ItemStack getOutput(ItemStack input) {
-        if (input.isEmpty()) return ItemStack.EMPTY;
-        for (int id : OreDictionary.getOreIDs(input)) {
-            String name = OreDictionary.getOreName(id);
-            if (dict.containsKey(name)) {
-                return new ItemStack(dict.get(name), ElementtimesConfig.pul.pulPowderCount);
-            }
-        }
-        return ItemStack.EMPTY;
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return sRecipeHandler;
     }
 
     @Override
-    protected int getTotalTime(ItemStack input) {
-        return ElementtimesConfig.pul.pulPowderEnergy / ElementtimesConfig.pul.pulMaxExtract;
+    public void applyConfig() {
+        setMaxTransfer(ElementtimesConfig.PUL.pulMaxReceive);
     }
 
     @Override
-    protected int getEnergyConsumePerTick(ItemStack input) {
-        return ElementtimesConfig.pul.pulMaxExtract;
+    public int getMaxEnergyChange() {
+        return ElementtimesConfig.PUL.pulMaxExtract;
     }
-
 }

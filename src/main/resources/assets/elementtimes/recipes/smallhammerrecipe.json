@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "pattern":
   [
     "AAA",
@@ -17,7 +17,6 @@
     }
   },
   "result": {
-    "item": "elementtimes:smallhammer",
-    "count": 10
+    "item": "elementtimes:smallhammer"
   }
 }
