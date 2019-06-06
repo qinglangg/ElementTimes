@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.common.block.base;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.common.tileentity.base.TileMachine;
-import com.elementtimes.tutorial.interface_.block.IDismantleBlock;
+import com.elementtimes.tutorial.common.tileentity.BaseMachine;
+import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 /**
- * 需要带有箱子的方块时继承此类
+ * 需要带有 TileEntity 的方块时继承此类
  *
  * @author KSGFK create in 2019/2/17
  */
@@ -77,19 +77,10 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     }
 
     @Override
-    @SuppressWarnings("NullableProblems")
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile != null) {
-            worldIn.removeTileEntity(pos);
-        }
-    }
-
-    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
-            if (e instanceof TileMachine) {
+            if (e instanceof BaseMachine) {
                 playerIn.openGui(Elementtimes.instance, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
         }
@@ -101,8 +92,8 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
-            if (e instanceof TileMachine && stack.getTagCompound() != null) {
-                TileMachine dyn = (TileMachine) e;
+            if (e instanceof BaseMachine && stack.getTagCompound() != null) {
+                BaseMachine dyn = (BaseMachine) e;
                 // fix: x, y, z
                 NBTTagCompound tagCompound = stack.getTagCompound().copy();
                 tagCompound.setInteger("x", pos.getX());
@@ -117,8 +108,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     @Override
     public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
         super.getSubBlocks(itemIn, items);
-        if (addFullEnergyBlock) {
-            if (items.isEmpty()) return;
+        if (addFullEnergyBlock && !items.isEmpty()) {
             items.stream().filter(itemStack -> itemStack.getItem() == Item.getItemFromBlock(this)).findFirst().ifPresent(itemStack -> {
                 ItemStack fullEnergyGenerator = itemStack.copy();
                 NBTTagCompound nbt = new NBTTagCompound();
@@ -131,14 +121,15 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         }
     }
 
-    @Override
-    @SuppressWarnings("NullableProblems")
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        if (worldIn.isRemote) return;
-        worldIn.setBlockToAir(pos);
-        TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile != null) {
-            worldIn.removeTileEntity(pos);
-        }
-    }
+//    @Override
+//    @SuppressWarnings("NullableProblems")
+//    // 不知道要不要删除。使用这个结果是无法用稿子敲下来
+//    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+//        if (worldIn.isRemote) return;
+//        worldIn.setBlockToAir(pos);
+//        TileEntity tile = worldIn.getTileEntity(pos);
+//        if (tile != null) {
+//            worldIn.removeTileEntity(pos);
+//        }
+//    }
 }

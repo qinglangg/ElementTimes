@@ -126,3 +126,7 @@ tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
 chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
 chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity
 chat.elementtimes.hammer.nonbt=方块 [%s] 无法序列化为 NBT
+# chat
+chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
+chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity
+chat.elementtimes.hammer.nonbt=方块 [%s] 无法序列化为 NBT

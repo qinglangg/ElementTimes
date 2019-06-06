@@ -23,6 +23,13 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * 加载合成表
+ * 处理所有 ModRecipe 注解的成员
+ * 目前只有一个可用 ModRecipe.Ore
+ *
+ * @author luqin2007
+ */
 class ModRecipeLoader {
 
     /**
@@ -31,7 +38,9 @@ class ModRecipeLoader {
     static void getRecipes(Map<Class, ArrayList<AnnotatedElement>> elements, List<Supplier<IRecipe>> into) {
         elements.get(ModRecipe.class).forEach(element -> {
             Object obj = ReflectUtil.getFromAnnotated(element, null).orElse(null);
-            if (obj == null) return;
+            if (obj == null) {
+                return;
+            }
             for (Annotation annotation : element.getAnnotations()) {
                 if (annotation instanceof ModRecipe.Ore) {
                     addOreRecipe(obj, (ModRecipe.Ore) annotation, into);
@@ -61,7 +70,9 @@ class ModRecipeLoader {
             into.add(() -> {
                 NonNullList<Ingredient> input = NonNullList.create();
                 ItemStack[] matchingStacks = getIngredient(info.output()).getMatchingStacks();
-                if (matchingStacks.length == 0) return null;
+                if (matchingStacks.length == 0) {
+                    return null;
+                }
                 ItemStack output = matchingStacks[0].copy();
                 input.add(getIngredient(ore));
                 output.setCount(info.dustCount());

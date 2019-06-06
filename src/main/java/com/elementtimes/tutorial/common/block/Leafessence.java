@@ -19,7 +19,7 @@ public class Leafessence extends Block
 	@Override
 	@SuppressWarnings("NullableProblems")
 	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT;
+		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
 	

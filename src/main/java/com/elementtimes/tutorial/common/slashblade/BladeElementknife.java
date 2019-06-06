@@ -42,13 +42,14 @@ public class BladeElementknife {
         etherealshadow.addEnchantment(Enchantments.SHARPNESS,4);
         etherealshadow.addEnchantment(Enchantments.FIRE_ASPECT,1);
         SlashBlade.registerCustomItemStack(name,etherealshadow);
-        ItemSlashBladeNamed.NamedBlades.add(name);//设置名字
+        //设置名字
+        ItemSlashBladeNamed.NamedBlades.add(name);
     }
         @SubscribeEvent
         public void postinit(LoadEvent.PostInitEvent event) {
-            ItemStack reqiredBlade = SlashBlade.findItemStack("flammpfeil.slashblade", "slashbladeWrapper", 1);
-            ItemStack Blade = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameWhite);
-            ItemStack Blade2 = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameBlack);
-            SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"), SlashBlade.getCustomBlade("flammpfeil.slashblade","elementknife"), reqiredBlade, "VXW", "XXX", "AXB", 'X', new ItemStack(ElementtimesItems.fiveElements), 'B', Blade2,'A', Blade,'V',new ItemStack(ElementtimesItems.photoElement),'W',new ItemStack(ElementtimesItems.endElement)));
+            ItemStack requiredBlade = SlashBlade.findItemStack("flammpfeil.slashblade", "slashbladeWrapper", 1);
+            ItemStack blade = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameWhite);
+            ItemStack blade2 = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameBlack);
+            SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"), SlashBlade.getCustomBlade("flammpfeil.slashblade","elementknife"), requiredBlade, "VXW", "XXX", "AXB", 'X', new ItemStack(ElementtimesItems.fiveElements), 'B', blade2,'A', blade,'V',new ItemStack(ElementtimesItems.photoElement),'W',new ItemStack(ElementtimesItems.endElement)));
     }
 }

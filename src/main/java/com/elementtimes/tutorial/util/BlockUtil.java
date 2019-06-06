@@ -15,30 +15,23 @@ public class BlockUtil {
     // 代码参考 原版熔炉
     public static void setState(IBlockState state, World worldIn, BlockPos pos) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-
-        if (state == iblockstate) return;
-
-        worldIn.setBlockState(pos, state, 3);
-
-        if (tileentity != null) {
-            tileentity.validate();
-            worldIn.setTileEntity(pos, tileentity);
+        if (state != iblockstate) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            worldIn.setBlockState(pos, state, 3);
+            if (tileentity != null) {
+                tileentity.validate();
+                worldIn.setTileEntity(pos, tileentity);
+            }
         }
     }
 
     public static NonNullList<ItemStack> getAllBlocks(String oreName) {
-        NonNullList<ItemStack> list = NonNullList.create();
-        OreDictionary.getOres(oreName).forEach(itemStack -> {
-            Block block = Block.getBlockFromItem(itemStack.getItem());
-            if (block != Blocks.AIR) {
-                if (itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-                    block.getSubBlocks(block.getCreativeTabToDisplayOn(), list);
-                } else {
-                    list.add(itemStack);
-                }
+        NonNullList<ItemStack> list = ItemUtil.getAllItems(oreName);
+        for (ItemStack stack : list) {
+            if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+                list.remove(stack);
             }
-        });
+        }
         return list;
     }
 }

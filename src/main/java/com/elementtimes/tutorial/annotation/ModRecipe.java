@@ -41,8 +41,4 @@ public @interface ModRecipe {
          */
         String output();
     }
-
-    enum RecipeType {
-        Shaped, Shapeless, OreShaped, OreShapeless
-    }
 }

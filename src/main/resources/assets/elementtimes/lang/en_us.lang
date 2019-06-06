@@ -126,3 +126,7 @@ tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
 chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
 chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity
 chat.elementtimes.hammer.nonbt=The block[%s] can't serialize to NBT
+# chat
+chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
+chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity
+chat.elementtimes.hammer.nonbt=The block[%s] can't serialize to NBT

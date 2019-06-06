@@ -16,6 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 加载物品
+ * 处理所有 ModItem 注解的成员
+ *
+ * @author luqin2007
+ */
 class ModItemLoader {
 
     static Map<Item, String> sItemOreDict = new HashMap<>();
@@ -28,28 +34,37 @@ class ModItemLoader {
     private static void buildItem(AnnotatedElement itemHolder, List<Item> into) {
         // object
         final ModItem info = itemHolder.getAnnotation(ModItem.class);
-        if (info == null) return;
+        if (info == null) {
+            return;
+        }
         Item item = ReflectUtil.getFromAnnotated(itemHolder, new Item()).orElse(new Item());
 
         initOreDict(item, itemHolder);
+        // 矿辞
         initItem(item, info);
+        // 子类型
         initSubItem(item, itemHolder);
+        // 合成表保留
         initRetainedItem(item, itemHolder);
+        // 耐久
         initDamageable(item, itemHolder);
 
         into.add(item);
     }
 
     private static void initItem(Item item, ModItem info) {
-        if (item.getRegistryName() == null)
+        if (item.getRegistryName() == null) {
             item.setRegistryName(info.registerName());
+        }
         item.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
         item.setCreativeTab(info.creativeTab().tab);
     }
 
     private static void initOreDict(Item item, AnnotatedElement itemHolder) {
         ModOreDict oreDict = itemHolder.getAnnotation(ModOreDict.class);
-        if (oreDict != null) sItemOreDict.put(item, oreDict.value());
+        if (oreDict != null) {
+            sItemOreDict.put(item, oreDict.value());
+        }
     }
 
     private static void initSubItem(Item item, AnnotatedElement itemHolder) {
@@ -106,8 +121,9 @@ class ModItemLoader {
         if (damageable != null) {
             item.setMaxDamage(damageable.value());
             item.setMaxStackSize(1);
-            if (damageable.noRepair())
+            if (damageable.noRepair()) {
                 item.setNoRepair();
+            }
         }
     }
 }

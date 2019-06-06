@@ -12,8 +12,12 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+/**
+ * 所有合成表
+ * @author KSGFK
+ */
 public class ElementtimesRecipe {
-    public static void Init(FMLInitializationEvent event) {
+    public static void init(FMLInitializationEvent event) {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder),new ItemStack(ElementtimesItems.sulfiteSolution,2));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT),new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper",new ItemStack(ElementtimesItems.hydrogen));
@@ -44,8 +48,9 @@ public class ElementtimesRecipe {
 			@Override
 			public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 				//返回的材料
-				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK))
-				return new ItemStack(ElementtimesItems.diamondIngot);
+				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)) {
+                    return new ItemStack(ElementtimesItems.diamondIngot);
+                }
 				return new ItemStack(Items.AIR);
 			}
 		});

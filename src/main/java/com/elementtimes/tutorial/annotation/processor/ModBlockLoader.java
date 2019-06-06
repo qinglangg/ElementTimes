@@ -18,9 +18,15 @@ import java.util.*;
 import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 import static com.elementtimes.tutorial.annotation.util.ReflectUtil.getField;
 
+/**
+ * 用于处理 Block 注解
+ * 所有被 ModBlock 注解的成员都会在此处理
+ *
+ * @see ModBlock
+ * @author luqin2007
+ */
 public class ModBlockLoader {
 
-    // block
     static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> sTileEntities = new HashMap<>();
     static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
     static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
@@ -39,16 +45,21 @@ public class ModBlockLoader {
         Block block = ReflectUtil.getFromAnnotated(blockHolder, new Block(Material.ROCK)).orElse(new Block(Material.ROCK));
 
         initBlock(block, info);
+        // 矿辞
         initOreDict(block, blockHolder);
+        // TileEntity
         initTileEntity(block, blockHolder);
+        // IStateMapper
         initStateMapper(block, blockHolder);
+        // BlockState 对应材质
         initBlockState(block, blockHolder);
         into.add(block);
     }
 
     private static void initBlock(Block block, ModBlock info) {
-        if (block.getRegistryName() == null)
+        if (block.getRegistryName() == null) {
             block.setRegistryName(info.registerName());
+        }
         block.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
         block.setCreativeTab(info.creativeTab().tab);
     }
@@ -102,12 +113,13 @@ public class ModBlockLoader {
     private static void initBlockState(Block block, AnnotatedElement blockHolder) {
         ModBlock.StateMap bsInfo = blockHolder.getAnnotation(ModBlock.StateMap.class);
         if (bsInfo != null) {
-            if (!useB3D) useB3D = bsInfo.useB3D();
-            if (!useOBJ) useOBJ = bsInfo.useOBJ();
-
-            for (int i = 0; i < bsInfo.metadatas().length; i++) {
-
+            if (!useB3D) {
+                useB3D = bsInfo.useB3D();
             }
+            if (!useOBJ) {
+                useOBJ = bsInfo.useOBJ();
+            }
+
             if (bsInfo.metadatas().length > 0) {
                 sBlockStates.put(block, bsInfo);
             }

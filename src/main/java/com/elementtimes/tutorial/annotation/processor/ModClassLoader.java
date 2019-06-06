@@ -12,12 +12,19 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * 加载 Class
+ *
+ * @author luqin2007
+ */
 public class ModClassLoader {
 
+    @SafeVarargs
     static void getClasses(@Nonnull Map<Class, ArrayList<AnnotatedElement>> elements, Class<? extends Annotation>... support) {
         for (Class aClass : support) {
-            if (!elements.containsKey(aClass))
+            if (!elements.containsKey(aClass)) {
                 elements.put(aClass, new ArrayList<>());
+            }
         }
 
         try {
@@ -69,10 +76,14 @@ public class ModClassLoader {
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
                     String name = entry.getName();
-                    if (name.charAt(0) == '/') name = name.substring(1);
+                    if (name.charAt(0) == '/') {
+                        name = name.substring(1);
+                    }
                     if (name.startsWith(packageDirName)) {
                         int idx = name.lastIndexOf('/');
-                        if (idx != -1) packageName = name.substring(0, idx).replace('/', '.');
+                        if (idx != -1) {
+                            packageName = name.substring(0, idx).replace('/', '.');
+                        }
                         if ((idx != -1) || recursive) {
                             if (name.endsWith(".class") && !entry.isDirectory()) {
                                 String className = name.substring(packageName.length() + 1, name.length() - 6);
@@ -119,7 +130,7 @@ public class ModClassLoader {
 //    private static void initFluid(Object fluidHolder, List<Fluid> into) {
 //        Fluid fluid = null;
 //        ModFluid info = null;
-//        into.add(fluid);
+//        into.set(fluid);
 //    }
 //
 //    /**
@@ -131,7 +142,7 @@ public class ModClassLoader {
 //            sElementClasses.get(ModCommand.class)
 //                    .forEach(aClass -> {
 //                        try {
-//                            sCommands.add((CommandBase) get(aClass));
+//                            sCommands.set((CommandBase) get(aClass));
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -153,7 +164,7 @@ public class ModClassLoader {
 //                            Enchantment enchantment = (Enchantment) get(aClass);
 //                            enchantment.setName(info.name());
 //                            enchantment.setRegistryName(info.registerName());
-//                            sEnchantments.add(enchantment);
+//                            sEnchantments.set(enchantment);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -175,7 +186,7 @@ public class ModClassLoader {
 //                            Potion potion = (Potion) get(aClass);
 //                            potion.setPotionName(info.name());
 //                            potion.setRegistryName(info.registerName());
-//                            sPotions.add(potion);
+//                            sPotions.set(potion);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -200,7 +211,7 @@ public class ModClassLoader {
 //                            item.setRegistryName(info.registerName());
 //                            item.setUnlocalizedName(info.unlocalizedName());
 //                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-//                            sBuckets.add(item);
+//                            sBuckets.set(item);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -235,7 +246,7 @@ public class ModClassLoader {
 //        if (sCapabilities == null) {
 //            sCapabilities = new ArrayList<>();
 //            sElementClasses.get(ModCapability.class)
-//                    .forEach(aClass -> sCapabilities.add((ModCapability) aClass.getAnnotation(ModCapability.class)));
+//                    .forEach(aClass -> sCapabilities.set((ModCapability) aClass.getAnnotation(ModCapability.class)));
 //        }
 //        return sCapabilities;
 //    }

@@ -30,22 +30,21 @@ public class RubberSapling extends BlockBush implements IGrowable {
 
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        if (worldIn.isRemote) return;
-        if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
+        if (!worldIn.isRemote && TerrainGen.saplingGrowTree(worldIn, rand, pos)) {
+            WorldGenerator worldgenerator = new WorldGenTrees(
+                    true,
+                    4,
+                    ElementtimesBlocks.rubberLog.getDefaultState(),
+                    ElementtimesBlocks.rubberLeaf.getDefaultState(),
+                    false);
+            IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
+            int i = 0;
+            int j = 0;
 
-        WorldGenerator worldgenerator = new WorldGenTrees(
-                true,
-                4,
-                ElementtimesBlocks.rubberLog.getDefaultState(),
-                ElementtimesBlocks.rubberLeaf.getDefaultState(),
-                false);
-        IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
-        int i = 0;
-        int j = 0;
-
-        worldIn.setBlockState(pos, iblockstate2, 4);
-        if (!worldgenerator.generate(worldIn, rand, pos.add(i, 0, j))) {
-            worldIn.setBlockState(pos, state, 4);
+            worldIn.setBlockState(pos, iblockstate2, 4);
+            if (!worldgenerator.generate(worldIn, rand, pos.add(i, 0, j))) {
+                worldIn.setBlockState(pos, state, 4);
+            }
         }
     }
 }

@@ -28,8 +28,12 @@ public class RecipeUtil {
      * @param type 该 IRecipeFactory 类型，即合成表中 type 对应的值
      */
     public static IRecipeFactory getIRecipeFactoryByType(String type) {
-        if (type.equals("forge:ore_shaped")) return ShapedOreRecipe::factory;
-        if (type.equals("forge:ore_shapeless")) return ShapelessOreRecipe::factory;
+        if ("forge:ore_shaped".equals(type)) {
+            return ShapedOreRecipe::factory;
+        }
+        if ("forge:ore_shapeless".equals(type)) {
+            return ShapelessOreRecipe::factory;
+        }
         try {
             Field recipesField = CraftingHelper.class.getDeclaredField("recipes");
             recipesField.setAccessible(true);

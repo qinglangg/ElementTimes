@@ -10,23 +10,27 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraftforge.common.util.EnumHelper;
 
+/**
+ * 所有物品
+ * @author KSGFK
+ */
 @SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "ConstantConditions"})
 public class ElementtimesItems {
 
     @ModItem(registerName = "fiveelements", unlocalizedName = "fiveelements")
-    public static Item fiveElements = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterFive);
+    public static Item fiveElements = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterFive);
     @ModItem(registerName = "endelement", unlocalizedName = "endelement")
-    public static Item endElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterEnd);
+    public static Item endElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterEnd);
     @ModItem(registerName = "soilelement", unlocalizedName = "soilelement")
-    public static Item soilElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterSoilGen);
+    public static Item soilElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterSoilGen);
     @ModItem(registerName = "woodelement", unlocalizedName = "woodelement")
-    public static Item woodElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterWoodGen);
+    public static Item woodElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterWoodGen);
     @ModItem(registerName = "waterelement", unlocalizedName = "waterelement")
-    public static Item waterElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterWaterGen);
+    public static Item waterElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterWaterGen);
     @ModItem(registerName = "fireelement", unlocalizedName = "fireelement")
-    public static Item fireElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterFireGen);
+    public static Item fireElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterFireGen);
     @ModItem(registerName = "goldelement", unlocalizedName = "goldelement")
-    public static Item goldElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterGoldGen);
+    public static Item goldElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterGoldGen);
     @ModItem(registerName = "saplingessence", unlocalizedName = "saplingessence")
     public static Item saplingEssence;
     @ModItem(registerName = "cropessence", unlocalizedName = "cropessence")
@@ -112,7 +116,7 @@ public class ElementtimesItems {
     @ModItem(registerName = "largerubbingsuncompound", unlocalizedName = "largerubbingsuncompound")
     public static Item largeRubbingSunCompound;
     @ModItem(registerName = "photoelement", unlocalizedName = "photoelement")
-    public static Item photoElement = new ItemElementEnergy(() -> ElementtimesConfig.general.generaterSun);
+    public static Item photoElement = new ItemElementEnergy(() -> ElementtimesConfig.GENERAL.generaterSun);
     @ModItem(registerName = "quartzpowder", unlocalizedName = "quartzpowder")
     public static Item quartzPowder;
     @ModItem(registerName = "bighammer", unlocalizedName = "bighammer", creativeTab = ModCreativeTabs.Ore)

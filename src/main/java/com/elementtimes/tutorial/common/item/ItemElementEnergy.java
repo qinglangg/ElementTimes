@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.interface_.item.IGeneratorElement;
+import com.elementtimes.tutorial.interfaces.item.IGeneratorElement;
 import net.minecraft.item.Item;
 
 import java.util.function.IntSupplier;
@@ -19,6 +19,6 @@ public class ItemElementEnergy extends Item implements IGeneratorElement {
 
     @Override
     public int getEnergy() {
-        return 0;
+        return energyProvider.getAsInt();
     }
 }

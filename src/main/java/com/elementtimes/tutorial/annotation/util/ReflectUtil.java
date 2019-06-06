@@ -10,6 +10,11 @@ import java.util.Optional;
 
 import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 
+/**
+ * 处理反射有关的方法
+ *
+ * @author luqin2007
+ */
 public class ReflectUtil {
 
     /**
@@ -19,8 +24,9 @@ public class ReflectUtil {
     @SuppressWarnings("unchecked")
     public static <T> Optional<T> getFromAnnotated(@Nonnull AnnotatedElement holder, @Nullable T defaultValue) {
         T obj;
-        if (holder instanceof AccessibleObject)
+        if (holder instanceof AccessibleObject) {
             ((AccessibleObject) holder).setAccessible(true);
+        }
 
         if (holder instanceof Class) {
             obj = (T) create((Class) holder).orElse(defaultValue);
@@ -30,8 +36,9 @@ public class ReflectUtil {
             obj = create((Constructor<T>) holder).orElse(defaultValue);
         } else if (holder instanceof Method) {
             obj = (T) invoke((Method) holder, null).orElse(defaultValue);
-        } else
+        } else {
             obj = defaultValue;
+        }
         return Optional.ofNullable(obj);
     }
 
@@ -102,9 +109,13 @@ public class ReflectUtil {
         boolean isStatic = Modifier.isStatic(field.getModifiers());
         // 成员本身值
         try {
-            if (isStatic) obj = (T) field.get(null);
-            else if (object != null) obj = (T) field.get(object);
-            else warn("Field {} is not static, but the object is null", field.getName());
+            if (isStatic) {
+                obj = (T) field.get(null);
+            } else if (object != null) {
+                obj = (T) field.get(object);
+            } else {
+                warn("Field {} is not static, but the object is null", field.getName());
+            }
         } catch (IllegalAccessException e) {
             warn("Cannot get field {}", field.getName());
         }
@@ -112,9 +123,13 @@ public class ReflectUtil {
         if (obj == null) {
             // 尝试根绝类型获取值
             obj = (T) create(field.getType()).orElse(null);
-            if (obj == null) obj = defaultValue;
+            if (obj == null) {
+                obj = defaultValue;
+            }
             // 尝试赋值
-            if (setIfNull && obj != null) set(field, obj, null);
+            if (setIfNull && obj != null) {
+                set(field, obj, null);
+            }
         }
 
         return Optional.ofNullable(obj);
@@ -134,9 +149,13 @@ public class ReflectUtil {
         boolean isStatic = Modifier.isStatic(method.getModifiers());
         // 成员本身值
         try {
-            if (isStatic) obj = (T) method.invoke(null);
-            else if (object != null) obj = (T) method.invoke(object);
-            else warn("Method {} is not static, but the object is null", method.getName());
+            if (isStatic) {
+                obj = (T) method.invoke(null);
+            } else if (object != null) {
+                obj = (T) method.invoke(object);
+            } else {
+                warn("Method {} is not static, but the object is null", method.getName());
+            }
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             warn("Cannot invoke method {}", method.getName());
@@ -163,8 +182,9 @@ public class ReflectUtil {
             if (Modifier.isStatic(modifiers)) {
                 field.set(null, value);
             } else {
-                if (object == null)
+                if (object == null) {
                     warn("Field {} is not state, but the object is null", field.getName());
+                }
                 field.set(object, value);
             }
         } catch (IllegalAccessException e) {
@@ -188,7 +208,9 @@ public class ReflectUtil {
         if (find != null && find.length > 0) {
             for (Class<? extends Annotation> aClass : find) {
                 Annotation annotation = handler.getAnnotation(aClass);
-                if (annotation != null) annotationMap.put(aClass, annotation);
+                if (annotation != null) {
+                    annotationMap.put(aClass, annotation);
+                }
             }
         }
         return annotationMap;

@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.machine;
 
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.common.init.ElementtimesGui;
 import com.elementtimes.tutorial.common.tileentity.TileFurnace;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -14,13 +14,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * 熔炉
+ * @author luqin2007
+ */
 public class Furnace extends BlockTileBase<TileFurnace> {
 
     public static IProperty<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static IProperty<Boolean> BURNING = PropertyBool.create("burning");
 
     public Furnace() {
-        super(ElementtimesGUI.Furnace, TileFurnace.class, false);
+        super(ElementtimesGui.FURNACE, TileFurnace.class, false);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
     }

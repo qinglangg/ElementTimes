@@ -10,6 +10,14 @@ import net.minecraft.util.NonNullList;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * 用于多物品耐久匹配的配方。
+ * items 为可接受物品，damageCount 为一次合成要消耗的耐久，用于判断
+ *
+ * @see net.minecraft.item.crafting.Ingredient
+ * @see net.minecraftforge.oredict.OreIngredient
+ * @author luqin2007
+ */
 public class DamageIngredient extends Ingredient {
     private NonNullList<ItemStack> tools;
     private IntList itemIds = null;
@@ -23,7 +31,8 @@ public class DamageIngredient extends Ingredient {
             ItemStack itemStack = new ItemStack(item);
             tools.add(itemStack.copy());
             if (item.isDamageable() && damageCount > 0) {
-                for (int i = 1; i < item.getMaxDamage(itemStack) - damageCount + 2; i++) {
+                int delta = 2;
+                for (int i = 1; i < item.getMaxDamage(itemStack) - damageCount + delta; i++) {
                     ItemStack stack = itemStack.copy();
                     stack.setItemDamage(i);
                     tools.add(stack);
@@ -64,7 +73,9 @@ public class DamageIngredient extends Ingredient {
     public boolean apply(@Nullable ItemStack input) {
         if (input != null && !input.isEmpty()) {
             for (ItemStack target : tools) {
-                if (target.isItemEqual(input)) return true;
+                if (target.isItemEqual(input)) {
+                    return true;
+                }
             }
         }
         return false;

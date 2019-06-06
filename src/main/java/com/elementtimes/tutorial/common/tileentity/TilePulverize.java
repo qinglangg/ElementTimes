@@ -1,76 +1,52 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.oredict.OreDictionary;
+import com.elementtimes.tutorial.other.MachineRecipeHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
+ * 打粉机
  * @author KSGFK create in 2019/5/6
  */
-public class TilePulverize extends TileOneToOne {
-
-    public static Map<String, Item> dict = new HashMap<>();
-
-    public static void init() {
-        if (!dict.isEmpty()) return;
-        dict.put("oreIron", ElementtimesItems.ironPower);
-        dict.put("oreRedstone", ElementtimesItems.redstonePowder);
-        dict.put("oreGold", ElementtimesItems.goldPowder);
-        dict.put("oreDiamond", ElementtimesItems.diamondPowder);
-        dict.put("oreLapis", ElementtimesItems.bluestonePowder);
-        dict.put("oreEmerald", ElementtimesItems.greenstonePowder);
-        dict.put("oreCopper", ElementtimesItems.copperPowder);
-        dict.put("oreCoal", ElementtimesItems.coalPowder);
-        dict.put("orePlatinum", ElementtimesItems.platinumOrePowder);
-    }
+@ModElement
+@ModElement.ModInvokeStatic("init")
+public class TilePulverize extends BaseOneToOne {
 
     public TilePulverize() {
-        super(ElementtimesConfig.pul.pulMaxEnergy, ElementtimesConfig.pul.pulMaxReceive);
-        init();
+        super(ElementtimesConfig.PUL.pulMaxEnergy);
+    }
+
+    public static MachineRecipeHandler sRecipeHandler;
+
+    public static void init() {
+        sRecipeHandler = new MachineRecipeHandler()
+                .add("0", ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironPower, ElementtimesConfig.PUL.pulPowderCount)
+                .add("1", ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("2", ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("3", ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("4", ElementtimesConfig.PUL.pulPowderEnergy, "oreLapis", 1, ElementtimesItems.bluestonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("5", ElementtimesConfig.PUL.pulPowderEnergy, "oreEmerald", 1, ElementtimesItems.greenstonePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("6", ElementtimesConfig.PUL.pulPowderEnergy, "oreCopper", 1, ElementtimesItems.copperPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("7", ElementtimesConfig.PUL.pulPowderEnergy, "oreCoal", 1, ElementtimesItems.coalPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("8", ElementtimesConfig.PUL.pulPowderEnergy, "orePlatinum", 1, ElementtimesItems.platinumOrePowder, ElementtimesConfig.PUL.pulPowderCount);
+    }
+
+    @Nonnull
+    @Override
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return sRecipeHandler;
     }
 
     @Override
-    protected ItemStack getInput(ItemStackHandler handler) {
-        return handler.extractItem(0, 1, true);
+    public void applyConfig() {
+        setMaxTransfer(ElementtimesConfig.PUL.pulMaxReceive);
     }
 
     @Override
-    protected ItemStack getOutput(ItemStackHandler handler, boolean simulate) {
-        ItemStack input = handler.extractItem(0, 1, simulate);
-        if (input.isEmpty()) return ItemStack.EMPTY;
-        for (int id : OreDictionary.getOreIDs(input)) {
-            String name = OreDictionary.getOreName(id);
-            if (dict.containsKey(name)) {
-                return new ItemStack(dict.get(name), ElementtimesConfig.pul.pulPowderCount);
-            }
-        }
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    protected int getTotalEnergyCost(ItemStackHandler handler) {
-        return ElementtimesConfig.pul.pulPowderEnergy;
-    }
-
-    @Override
-    protected int getEnergyCostPerTick(ItemStackHandler handler) {
-        return ElementtimesConfig.pul.pulMaxExtract;
-    }
-
-    @Override
-    protected boolean isInputItemValid(int slot, @Nonnull ItemStack stack) {
-        for (int oreID : OreDictionary.getOreIDs(stack)) {
-            if (dict.containsKey(OreDictionary.getOreName(oreID)))
-                return true;
-        }
-        return false;
+    public int getMaxEnergyChange() {
+        return ElementtimesConfig.PUL.pulMaxExtract;
     }
 }
