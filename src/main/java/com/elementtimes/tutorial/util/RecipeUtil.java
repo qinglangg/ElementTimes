@@ -1,11 +1,11 @@
 package com.elementtimes.tutorial.util;
 
-import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -85,7 +85,7 @@ public class RecipeUtil {
         for (int i = 0; i < input.size(); i++) {
             tempCrafting.setInventorySlotContents(i, input.get(i));
         }
-        ItemStack resultEntry = ItemHelper.getCraftingResult(tempCrafting, null).copy();
+        ItemStack resultEntry = CraftingManager.findMatchingResult(tempCrafting, null).copy();
         tempCrafting.clear();
         return resultEntry;
     }

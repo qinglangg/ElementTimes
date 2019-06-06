@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.common.capability.impl.*;
+import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
+import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
+import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.interfaces.tileentity.*;
 import com.elementtimes.tutorial.other.DefaultMachineLifecycle;
 import com.elementtimes.tutorial.other.MachineRecipeHandler;
@@ -11,8 +13,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,7 +22,10 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 对所有机器的抽象
@@ -196,15 +199,6 @@ public abstract class BaseMachine extends TileEntity implements
         IMachineTickable.super.writeToNBT(nbt);
         IMachineRecipe.super.writeToNBT(nbt);
         return nbt;
-    }
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(this.pos, 0, serializeNBT());
-    }
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        deserializeNBT(pkt.getNbtCompound());
     }
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {

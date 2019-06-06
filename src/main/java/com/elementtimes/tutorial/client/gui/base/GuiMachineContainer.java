@@ -6,7 +6,6 @@ import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -43,22 +42,23 @@ public class GuiMachineContainer<T extends BaseMachine> extends GuiContainer {
     @Override
     public void initGui() {
         super.initGui();
-        for (GuiButton button : machine.getMachine().getButtons()) {
+        for (GuiButton button : machine.getButtons()) {
             addButton(button);
         }
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        updateData();
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
     }
 
-    /**
-     * 在此处进行数据更新
-     */
-    protected void updateData() {}
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        String name = machine.getName();
+        this.fontRenderer.drawString(name, 88 - this.fontRenderer.getStringWidth(name) / 2, 60, 0x404040);
+    }
 }

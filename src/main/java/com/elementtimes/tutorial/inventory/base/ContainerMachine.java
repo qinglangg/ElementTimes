@@ -1,11 +1,15 @@
 package com.elementtimes.tutorial.inventory.base;
 
+import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * @author KSGFK create in 2019/3/9
@@ -79,7 +83,54 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
         return oldStack;
     }
 
-    public T getMachine() {
-        return machine;
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        RfEnergy.EnergyProxy energyProxy = machine.getReadonlyEnergyProxy();
+        int total = energyProxy.getMaxEnergyStored();
+        short stored = total == 0 ? 0 : (short) (Short.MAX_VALUE * energyProxy.getEnergyStored() / total);
+        total = machine.getEnergyUnprocessed() + machine.getEnergyProcessed();
+        short processed = total == 0 ? 0 : (short) (Short.MAX_VALUE * machine.getEnergyProcessed() / total);
+
+        listeners.forEach(listener -> {
+            listener.sendWindowProperty(this, 0, stored);
+            listener.sendWindowProperty(this, 1, processed);
+        });
+    }
+
+    private short mEnergyStored = 0;
+    private short mEnergyProcessed = 0;
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void updateProgressBar(int id, int data) {
+        super.updateProgressBar(id, data);
+        if (id == 0) {
+            mEnergyStored = (short) data;
+        } else if (id == 1) {
+            mEnergyProcessed = (short) data;
+        }
+    }
+
+    public short getEnergyProcessed() {
+        return mEnergyProcessed;
+    }
+
+    public short getEnergyStored() {
+        return mEnergyStored;
+    }
+
+    public GuiButton[] getButtons() {
+        return machine.getButtons();
+    }
+
+    public String getName() {
+        String localizedName = machine.getBlockType().getLocalizedName();
+        if (machine.getWorld().isRemote) {
+            return I18n.format(localizedName);
+        } else {
+            return localizedName;
+        }
     }
 }

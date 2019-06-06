@@ -198,10 +198,11 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                 if (state != newState) {
                     BlockUtil.setState(newState, world, pos);
                     world.markBlockRangeForRenderUpdate(pos, pos);
-                } else {
-                    tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
-                    world.notifyBlockUpdate(pos, state, newState, 3);
+                    // 恢复 TileEntity
+                    tileEntity.validate();
+                    world.setTileEntity(pos, tileEntity);
                 }
+                tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             }
         }
     }
