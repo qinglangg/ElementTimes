@@ -48,6 +48,13 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "steelblock", unlocalizedName = "steelblock", creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("blockSteel")
     public static Block steelBlock = new Steelblock();
+    @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
+    public static Block rubberSapling = new RubberSapling();
+    @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log")
+    @ModOreDict("logWood")
+    public static Block rubberLog = new RubberLog();
+    @ModBlock(registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")
+    public static Block rubberLeaf = new RubberLeaf();
 
     @ModBlock(registerName = "pulverizer", unlocalizedName = "pulverizer", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "pulverizer", clazz = "com.elementtimes.tutorial.common.tileentity.TilePulverize")

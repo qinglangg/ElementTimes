@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "axis=y": {
+      "model": "elementtimes:rubber_log"
+    },
+    "axis=z": {
+      "model": "elementtimes:rubber_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "elementtimes:rubber_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

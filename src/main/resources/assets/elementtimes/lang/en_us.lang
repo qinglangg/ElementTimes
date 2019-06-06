@@ -113,9 +113,16 @@ tile.elementtimes.compressor.name=Compressor
 tile.elementtimes.furnace.name=Furnace
 tile.elementtimes.fuelGenerator.name=Fuel Generator
 tile.elementtimes.rebuild.name=Item Rebuilder
+tile.elementtimes.rubber_sapling.name=Rubber Sapling
+tile.elementtimes.rubber_log.name=Rubber Log
+tile.elementtimes.rubber_leaf.name=Rubber Leaf
 # jei
 jei.elementtimes.pulverize=Pulverize
 jei.elementtimes.rebuild=Rebuilder
 jei.elementtimes.compressor=Compressor
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
+# chat
+chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
+chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity
+chat.elementtimes.hammer.nonbt=The block[%s] can't serialize to NBT

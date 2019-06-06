@@ -113,9 +113,16 @@ tile.elementtimes.compressor.name=压缩机
 tile.elementtimes.furnace.name=电炉
 tile.elementtimes.fuelGenerator.name=火力发电机
 tile.elementtimes.rebuild.name=物质重构机
+tile.elementtimes.rubber_sapling.name=橡胶树苗
+tile.elementtimes.rubber_log.name=橡胶树树干
+tile.elementtimes.rubber_leaf.name=橡胶树树叶
 # jei
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机
 jei.elementtimes.compressor=压缩机
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
+# chat
+chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
+chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity
+chat.elementtimes.hammer.nonbt=方块 [%s] 无法序列化为 NBT
