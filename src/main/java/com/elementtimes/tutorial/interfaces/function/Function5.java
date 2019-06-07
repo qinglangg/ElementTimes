@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.interfaces.function;
 
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -27,7 +27,7 @@ public interface Function5<T1, T2, T3, T4, T5, R> {
     R apply(T1 v1, T2 v2, T3 v3, T4 v4, T5 v5);
 
     @FunctionalInterface
-    interface Match<T> extends Function5<MachineRecipeHandler.MachineRecipe, Integer, List<ItemStack>, List<FluidStack>, T, Boolean> {
+    interface Match<T> extends Function5<MachineRecipe, Integer, List<ItemStack>, List<FluidStack>, T, Boolean> {
         /**
          * 用于判断输入物品是否符合合成条件
          * @param recipe 合成表
@@ -38,6 +38,6 @@ public interface Function5<T1, T2, T3, T4, T5, R> {
          * @return 是否可以参与合成
          */
         @Override
-        Boolean apply(MachineRecipeHandler.MachineRecipe recipe, Integer slot, List<ItemStack> inputItems, List<FluidStack> inputFluids, T input);
+        Boolean apply(MachineRecipe recipe, Integer slot, List<ItemStack> inputItems, List<FluidStack> inputFluids, T input);
     }
 }

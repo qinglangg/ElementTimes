@@ -16,52 +16,52 @@ import net.minecraftforge.common.util.EnumHelper;
 @SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "ConstantConditions"})
 public class ElementtimesItems {
 
-    @ModItem(registerName = "fiveelements", unlocalizedName = "fiveelements")
+    @ModItem
     public static Item fiveElements;
-    @ModItem(registerName = "endelement", unlocalizedName = "endelement")
+    @ModItem
     public static Item endElement;
-    @ModItem(registerName = "soilelement", unlocalizedName = "soilelement")
+    @ModItem
     public static Item soilElement;
-    @ModItem(registerName = "woodelement", unlocalizedName = "woodelement")
+    @ModItem
     public static Item woodElement;
-    @ModItem(registerName = "waterelement", unlocalizedName = "waterelement")
+    @ModItem
     public static Item waterElement;
-    @ModItem(registerName = "fireelement", unlocalizedName = "fireelement")
+    @ModItem
     public static Item fireElement;
-    @ModItem(registerName = "goldelement", unlocalizedName = "goldelement")
+    @ModItem
     public static Item goldElement;
-    @ModItem(registerName = "saplingessence", unlocalizedName = "saplingessence")
+    @ModItem
     public static Item saplingEssence;
-    @ModItem(registerName = "cropessence", unlocalizedName = "cropessence")
+    @ModItem
     public static Item cropesSence;
-    @ModItem(registerName = "elementsword", unlocalizedName = "elementsword")
+    @ModItem
     public static Item elementSword = new Elementsword();
-    @ModItem(registerName = "elementaxe", unlocalizedName = "elementaxe")
+    @ModItem
     public static Item elementAxe = new Elementaxe();
-    @ModItem(registerName = "elementpickaxe", unlocalizedName = "elementpickaxe")
+    @ModItem
     public static Item elementPickaxe = new Elementpickaxe();
-    @ModItem(registerName = "starchpowder", unlocalizedName = "starchpowder")
+    @ModItem
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
-    @ModItem(registerName = "amylum", unlocalizedName = "amylum")
+    @ModItem
     public static Item amylum = new Amylum();
-    @ModItem(registerName = "puremeat", unlocalizedName = "puremeat")
+    @ModItem
     public static Item puremeat = new ItemFood(4, 0f, false);
-    @ModItem(registerName = "corn", unlocalizedName = "corn")
+    @ModItem
     public static Item corn = new Corn();
-    @ModItem(registerName = "bakedcorn", unlocalizedName = "bakedcorn")
+    @ModItem
     public static Item bakedCorn = new ItemFood(5, 2.0F, false);
-    @ModItem(registerName = "stoneingot", unlocalizedName = "stoneingot", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot;
-    @ModItem(registerName = "steelingot", unlocalizedName = "steelingot", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("ingotSteel")
     public static Item steelIngot;
-    @ModItem(registerName = "calciumcarbonate", unlocalizedName = "calciumcarbonate", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumCarbonate;
-    @ModItem(registerName = "calciumoxide", unlocalizedName = "calciumoxide", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumOxide;
-    @ModItem(registerName = "ingotcolumn", unlocalizedName = "ingotcolumn", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item ingotColumn;
-    @ModItem(registerName = "concrete", unlocalizedName = "concrete", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item concrete;
     @ModItem(registerName = "element_sleeve_helmet", unlocalizedName = "elementsleevehelmet")
     public static Item elementSleeveHelmet = new ElementSleeveHelmet();
@@ -79,159 +79,159 @@ public class ElementtimesItems {
     public static Item platinumSleeveLeggings = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 12.0F), 1, EntityEquipmentSlot.LEGS);
     @ModItem(registerName = "platinum_sleeve_boots", unlocalizedName = "platinumsleeveboots")
     public static Item platinumSleeveBoots = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.FEET);
-    @ModItem(registerName = "copper", unlocalizedName = "copper", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotCopper")
     public static Item copper;
-    @ModItem(registerName = "greenstonepowder", unlocalizedName = "greenstonepowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustEmerald")
     public static Item greenstonePowder;
-    @ModItem(registerName = "redstonepowder", unlocalizedName = "redstonepowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustRedstone")
     public static Item redstonePowder;
-    @ModItem(registerName = "bluestonepowder", unlocalizedName = "bluestonepowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustLapisLazuli")
     public static Item bluestonePowder;
-    @ModItem(registerName = "ironpower", unlocalizedName = "ironpower", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustIron")
     public static Item ironPower;
-    @ModItem(registerName = "goldpowder", unlocalizedName = "goldpowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustGold")
     public static Item goldPowder;
-    @ModItem(registerName = "coalpowder", unlocalizedName = "coalpowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustCoal")
     public static Item coalPowder;
-    @ModItem(registerName = "diamondpowder", unlocalizedName = "diamondpowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustDiamond")
     public static Item diamondPowder;
-    @ModItem(registerName = "copperpowder", unlocalizedName = "copperpowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustCopper")
     public static Item copperPowder;
-    @ModItem(registerName = "spanner", unlocalizedName = "spanner")
+    @ModItem
     public static Item spanner = new Spanner();
-    @ModItem(registerName = "twiningsuncompound", unlocalizedName = "twiningsuncompound")
+    @ModItem
     public static Item twiningSunCompound;
-    @ModItem(registerName = "intermediaterubbingsuncompound", unlocalizedName = "intermediaterubbingsuncompound")
+    @ModItem
     public static Item intermediateRubbingSunCompound;
-    @ModItem(registerName = "largerubbingsuncompound", unlocalizedName = "largerubbingsuncompound")
+    @ModItem
     public static Item largeRubbingSunCompound;
-    @ModItem(registerName = "photoelement", unlocalizedName = "photoelement")
+    @ModItem
     public static Item photoElement;
-    @ModItem(registerName = "quartzpowder", unlocalizedName = "quartzpowder")
+    @ModItem
     public static Item quartzPowder;
-    @ModItem(registerName = "bighammer", unlocalizedName = "bighammer", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(100)
     @ModItem.RetainInCrafting
     public static Item bigHammer = new Hammer();
-    @ModItem(registerName = "smallhammer", unlocalizedName = "smallhammer", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(10)
     @ModItem.RetainInCrafting
     public static Item smallHammer = new Hammer();
-    @ModItem(registerName = "cornbroth", unlocalizedName = "cornbroth")
+    @ModItem
     public static Item cornBroth = new ItemSoup(20);
-    @ModItem(registerName = "money", unlocalizedName = "money")
+    @ModItem
     public static Item money;
-    @ModItem(registerName = "sulfurorepowder", unlocalizedName = "sulfurorepowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item sulfurOrePowder;
-    @ModItem(registerName = "sulfurpowder", unlocalizedName = "sulfurpowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item sulfurPowder = new ItemFuel(800);
-    @ModItem(registerName = "sucrosecharcoal", unlocalizedName = "sucrosecharcoal")
+    @ModItem
     public static Item sucroseCharCoal = new ItemFuel(800);
-    @ModItem(registerName = "platinumingot", unlocalizedName = "platinumingot", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotPlatinum")
     public static Item platinumIngot;
-    @ModItem(registerName = "platinumorepowder", unlocalizedName = "platinumorepowder", creativeTab = ModCreativeTabs.Ore)
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("dustPlatinum")
     public static Item platinumOrePowder;
-    @ModItem(registerName = "diamondingot", unlocalizedName = "diamondingot", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot;
-    @ModItem(registerName = "hydrogen", unlocalizedName = "hydrogen", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item hydrogen = new ItemBottleFuel(1600);
-    @ModItem(registerName = "steam", unlocalizedName = "steam", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle steam;
-    @ModItem(registerName = "sulfitesolution", unlocalizedName = "sulfitesolution", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sulfiteSolution;
-    @ModItem(registerName = "sulphuricacid", unlocalizedName = "sulphuricacid")
+    @ModItem
     public static ItemGlassBottle sulphuricAcid;
-    @ModItem(registerName = "sodiumsulfitesolution", unlocalizedName = "sodiumsulfitesolution", creativeTab = ModCreativeTabs.Chemical)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sodiumSulfiteSolution;
-    @ModItem(registerName = "elementshovel", unlocalizedName = "elementshovel")
-    public static Item slementShovel = new Elementshovel();
-    @ModItem(registerName = "elementhoe", unlocalizedName = "elementhoe")
+    @ModItem
+    public static Item elementShovel = new Elementshovel();
+    @ModItem
     public static Item elementHoe = new Elementhoe();
-    @ModItem(registerName = "platinumsword", unlocalizedName = "platinumsword")
+    @ModItem
     public static Item platinumSword = new ItemSword(EnumHelper.addToolMaterial("platinumsword", 4, 500, 10.0F, 20.0F, 20));
-    @ModItem(registerName = "platinumhoe", unlocalizedName = "platinumhoe")
+    @ModItem
     public static Item platinumHoe = new ItemHoe(EnumHelper.addToolMaterial("platinumhoe", 4, 500, 300.0F, 15.0F, 100));
-    @ModItem(registerName = "platinumshovel", unlocalizedName = "platinumshovel")
+    @ModItem
     public static Item platinumShovel = new ItemSpade(EnumHelper.addToolMaterial("platinumshovel", 4, 500, 300.0F, 15.0F, 100));
-    @ModItem(registerName = "platinumaxe", unlocalizedName = "platinumaxe")
+    @ModItem
     public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
-    @ModItem(registerName = "platinumpick", unlocalizedName = "platinumpick")
+    @ModItem
     public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
 
     // gear
 
-    @ModItem(registerName = "gearwood", unlocalizedName = "gearwood", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearWood")
     public static Item gearWood;
-    @ModItem(registerName = "gearquartz", unlocalizedName = "gearquartz", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearQuartz")
     public static Item gearQuartz;
-    @ModItem(registerName = "gearstone", unlocalizedName = "gearstone", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearStone")
     public static Item gearStone;
-    @ModItem(registerName = "gearcarbon", unlocalizedName = "gearcarbon", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearCarbon")
     public static Item gearCarbon;
-    @ModItem(registerName = "geargold", unlocalizedName = "geargold", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearGold")
     public static Item gearGold;
-    @ModItem(registerName = "gearsteel", unlocalizedName = "gearsteel", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSteel")
     public static Item gearSteel;
-    @ModItem(registerName = "geardiamond", unlocalizedName = "geardiamond", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearDiamond")
     public static Item gearDiamond;
-    @ModItem(registerName = "geariron", unlocalizedName = "geariron", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearIron")
     public static Item gearIron;
-    @ModItem(registerName = "gearplatinum", unlocalizedName = "gearplatinum", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearPlatinum")
     public static Item gearPlatinum;
-    @ModItem(registerName = "gearcopper", unlocalizedName = "gearcopper", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearCopper")
     public static Item gearCopper;
 
     // plate
 
-    @ModItem(registerName = "platewood", unlocalizedName = "platewood", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateWood")
     public static Item platewood;
-    @ModItem(registerName = "platestone", unlocalizedName = "platestone", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("platestone")
     public static Item plateStone;
-    @ModItem(registerName = "plateiron", unlocalizedName = "plateiron", creativeTab = ModCreativeTabs.Industry)
+    @ModItem( creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateIron")
     public static Item plateIron;
-    @ModItem(registerName = "platesteel", unlocalizedName = "platesteel", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateSteel")
     public static Item plateSteel;
-    @ModItem(registerName = "plategold", unlocalizedName = "plategold", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateGold")
     public static Item plateGold;
-    @ModItem(registerName = "platediamond", unlocalizedName = "platediamond", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateDiamond")
     public static Item plateDiamond;
-    @ModItem(registerName = "plateplatinum", unlocalizedName = "plateplatinum", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("platePlatinum")
     public static Item platePlatinum;
-    @ModItem(registerName = "platecopper", unlocalizedName = "platecopper", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCopper")
     public static Item plateCopper;
-    @ModItem(registerName = "platequartz", unlocalizedName = "platequartz", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateQuartz")
     public static Item plateQuartz;
-    @ModItem(registerName = "platecarbon", unlocalizedName = "platecarbon", creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCarbon")
     public static Item plateCarbon;
 

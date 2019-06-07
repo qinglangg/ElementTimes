@@ -12,7 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 /**
+ * 一个机器的 Container
  * @author KSGFK create in 2019/3/9
  */
 public class ContainerMachine<T extends BaseMachine> extends Container {
@@ -49,6 +52,7 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
     /**
      * 来源于 https://github.com/Yaossg/SausageCore
      */
+    @Nonnull
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         Slot slot = inventorySlots.get(index);
@@ -114,22 +118,43 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
         }
     }
 
+    /**
+     * 获取已处理的能量（比例缩放），范围为 0-Short.MAX_VALUE，仅用于确定进度
+     * @return 已处理能量（按比例缩放）
+     */
     public short getEnergyProcessed() {
         return mEnergyProcessed;
     }
 
+    /**
+     * 获取能量缓存（比例缩放），范围为 0-Short.MAX_VALUE，仅用于缓存充满程度
+     * @return 能量缓存（按比例缩放）
+     */
     public short getEnergyStored() {
         return mEnergyStored;
     }
 
+    /**
+     * 获取所有按钮
+     * @return 按钮数组
+     */
     public GuiButton[] getButtons() {
         return machine.getButtons();
     }
 
+    /**
+     * 处理按钮事件
+     * @param button 被按下的按钮
+     * @param container 按钮所在 GuiContainer
+     */
     public void actionPerformed(GuiButton button, GuiMachineContainer container) {
         machine.actionPerformed(button, container);
     }
 
+    /**
+     * 获取该 GUI 标题，默认为所使用机器名
+     * @return 该 GUI 标题，服务器获得则为 getLocalizedName 值
+     */
     public String getName() {
         String localizedName = machine.getBlockType().getLocalizedName();
         if (machine.getWorld().isRemote) {

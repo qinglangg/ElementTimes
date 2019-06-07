@@ -1,24 +1,34 @@
 package com.elementtimes.tutorial.util;
 
-import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * 流体工具类
+ * @author luqin2007
+ */
 public class FluidUtil {
 
+    /**
+     * 将流体列表转化为 NBT 列表
+     * @param fluids 流体列表
+     * @return NBT 列表
+     */
     public static NBTTagList toNBTList(List<FluidStack> fluids) {
         NBTTagList list = new NBTTagList();
         fluids.forEach(fluid -> list.appendTag(fluid.writeToNBT(new NBTTagCompound())));
         return list;
     }
 
+    /**
+     * 从 NBT 列表读取流体
+     * @param list NBT 列表
+     * @return 流体
+     */
     public static List<FluidStack> fromNBTList(NBTTagList list) {
         int count = list.tagCount();
         List<FluidStack> fluidStacks = new ArrayList<>(count);

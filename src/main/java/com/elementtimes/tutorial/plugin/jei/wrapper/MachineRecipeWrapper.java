@@ -1,7 +1,8 @@
 package com.elementtimes.tutorial.plugin.jei.wrapper;
 
 import com.elementtimes.tutorial.other.IngredientPart;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipe;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -9,12 +10,16 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MachineItemRecipeWrapper implements IRecipeWrapper {
+/**
+ * 只有物品输入输出的机器 jei 合成表
+ * @author luqin2007
+ */
+public class MachineRecipeWrapper implements IRecipeWrapper {
 
-    List<List<ItemStack>> inputItems;
-    List<List<ItemStack>> outputItems;
+    private List<List<ItemStack>> inputItems;
+    private List<List<ItemStack>> outputItems;
 
-    public MachineItemRecipeWrapper(MachineRecipeHandler.MachineRecipe recipe) {
+    private MachineRecipeWrapper(MachineRecipe recipe) {
         inputItems = new ArrayList<>(recipe.inputs.size());
         for (IngredientPart<ItemStack> input : recipe.inputs) {
             inputItems.add(input.allViableValues.get());
@@ -32,11 +37,11 @@ public class MachineItemRecipeWrapper implements IRecipeWrapper {
         ingredients.setOutputLists(ItemStack.class, outputItems);
     }
 
-    public static List<MachineItemRecipeWrapper> fromHandler(MachineRecipeHandler handler) {
-        List<MachineRecipeHandler.MachineRecipe> recipes = handler.getMachineRecipes();
-        List<MachineItemRecipeWrapper> wrappers = new ArrayList<>(recipes.size());
-        for (MachineRecipeHandler.MachineRecipe recipe : recipes) {
-            wrappers.add(new MachineItemRecipeWrapper(recipe));
+    public static List<MachineRecipeWrapper> fromHandler(MachineRecipeHandler handler) {
+        List<MachineRecipe> recipes = handler.getMachineRecipes();
+        List<MachineRecipeWrapper> wrappers = new ArrayList<>(recipes.size());
+        for (MachineRecipe recipe : recipes) {
+            wrappers.add(new MachineRecipeWrapper(recipe));
         }
         return wrappers;
     }

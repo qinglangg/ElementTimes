@@ -20,7 +20,9 @@ import org.apache.logging.log4j.Logger;
  * TODO: 橡胶树 树叶 橡胶矿典
  * TODO: 提取机：出橡胶，叶子出1，树苗出2
  * TODO: 化学
- * TODO: 1.7.10 1.13.2 1.14 兼容 （1.7就算了吧(KSGFK)）
+ * TODO: 1.13.2 1.14 兼容
+ * TODO: 1.7.10 兼容（优先度极低）
+ * @author KSGFK
  */
 @Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
 public class Elementtimes {

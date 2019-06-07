@@ -4,7 +4,7 @@ import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.util.RecipeUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;

@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.items.ItemHandlerHelper;

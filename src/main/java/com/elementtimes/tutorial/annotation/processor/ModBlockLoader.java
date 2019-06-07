@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
@@ -44,7 +45,18 @@ public class ModBlockLoader {
         ModBlock info = blockHolder.getAnnotation(ModBlock.class);
         Block block = ReflectUtil.getFromAnnotated(blockHolder, new Block(Material.ROCK)).orElse(new Block(Material.ROCK));
 
-        initBlock(block, info);
+        String defaultName;
+        if (blockHolder instanceof Class) {
+            defaultName = ((Class) blockHolder).getSimpleName().toLowerCase();
+        } else if (blockHolder instanceof Field) {
+            defaultName = ((Field) blockHolder).getName().toLowerCase();
+        } else {
+            defaultName = null;
+        }
+
+        initBlock(block, info, defaultName);
+        // 无法被链式调用的方法
+        initBlock2(block, blockHolder);
         // 矿辞
         initOreDict(block, blockHolder);
         // TileEntity
@@ -56,12 +68,31 @@ public class ModBlockLoader {
         into.add(block);
     }
 
-    private static void initBlock(Block block, ModBlock info) {
-        if (block.getRegistryName() == null) {
-            block.setRegistryName(info.registerName());
+    private static void initBlock(Block block, ModBlock info, String defaultName) {
+        String registryName = info.registerName();
+        if (registryName.isEmpty()) {
+            registryName = defaultName;
         }
-        block.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
+        if (block.getRegistryName() == null) {
+            if (registryName == null) {
+                warn("Block {} don't have a RegisterName. It's a Bug!!!", block);
+            } else {
+                block.setRegistryName(registryName);
+            }
+        }
+        String unlocalizedName = info.unlocalizedName();
+        if (unlocalizedName.isEmpty()) {
+            unlocalizedName = registryName;
+        }
+        block.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
         block.setCreativeTab(info.creativeTab().tab);
+    }
+
+    private static void initBlock2(Block block, AnnotatedElement blockHolder) {
+        ModBlock.HarvestLevel harvestLevel = blockHolder.getAnnotation(ModBlock.HarvestLevel.class);
+        if (harvestLevel != null) {
+            block.setHarvestLevel(harvestLevel.toolClass(), harvestLevel.level());
+        }
     }
 
     private static void initOreDict(Block block, AnnotatedElement blockHolder) {

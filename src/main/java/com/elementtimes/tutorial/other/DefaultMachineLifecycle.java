@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -16,7 +17,7 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
 
     private BaseMachine machine;
 
-    private MachineRecipeHandler.MachineRecipeCapture recipe;
+    private MachineRecipeCapture recipe;
     private ItemHandler inputItems;
     private TankHandler inputTanks;
     private ItemHandler outputItems;
@@ -33,7 +34,7 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
     @Override
     public boolean onCheckStart() {
         // 合成表
-            recipe = machine.getNextRecipe(inputItems, inputTanks);
+        recipe = machine.getNextRecipe(inputItems, inputTanks);
         if (machine.isRecipeCanWork(recipe, inputItems, inputTanks)) {
             // 能量
             assert recipe != null;

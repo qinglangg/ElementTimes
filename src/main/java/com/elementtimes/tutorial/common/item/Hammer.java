@@ -18,6 +18,11 @@ import net.minecraft.world.World;
 
 import java.util.Arrays;
 
+/**
+ * 大小锤子
+ * 唯一指定调试工具
+ * @author luqin2007
+ */
 public class Hammer extends Item {
 
     private static final String TAG_DAMAGE = "damage";
@@ -32,6 +37,7 @@ public class Hammer extends Item {
         ItemStack container = itemStack.copy();
         container.removeSubCompound(Elementtimes.MODID + "_bind");
         container.attemptDamageItem(d, itemRand, null);
+
         return container;
     }
 

@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

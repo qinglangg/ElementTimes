@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -10,16 +12,19 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
  * 与合成表有关的方法
  * 目前主要是 IRecipeFactory 相关辅助
+ * @author luqin2007
  */
 public class RecipeUtil {
 
@@ -91,11 +96,9 @@ public class RecipeUtil {
     }
 
     public static void collectOneBlockCraftingResult(String oreName, Map<ItemStack, ItemStack> receiver) {
-        BlockUtil.getAllBlocks(oreName).forEach(itemStack -> {
-            ItemStack input = itemStack.copy();
-            input.setCount(1);
-            ItemStack result = RecipeUtil.getCraftingResult(NonNullList.withSize(1, input));
-            receiver.put(input, result);
-        });
+        Arrays.stream(CraftingHelper.getIngredient(oreName).getMatchingStacks())
+                .filter(stack -> !stack.isEmpty() && Block.getBlockFromItem(stack.getItem()) != Blocks.AIR)
+                .map(stack -> ItemHandlerHelper.copyStackWithSize(stack, 1))
+                .forEach(stack -> receiver.put(stack, RecipeUtil.getCraftingResult(NonNullList.withSize(1, stack))));
     }
 }

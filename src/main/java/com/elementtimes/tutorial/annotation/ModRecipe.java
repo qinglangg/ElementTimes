@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ModRecipe {
+
     /**
      * 锤子合成
      * json 注册 我注册个锤子啊 头疼

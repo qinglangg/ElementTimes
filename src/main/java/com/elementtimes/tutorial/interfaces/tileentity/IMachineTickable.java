@@ -2,8 +2,7 @@ package com.elementtimes.tutorial.interfaces.tileentity;
 
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
-import com.elementtimes.tutorial.util.BlockUtil;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -118,7 +117,7 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
      *
      * @return 通常意味着可以进行下一次合成。
      */
-    default boolean isRecipeCanWork(@Nullable MachineRecipeHandler.MachineRecipeCapture recipeCapture, IItemHandler itemHandler, TankHandler tankHandler) {
+    default boolean isRecipeCanWork(@Nullable MachineRecipeCapture recipeCapture, IItemHandler itemHandler, TankHandler tankHandler) {
         if (recipeCapture == null) {
             return false;
         }
@@ -203,7 +202,9 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                 IBlockState state = world.getBlockState(pos);
                 IBlockState newState = updateState(state);
                 if (state != newState) {
-                    BlockUtil.setState(newState, world, pos);
+                    world.setBlockState(pos, state, 3);
+                    tileEntity.validate();
+                    world.setTileEntity(pos, tileEntity);
                 }
                 tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             }

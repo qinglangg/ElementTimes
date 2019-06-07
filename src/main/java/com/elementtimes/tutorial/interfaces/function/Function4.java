@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.interfaces.function;
 
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -26,7 +26,7 @@ public interface Function4<T1, T2, T3, T4, R> {
     R apply(T1 v1, T2 v2, T3 v3, T4 v4);
 
     @FunctionalInterface
-    interface Stack<T> extends Function4<MachineRecipeHandler.MachineRecipe, List<ItemStack>, List<FluidStack>, Integer, T> {
+    interface Stack<T> extends Function4<MachineRecipe, List<ItemStack>, List<FluidStack>, Integer, T> {
 
         /**
          * 根据输入和合成表，获取匹配的物品
@@ -37,6 +37,6 @@ public interface Function4<T1, T2, T3, T4, R> {
          * @return 合成所需的物品，包括数量
          */
         @Override
-        T apply(MachineRecipeHandler.MachineRecipe recipe, List<ItemStack> inputItems, List<FluidStack> inputFluids, Integer slot);
+        T apply(MachineRecipe recipe, List<ItemStack> inputItems, List<FluidStack> inputFluids, Integer slot);
     }
 }

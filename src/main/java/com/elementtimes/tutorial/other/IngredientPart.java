@@ -24,8 +24,9 @@ import java.util.stream.Collectors;
  * 合成表匹配
  * @author luqin2007
  */
+@SuppressWarnings({"unused", "FieldCanBeLocal", "WeakerAccess", "unchecked"})
 public class IngredientPart<T> {
-    
+
     private static String SYMBOL_ITEM_ALL = "[all]";
     private static String SYMBOL_ITEM_ORE = "[ore]";
     private static String SYMBOL_ITEM_ID = "[id]";
@@ -48,7 +49,7 @@ public class IngredientPart<T> {
      */
     public Supplier<List<T>> allViableValues;
 
-    IngredientPart(Function5.Match<T> matcher, Function4.Stack<T> getter, Supplier<List<T>> allViableValues) {
+    public IngredientPart(Function5.Match<T> matcher, Function4.Stack<T> getter, Supplier<List<T>> allViableValues) {
         this.getter = getter;
         this.matcher = matcher;
         this.allViableValues = allViableValues;

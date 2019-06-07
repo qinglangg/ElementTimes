@@ -25,8 +25,8 @@ public class Corn extends ItemFood {
 		if(!worldIn.isRemote) {
 			IBlockState state = worldIn.getBlockState(pos);
 			if(state.getBlock()==Blocks.FARMLAND&&state.getValue(BlockFarmland.MOISTURE)>0) {
-				worldIn.setBlockState(pos.up(),ElementtimesBlocks.cornCrop.getDefaultState());//设置玉米为第一个形态
-				player.getHeldItem(hand).shrink(1);//对手持物品-1
+				worldIn.setBlockState(pos.up(),ElementtimesBlocks.cornCrop.getDefaultState());
+				player.getHeldItem(hand).shrink(1);
 			}
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);

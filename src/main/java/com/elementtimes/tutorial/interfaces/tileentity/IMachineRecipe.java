@@ -1,7 +1,8 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
-import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.util.ItemUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,9 +37,9 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
      * 通常这里只检查输入量是否足够
      */
     @Nullable
-    default MachineRecipeHandler.MachineRecipeCapture getNextRecipe(IItemHandler input, TankHandler tankHandler) {
+    default MachineRecipeCapture getNextRecipe(IItemHandler input, TankHandler tankHandler) {
         List<ItemStack> items = ItemUtil.toList(input);
-        MachineRecipeHandler.MachineRecipeCapture[] captures = getRecipes().matchInput(items, tankHandler.getFluidStacks());
+        MachineRecipeCapture[] captures = getRecipes().matchInput(items, tankHandler.getFluidStacks());
         if (captures.length == 0) {
             return null;
         }
@@ -49,12 +50,12 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
      * 根据所在上下文获取正在执行的合成表
      */
     @Nullable
-    MachineRecipeHandler.MachineRecipeCapture getWorkingRecipe();
+    MachineRecipeCapture getWorkingRecipe();
 
     /**
      * 设置正在执行的合成表
      */
-    void setWorkingRecipe(MachineRecipeHandler.MachineRecipeCapture capture);
+    void setWorkingRecipe(MachineRecipeCapture capture);
 
     @Override
     default NBTTagCompound serializeNBT() {
@@ -65,8 +66,8 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
     default void deserializeNBT(NBTTagCompound nbt) {
         if (nbt.hasKey(NBT_RECIPE) && getRecipes() != null) {
             NBTTagCompound recipe = nbt.getCompoundTag(NBT_RECIPE);
-            MachineRecipeHandler.MachineRecipeCapture capture =
-                    MachineRecipeHandler.MachineRecipeCapture.fromNBT(recipe, getRecipes());
+            MachineRecipeCapture capture =
+                    MachineRecipeCapture.fromNBT(recipe, getRecipes());
             if (capture != null) {
                 setWorkingRecipe(capture);
             }

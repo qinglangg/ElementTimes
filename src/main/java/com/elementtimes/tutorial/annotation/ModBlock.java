@@ -16,8 +16,20 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface ModBlock {
-    String registerName();
-    String unlocalizedName();
+    /**
+     * RegisterName，代表方块注册名
+     * 当该注解注解 Field 且方块 registerName 与属性名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * 当该注解注解 Class 且方块 registerName 与类名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * @return registerName
+     */
+    String registerName() default "";
+
+    /**
+     * UnlocalizedName，用于获取方块显示名
+     * 当 unlocalizedName 与 registerName 相同时，可省略
+     * @return unlocalizedName
+     */
+    String unlocalizedName() default "";
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**
@@ -110,5 +122,16 @@ public @interface ModBlock {
          * 否则，为 inventory
          */
         String[] properties() default {};
+    }
+
+    /**
+     * 相当于 setHarvestLevel 方法
+     * 用于消灭 Block 类
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface HarvestLevel {
+        String toolClass() default "pickaxe";
+        int level() default 2;
     }
 }

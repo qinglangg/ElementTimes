@@ -11,10 +11,13 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 
 /**
  * 加载物品
@@ -39,9 +42,18 @@ class ModItemLoader {
         }
         Item item = ReflectUtil.getFromAnnotated(itemHolder, new Item()).orElse(new Item());
 
+        String defaultName;
+        if (itemHolder instanceof Class) {
+            defaultName = ((Class) itemHolder).getSimpleName().toLowerCase();
+        } else if (itemHolder instanceof Field) {
+            defaultName = ((Field) itemHolder).getName().toLowerCase();
+        } else {
+            defaultName = null;
+        }
+
         initOreDict(item, itemHolder);
         // 矿辞
-        initItem(item, info);
+        initItem(item, info, defaultName);
         // 子类型
         initSubItem(item, itemHolder);
         // 合成表保留
@@ -52,11 +64,23 @@ class ModItemLoader {
         into.add(item);
     }
 
-    private static void initItem(Item item, ModItem info) {
-        if (item.getRegistryName() == null) {
-            item.setRegistryName(info.registerName());
+    private static void initItem(Item item, ModItem info, String defaultName) {
+        String registryName = info.registerName();
+        if (registryName.isEmpty()) {
+            registryName = defaultName;
         }
-        item.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
+        if (item.getRegistryName() == null) {
+            if (registryName == null) {
+                warn("Item {} don't have a RegisterName. It's a Bug!!!", item);
+            } else {
+                item.setRegistryName(registryName);
+            }
+        }
+        String unlocalizedName = info.unlocalizedName();
+        if (unlocalizedName.isEmpty()) {
+            unlocalizedName = registryName;
+        }
+        item.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
     }
 
