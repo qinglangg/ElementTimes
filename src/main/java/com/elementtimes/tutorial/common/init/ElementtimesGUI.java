@@ -18,9 +18,9 @@ import javax.annotation.Nullable;
  *
  * @author KSGFK create in 2019/2/17
  */
-public class ElementtimesGui implements IGuiHandler {
+public class ElementtimesGUI implements IGuiHandler {
 
-    public static ElementtimesGui GUI;
+    public static ElementtimesGUI GUI;
 
     public static final int ELEMENT_GENERATOR = 0;
     public static final int PULVERIZE = 1;

@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.machine;
 
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
-import com.elementtimes.tutorial.common.init.ElementtimesGui;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.TileFurnace;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -24,7 +24,7 @@ public class Furnace extends BlockTileBase<TileFurnace> {
     public static IProperty<Boolean> BURNING = PropertyBool.create("burning");
 
     public Furnace() {
-        super(ElementtimesGui.FURNACE, TileFurnace.class, false);
+        super(ElementtimesGUI.FURNACE, TileFurnace.class, false);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
     }

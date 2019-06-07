@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common;
 
 import com.elementtimes.tutorial.annotation.processor.ElementRegister;
-import com.elementtimes.tutorial.common.init.ElementtimesGui;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.world.gen.WorldGenElementTimesOres;
@@ -28,7 +28,7 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new WorldGenElementTimesOres(), 0);
-        new ElementtimesGui().init();
+        new ElementtimesGUI().init();
         ElementtimesRecipe.init(event);
     }
 

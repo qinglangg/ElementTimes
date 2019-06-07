@@ -1,8 +1,6 @@
 package com.elementtimes.tutorial.common.block;
 
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;
 
 /**

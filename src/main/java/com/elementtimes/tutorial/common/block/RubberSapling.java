@@ -35,7 +35,7 @@ public class RubberSapling extends BlockBush implements IGrowable {
                     true,
                     4,
                     ElementtimesBlocks.rubberLog.getDefaultState(),
-                    ElementtimesBlocks.rubberLeaf.getDefaultState(),
+                    ElementtimesBlocks.rubberLeaf.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.TRUE).withProperty(BlockLeaves.DECAYABLE, Boolean.TRUE),
                     false);
             IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
             int i = 0;

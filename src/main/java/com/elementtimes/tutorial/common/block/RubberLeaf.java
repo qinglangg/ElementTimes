@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class RubberLeaf extends BlockLeaves {
     public RubberLeaf() {
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, true));
     }
 
     @Override

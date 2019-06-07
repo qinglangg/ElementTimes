@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.machine;
 
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
-import com.elementtimes.tutorial.common.init.ElementtimesGui;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.TileGeneratorFuel;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -24,7 +24,7 @@ public class FuelGenerator extends BlockTileBase<TileGeneratorFuel> {
     public static IProperty<Boolean> BURNING = PropertyBool.create("burning");
 
     public FuelGenerator() {
-        super(ElementtimesGui.FUEL_GENERATOR, TileGeneratorFuel.class, true);
+        super(ElementtimesGUI.FUEL_GENERATOR, TileGeneratorFuel.class, true);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
     }
