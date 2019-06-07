@@ -1,17 +1,20 @@
 {
   "forge_marker": 1,
+  "defaults": {
+    "model": "leaves",
+    "textures": {
+      "all": "elementtimes:blocks/rubber_tree/leaf"
+    }
+  },
   "variants": {
-    "check_decay=true,decayable=false": {
-      "model": "elementtimes:rubber_leaf"
+    "inventory": [{}],
+    "check_decay": {
+      "true": {},
+      "false": {}
     },
-    "check_decay=true,decayable=true": {
-      "model": "elementtimes:rubber_leaf"
-    },
-    "check_decay=false,decayable=false": {
-      "model": "elementtimes:rubber_leaf"
-    },
-    "check_decay=false,decayable=true": {
-      "model": "elementtimes:rubber_leaf"
+    "decayable": {
+      "true": {},
+      "false": {}
     }
   }
 }

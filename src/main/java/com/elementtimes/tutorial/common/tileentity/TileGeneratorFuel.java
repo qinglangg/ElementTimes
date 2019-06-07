@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 /**
  * 火力发电机的TileEntity
@@ -27,7 +28,8 @@ public class TileGeneratorFuel extends BaseGenerator {
         sRecipeHandler = new MachineRecipeHandler()
                 .add("0")
                 .addItemInput(itemStack -> TileEntityFurnace.getItemBurnTime(itemStack) > 0,
-                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1))
+                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
+                              Collections.emptyList())
                 .addCost(value -> {
                     if (value.inputs.isEmpty()) {
                         return 0;

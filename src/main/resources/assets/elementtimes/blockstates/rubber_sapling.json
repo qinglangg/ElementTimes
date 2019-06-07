@@ -1,7 +1,13 @@
 {
-  "variants": {
-    "normal": {
-      "model": "elementtimes:rubber_sapling"
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cross",
+    "textures": {
+      "cross": "elementtimes:blocks/rubber_tree/sapling"
     }
+  },
+  "variants": {
+    "inventory": [{}],
+    "normal": [{}]
   }
 }

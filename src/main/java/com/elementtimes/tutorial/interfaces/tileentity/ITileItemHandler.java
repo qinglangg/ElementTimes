@@ -69,21 +69,21 @@ public interface ITileItemHandler extends ICapabilityProvider, INBTSerializable<
     default void deserializeNBT(NBTTagCompound nbt) {
         // 旧版本兼容
         if (nbt.hasKey(NBT_ITEMS_INPUT_OLD)) {
-            getItemHandler(SideHandlerType.INPUT).deserializeNBT(nbt.getCompoundTag("inputs"));
+            getItemHandler(SideHandlerType.INPUT).deserializeNBT(nbt.getCompoundTag(NBT_ITEMS_INPUT_OLD));
             nbt.removeTag(NBT_ITEMS_INPUT_OLD);
         }
-        if (nbt.hasKey(NBT_ITEMS_OUTPUT)) {
-            getItemHandler(SideHandlerType.OUTPUT).deserializeNBT(nbt.getCompoundTag(NBT_ITEMS_OUTPUT));
-            nbt.removeTag(NBT_ITEMS_OUTPUT);
+        if (nbt.hasKey(NBT_ITEMS_OUTPUT_OLD)) {
+            getItemHandler(SideHandlerType.OUTPUT).deserializeNBT(nbt.getCompoundTag(NBT_ITEMS_OUTPUT_OLD));
+            nbt.removeTag(NBT_ITEMS_OUTPUT_OLD);
         }
 
         if (nbt.hasKey(NBT_ITEMS)) {
             NBTTagCompound nbtItems = nbt.getCompoundTag(NBT_ITEMS);
             if (nbtItems.hasKey(NBT_ITEMS_INPUT)) {
-                getItemHandler(SideHandlerType.INPUT).deserializeNBT(nbt.getCompoundTag(NBT_ITEMS_INPUT));
+                getItemHandler(SideHandlerType.INPUT).deserializeNBT(nbtItems.getCompoundTag(NBT_ITEMS_INPUT));
             }
             if (nbtItems.hasKey(NBT_ITEMS_OUTPUT)) {
-                getItemHandler(SideHandlerType.OUTPUT).deserializeNBT(nbt.getCompoundTag(NBT_ITEMS_OUTPUT));
+                getItemHandler(SideHandlerType.OUTPUT).deserializeNBT(nbtItems.getCompoundTag(NBT_ITEMS_OUTPUT));
             }
         }
     }

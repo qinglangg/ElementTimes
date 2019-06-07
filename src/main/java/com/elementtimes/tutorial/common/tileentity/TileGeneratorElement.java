@@ -1,15 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.interfaces.item.IGeneratorElement;
 import com.elementtimes.tutorial.other.MachineRecipeHandler;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 /**
  * 元素发电机的 TileEntity
@@ -27,21 +23,14 @@ public class TileGeneratorElement extends BaseGenerator {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0")
-                .addCost((i) -> {
-                    List<ItemStack> inputs = i.inputs;
-                    if (inputs.isEmpty() || inputs.get(0).isEmpty()) {
-                        return 0;
-                    }
-                    Item item = inputs.get(0).getItem();
-                    if (item instanceof IGeneratorElement) {
-                        return -((IGeneratorElement) item).getEnergy();
-                    }
-                    return 0;
-                })
-                .addItemInput(itemStack -> !itemStack.isEmpty() && itemStack.getItem() instanceof IGeneratorElement,
-                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1))
-                .build();
+                .add("0", r -> -ElementtimesConfig.GENERAL.generaterFive, ElementtimesItems.fiveElements)
+                .add("1", r -> -ElementtimesConfig.GENERAL.generaterEnd, ElementtimesItems.endElement)
+                .add("2", r -> -ElementtimesConfig.GENERAL.generaterSoilGen, ElementtimesItems.soilElement)
+                .add("3", r -> -ElementtimesConfig.GENERAL.generaterWoodGen, ElementtimesItems.woodElement)
+                .add("3", r -> -ElementtimesConfig.GENERAL.generaterWaterGen, ElementtimesItems.waterElement)
+                .add("3", r -> -ElementtimesConfig.GENERAL.generaterFireGen, ElementtimesItems.fireElement)
+                .add("3", r -> -ElementtimesConfig.GENERAL.generaterSun, ElementtimesItems.photoElement)
+                .add("4", r -> -ElementtimesConfig.GENERAL.generaterGoldGen, ElementtimesItems.goldElement);
     }
 
     @Nonnull

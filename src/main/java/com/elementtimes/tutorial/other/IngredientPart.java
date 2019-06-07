@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.other;
 
-import com.elementtimes.tutorial.interfaces.function.Function3;
+import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.interfaces.function.Function5;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -8,11 +8,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreIngredient;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * 合成表匹配
@@ -24,22 +30,37 @@ public class IngredientPart<T> {
     private static String SYMBOL_ITEM_ORE = "[ore]";
     private static String SYMBOL_ITEM_ID = "[id]";
 
-    Function5.Match<T> matcher;
+    /**
+     * 测试输入是否匹配
+     * 用于机器检索合成表
+     */
+    public Function5.Match<T> matcher;
 
-    Function3.Stack<T> getter;
+    /**
+     * 根据输入获取实际物品及数量
+     * 用于获取输入输出物品
+     */
+    public Function4.Stack<T> getter;
 
-    IngredientPart(Function5.Match<T> matcher, Function3.Stack<T> getter) {
+    /**
+     * 获取所有可用值
+     * 用于 Jei 兼容
+     */
+    public Supplier<List<T>> allViableValues;
+
+    IngredientPart(Function5.Match<T> matcher, Function4.Stack<T> getter, Supplier<List<T>> allViableValues) {
         this.getter = getter;
         this.matcher = matcher;
+        this.allViableValues = allViableValues;
     }
 
     private IngredientPart() {}
 
     public static IngredientPart<ItemStack> forItem(Ingredient ingredient, int count) {
         Function5.Match<ItemStack> match = (recipe, slot, inputItems, inputFluids, input) -> ingredient.apply(input);
-        Function3.Stack<ItemStack> get = (recipe, slot, input) -> {
-            if (input != null && !input.isEmpty()) {
-                return ItemHandlerHelper.copyStackWithSize(input, count);
+        Function4.Stack<ItemStack> get = (recipe, items, fluids, slot) -> {
+            if (items != null && !items.isEmpty() && !items.get(slot).isEmpty()) {
+                return ItemHandlerHelper.copyStackWithSize(items.get(slot), count);
             } else {
                 ItemStack[] stacks = ingredient.getMatchingStacks();
                 if (stacks.length == 0) {
@@ -49,7 +70,11 @@ public class IngredientPart<T> {
                 }
             }
         };
-        return new IngredientPart<>(match, get);
+        Supplier<List<ItemStack>> allViableValues = () ->
+                Arrays.stream(ingredient.getMatchingStacks())
+                        .map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, count))
+                        .collect(Collectors.toList());
+        return new IngredientPart<>(match, get, allViableValues);
     }
 
     public static IngredientPart<ItemStack> forItem(ItemStack itemStack) {
@@ -59,8 +84,9 @@ public class IngredientPart<T> {
             }
             return false;
         };
-        Function3.Stack<ItemStack> get = (recipe, slot, input) -> itemStack.copy();
-        return new IngredientPart<>(match, get);
+        Function4.Stack<ItemStack> get = (recipe, items, fluids, slot) -> itemStack.copy();
+        Supplier<List<ItemStack>> allViableValues = () -> Collections.singletonList(itemStack);
+        return new IngredientPart<>(match, get, allViableValues);
     }
 
     public static IngredientPart<ItemStack> forItem(Item item, int count) {
@@ -70,8 +96,9 @@ public class IngredientPart<T> {
             }
             return false;
         };
-        Function3.Stack<ItemStack> get = (recipe, slot, input) -> new ItemStack(item, count);
-        return new IngredientPart<>(match, get);
+        Function4.Stack<ItemStack> get = (recipe, items, fluids, slot) -> new ItemStack(item, count);
+        Supplier<List<ItemStack>> allViableValues = () -> Collections.singletonList(new ItemStack(item, count));
+        return new IngredientPart<>(match, get, allViableValues);
     }
 
     public static IngredientPart<ItemStack> forItem(Block block, int count) {
@@ -92,14 +119,22 @@ public class IngredientPart<T> {
                     return true;
                 };
 
-                getter = (recipe, slot, input) -> {
+                getter = (recipe, items, fluids, slot) -> {
                     for (IngredientPart<ItemStack> part : contains) {
-                        ItemStack stack = part.getter.apply(recipe, slot, input);
+                        ItemStack stack = part.getter.apply(recipe, items, fluids, slot);
                         if (!stack.isEmpty()) {
                             return stack;
                         }
                     }
                     return ItemStack.EMPTY;
+                };
+
+                allViableValues = () -> {
+                    List<ItemStack> items = new LinkedList<>();
+                    Arrays.stream(contains)
+                            .map(contain -> contain.allViableValues.get())
+                            .forEach(items::addAll);
+                    return items;
                 };
             }
         };
@@ -132,21 +167,25 @@ public class IngredientPart<T> {
     
     public static IngredientPart<FluidStack> forFluid(FluidStack fluidStack) {
         Function5.Match<FluidStack> match = (recipe, slot, inputItems, inputFluids, input) -> input.containsFluid(fluidStack);
-        Function3.Stack<FluidStack> get = (recipe, slot, input) -> fluidStack.copy();
-        return new IngredientPart<>(match, get);
+        Function4.Stack<FluidStack> get = (recipe, items, fluids, slot) -> fluidStack.copy();
+        Supplier<List<FluidStack>> allViableValues = () -> Collections.singletonList(fluidStack);
+        return new IngredientPart<>(match, get, allViableValues);
     }
 
     public static IngredientPart<FluidStack> forFluid(Fluid fluid, int amount) {
         Function5.Match<FluidStack> match = (recipe, slot, inputItems, inputFluids, input) -> fluid == input.getFluid() && amount <= input.amount;
-        Function3.Stack<FluidStack> get = (recipe, slot, input) -> new FluidStack(fluid, amount);
-        return new IngredientPart<>(match, get);
+        Function4.Stack<FluidStack> get = (recipe, items, fluids, slot) -> new FluidStack(fluid, amount);
+        Supplier<List<FluidStack>> allViableValues = () -> Collections.singletonList(new FluidStack(fluid, amount));
+        return new IngredientPart<>(match, get, allViableValues);
     }
 
     public static IngredientPart<ItemStack> EMPTY_ITEM = new IngredientPart<>(
             (recipe, slot, inputItems, inputFluids, input) -> false,
-            (recipe, slot, input) -> ItemStack.EMPTY);
+            (recipe, items, fluids, slot) -> ItemStack.EMPTY,
+            () -> Collections.singletonList(ItemStack.EMPTY));
 
     public static IngredientPart<FluidStack> EMPTY_FLUID = new IngredientPart<>(
             (recipe, slot, inputItems, inputFluids, input) -> false,
-            (recipe, slot, input) -> null);
+            (recipe, items, fluids, slot) -> null,
+            () -> Collections.singletonList(new FluidStack(FluidRegistry.WATER, 0)));
 }

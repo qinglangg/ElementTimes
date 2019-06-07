@@ -11,14 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * TODO: ！！！机器吞物品，物品不显示，能量不增减 很难受
  * TODO: 酿造台 1000000-10000(io)-16000(/item)
  * TODO: 木精华从树叶获取。具体获取方法未知
  * TODO: 盐矿 盐 盐粉 盐矿生成在水里，类似粘土，吃精准；数量和硫矿同，包括掉落，锤粉（合成），燃烧，酿造
  * TODO: 整形机测试及 jei 兼容
- * TODO: 磨粉机添加 烈焰棒->烈焰粉*8 合成表
  * TODO: 重构机 多层块 合成
- * TODO: 橡胶树 元素树及其材质
+ * TODO: 元素树及其材质
  * TODO: 橡胶树 树叶 橡胶矿典
  * TODO: 提取机：出橡胶，叶子出1，树苗出2
  * TODO: 化学

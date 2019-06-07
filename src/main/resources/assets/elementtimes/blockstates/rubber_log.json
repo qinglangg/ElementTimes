@@ -1,17 +1,23 @@
 {
   "forge_marker": 1,
+  "defaults": {
+    "model": "cube_column",
+    "textures": {
+      "end": "elementtimes:blocks/rubber_tree/top",
+      "side": "elementtimes:blocks/rubber_tree/side"
+    }
+  },
   "variants": {
-    "axis=y": {
-      "model": "elementtimes:rubber_log"
-    },
-    "axis=z": {
-      "model": "elementtimes:rubber_log",
-      "x": 90
-    },
-    "axis=x": {
-      "model": "elementtimes:rubber_log",
-      "x": 90,
-      "y": 90
+    "inventory": [{}],
+    "axis": {
+      "x": {
+        "x": 90,
+        "y": 90
+      },
+      "y": {},
+      "z": {
+        "x": 90
+      }
     }
   }
 }

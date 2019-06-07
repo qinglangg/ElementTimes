@@ -4,6 +4,7 @@ import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.MachineRecipeHandler;
+import net.minecraft.init.Items;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +32,8 @@ public class TileCompressor extends BaseOneToOne {
                 .add("6", ElementtimesConfig.COMPRESSOR.powderEnergy, "gemQuartz", 1, ElementtimesItems.plateQuartz, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("7", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSteel", 1, ElementtimesItems.plateSteel, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("8", ElementtimesConfig.COMPRESSOR.powderEnergy, "stone", 1, ElementtimesItems.plateStone, ElementtimesConfig.COMPRESSOR.powderCount)
-                .add("9", ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.sucroseCharCoal, 1, ElementtimesItems.plateCarbon, ElementtimesConfig.COMPRESSOR.powderCount);
+                .add("9", ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.sucroseCharCoal, 1, ElementtimesItems.plateCarbon, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("10", ElementtimesConfig.COMPRESSOR.powderEnergy, Items.BLAZE_ROD, 1, Items.BLAZE_POWDER, 8);
     }
 
     @Nonnull

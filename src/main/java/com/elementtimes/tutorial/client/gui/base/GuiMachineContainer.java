@@ -8,6 +8,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
+import java.io.IOException;
+
 /**
  * 对所有机器 gui 的抽象
  *
@@ -60,5 +62,11 @@ public class GuiMachineContainer<T extends BaseMachine> extends GuiContainer {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
         String name = machine.getName();
         this.fontRenderer.drawString(name, 88 - this.fontRenderer.getStringWidth(name) / 2, 60, 0x404040);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException {
+        super.actionPerformed(button);
+        machine.actionPerformed(button, this);
     }
 }

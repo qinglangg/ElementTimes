@@ -4,7 +4,7 @@
     "model": "cube"
   },
   "variants": {
-    "burning": {
+    "running": {
       "false": {
         "textures": {
           "particle": "elementtimes:blocks/fuel_generator/a",

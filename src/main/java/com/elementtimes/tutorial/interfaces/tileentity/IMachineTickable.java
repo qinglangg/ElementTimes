@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.other.MachineRecipeHandler;
 import com.elementtimes.tutorial.util.BlockUtil;
@@ -153,6 +154,12 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
      * @return 新的 IBlockState
      */
     default IBlockState updateState(IBlockState old) {
+        if (old.getPropertyKeys().contains(BaseClosableMachine.IS_RUNNING)) {
+            boolean running = isWorking() && !isPause();
+            if (old.getValue(BaseClosableMachine.IS_RUNNING) != running) {
+                return old.withProperty(BaseClosableMachine.IS_RUNNING, running);
+            }
+        }
         return old;
     }
 
@@ -197,10 +204,6 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                 IBlockState newState = updateState(state);
                 if (state != newState) {
                     BlockUtil.setState(newState, world, pos);
-                    world.markBlockRangeForRenderUpdate(pos, pos);
-                    // 恢复 TileEntity
-                    tileEntity.validate();
-                    world.setTileEntity(pos, tileEntity);
                 }
                 tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             }

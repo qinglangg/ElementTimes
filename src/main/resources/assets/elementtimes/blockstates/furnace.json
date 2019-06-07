@@ -4,26 +4,26 @@
     "model": "cube"
   },
   "variants": {
-    "burning": {
+    "running": {
       "false": {
         "textures": {
-          "particle": "elementtimes:blocks/furnace/a",
-          "down": "elementtimes:blocks/furnace/a",
-          "up": "elementtimes:blocks/furnace/a",
-          "north": "elementtimes:blocks/furnace/b",
-          "south": "elementtimes:blocks/furnace/b",
-          "west": "elementtimes:blocks/furnace/b",
+          "particle": "elementtimes:blocks/furnace/top",
+          "down": "elementtimes:blocks/furnace/top",
+          "up": "elementtimes:blocks/furnace/top",
+          "north": "elementtimes:blocks/furnace/side",
+          "south": "elementtimes:blocks/furnace/side",
+          "west": "elementtimes:blocks/furnace/side",
           "east": "elementtimes:blocks/furnace/off"
         }
       },
       "true": {
         "textures": {
-          "particle": "elementtimes:blocks/furnace/a",
-          "down": "elementtimes:blocks/furnace/a",
-          "up": "elementtimes:blocks/furnace/a",
-          "north": "elementtimes:blocks/furnace/b",
-          "south": "elementtimes:blocks/furnace/b",
-          "west": "elementtimes:blocks/furnace/b",
+          "particle": "elementtimes:blocks/furnace/top",
+          "down": "elementtimes:blocks/furnace/top",
+          "up": "elementtimes:blocks/furnace/top",
+          "north": "elementtimes:blocks/furnace/side",
+          "south": "elementtimes:blocks/furnace/side",
+          "west": "elementtimes:blocks/furnace/side",
           "east": "elementtimes:blocks/furnace/on"
         }
       }

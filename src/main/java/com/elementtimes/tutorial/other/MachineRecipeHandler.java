@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.other;
 
-import com.elementtimes.tutorial.interfaces.function.Function3;
+import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.interfaces.function.Function5;
 import com.elementtimes.tutorial.util.FluidUtil;
 import com.elementtimes.tutorial.util.ItemUtil;
@@ -27,6 +27,10 @@ public class MachineRecipeHandler {
     
     private List<MachineRecipe> mMachineRecipes = new LinkedList<>();
 
+    public List<MachineRecipe> getMachineRecipes() {
+        return mMachineRecipes;
+    }
+
     public MachineRecipeBuilder add(String name) {
         return new MachineRecipeBuilder(name);
     }
@@ -39,25 +43,35 @@ public class MachineRecipeHandler {
                 .build();
     }
 
+    public MachineRecipeHandler add(String name, ToIntFunction<MachineRecipeCapture> energy, Item input) {
+        return add(name)
+                .addCost(energy)
+                .addItemInput(IngredientPart.forItem(input, 1))
+                .build();
+    }
+
     public MachineRecipeHandler add(String name, int energy, Item input, int inputCount, Item output, int outputCount) {
         return add(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
-                .addItemOutput(IngredientPart.forItem(output, outputCount)).build();
+                .addItemOutput(IngredientPart.forItem(output, outputCount))
+                .build();
     }
 
     public MachineRecipeHandler add(String name, int energy, Block input, int inputCount, Item output, int outputCount) {
         return add(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
-                .addItemOutput(IngredientPart.forItem(output, outputCount)).build();
+                .addItemOutput(IngredientPart.forItem(output, outputCount))
+                .build();
     }
 
     public MachineRecipeHandler add(String name, int energy, Block input, int inputCount, Block output, int outputCount) {
         return add(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
-                .addItemOutput(IngredientPart.forItem(output, outputCount)).build();
+                .addItemOutput(IngredientPart.forItem(output, outputCount))
+                .build();
     }
 
     public MachineRecipeHandler add(String name, int energy, Item input, int inputCount, ItemStack output) {
@@ -192,16 +206,23 @@ public class MachineRecipeHandler {
             return this;
         }
 
-        public MachineRecipeBuilder addItemInput(Predicate<ItemStack> inputCheck, Function<ItemStack, ItemStack> inputConvert) {
-            Function3.Stack<ItemStack> get = (recipe, slot, input) -> inputConvert.apply(input);
+        /**
+         * 动态匹配
+         *
+         * @param inputCheck 检查输入物品是否符合要求
+         * @param inputConvert 根据输入物品获取实际输入物品种类及数量
+         * @param allInputValues 所有可能的输入，用于jei
+         * @return 构建器
+         */
+        public MachineRecipeBuilder addItemInput(Predicate<ItemStack> inputCheck, Function<ItemStack, ItemStack> inputConvert, List<ItemStack> allInputValues) {
+            Function4.Stack<ItemStack> get = (recipe, input, fluids, i) -> inputConvert.apply(input.get(i));
             Function5.Match<ItemStack> match = (recipe, slot, inputItems1, inputFluids1, input) -> inputCheck.test(input);
-
-            return addItemInput(new IngredientPart<>(match, get));
+            return addItemInput(new IngredientPart<>(match, get, () -> allInputValues));
         }
 
-        public MachineRecipeBuilder addItemOutput(Function3.Stack<ItemStack> outputGetter) {
+        public MachineRecipeBuilder addItemOutput(Function4.Stack<ItemStack> outputGetter, List<ItemStack> allInputValues) {
             Function5.Match<ItemStack> matcher = (recipe, slot, inputItems1, inputFluids1, input) -> true;
-            return addItemOutput(new IngredientPart<>(matcher, outputGetter));
+            return addItemOutput(new IngredientPart<>(matcher, outputGetter, () -> allInputValues));
         }
 
         public MachineRecipeHandler build() {
@@ -281,22 +302,22 @@ public class MachineRecipeHandler {
 
             this.inputs = new ArrayList<>(recipe.inputs.size());
             for (int i = 0; i < recipe.inputs.size(); i++) {
-                inputs.add(i, recipe.inputs.get(i).getter.apply(recipe, i, input.get(i)));
+                inputs.add(i, recipe.inputs.get(i).getter.apply(recipe, input, fluids, i));
             }
 
             this.outputs = new ArrayList<>(recipe.outputs.size());
             for (int i = 0; i < recipe.outputs.size(); i++) {
-                outputs.add(i, recipe.outputs.get(i).getter.apply(recipe, i, null));
+                outputs.add(i, recipe.outputs.get(i).getter.apply(recipe, input, fluids, i));
             }
 
             this.fluidInputs = new ArrayList<>(recipe.fluidInputs.size());
             for (int i = 0; i < recipe.fluidInputs.size(); i++) {
-                fluidInputs.add(i, recipe.fluidInputs.get(i).getter.apply(recipe, i, fluids.get(i)));
+                fluidInputs.add(i, recipe.fluidInputs.get(i).getter.apply(recipe, input, fluids, i));
             }
 
             this.fluidOutputs = new ArrayList<>(recipe.fluidOutputs.size());
             for (int i = 0; i < recipe.fluidOutputs.size(); i++) {
-                fluidOutputs.add(i, recipe.fluidOutputs.get(i).getter.apply(recipe, i, null));
+                fluidOutputs.add(i, recipe.fluidOutputs.get(i).getter.apply(recipe, input, fluids, i));
             }
         }
 

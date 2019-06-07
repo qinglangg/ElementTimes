@@ -1,10 +1,12 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.MachineRecipeHandler;
 import com.elementtimes.tutorial.util.RecipeUtil;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -81,5 +83,24 @@ public class TileForming extends BaseOneToOne {
     @Override
     public int getMaxEnergyChange() {
         return ElementtimesConfig.FORMING.maxExtract;
+    }
+
+    @Nonnull
+    @Override
+    public GuiButton[] createButton() {
+        return new GuiButton[] {
+                new GuiButton(0, 0, 0, mode == Mode.Forming ? Mode.Gear.name() : Mode.Forming.name())
+        };
+    }
+
+    @Override
+    public void actionPerformed(GuiButton button, GuiMachineContainer guiContainer) {
+        if (button.id == 0) {
+            if (mode == Mode.Forming) {
+                setMode(Mode.Gear);
+            } else {
+                setMode(Mode.Forming);
+            }
+        }
     }
 }

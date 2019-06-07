@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 /**
  * 电炉
@@ -27,13 +28,14 @@ public class TileFurnace extends BaseOneToOne {
         sRecipeHandler = new MachineRecipeHandler()
                 .add("0")
                 .addItemInput(itemStack -> !FurnaceRecipes.instance().getSmeltingResult(itemStack).isEmpty(),
-                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1))
-                .addItemOutput((recipe, slot, input) -> {
-                    if (input == null || input.isEmpty()) {
+                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
+                              Collections.emptyList())
+                .addItemOutput((recipe, input, fluids, i) -> {
+                    if (input == null || input.isEmpty() || input.get(0).isEmpty()) {
                         return ItemStack.EMPTY;
                     }
-                    return FurnaceRecipes.instance().getSmeltingResult(input).copy();
-                })
+                    return FurnaceRecipes.instance().getSmeltingResult(input.get(0)).copy();
+                }, Collections.emptyList())
                 .addCost(100)
                 .build();
     }

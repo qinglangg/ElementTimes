@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.Slot;
@@ -39,6 +40,11 @@ public interface IGuiProvider {
      * @return 按钮
      */
     GuiButton[] getButtons();
+
+    /**
+     * 按钮响应
+     */
+    default void actionPerformed(GuiButton button, GuiMachineContainer guiContainer) {}
 
     /**
      * 模板。只有一个槽位，位于中间

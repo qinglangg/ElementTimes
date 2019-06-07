@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "elementtimes:blocks/elementgeneraterdown",
-        "side": "elementtimes:blocks/pulverizer"
-    }
-}

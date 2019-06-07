@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.inventory.base;
 
+import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import net.minecraft.client.gui.GuiButton;
@@ -88,10 +89,10 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
         super.detectAndSendChanges();
 
         RfEnergy.EnergyProxy energyProxy = machine.getReadonlyEnergyProxy();
-        int total = energyProxy.getMaxEnergyStored();
-        short stored = total == 0 ? 0 : (short) (Short.MAX_VALUE * energyProxy.getEnergyStored() / total);
-        total = machine.getEnergyUnprocessed() + machine.getEnergyProcessed();
-        short processed = total == 0 ? 0 : (short) (Short.MAX_VALUE * machine.getEnergyProcessed() / total);
+        float totalEnergy = Math.abs(energyProxy.getMaxEnergyStored());
+        int stored = totalEnergy == 0 ? 0 : (int) (Short.MAX_VALUE * (energyProxy.getEnergyStored() / totalEnergy));
+        float totalProcessed = Math.abs(machine.getEnergyUnprocessed() + machine.getEnergyProcessed());
+        int processed = totalProcessed == 0 ? 0 : (int) (Short.MAX_VALUE * (machine.getEnergyProcessed() / totalProcessed));
 
         listeners.forEach(listener -> {
             listener.sendWindowProperty(this, 0, stored);
@@ -123,6 +124,10 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
 
     public GuiButton[] getButtons() {
         return machine.getButtons();
+    }
+
+    public void actionPerformed(GuiButton button, GuiMachineContainer container) {
+        machine.actionPerformed(button, container);
     }
 
     public String getName() {
