@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.plugin.jei;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.annotation.ModSkip;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import com.elementtimes.tutorial.common.tileentity.TilePulverize;
@@ -22,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 @JEIPlugin
-@ModSkip
 public class JEISupport implements IModPlugin {
 
     private static final String ID_COMPRESSOR = Elementtimes.MODID + ".compressor.jei.category";

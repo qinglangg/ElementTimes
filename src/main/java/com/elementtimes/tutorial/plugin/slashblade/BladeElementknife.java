@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.plugin.slashblade;
 
-import com.elementtimes.tutorial.annotation.ModSkip;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.RecipeAwakeBlade;
@@ -16,7 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@ModSkip
 @Optional.Interface(iface = "", modid = "flammpfeil.slashblade")
 public class BladeElementknife {
     @SubscribeEvent

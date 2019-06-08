@@ -18,9 +18,10 @@
         {
             "item":"minecraft:lapis_block"
         },
-        {
-            "item":"elementtimes:diamondblock"
-        },
+      {
+        "type":"forge:ore_dict",
+        "ore":"blockSteel"
+      },
         {
             "item":"minecraft:emerald_block"
         },

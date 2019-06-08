@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 跳过某类的加载
- * 用于依赖
+ * 跳过注解解析器对某包的检索
+ * 不适用于 jar 包
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface ModSkip { }
+@Target(ElementType.PACKAGE)
+public @interface ModSkip {}
