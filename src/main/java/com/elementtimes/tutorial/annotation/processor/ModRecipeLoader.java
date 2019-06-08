@@ -51,55 +51,60 @@ class ModRecipeLoader {
                     addOreRecipe(obj, (ModRecipe.Ore) annotation, into);
                 } else if (annotation instanceof ModRecipe.Crafting) {
                     String name = ReflectUtil.getName(element).orElse(null);
-                    addCraftingRecipe(obj, (ModRecipe.Crafting) annotation, name, into);
+                    addCraftingRecipe(element, (ModRecipe.Crafting) annotation, name, into);
                 }
             }
         });
     }
 
-    private static void addCraftingRecipe(Object obj, ModRecipe.Crafting info, String name, List<Supplier<IRecipe>> into) {
-        if (obj instanceof IRecipe) {
-            into.add(() -> (IRecipe) obj);
-        } else if (obj instanceof Object[]) {
-            Object[] objects = (Object[]) obj;
-            Object result = objects[0];
-            ItemStack r;
-            if (result instanceof Item) {
-                r = new ItemStack((Item) result);
-            } else if (result instanceof Block) {
-                r = new ItemStack((Block) result);
-            } else if (result instanceof ItemStack) {
-                r = (ItemStack) result;
-            } else if (result instanceof Ingredient) {
-                r = ((Ingredient) result).getMatchingStacks()[0];
-            } else {
-                r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
-            }
-            IRecipe recipe;
-            CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
-            primer.input = NonNullList.create();
-            primer.width = info.width();
-            primer.height = info.height();
-            for (int i = 1; i < objects.length; i++) {
-                Object o = objects[i];
-                primer.input.add(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
-            }
-            if (info.shaped()) {
-                if (info.ore()) {
-                    recipe = new ShapedOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), r, primer);
+    private static void addCraftingRecipe(AnnotatedElement element, ModRecipe.Crafting info, String name, List<Supplier<IRecipe>> into) {
+        into.add(() -> {
+            final AnnotatedElement element1 = element;
+            Object obj = ReflectUtil.getFromAnnotated(element1, null).orElse(null);
+            if (obj instanceof IRecipe) {
+                return (IRecipe) obj;
+            } else if (obj instanceof Object[]) {
+                Object[] objects = (Object[]) obj;
+                Object result = objects[0];
+                ItemStack r;
+                if (result instanceof Item) {
+                    r = new ItemStack((Item) result);
+                } else if (result instanceof Block) {
+                    r = new ItemStack((Block) result);
+                } else if (result instanceof ItemStack) {
+                    r = (ItemStack) result;
+                } else if (result instanceof Ingredient) {
+                    r = ((Ingredient) result).getMatchingStacks()[0];
                 } else {
-                    recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
+                    r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
                 }
-            } else {
-                if (info.ore()) {
-                    recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), primer.input, r);
+                IRecipe recipe;
+                CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
+                primer.input = NonNullList.create();
+                primer.width = info.width();
+                primer.height = info.height();
+                for (int i = 1; i < objects.length; i++) {
+                    Object o = objects[i];
+                    primer.input.add(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
+                }
+                if (info.shaped()) {
+                    if (info.ore()) {
+                        recipe = new ShapedOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), r, primer);
+                    } else {
+                        recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
+                    }
                 } else {
-                    recipe = new ShapelessRecipes("recipe", r, primer.input);
+                    if (info.ore()) {
+                        recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), primer.input, r);
+                    } else {
+                        recipe = new ShapelessRecipes("recipe", r, primer.input);
+                    }
                 }
+                recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, info.value().isEmpty() ? name : info.value()));
+                return recipe;
             }
-            recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, info.value().isEmpty() ? name : info.value()));
-            into.add(() -> recipe);
-        }
+            return null;
+        });
     }
 
     private static void addOreRecipe(Object ore, final ModRecipe.Ore info, List<Supplier<IRecipe>> into) {

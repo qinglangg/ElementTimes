@@ -138,5 +138,12 @@ public class ElementtimesRecipe {
 			"plateSilver", "plateCopper"
 	};
 
-
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static Object[] spanner = new Object[] {
+			ElementtimesItems.spanner,
+			null, null, "ingotSteel",
+			null, "ingotCopper", null,
+			"ingotCopper"
+	};
 }
