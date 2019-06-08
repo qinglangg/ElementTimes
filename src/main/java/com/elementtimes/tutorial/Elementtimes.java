@@ -11,6 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * TODO: 物质重构机 删除盐-煤
+ * TODO: 钢块合成表
+ * TODO: 碳 煤炭(在购)
+ * TODO: 物质重组机打粉机（6）该压缩机
+ * TODO: 删除所有依赖外 mod 橡胶的合成表，使用矿辞实现；树叶、木、树苗精华中加入一个橡胶
+ * TODO: 元素刀汉化
  * TODO: 酿造台 1000000-10000(io)-16000(/item)
  * TODO: 木精华从树叶获取。具体获取方法未知
  * TODO: 盐矿 盐 盐粉 盐矿生成在水里，类似粘土，吃精准；数量和硫矿同，包括掉落，锤粉（合成），燃烧，酿造

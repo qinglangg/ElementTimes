@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common;
 import com.elementtimes.tutorial.annotation.processor.ElementRegister;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
-import com.elementtimes.tutorial.common.slashblade.BladeElementknife;
+import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.world.gen.WorldGenElementTimesOres;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.fml.common.Loader;

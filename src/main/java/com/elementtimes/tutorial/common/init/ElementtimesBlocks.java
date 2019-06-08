@@ -71,6 +71,18 @@ public class ElementtimesBlocks {
     public static Block rubberLog = new RubberLog();
     @ModBlock(registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")
     public static Block rubberLeaf = new RubberLeaf();
+    @ModBlock
+    @ModBlock.HarvestLevel
+    public static Block blockMultiSilverCopper = new Block(Material.IRON);
+    @ModBlock
+    @ModBlock.HarvestLevel
+    public static Block blockMultiWoodStone = new Block(Material.IRON);
+    @ModBlock
+    @ModBlock.HarvestLevel
+    public static Block blockMultiGoldPlatinum = new Block(Material.IRON);
+    @ModBlock
+    @ModBlock.HarvestLevel
+    public static Block blockMultiQuartzSteel = new Block(Material.IRON);
 
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "furnace", clazz = "com.elementtimes.tutorial.common.tileentity.TileFurnace")
@@ -109,5 +121,4 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
     public static Block elementGenerator = new BlockTileBase<>(ElementtimesGUI.ELEMENT_GENERATOR, TileGeneratorElement.class, true);
-
 }

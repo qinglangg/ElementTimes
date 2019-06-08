@@ -97,7 +97,7 @@ public class MachineRecipeCapture implements INBTSerializable<NBTTagCompound> {
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbtRecipe = new NBTTagCompound();
-        nbtRecipe.setString(NBT_RECIPE_NAME, recipe.name);
+        nbtRecipe.setString(NBT_RECIPE_NAME, name);
         nbtRecipe.setTag(NBT_RECIPE_ITEM_INPUT, ItemUtil.toNBTList(inputs));
         nbtRecipe.setTag(NBT_RECIPE_FLUID_INPUT, FluidUtil.toNBTList(fluidInputs));
         nbtRecipe.setTag(NBT_RECIPE_ITEM_OUTPUT, ItemUtil.toNBTList(outputs));

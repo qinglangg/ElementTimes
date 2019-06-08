@@ -256,4 +256,14 @@ public class ReflectUtil {
         }
         return Optional.ofNullable(field);
     }
+
+    public static Optional<String> getName(@Nullable AnnotatedElement element) {
+        String defaultName = null;
+        if (element instanceof Field) {
+            defaultName = ((Field) element).getName();
+        } else if (element instanceof Class) {
+            defaultName = ((Class) element).getSimpleName();
+        }
+        return Optional.ofNullable(defaultName);
+    }
 }

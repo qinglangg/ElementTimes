@@ -6,16 +6,20 @@ import com.elementtimes.tutorial.annotation.ingredient.DamageIngredient;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.util.RecipeUtil;
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.lang.annotation.Annotation;
@@ -41,12 +45,61 @@ class ModRecipeLoader {
             if (obj == null) {
                 return;
             }
+
             for (Annotation annotation : element.getAnnotations()) {
                 if (annotation instanceof ModRecipe.Ore) {
                     addOreRecipe(obj, (ModRecipe.Ore) annotation, into);
+                } else if (annotation instanceof ModRecipe.Crafting) {
+                    String name = ReflectUtil.getName(element).orElse(null);
+                    addCraftingRecipe(obj, (ModRecipe.Crafting) annotation, name, into);
                 }
             }
         });
+    }
+
+    private static void addCraftingRecipe(Object obj, ModRecipe.Crafting info, String name, List<Supplier<IRecipe>> into) {
+        if (obj instanceof IRecipe) {
+            into.add(() -> (IRecipe) obj);
+        } else if (obj instanceof Object[]) {
+            Object[] objects = (Object[]) obj;
+            Object result = objects[0];
+            ItemStack r;
+            if (result instanceof Item) {
+                r = new ItemStack((Item) result);
+            } else if (result instanceof Block) {
+                r = new ItemStack((Block) result);
+            } else if (result instanceof ItemStack) {
+                r = (ItemStack) result;
+            } else if (result instanceof Ingredient) {
+                r = ((Ingredient) result).getMatchingStacks()[0];
+            } else {
+                r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
+            }
+            IRecipe recipe;
+            CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
+            primer.input = NonNullList.create();
+            primer.width = info.width();
+            primer.height = info.height();
+            for (int i = 1; i < objects.length; i++) {
+                Object o = objects[i];
+                primer.input.add(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
+            }
+            if (info.shaped()) {
+                if (info.ore()) {
+                    recipe = new ShapedOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), r, primer);
+                } else {
+                    recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
+                }
+            } else {
+                if (info.ore()) {
+                    recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), primer.input, r);
+                } else {
+                    recipe = new ShapelessRecipes("recipe", r, primer.input);
+                }
+            }
+            recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, info.value().isEmpty() ? name : info.value()));
+            into.add(() -> recipe);
+        }
     }
 
     private static void addOreRecipe(Object ore, final ModRecipe.Ore info, List<Supplier<IRecipe>> into) {

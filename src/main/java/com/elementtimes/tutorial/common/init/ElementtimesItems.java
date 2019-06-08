@@ -168,6 +168,9 @@ public class ElementtimesItems {
     public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
     @ModItem
     public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
+    @ModItem
+    @ModOreDict("rubber")
+    public static Item rubber;
 
     // gear
 

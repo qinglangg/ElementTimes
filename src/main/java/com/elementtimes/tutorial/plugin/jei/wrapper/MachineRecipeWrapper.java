@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.plugin.jei.wrapper;
 
+import com.elementtimes.tutorial.annotation.ModSkip;
 import com.elementtimes.tutorial.other.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
@@ -14,6 +15,7 @@ import java.util.List;
  * 只有物品输入输出的机器 jei 合成表
  * @author luqin2007
  */
+@ModSkip
 public class MachineRecipeWrapper implements IRecipeWrapper {
 
     private List<List<ItemStack>> inputItems;

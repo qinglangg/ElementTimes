@@ -1,14 +1,13 @@
-package com.elementtimes.tutorial.common.slashblade;
+package com.elementtimes.tutorial.plugin.slashblade;
 
+import com.elementtimes.tutorial.annotation.ModSkip;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.named.Fox;
 import mods.flammpfeil.slashblade.named.event.LoadEvent;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@ModSkip
 @Optional.Interface(iface = "", modid = "flammpfeil.slashblade")
 public class BladeElementknife {
     @SubscribeEvent

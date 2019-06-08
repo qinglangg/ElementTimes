@@ -18,7 +18,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class ElementtimesRecipe {
     public static void init(FMLInitializationEvent event) {
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder),new ItemStack(ElementtimesItems.sulfiteSolution,2));
+    	BrewingRecipeRegistry.addRecipe(
+    			PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY),
+				new ItemStack(ElementtimesItems.sulfurPowder),
+				new ItemStack(ElementtimesItems.sulfiteSolution, 2));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT),new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper",new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.ironPower),new ItemStack(Items.IRON_INGOT));
@@ -125,6 +128,15 @@ public class ElementtimesRecipe {
 //	@ModRecipe
 //	@ModRecipe.Ore(output = "elementtimes:ironpower")
 //	public static String log;
+
+	@ModRecipe
+	@ModRecipe.Crafting(width = 2)
+	public static Object[] blockMultiSliverCopper = new Object[] {
+			ElementtimesBlocks.blockMultiSilverCopper,
+			"plateSilver", "plateCopper",
+			"gearSilver", "gearCopper",
+			"plateSilver", "plateCopper"
+	};
 
 
 }

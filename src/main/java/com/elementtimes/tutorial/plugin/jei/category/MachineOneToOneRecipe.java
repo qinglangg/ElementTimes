@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.plugin.jei.category;
 
 import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.annotation.ModSkip;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -21,6 +22,7 @@ import javax.annotation.Nonnull;
  * wh：90 44
  * @author luqin2007
  */
+@ModSkip
 public class MachineOneToOneRecipe implements IRecipeCategory<MachineRecipeWrapper> {
 
     private IDrawable mBackground;

@@ -75,8 +75,9 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
     }
 
     default NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        if (getWorkingRecipe() != null) {
-            NBTTagCompound nbt = getWorkingRecipe().serializeNBT();
+        MachineRecipeCapture recipe = getWorkingRecipe();
+        if (recipe != null) {
+            NBTTagCompound nbt = recipe.serializeNBT();
             nbtTagCompound.setTag(NBT_RECIPE, nbt);
         }
         return nbtTagCompound;
