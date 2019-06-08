@@ -75,6 +75,9 @@ public class ElementtimesConfig {
         @Config.Comment("设置影元素发电量")
         @Config.Name("generaterEnd")
         public int generaterEnd = 15000000;
+        @Config.Comment("设置橡胶树生成时,自带橡胶的概率(最大100)")
+        @Config.Name("rubberTreeGenRubberProbability")
+        public int rubberTreeGenRubberProbability = 50;
     }
 
     public static final class FuelGeneral {

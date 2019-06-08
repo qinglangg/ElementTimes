@@ -8,7 +8,9 @@
     }
   },
   "variants": {
-    "inventory": [{}],
+    "inventory": [
+      {}
+    ],
     "axis": {
       "x": {
         "x": 90,
@@ -17,6 +19,20 @@
       "y": {},
       "z": {
         "x": 90
+      }
+    },
+    "rubber": {
+      "true": {
+        "textures": {
+          "end": "elementtimes:blocks/rubber_tree/top",
+          "side": "elementtimes:blocks/rubber_tree/side_rubber"
+        }
+      },
+      "false": {
+        "textures": {
+          "end": "elementtimes:blocks/rubber_tree/top",
+          "side": "elementtimes:blocks/rubber_tree/side"
+        }
       }
     }
   }
