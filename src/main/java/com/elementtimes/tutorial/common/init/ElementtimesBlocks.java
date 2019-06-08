@@ -47,12 +47,20 @@ public class ElementtimesBlocks {
     public static Block calciumFluoride = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("orePlatinum")
-    @ModBlock.HarvestLevel
+    @ModBlock.HarvestLevel(level = 3)
     public static Block platinumOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockPlatinum")
     @ModBlock.HarvestLevel
+    public static Block SilverOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("blockPlatinum")
+    @ModBlock.HarvestLevel(level = 3)
     public static Block platinumBlock = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("blockSilver")
+    @ModBlock.HarvestLevel
+    public static Block blockSilver = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel(level = 3)
     public static Block diamondBlock = new Block(Material.ROCK).setHardness(100f).setResistance(30f).setLightLevel(100f);
