@@ -1,5 +1,17 @@
 {
-    "variants": {
-        "normal": { "model": "elementtimes:platinumore" }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "elementtimes:blocks/ore/platinumore"
     }
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
+  }
 }

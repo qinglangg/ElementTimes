@@ -4,11 +4,9 @@ import com.elementtimes.tutorial.annotation.ModRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -18,10 +16,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class ElementtimesRecipe {
     public static void init(FMLInitializationEvent event) {
-    	BrewingRecipeRegistry.addRecipe(
-    			PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY),
-				new ItemStack(ElementtimesItems.sulfurPowder),
-				new ItemStack(ElementtimesItems.sulfiteSolution, 2));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder), new ItemStack(ElementtimesItems.sulfiteSolution, 2));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT),new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper",new ItemStack(ElementtimesItems.hydrogen));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.ironPower),new ItemStack(Items.IRON_INGOT));
@@ -34,29 +29,7 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.redstonePowder),new ItemStack(Items.REDSTONE,2));
       	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.bluestonePowder),new ItemStack(Items.DYE, 2, 4));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.quartzPowder),new ItemStack(Items.QUARTZ,2));
-    	BrewingRecipeRegistry.addRecipe(new IBrewingRecipe() {
-			
-			@Override
-			public boolean isInput(ItemStack input) {
-                //药水槽
-                return input.getItem() == Item.getItemFromBlock(Blocks.COAL_BLOCK);
-            }
-			
-			@Override
-			public boolean isIngredient(ItemStack ingredient) {
-                //材料
-                return ingredient.getItem() == Item.getItemFromBlock(Blocks.DIAMOND_BLOCK);
-            }
-			
-			@Override
-			public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
-				//返回的材料
-				if(input.getItem()==Item.getItemFromBlock(Blocks.COAL_BLOCK)&&ingredient.getItem()==Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)) {
-                    return new ItemStack(ElementtimesItems.diamondIngot);
-                }
-				return new ItemStack(Items.AIR);
-			}
-		});
+    	BrewingRecipeRegistry.addRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(ElementtimesItems.diamondIngot));
 
 		GameRegistry.addSmelting(Blocks.STONE, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.stoneBlock, new ItemStack(ElementtimesItems.calciumCarbonate, 1), 3.0f);
@@ -145,5 +118,14 @@ public class ElementtimesRecipe {
 			null, null, "ingotSteel",
 			null, "ingotCopper", null,
 			"ingotCopper"
+	};
+
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static Object[] compressor = new Object[] {
+			ElementtimesBlocks.compressor,
+			"gearDiamond", "blockCopper", "gearDiamond",
+			"blockCopper", ElementtimesBlocks.fuelGenerator, "blockCopper",
+			"gearGold", "blockCopper", "gearGold"
 	};
 }

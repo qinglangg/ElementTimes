@@ -93,6 +93,12 @@ item.elementtimes.plateplatinum.name=铂板
 item.elementtimes.platecopper.name=铜板
 item.elementtimes.platequartz.name=石英板
 item.elementtimes.platecarbon.name=碳板
+item.elementtimes.silver.name=银锭
+item.elementtimes.silverpowder.name=银粉
+item.elementtimes.salt.name=盐
+item.elementtimes.rubber.name=橡胶
+item.elementtimes.gearsilver.name=银齿轮
+item.elementtimes.platesilver.name=银版
 # block
 tile.elementtimes.woodessence.name=木材精华
 tile.elementtimes.leafessence.name=树叶精华
@@ -118,6 +124,13 @@ tile.elementtimes.extractor.name=提取机（未完成）
 tile.elementtimes.rubber_sapling.name=橡胶树苗
 tile.elementtimes.rubber_log.name=橡胶树树干
 tile.elementtimes.rubber_leaf.name=橡胶树树叶
+tile.elementtimes.silverore.name=银矿石
+tile.elementtimes.blocksilver.name=银块
+tile.elementtimes.oresalt.name=盐矿石
+tile.elementtimes.blockmulticarbonsteel.name=碳钢多层块
+tile.elementtimes.blockmultigoldplatinum.name=铂金多层块
+tile.elementtimes.blockmultisilvercopper.name=银铜多层块
+tile.elementtimes.blockmultiwoodstone.name=木石多层块
 # jei
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机

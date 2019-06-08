@@ -177,6 +177,9 @@ public class ElementtimesItems {
     @ModItem
     @ModOreDict("rubber")
     public static Item rubber;
+    @ModItem
+    @ModOreDict("salt")
+    public static Item salt;
 
     // gear
 
@@ -247,6 +250,7 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCarbon")
     public static Item plateCarbon;
-
-
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateSilver")
+    public static Item plateSilver;
 }

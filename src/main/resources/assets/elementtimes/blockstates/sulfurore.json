@@ -1,5 +1,17 @@
 {
-    "variants": {
-        "normal": { "model": "elementtimes:sulfurore" }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "elementtimes:blocks/ore/sulfurore"
     }
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
+  }
 }

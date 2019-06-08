@@ -23,7 +23,7 @@ public class TileRebuild extends BaseOneToOne {
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
                 .add("0", 4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
-                .add("1", 4000, ElementtimesItems.amylum, 2, ElementtimesItems.sucroseCharCoal, 1)
+                .add("1", 100000, new ItemStack(Items.GOLDEN_APPLE, 1, 1), Items.TOTEM_OF_UNDYING, 1)
                 .add("2", 4000, ElementtimesItems.sucroseCharCoal, 2, new ItemStack(Items.COAL, 1, 1))
                 .add("3", 4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))
                 .add("4", 50000, new ItemStack(Items.COAL, 1, 0), Items.DIAMOND, 1)

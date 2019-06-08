@@ -135,7 +135,7 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置压缩机每个矿物产粉量")
         @Config.Name("compressorPowderCount")
-        public int powderCount = 5;
+        public int powderCount = 1;
 
 //        @Config.Comment("设置压缩机可放入的矿石")
 //        @Config.Name("compressorCanPutIn")

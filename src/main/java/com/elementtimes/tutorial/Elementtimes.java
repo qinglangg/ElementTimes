@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
  * TODO: 元素树及其材质
  * TODO: 橡胶树 树叶 橡胶矿典
  * TODO: 提取机：出橡胶，叶子出1，树苗出2
+ * TODO: 绿宝石 硫 石英 的矿锤 打粉机合成
  * TODO: 化学
  * TODO: 1.13.2 1.14 兼容
  * TODO: 1.7.10 兼容（优先度极低）
