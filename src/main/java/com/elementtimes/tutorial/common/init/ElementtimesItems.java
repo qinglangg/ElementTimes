@@ -155,6 +155,10 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle steam;
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
+    public static ItemGlassBottle sodiumBisulfite;
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
+    public static ItemGlassBottle sodiumMetabisulfite;
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sulfiteSolution;
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sulphuricAcid;
