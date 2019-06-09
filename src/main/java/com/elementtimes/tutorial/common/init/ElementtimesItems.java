@@ -233,7 +233,7 @@ public class ElementtimesItems {
     @ModOreDict("plateWood")
     public static Item platewood;
     @ModItem(creativeTab = ModCreativeTabs.Industry)
-    @ModOreDict("plateStone")
+    @ModOreDict("platestone")
     public static Item plateStone;
     @ModItem( creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateIron")

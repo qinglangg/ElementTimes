@@ -58,11 +58,11 @@ public class ElementtimesBlocks {
     @ModOreDict("blockSilver")
     @ModBlock.HarvestLevel
     public static Block blockSilver = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
-    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockSteel")
     @ModBlock.HarvestLevel
     public static Block steelBlock = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
-    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModBlock.HarvestLevel(level = 3)
     public static Block diamondBlock = new Block(Material.ROCK).setHardness(100f).setResistance(30f).setLightLevel(100f);
 
