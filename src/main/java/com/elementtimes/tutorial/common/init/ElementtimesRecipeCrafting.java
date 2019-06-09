@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.annotation.ModRecipe;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 
 /**
  * 所有合成表
@@ -12,12 +14,20 @@ public class ElementtimesRecipeCrafting {
 	public static String oreIron = "oreIron";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "emerald", output = "minecraft:emerald")
+	@ModRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder", dustCount = 5)
 	public static String oreEmerald = "oreEmerald";
 
 	@ModRecipe
 	@ModRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurpowder")
 	public static String oreSulfur = "oreSulfur";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "coalpodwer", output = "elementtimes:coalpowder")
+	public static String oreCoal = "oreCoal";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "silverpowder", output = "elementtimes:silverpowder")
+	public static String oreSilver = "oreSilver";
 
 	@ModRecipe
 	@ModRecipe.Ore(value = "salt", output = "elementtimes:salt")
@@ -138,5 +148,14 @@ public class ElementtimesRecipeCrafting {
 			null, "blockSteel", null,
 			ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiSilverCopper,
 			null, "blockSteel", null
+	};
+
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static Object[] gearCarbon = new Object[] {
+			ElementtimesItems.gearCarbon,
+			null, Items.COAL, null,
+			Items.COAL, Blocks.COAL_BLOCK, Items.COAL,
+			null, Items.COAL, null
 	};
 }
