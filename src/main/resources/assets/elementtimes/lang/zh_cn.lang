@@ -102,6 +102,8 @@ item.elementtimes.platesilver.name=银版
 item.elementtimes.woodenhalter.name=木笼头
 item.elementtimes.rubberraw.name=粘性树脂
 item.elementknife.name=元素刀
+item.elementtimes.sodiumbisulfite.name=亚硫酸氢钠
+item.elementtimes.sodiummetabisulfite.name=焦亚硫酸钠
 # block
 tile.elementtimes.woodessence.name=木材精华
 tile.elementtimes.leafessence.name=树叶精华
