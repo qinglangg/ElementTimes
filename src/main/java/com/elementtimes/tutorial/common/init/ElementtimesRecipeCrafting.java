@@ -14,11 +14,11 @@ public class ElementtimesRecipeCrafting {
 	public static String oreIron = "oreIron";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder", dustCount = 5)
+	@ModRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
 	public static String oreEmerald = "oreEmerald";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurpowder")
+	@ModRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurorepowder")
 	public static String oreSulfur = "oreSulfur";
 
 	@ModRecipe
@@ -46,11 +46,11 @@ public class ElementtimesRecipeCrafting {
 	public static String orePlatinum = "orePlatinum";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "quartz", output = "minecraft:quartz")
+	@ModRecipe.Ore(value = "quartz", output = "elementtimes:quartzpowder")
 	public static String oreQuartz = "oreQuartz";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "lapis", damage = 2, output = "minecraft:dye:4")
+	@ModRecipe.Ore(value = "lapis", output = "elementtimes:bluestonepowder")
 	public static String oreLapis = "oreLapis";
 
 	@ModRecipe
