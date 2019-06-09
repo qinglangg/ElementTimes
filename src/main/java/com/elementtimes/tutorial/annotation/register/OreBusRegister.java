@@ -1,8 +1,11 @@
 package com.elementtimes.tutorial.annotation.register;
 
+import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.annotation.processor.ModBlockLoader;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -14,8 +17,21 @@ public class OreBusRegister {
     @SubscribeEvent
     public void registerWorldGenerator(OreGenEvent.Post event) {
         if (!event.getWorld().isRemote) {
-            for (WorldGenerator generator: ModBlockLoader.sGenerators) {
-                generator.generate(event.getWorld(), event.getRand(), event.getPos());
+            for (WorldGenerator generator: ModBlockLoader.sGenerators.get(GenType.Ore)) {
+                if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(), OreGenEvent.GenerateMinable.EventType.CUSTOM)) {
+                    generator.generate(event.getWorld(), event.getRand(), event.getPos());
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void registerWorldGenerator(DecorateBiomeEvent.Post event) {
+        if (!event.getWorld().isRemote) {
+            for (WorldGenerator generator: ModBlockLoader.sGenerators.get(GenType.Tree)) {
+                if (TerrainGen.decorate(event.getWorld(), event.getRand(), event.getChunkPos(), DecorateBiomeEvent.Decorate.EventType.TREE)) {
+                    generator.generate(event.getWorld(), event.getRand(), event.getPos());
+                }
             }
         }
     }

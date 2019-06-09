@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.annotation;
 
+import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 
 import java.lang.annotation.ElementType;
@@ -12,6 +13,7 @@ import java.lang.annotation.Target;
  * 可将其注解到类或静态变量中。
  *  注解类则会使用无参构造实例化被标记类，并注册
  *  注解成员变量则会尝试使用无参构造实例化成员变量类型，并注册
+ *  成员请手动赋值，否则对其引用可能会出问题（编译器优化时会直接给他赋值为 null）
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
@@ -169,20 +171,33 @@ public @interface ModBlock {
         /**
          * @return 不生成的维度
          */
-        int[] dimBlackList() default {0};
+        int[] dimBlackList() default {};
 
         /**
          * @return 允许生成的维度。留空则不限制
          */
-        int[] dimWhiteList() default {};
+        int[] dimWhiteList() default {0};
+
+        /**
+         * @return 世界生成的种类
+         */
+        GenType type() default GenType.Ore;
     }
 
     /**
-     * 用于标注自定义世界生成，允许包含一个接受 Block 类型参数的构造
+     * 用于自定义世界生成，允许包含一个接受 Block 类型参数的构造
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.TYPE, ElementType.FIELD})
     @interface WorldGenClass {
+        /**
+         * @return 自定义世界生成 WorldGenerator 的全类名
+         */
         String value();
+
+        /**
+         * @return 世界生成的种类
+         */
+        GenType type() default GenType.Ore;
     }
 }

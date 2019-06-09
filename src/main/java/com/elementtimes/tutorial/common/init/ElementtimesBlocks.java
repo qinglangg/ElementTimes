@@ -2,6 +2,7 @@ package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
@@ -37,7 +38,7 @@ public class ElementtimesBlocks {
     public static Block SilverOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSalt")
-    @ModBlock.WorldGenClass("com.elementtimes.tutorial.world.gen.WaterGenerator")
+    @ModBlock.WorldGenClass("com.elementtimes.tutorial.world.gen.SaltGenerator")
     public static OreSalt oreSalt = new OreSalt();
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSulfur")
@@ -130,6 +131,7 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
     public static Block cornCropUp = new CornCropUp();
     @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
+    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator", type = GenType.Tree)
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log")
     @ModOreDict("logWood")

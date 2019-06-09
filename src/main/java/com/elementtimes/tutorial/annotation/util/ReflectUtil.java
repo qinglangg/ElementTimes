@@ -84,7 +84,7 @@ public class ReflectUtil {
                         })
                         .findFirst()
                         .orElseThrow(NullPointerException::new);
-                constructor.newInstance(params);
+                object = (T) constructor.newInstance(params);
             } catch (InvocationTargetException | NullPointerException e) {
                 String[] classNames = Arrays.stream(paramClass).map(Class::getSimpleName).toArray(String[]::new);
                 warn("Cannot find constructor with param types: {}", Arrays.toString(classNames));
@@ -109,7 +109,7 @@ public class ReflectUtil {
         } else {
             try {
                 Class<?> aClass = Class.forName(className);
-                object = (T) create(aClass, params).orElse(null);
+                return (Optional<T>) create(aClass, params);
             } catch (ClassNotFoundException e) {
                 warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can load the class", className);
                 e.printStackTrace();

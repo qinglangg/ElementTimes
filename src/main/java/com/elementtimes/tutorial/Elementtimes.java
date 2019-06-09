@@ -10,16 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * TODO: 物质重构机 删除盐-煤
- * TODO: 碳 煤炭(在购)
- * TODO: 物质重组机打粉机（6）该压缩机
  * TODO: 酿造台 1000000-10000(io)-16000(/item)
- * TODO: 盐矿 盐 盐粉 盐矿生成在水里，类似粘土，吃精准；数量和硫矿同，包括掉落，锤粉（合成），燃烧，酿造
  * TODO: 整形机测试及 jei 兼容
  * TODO: 树苗精华改为block，并且可以种植。
- * TODO: 橡胶树 树叶 橡胶矿典
- * TODO: 提取机：出橡胶，叶子出1，树苗出2
- * TODO: 绿宝石 硫 石英 的矿锤 打粉机合成
  * TODO: 1.13.2 1.14 兼容
  * TODO: 1.7.10 兼容（优先度极低）
  * @author KSGFK
