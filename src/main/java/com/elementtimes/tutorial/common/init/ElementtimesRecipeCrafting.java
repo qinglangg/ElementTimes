@@ -109,7 +109,7 @@ public class ElementtimesRecipeCrafting {
 	public static Object[] compressor = new Object[] {
 			ElementtimesBlocks.compressor,
 			"gearDiamond", "blockCopper", "gearDiamond",
-			"blockCopper", ElementtimesBlocks.fuelGenerator, "blockCopper",
+			"blockSteel", ElementtimesBlocks.fuelGenerator, "blockSteel",
 			"gearGold", "blockCopper", "gearGold"
 	};
 
