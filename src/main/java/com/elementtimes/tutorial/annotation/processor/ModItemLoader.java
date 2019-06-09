@@ -25,12 +25,12 @@ import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
  *
  * @author luqin2007
  */
-class ModItemLoader {
+public class ModItemLoader {
 
-    static Map<Item, String> sItemOreDict = new HashMap<>();
-    static Map<Item, Int2ObjectMap<ModelResourceLocation>> sSubItemModel = new HashMap<>();
+    public static Map<Item, String> sItemOreDict = new HashMap<>();
+    public static Map<Item, Int2ObjectMap<ModelResourceLocation>> sSubItemModel = new HashMap<>();
 
-    static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
+    public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
         elements.get(ModItem.class).forEach(element -> buildItem(element, into));
     }
 

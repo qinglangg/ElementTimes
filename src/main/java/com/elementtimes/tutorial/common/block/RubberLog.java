@@ -6,6 +6,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * @author KSGFK create in 2019/6/4
@@ -26,29 +27,16 @@ public class RubberLog extends BlockLog {
     public int getMetaFromState(IBlockState state) {
         EnumFacing.Axis axis = state.getValue(AXIS);
         Boolean isRub = state.getValue(HAS_RUBBER);
-        int a = 0;
-        switch (axis) {
-            case X:
-                a |= 4;
-                break;
-            case Y:
-                a |= 8;
-                break;
-        }
-        int b = isRub ? 0b0100 : 0b0000;
+        int a = ArrayUtils.indexOf(EnumFacing.Axis.values(), axis);
+        int b = isRub ? 0b1000 : 0b0000;
         return a | b;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing.Axis axis = EnumFacing.Axis.Y;
-        int a = meta & 12;
-        if (a == 4) {
-            axis = EnumFacing.Axis.X;
-        } else if (a == 8) {
-            axis = EnumFacing.Axis.Z;
-        }
-        boolean has = (meta & 0b0100) == 0b0100;
+        int a = meta & 0b0011;
+        EnumFacing.Axis axis = EnumFacing.Axis.values()[a];
+        boolean has = (meta & 0b1000) == 0b1000;
         return super.getStateFromMeta(meta).withProperty(HAS_RUBBER, has).withProperty(AXIS, axis);
     }
 }

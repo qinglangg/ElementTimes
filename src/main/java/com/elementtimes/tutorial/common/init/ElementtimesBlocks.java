@@ -23,18 +23,26 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreCopper")
     @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
     public static Block copperOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("orePlatinum")
     @ModBlock.HarvestLevel(level = 3)
+    @ModBlock.WorldGen(YMin = 5, YRange = 10, probability = 0.3f)
     public static Block platinumOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSilver")
     @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
     public static Block SilverOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSalt")
-    public static Block oreSalt = new Block(Material.ROCK);
+    @ModBlock.WorldGenClass("com.elementtimes.tutorial.world.gen.WaterGenerator")
+    public static OreSalt oreSalt = new OreSalt();
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("oreSulfur")
+    @ModBlock.WorldGen
+    public static Block sulfurOre = new Sulfurore();
 
     // Block
 
@@ -114,9 +122,8 @@ public class ElementtimesBlocks {
     @ModBlock.HarvestLevel(level = 4)
     public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(10000f).setResistance(150f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
-    public static Block sulfurOre = new Sulfurore();
-    @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
     public static Block calciumFluoride = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(registerName = "corn_crop", unlocalizedName = "cornCrop", creativeTab = ModCreativeTabs.None)
     public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();

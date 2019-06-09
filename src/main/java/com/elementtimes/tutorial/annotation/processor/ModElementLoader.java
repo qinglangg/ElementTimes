@@ -21,9 +21,9 @@ import static org.jline.utils.Log.warn;
  */
 public class ModElementLoader {
 
-    static List<Method> sInvokers = new LinkedList<>();
+    public static List<Method> sInvokers = new LinkedList<>();
 
-    static void getElements(Map<Class, ArrayList<AnnotatedElement>> elements) {
+    public static void getElements(Map<Class, ArrayList<AnnotatedElement>> elements) {
         elements.get(ModElement.class).forEach(ModElementLoader::buildInvoker);
     }
 

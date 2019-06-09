@@ -34,12 +34,12 @@ import java.util.function.Supplier;
  *
  * @author luqin2007
  */
-class ModRecipeLoader {
+public class ModRecipeLoader {
 
     /**
      * 获取所有合成表
      */
-    static void getRecipes(Map<Class, ArrayList<AnnotatedElement>> elements, List<Supplier<IRecipe>> into) {
+    public static void getRecipes(Map<Class, ArrayList<AnnotatedElement>> elements, List<Supplier<IRecipe>> into) {
         elements.get(ModRecipe.class).forEach(element -> {
             Object obj = ReflectUtil.getFromAnnotated(element, null).orElse(null);
             if (obj == null) {

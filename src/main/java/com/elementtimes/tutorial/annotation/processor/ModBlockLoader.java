@@ -7,11 +7,20 @@ import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.event.terraingen.OreGenEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -28,12 +37,13 @@ import static com.elementtimes.tutorial.annotation.util.ReflectUtil.getField;
  */
 public class ModBlockLoader {
 
-    static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> sTileEntities = new HashMap<>();
-    static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
-    static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
-    static Map<Block, String> sBlockOreDict = new HashMap<>();
-    static boolean useB3D = false;
-    static boolean useOBJ = false;
+    public static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> sTileEntities = new HashMap<>();
+    public static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
+    public static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
+    public static Map<Block, String> sBlockOreDict = new HashMap<>();
+    public static List<WorldGenerator> sGenerators = new LinkedList<>();
+    public static boolean useB3D = false;
+    public static boolean useOBJ = false;
 
     /**
      * 获取所有方块
@@ -65,6 +75,8 @@ public class ModBlockLoader {
         initStateMapper(block, blockHolder);
         // BlockState 对应材质
         initBlockState(block, blockHolder);
+        // 世界生成
+        initWorldGenerator(block, blockHolder);
         into.add(block);
     }
 
@@ -153,6 +165,60 @@ public class ModBlockLoader {
 
             if (bsInfo.metadatas().length > 0) {
                 sBlockStates.put(block, bsInfo);
+            }
+        }
+    }
+
+    private static void initWorldGenerator(Block block, AnnotatedElement blockHolder) {
+        ModBlock.WorldGenClass wgcInfo = blockHolder.getAnnotation(ModBlock.WorldGenClass.class);
+        WorldGenerator wgcObject = null;
+        if (wgcInfo != null) {
+            wgcObject = ReflectUtil.<WorldGenerator>create(wgcInfo.value(), new Object[] {block}).orElse(null);
+        }
+        if (wgcObject != null) {
+            sGenerators.add(wgcObject);
+        } else {
+            ModBlock.WorldGen wgInfo = blockHolder.getAnnotation(ModBlock.WorldGen.class);
+            if (wgInfo != null) {
+                sGenerators.add(new WorldGenerator() {
+                    private final ModBlock.WorldGen mWorldGen = wgInfo;
+                    private final IBlockState mBlock = block.getDefaultState();
+                    private final WorldGenMinable mWorldGenerator = new WorldGenMinable(mBlock, mWorldGen.count());
+
+                    @Override
+                    public boolean generate(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos position) {
+                        if (TerrainGen.generateOre(worldIn, rand, this, position, OreGenEvent.GenerateMinable.EventType.CUSTOM)) {
+                            if (canGenerator(worldIn.provider.getDimension())) {
+                                for (int i = 0; i < mWorldGen.times(); i++) {
+                                    int x = position.getX() + rand.nextInt(16);
+                                    int y = mWorldGen.YMin() + rand.nextInt(mWorldGen.YRange());
+                                    int z = position.getZ() + rand.nextInt(16);
+                                    if (rand.nextFloat() <= mWorldGen.probability()) {
+                                        mWorldGenerator.generate(worldIn, rand, new BlockPos(x, y, z));
+                                    }
+                                }
+                            }
+                        }
+                        return true;
+                    }
+
+                    private boolean canGenerator(int dimId) {
+                        int[] w = mWorldGen.dimWhiteList();
+                        int[] b = mWorldGen.dimBlackList();
+
+                        boolean canGenerator = true;
+
+                        if (w.length > 0) {
+                            canGenerator = ArrayUtils.contains(w, dimId);
+                        }
+
+                        if (canGenerator && b.length > 0) {
+                            canGenerator = !ArrayUtils.contains(b, dimId);
+                        }
+
+                        return canGenerator;
+                    }
+                });
             }
         }
     }

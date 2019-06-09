@@ -156,7 +156,7 @@ public class ElementtimesItems {
     public static ItemGlassBottle steam;
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sulfiteSolution;
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sulphuricAcid;
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sodiumSulfiteSolution;
@@ -178,8 +178,13 @@ public class ElementtimesItems {
     @ModOreDict("rubber")
     public static Item rubber;
     @ModItem
+    public static Item rubberRaw;
+    @ModItem
     @ModOreDict("salt")
     public static Item salt;
+    @ModItem
+    @ModItem.Damageable(10)
+    public static WoodenHalter woodenHalter;
 
     // gear
 

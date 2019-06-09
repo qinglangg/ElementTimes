@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -55,6 +56,64 @@ public class ReflectUtil {
         } catch (IllegalAccessException | InstantiationException e) {
             warn("Cannot create an instance of {}. Please make sure the class has a public constructor with zero parameter.", aClass.getSimpleName());
             e.printStackTrace();
+        }
+        return Optional.ofNullable(object);
+    }
+
+    /**
+     * 使用有参构造创建对象
+     *
+     * @param aClass 要创建的对象类
+     * @param <T> 对象类型
+     */
+    public static <T> Optional<T> create(@Nonnull Class<? extends T> aClass, Object[] params) {
+        T object = null;
+        try {
+            Class[] paramClass = Arrays.stream(params).map(Object::getClass).toArray(Class[]::new);
+            try {
+                Constructor<?> constructor = Arrays.stream(aClass.getConstructors())
+                        .filter(c -> c.getParameterCount() == paramClass.length)
+                        .filter(c -> {
+                            Class<?>[] parameterTypes = c.getParameterTypes();
+                            for (int i = 0; i < paramClass.length; i++) {
+                                if (!parameterTypes[i].isAssignableFrom(paramClass[i])) {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        })
+                        .findFirst()
+                        .orElseThrow(NullPointerException::new);
+                constructor.newInstance(params);
+            } catch (InvocationTargetException | NullPointerException e) {
+                String[] classNames = Arrays.stream(paramClass).map(Class::getSimpleName).toArray(String[]::new);
+                warn("Cannot find constructor with param types: {}", Arrays.toString(classNames));
+                object = aClass.newInstance();
+            }
+        } catch (IllegalAccessException | InstantiationException e) {
+            warn("Cannot create an instance of {}. Please make sure the class has a public constructor with zero parameter.", aClass.getSimpleName());
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(object);
+    }
+
+    /**
+     * 使用有参构造创建对象
+     *
+     * @param className 要创建的对象类的全类名
+     */
+    public static <T> Optional<T> create(@Nonnull String className, Object[] params) {
+        T object = null;
+        if (className.isEmpty()) {
+            warn("You want to find an EMPTY class.");
+        } else {
+            try {
+                Class<?> aClass = Class.forName(className);
+                object = (T) create(aClass, params).orElse(null);
+            } catch (ClassNotFoundException e) {
+                warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can load the class", className);
+                e.printStackTrace();
+            }
         }
         return Optional.ofNullable(object);
     }

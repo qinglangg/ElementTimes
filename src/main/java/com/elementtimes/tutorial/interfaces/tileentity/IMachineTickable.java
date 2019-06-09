@@ -154,9 +154,8 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
      */
     default IBlockState updateState(IBlockState old) {
         if (old.getPropertyKeys().contains(BaseClosableMachine.IS_RUNNING)) {
-            boolean running = isWorking() && !isPause();
-            if (old.getValue(BaseClosableMachine.IS_RUNNING) != running) {
-                return old.withProperty(BaseClosableMachine.IS_RUNNING, running);
+            if (old.getValue(BaseClosableMachine.IS_RUNNING) != isWorking()) {
+                return old.withProperty(BaseClosableMachine.IS_RUNNING, isWorking());
             }
         }
         return old;

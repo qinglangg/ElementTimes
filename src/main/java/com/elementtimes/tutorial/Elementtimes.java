@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial;
 
-import com.elementtimes.tutorial.annotation.processor.ElementRegister;
 import com.elementtimes.tutorial.common.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -59,6 +58,6 @@ public class Elementtimes {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        ElementRegister.invokeMethod();
+        proxy.postInit(event);
     }
 }

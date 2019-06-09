@@ -99,6 +99,7 @@ item.elementtimes.salt.name=Salt
 item.elementtimes.rubber.name=Rubber
 item.elementtimes.gearsilver.name=Silver Gear
 item.elementtimes.platesilver.name=Silver Plate
+item.elementtimes.woodenhalter.name=Wooden Halter
 # block
 tile.elementtimes.woodessence.name=woodessenc
 tile.elementtimes.leafessence.name=leafessence

@@ -99,6 +99,7 @@ item.elementtimes.salt.name=盐
 item.elementtimes.rubber.name=橡胶
 item.elementtimes.gearsilver.name=银齿轮
 item.elementtimes.platesilver.name=银版
+item.elementtimes.woodenhalter.name=木笼头
 # block
 tile.elementtimes.woodessence.name=木材精华
 tile.elementtimes.leafessence.name=树叶精华

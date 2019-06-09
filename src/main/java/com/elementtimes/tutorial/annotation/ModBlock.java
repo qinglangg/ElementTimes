@@ -134,4 +134,55 @@ public @interface ModBlock {
         String toolClass() default "pickaxe";
         int level() default 2;
     }
+
+    /**
+     * 用于定义方块的世界生成
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface WorldGen {
+        /**
+         * @return 可生成高度范围
+         */
+        int YRange() default 48;
+
+        /**
+         * @return 最低生成高度
+         */
+        int YMin() default 16;
+
+        /**
+         * @return 矿物生成规模
+         */
+        int count() default 8;
+
+        /**
+         * @return 尝试生成次数
+         */
+        int times() default 4;
+
+        /**
+         * @return 每次尝试生成的成功率，范围 (0, 1)
+         */
+        float probability() default 0.5f;
+
+        /**
+         * @return 不生成的维度
+         */
+        int[] dimBlackList() default {0};
+
+        /**
+         * @return 允许生成的维度。留空则不限制
+         */
+        int[] dimWhiteList() default {};
+    }
+
+    /**
+     * 用于标注自定义世界生成，允许包含一个接受 Block 类型参数的构造
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface WorldGenClass {
+        String value();
+    }
 }
