@@ -37,7 +37,6 @@ public class Hammer extends Item {
         ItemStack container = itemStack.copy();
         container.removeSubCompound(Elementtimes.MODID + "_bind");
         container.attemptDamageItem(d, itemRand, null);
-
         return container;
     }
 

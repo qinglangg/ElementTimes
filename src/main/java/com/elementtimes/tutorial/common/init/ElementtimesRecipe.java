@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.tutorial.annotation.ModRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -56,4 +57,54 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.rubberRaw, new ItemStack(ElementtimesItems.rubber), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sodiumBisulfite, new ItemStack(ElementtimesItems.sodiumMetabisulfite), 2.0f);
     }
+
+    @ModRecipe
+	@ModRecipe.Ore(value = "ironpower", output = "elementtimes:ironpower")
+    public static String oreIron = "oreIron";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "goldpowder", output = "elementtimes:goldpowder")
+	public static String oreGold = "oreGold";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "copperpowder", output = "elementtimes:copperpowder")
+	public static String oreCopper = "oreCopper";
+
+//	@ModRecipe
+//	@ModRecipe.Ore(output = "elementtimes:copperpowder")
+//	public static String oreSalt = "oreSalt";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
+	public static String orePlatinum = "orePlatinum";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "quartz", output = "minecraft:quartz")
+	public static String oreQuartz = "oreQuartz";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "lapis", damage = 2, output = "minecraft:dye:4")
+	public static String oreLapis = "oreLapis";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
+	public static String oreRedstone = "oreRedstone";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
+	public static String oreDiamond = "oreDiamond";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
+	public static String blazeRod = "minecraft:blaze_rod";
+
+	@ModRecipe
+	@ModRecipe.Ore(value = "wood", dustCount = 10, output = "")
+	public static String logWood = "logWood";
+//
+//	@ModRecipe
+//	@ModRecipe.Ore(output = "elementtimes:ironpower")
+//	public static String log;
+
+
 }
