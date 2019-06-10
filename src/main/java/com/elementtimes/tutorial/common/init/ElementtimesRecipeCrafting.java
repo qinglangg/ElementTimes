@@ -8,6 +8,7 @@ import net.minecraft.init.Items;
  * 所有合成表
  * @author luqin2007
  */
+@SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {
 	@ModRecipe
 	@ModRecipe.Ore(value = "ironpower", output = "elementtimes:ironpower")
@@ -124,12 +125,12 @@ public class ElementtimesRecipeCrafting {
 	};
 
 	@ModRecipe
-	@ModRecipe.Crafting(ore = false)
+	@ModRecipe.Crafting
 	public static Object[] woodenHalter = new Object[] {
 			ElementtimesItems.woodenHalter,
-			null, ElementtimesBlocks.rubberLog, null,
-			ElementtimesBlocks.rubberLog, ElementtimesBlocks.rubberLog, ElementtimesBlocks.rubberLog,
-			ElementtimesBlocks.rubberLog
+			null, "logWood", null,
+			"logWood", "logWood", "logWood",
+			"logWood"
 	};
 
 	@ModRecipe

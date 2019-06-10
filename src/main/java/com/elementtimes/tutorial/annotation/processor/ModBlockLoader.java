@@ -3,24 +3,18 @@ package com.elementtimes.tutorial.annotation.processor;
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.enums.GenType;
+import com.elementtimes.tutorial.annotation.other.DefaultOreGenerator;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.OreGenEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import javax.annotation.Nonnull;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -41,7 +35,7 @@ public class ModBlockLoader {
     public static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
     public static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
     public static Map<Block, String> sBlockOreDict = new HashMap<>();
-    public static List<WorldGenerator> sGenerators = new LinkedList<>();
+    public static Map<GenType, List<WorldGenerator>> sGenerators = new HashMap<>();
     public static boolean useB3D = false;
     public static boolean useOBJ = false;
 
@@ -176,49 +170,13 @@ public class ModBlockLoader {
             wgcObject = ReflectUtil.<WorldGenerator>create(wgcInfo.value(), new Object[] {block}).orElse(null);
         }
         if (wgcObject != null) {
-            sGenerators.add(wgcObject);
+            List<WorldGenerator> worldGenerators = sGenerators.computeIfAbsent(wgcInfo.type(), k -> new ArrayList<>());
+            worldGenerators.add(wgcObject);
         } else {
             ModBlock.WorldGen wgInfo = blockHolder.getAnnotation(ModBlock.WorldGen.class);
             if (wgInfo != null) {
-                sGenerators.add(new WorldGenerator() {
-                    private final ModBlock.WorldGen mWorldGen = wgInfo;
-                    private final IBlockState mBlock = block.getDefaultState();
-                    private final WorldGenMinable mWorldGenerator = new WorldGenMinable(mBlock, mWorldGen.count());
-
-                    @Override
-                    public boolean generate(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos position) {
-                        if (TerrainGen.generateOre(worldIn, rand, this, position, OreGenEvent.GenerateMinable.EventType.CUSTOM)) {
-                            if (canGenerator(worldIn.provider.getDimension())) {
-                                for (int i = 0; i < mWorldGen.times(); i++) {
-                                    int x = position.getX() + rand.nextInt(16);
-                                    int y = mWorldGen.YMin() + rand.nextInt(mWorldGen.YRange());
-                                    int z = position.getZ() + rand.nextInt(16);
-                                    if (rand.nextFloat() <= mWorldGen.probability()) {
-                                        mWorldGenerator.generate(worldIn, rand, new BlockPos(x, y, z));
-                                    }
-                                }
-                            }
-                        }
-                        return true;
-                    }
-
-                    private boolean canGenerator(int dimId) {
-                        int[] w = mWorldGen.dimWhiteList();
-                        int[] b = mWorldGen.dimBlackList();
-
-                        boolean canGenerator = true;
-
-                        if (w.length > 0) {
-                            canGenerator = ArrayUtils.contains(w, dimId);
-                        }
-
-                        if (canGenerator && b.length > 0) {
-                            canGenerator = !ArrayUtils.contains(b, dimId);
-                        }
-
-                        return canGenerator;
-                    }
-                });
+                List<WorldGenerator> worldGenerators = sGenerators.computeIfAbsent(wgInfo.type(), k -> new ArrayList<>());
+                worldGenerators.add(new DefaultOreGenerator(wgInfo, block.getDefaultState()));
             }
         }
     }

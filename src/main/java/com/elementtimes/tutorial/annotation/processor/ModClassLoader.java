@@ -73,10 +73,9 @@ public class ModClassLoader {
                 findAndAddClassesInPackageByFile(packageName, filePath, classes);
             } else if ("jar".equals(protocol)) {
                 System.err.println("jar类型的扫描");
-                System.err.println("注意，该扫描过程不会识别 ModSkip 注解");
                 JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
                 Enumeration<JarEntry> entries = jar.entries();
-                Set<Class> classTemp = new LinkedHashSet<>();
+                Set<String> classTmp = new LinkedHashSet<>();
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
                     String name = entry.getName();
@@ -90,14 +89,55 @@ public class ModClassLoader {
                         }
                         if (name.endsWith(".class") && !entry.isDirectory()) {
                             String className = name.substring(packageName.length() + 1, name.length() - 6);
-                            classTemp.add(Class.forName(packageName + '.' + className));
+                            classTmp.add(packageName + "." + className);
                         }
                     }
+                }
+                // 排除
+                Set<String> remove = new LinkedHashSet<>();
+                classTmp.stream()
+                        .filter(c -> c.endsWith("package-info"))
+                        .forEach(pInfos -> {
+                            try {
+                                Class aClass = Thread.currentThread().getContextClassLoader().loadClass(pInfos);
+                                Annotation annotation = aClass.getAnnotation(ModSkip.class);
+                                if (annotation != null) {
+                                    String name = aClass.getPackage().getName();
+                                    System.out.println("跳过：" + name);
+                                    remove.add(name);
+                                }
+                            } catch (ClassNotFoundException ignored) {}
+                        });
+                classTmp.removeIf(r -> {
+                    for (String s : remove) {
+                        if (r.startsWith(s)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+                for (String s : classTmp) {
+                    classes.add(Class.forName(s));
                 }
             }
         }
 
         return classes;
+    }
+
+    private static void findAndAddClassesInPackageByJarDirectory(Set<String> classNames, Set<Class<?>> classes) throws ClassNotFoundException {
+        String pInfos = classNames.stream().filter(name -> name.endsWith("package-info")).findFirst().orElse(null);
+        if (pInfos != null && pInfos.length() > 0) {
+
+        }
+
+        for (String className : classNames) {
+            if (className != null) {
+                System.out.println(className);
+                classes.add(Class.forName(className));
+            }
+        }
+        classNames.clear();
     }
 
     /**

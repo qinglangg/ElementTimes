@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.annotation.ingredient;
+package com.elementtimes.tutorial.annotation.other;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;

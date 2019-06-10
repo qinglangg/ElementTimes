@@ -30,6 +30,10 @@ public class ElementtimesConfig {
     @Config.LangKey("elementtimes.config.furnace")
     public static final Furnace FURNACE = new Furnace();
 
+    @Config.Name("extractor")
+    @Config.LangKey("elementtimes.config.extractor")
+    public static final Extractor EXTRACTOR = new Extractor();
+
     @Config.Name("rebuild")
     @Config.LangKey("elementtimes.config.rebuild")
     public static final Rebuild REBUILD = new Rebuild();
@@ -161,6 +165,20 @@ public class ElementtimesConfig {
         public int maxExtract = 10;
 
         @Config.Comment("设置熔炉最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 10000;
+    }
+
+    public static final class Extractor {
+        @Config.Comment("设置提取机最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 1000000;
+
+        @Config.Comment("设置提取机每Tick消耗电量")
+        @Config.Name("maxExtract")
+        public int maxExtract = 10;
+
+        @Config.Comment("设置提取机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
     }

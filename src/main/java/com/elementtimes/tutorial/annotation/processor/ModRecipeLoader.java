@@ -2,11 +2,12 @@ package com.elementtimes.tutorial.annotation.processor;
 
 import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.annotation.ModRecipe;
-import com.elementtimes.tutorial.annotation.ingredient.DamageIngredient;
+import com.elementtimes.tutorial.annotation.other.DamageIngredient;
 import com.elementtimes.tutorial.annotation.util.RecipeUtil;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,12 +22,12 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.AnnotatedElement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
+
+import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 
 /**
  * 加载合成表
@@ -57,6 +58,7 @@ public class ModRecipeLoader {
         ModRecipe.Crafting info = element.getAnnotation(ModRecipe.Crafting.class);
         if (info != null) {
             into.add(() -> {
+                String rName = info.value().isEmpty() ? name : info.value();
                 Object obj = ReflectUtil.getFromAnnotated(element, null).orElse(null);
                 if (obj instanceof IRecipe) {
                     return (IRecipe) obj;
@@ -72,17 +74,41 @@ public class ModRecipeLoader {
                         r = (ItemStack) result;
                     } else if (result instanceof Ingredient) {
                         r = ((Ingredient) result).getMatchingStacks()[0];
+                    } else if (result instanceof String && ((String) result).contains(":")){
+                        Item resultItem = Item.getByNameOrId((String) result);
+                        if (resultItem == null || resultItem == Items.AIR) {
+                            warn("The recipe {} return an NULL item.", rName);
+                            return null;
+                        }
+                        r = new ItemStack(resultItem);
                     } else {
                         r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
                     }
                     IRecipe recipe;
                     CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
-                    primer.input = NonNullList.create();
+                    int size = info.width() * info.height();
+                    primer.input = NonNullList.withSize(size, Ingredient.EMPTY);
                     primer.width = info.width();
                     primer.height = info.height();
+                    if (size < objects.length - 1) {
+                        warn("You want to register a recipe({}) with {} items, but you put {} items in it. Some items will ignore.",
+                                rName, size, objects.length - 1);
+                    }
                     for (int i = 1; i < objects.length; i++) {
                         Object o = objects[i];
-                        primer.input.add(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
+                        if (i - 1 >= size) {
+                            warn("Ignore item[()]: {}.", i - 1, o);
+                            break;
+                        }
+                        if (o instanceof String && ((String) o).contains(":")) {
+                            Item item = Item.getByNameOrId((String) o);
+                            if (item == null || item == Items.AIR) {
+                                warn("The recipe {} have an NULL item.", rName);
+                                return null;
+                            }
+                            o = new ItemStack(item);
+                        }
+                        primer.input.set(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
                     }
                     if (info.shaped()) {
                         if (info.ore()) {
@@ -97,7 +123,7 @@ public class ModRecipeLoader {
                             recipe = new ShapelessRecipes("recipe", r, primer.input);
                         }
                     }
-                    recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, info.value().isEmpty() ? name : info.value()));
+                    recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, rName));
                     return recipe;
                 }
                 return null;
@@ -108,10 +134,11 @@ public class ModRecipeLoader {
     private static void addOreRecipe(Object ore, AnnotatedElement element, List<Supplier<IRecipe>> into) {
         // 矿物锤合成
         ModRecipe.Ore info = element.getAnnotation(ModRecipe.Ore.class);
+        final String logOreName = "logWood";
         if (info != null) {
-            if ("logWood".equals(ore)) {
+            if (logOreName.equals(ore)) {
                 // 对原木进行特殊处理
-                Map<ItemStack, ItemStack> itemStacks = new HashMap<>();
+                Map<ItemStack, ItemStack> itemStacks = new LinkedHashMap<>();
                 RecipeUtil.collectOneBlockCraftingResult("logWood", itemStacks);
                 for (Map.Entry<ItemStack, ItemStack> entry: itemStacks.entrySet()) {
                     into.add(() -> {
@@ -119,7 +146,7 @@ public class ModRecipeLoader {
                         ItemStack output = entry.getValue().copy();
                         input.add(Ingredient.fromStacks(entry.getKey()));
                         return getRecipeHammer(input, output, info.damage(), info.value()
-                                + "_" + output.getItem().getRegistryName().getResourceDomain()
+                                + "_" + Objects.requireNonNull(output.getItem().getRegistryName()).getResourceDomain()
                                 + "_" + output.getItem().getRegistryName().getResourcePath()
                                 + "_" + output.getItemDamage());
                     });
@@ -143,6 +170,7 @@ public class ModRecipeLoader {
     private static ShapelessOreRecipe getRecipeHammer(NonNullList<Ingredient> input, ItemStack output, int damage, String name) {
         input.add(new DamageIngredient(new Item[] {ElementtimesItems.smallHammer, ElementtimesItems.bigHammer}, damage));
         ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), input, output){
+            @Nonnull
             @Override
             public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
                 NonNullList<ItemStack> ret = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);

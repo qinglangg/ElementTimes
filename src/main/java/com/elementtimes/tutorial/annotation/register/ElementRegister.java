@@ -1,10 +1,7 @@
 package com.elementtimes.tutorial.annotation.register;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.annotation.ModBlock;
-import com.elementtimes.tutorial.annotation.ModElement;
-import com.elementtimes.tutorial.annotation.ModItem;
-import com.elementtimes.tutorial.annotation.ModRecipe;
+import com.elementtimes.tutorial.annotation.*;
 import com.elementtimes.tutorial.annotation.processor.*;
 import com.elementtimes.tutorial.annotation.util.RegisterUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -15,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.b3d.B3DLoader;
@@ -48,7 +44,6 @@ public class ElementRegister {
     private static List<Block> sBlocks = new ArrayList<>();
     private static List<Item> sItems = new ArrayList<>();
     private static List<Supplier<IRecipe>> sRecipes = new ArrayList<>();
-    private static List<WorldGenerator> sGenerators = new ArrayList<>();
     private static boolean sInInit = false;
 
     /**
@@ -58,18 +53,28 @@ public class ElementRegister {
         if (!sInInit) {
             HashMap<Class, ArrayList<AnnotatedElement>> elements = new HashMap<>();
             ModClassLoader.getClasses(elements,
-                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class);
+                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class);
             ModBlockLoader.getBlocks(elements, sBlocks);
-            warn("[Elementtimes] 共计 {} Block, {} World Generator", sBlocks.size(), ModBlockLoader.sGenerators.size());
+            warn("[Elementtimes] 共计 {} Block", sBlocks.size());
+            ModBlockLoader.sGenerators.forEach((genType, generators) -> {
+                warn("\tGenerator[{}]: {}", genType.name(), generators.size());
+            });
+            warn("\tOreDictionary Name: {}", ModBlockLoader.sBlockOreDict.size());
+            warn("\tBlockState: {}", ModBlockLoader.sBlockStates.size());
+            warn("\tStateMap: {}", ModBlockLoader.sStateMaps.size());
+            warn("\tTileEntity: {}", ModBlockLoader.sTileEntities.size());
+            warn("\tB3D: {}, OBJ: {}", ModBlockLoader.useB3D ? "on" : "off", ModBlockLoader.useOBJ ? "on" : "off");
             ModItemLoader.getItems(elements, sItems);
             warn("[Elementtimes] 共计 {} Item", sItems.size());
+            warn("\tOreDictionary Name: {}", ModItemLoader.sItemOreDict.size());
+            warn("\tSubItem Model: {}", ModItemLoader.sSubItemModel.size());
             ModRecipeLoader.getRecipes(elements, sRecipes);
             warn("[Elementtimes] 共计 {} Recipe", sRecipes.size());
             ModElementLoader.getElements(elements);
             warn("[Elementtimes] 共计 {} Static Functions", ModElementLoader.sInvokers.size());
 
-
-            MinecraftForge.ORE_GEN_BUS.register(new OreBusRegister());
+            MinecraftForge.ORE_GEN_BUS.register(OreBusRegister.class);
+            MinecraftForge.EVENT_BUS.register(TerrainBusRegister.class);
             sInInit = true;
         }
     }
@@ -151,9 +156,7 @@ public class ElementRegister {
                 if (ModBlockLoader.sBlockStates.containsKey(block)) {
                     ModBlock.StateMap stateMap = ModBlockLoader.sBlockStates.get(block);
                     RegisterUtil.applyResourceByStateMap(block, stateMap, null);
-                } else
-                    //noinspection ConstantConditions
-                {
+                } else {
                     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
                 }
             }

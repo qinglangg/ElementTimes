@@ -16,7 +16,7 @@ public @interface ModRecipe {
 
     /**
      * 锤子合成
-     * 可标记 Item，Block，String(默认认为是 矿辞，id以 [id]: 开头加以区分)
+     * 可标记 Item，Block，String(默认认为是 矿辞，id以 [id] 开头加以区分)
      * json 注册 我注册个锤子啊 头疼
      */
     @Retention(RetentionPolicy.RUNTIME)

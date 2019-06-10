@@ -17,23 +17,21 @@ import net.minecraftforge.common.util.EnumHelper;
 public class ElementtimesItems {
 
     @ModItem
-    public static Item fiveElements;
+    public static Item fiveElements = new Item();
     @ModItem
-    public static Item endElement;
+    public static Item endElement = new Item();
     @ModItem
-    public static Item soilElement;
+    public static Item soilElement = new Item();
     @ModItem
-    public static Item woodElement;
+    public static Item woodElement = new Item();
     @ModItem
-    public static Item waterElement;
+    public static Item waterElement = new Item();
     @ModItem
-    public static Item fireElement;
+    public static Item fireElement = new Item();
     @ModItem
-    public static Item goldElement;
+    public static Item goldElement = new Item();
     @ModItem
-    public static Item saplingEssence;
-    @ModItem
-    public static Item cropesSence;
+    public static Item cropesSence = new Item();
     @ModItem
     public static Item elementSword = new Elementsword();
     @ModItem
@@ -51,18 +49,18 @@ public class ElementtimesItems {
     @ModItem
     public static Item bakedCorn = new ItemFood(5, 2.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static Item stoneIngot;
+    public static Item stoneIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("ingotSteel")
-    public static Item steelIngot;
+    public static Item steelIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static Item calciumCarbonate;
+    public static Item calciumCarbonate = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static Item calciumOxide;
+    public static Item calciumOxide = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
-    public static Item ingotColumn;
+    public static Item ingotColumn = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static Item concrete;
+    public static Item concrete = new Item();
     @ModItem(registerName = "element_sleeve_helmet", unlocalizedName = "elementsleevehelmet")
     public static Item elementSleeveHelmet = new ElementSleeveHelmet();
     @ModItem(registerName = "element_sleeve_body", unlocalizedName = "elementsleevebody")
@@ -81,49 +79,40 @@ public class ElementtimesItems {
     public static Item platinumSleeveBoots = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.FEET);
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotCopper")
-    public static Item copper;
+    public static Item copper = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotSilver")
-    public static Item silver;
+    public static Item silver = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustEmerald")
-    public static Item greenstonePowder;
+    public static Item greenstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustSilver")
-    public static Item silverPowder;
+    public static Item silverPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustRedstone")
-    public static Item redstonePowder;
+    public static Item redstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustLapisLazuli")
-    public static Item bluestonePowder;
+    public static Item bluestonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustIron")
-    public static Item ironPower;
+    public static Item ironPower = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustGold")
     public static Item goldPowder;
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustCoal")
-    public static Item coalPowder;
+    public static Item coalPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustDiamond")
-    public static Item diamondPowder;
+    public static Item diamondPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustCopper")
-    public static Item copperPowder;
+    public static Item copperPowder = new Item();
     @ModItem
     public static Item spanner = new Spanner();
     @ModItem
-    public static Item twiningSunCompound;
+    public static Item twiningSunCompound = new Item();
     @ModItem
-    public static Item intermediateRubbingSunCompound;
+    public static Item intermediateRubbingSunCompound = new Item();
     @ModItem
-    public static Item largeRubbingSunCompound;
+    public static Item largeRubbingSunCompound = new Item();
     @ModItem
-    public static Item photoElement;
+    public static Item photoElement = new Item();
     @ModItem
-    public static Item quartzPowder;
+    public static Item quartzPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(100)
     @ModItem.RetainInCrafting
@@ -135,35 +124,34 @@ public class ElementtimesItems {
     @ModItem
     public static Item cornBroth = new ItemSoup(20);
     @ModItem
-    public static Item money;
+    public static Item money = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    public static Item sulfurOrePowder;
+    public static Item sulfurOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item sulfurPowder = new ItemFuel(800);
     @ModItem
     public static Item sucroseCharCoal = new ItemFuel(800);
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotPlatinum")
-    public static Item platinumIngot;
+    public static Item platinumIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustPlatinum")
-    public static Item platinumOrePowder;
+    public static Item platinumOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
-    public static Item diamondIngot;
+    public static Item diamondIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item hydrogen = new ItemBottleFuel(1600);
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle steam;
+    public static ItemGlassBottle steam = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumBisulfite;
+    public static ItemGlassBottle sodiumBisulfite = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumMetabisulfite;
+    public static ItemGlassBottle sodiumMetabisulfite = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sulfiteSolution;
+    public static ItemGlassBottle sulfiteSolution = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sulphuricAcid;
+    public static ItemGlassBottle sulphuricAcid = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumSulfiteSolution;
+    public static ItemGlassBottle sodiumSulfiteSolution = new ItemGlassBottle();
     @ModItem
     public static Item elementShovel = new Elementshovel();
     @ModItem
@@ -180,86 +168,86 @@ public class ElementtimesItems {
     public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
     @ModItem
     @ModOreDict("rubber")
-    public static Item rubber;
+    public static Item rubber = new Item();
     @ModItem
-    public static Item rubberRaw;
+    public static Item rubberRaw = new Item();
     @ModItem
     @ModOreDict("salt")
-    public static Item salt;
+    public static Item salt = new Item();
     @ModItem
     @ModItem.Damageable(10)
-    public static WoodenHalter woodenHalter;
+    public static WoodenHalter woodenHalter = new WoodenHalter();
 
     // gear
 
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearWood")
-    public static Item gearWood;
+    public static Item gearWood = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearQuartz")
-    public static Item gearQuartz;
+    public static Item gearQuartz = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearStone")
-    public static Item gearStone;
+    public static Item gearStone = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearCarbon")
-    public static Item gearCarbon;
+    public static Item gearCarbon = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearGold")
-    public static Item gearGold;
+    public static Item gearGold = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSteel")
-    public static Item gearSteel;
+    public static Item gearSteel = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearDiamond")
-    public static Item gearDiamond;
+    public static Item gearDiamond = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearIron")
-    public static Item gearIron;
+    public static Item gearIron = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearPlatinum")
-    public static Item gearPlatinum;
+    public static Item gearPlatinum = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearCopper")
-    public static Item gearCopper;
+    public static Item gearCopper = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSilver")
-    public static Item gearSilver;
+    public static Item gearSilver = new Item();
 
 
     // plate
 
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateWood")
-    public static Item platewood;
+    public static Item platewood = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateStone")
-    public static Item plateStone;
+    public static Item plateStone = new Item();
     @ModItem( creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateIron")
-    public static Item plateIron;
+    public static Item plateIron = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateSteel")
-    public static Item plateSteel;
+    public static Item plateSteel = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateGold")
-    public static Item plateGold;
+    public static Item plateGold = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateDiamond")
-    public static Item plateDiamond;
+    public static Item plateDiamond = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("platePlatinum")
-    public static Item platePlatinum;
+    public static Item platePlatinum = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCopper")
-    public static Item plateCopper;
+    public static Item plateCopper = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateQuartz")
-    public static Item plateQuartz;
+    public static Item plateQuartz = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCarbon")
-    public static Item plateCarbon;
+    public static Item plateCarbon = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateSilver")
-    public static Item plateSilver;
+    public static Item plateSilver = new Item();
 }

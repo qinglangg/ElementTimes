@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 
@@ -16,13 +18,16 @@ import javax.annotation.Nonnull;
 public class TileExtractor extends BaseOneToOne {
 
     public TileExtractor() {
-        super(ElementtimesConfig.FURNACE.maxEnergy);
+        super(ElementtimesConfig.EXTRACTOR.maxEnergy);
     }
 
     public static MachineRecipeHandler sRecipeHandler;
 
     public static void init() {
-        sRecipeHandler = new MachineRecipeHandler();
+        sRecipeHandler = new MachineRecipeHandler()
+                .add("0", 100000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
+                .add("1", 100000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 2)
+                .add("2", 100000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2);
     }
 
     @Nonnull
@@ -33,12 +38,12 @@ public class TileExtractor extends BaseOneToOne {
 
     @Override
     public int getMaxEnergyChange() {
-        return ElementtimesConfig.FURNACE.maxExtract;
+        return ElementtimesConfig.EXTRACTOR.maxExtract;
     }
 
     @Override
     public void applyConfig() {
-        setMaxTransfer(ElementtimesConfig.FURNACE.maxReceive);
+        setMaxTransfer(ElementtimesConfig.EXTRACTOR.maxReceive);
     }
 }
 
