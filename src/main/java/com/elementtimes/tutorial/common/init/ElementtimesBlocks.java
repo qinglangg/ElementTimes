@@ -3,9 +3,12 @@ package com.elementtimes.tutorial.common.init;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
-import com.elementtimes.tutorial.common.block.*;
+import com.elementtimes.tutorial.common.block.CornCropUp;
+import com.elementtimes.tutorial.common.block.OreSalt;
+import com.elementtimes.tutorial.common.block.Sulfurore;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
+import com.elementtimes.tutorial.common.block.tree.*;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.tileentity.*;
 import net.minecraft.block.Block;
@@ -18,6 +21,18 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber
 public class ElementtimesBlocks {
+
+    // Plant
+
+    @ModBlock(registerName = "corn_crop", unlocalizedName = "cornCrop", creativeTab = ModCreativeTabs.None)
+    public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();
+    @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
+    public static Block cornCropUp = new CornCropUp();
+    @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
+    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
+    public static Block rubberSapling = new RubberSapling();
+    @ModBlock
+    public static Block saplingEssence = new EssenceSapling();
 
     // ore
 
@@ -44,6 +59,10 @@ public class ElementtimesBlocks {
     @ModOreDict("oreSulfur")
     @ModBlock.WorldGen
     public static Block sulfurOre = new Sulfurore();
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
+    public static Block calciumFluoride = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
 
     // Block
 
@@ -110,9 +129,10 @@ public class ElementtimesBlocks {
 
     @ModBlock
     @ModBlock.HarvestLevel(toolClass = "axe")
-    public static Block woodesSence = new Block(Material.WOOD).setHardness(50f).setResistance(15f).setLightLevel(50f);
+    @ModOreDict("logWood")
+    public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
     @ModBlock
-    public static Block leafesSence = new Leafessence();
+    public static Block leafesSence = new EssenceLeaf();
     @ModBlock(creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.HarvestLevel
     public static Block stoneBlock = new Block(Material.ROCK).setHardness(100f).setResistance(15f);
@@ -122,17 +142,6 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.HarvestLevel(level = 4)
     public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(10000f).setResistance(150f);
-    @ModBlock(creativeTab = ModCreativeTabs.Ore)
-    @ModBlock.HarvestLevel
-    @ModBlock.WorldGen
-    public static Block calciumFluoride = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
-    @ModBlock(registerName = "corn_crop", unlocalizedName = "cornCrop", creativeTab = ModCreativeTabs.None)
-    public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();
-    @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
-    public static Block cornCropUp = new CornCropUp();
-    @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
-    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
-    public static Block rubberSapling = new RubberSapling();
     @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log")
     @ModOreDict("logWood")
     public static Block rubberLog = new RubberLog();

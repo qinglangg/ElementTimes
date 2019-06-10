@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.world.gen;
 
-import com.elementtimes.tutorial.common.block.RubberLog;
+import com.elementtimes.tutorial.common.block.tree.RubberLog;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.util.math.BlockPos;

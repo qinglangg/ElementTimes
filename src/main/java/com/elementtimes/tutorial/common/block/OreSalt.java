@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,6 +34,8 @@ public class OreSalt extends Block {
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        return 2 + random.nextInt(4);
+        int nextInt = random.nextInt(4);
+        float r = 4f - nextInt;
+        return (int) (2 + nextInt + r * fortune / Enchantments.FORTUNE.getMaxLevel());
     }
 }

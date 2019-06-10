@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.block;
+package com.elementtimes.tutorial.common.block.tree;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import net.minecraft.block.BlockLeaves;

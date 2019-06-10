@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.common.block.RubberLog;
+import com.elementtimes.tutorial.common.block.tree.RubberLog;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.state.IBlockState;
