@@ -1,56 +1,59 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.common.block.machine.Furnace;
-import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
+import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import net.minecraft.block.state.IBlockState;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
-public class TileFurnace extends TileOneToOne {
+/**
+ * 电炉
+ * @author luqin2007
+ */
+@ModElement
+@ModElement.ModInvokeStatic("init")
+public class TileFurnace extends BaseOneToOne {
 
     public TileFurnace() {
-        super(ElementtimesConfig.furnace.maxEnergy, ElementtimesConfig.furnace.maxReceive);
+        super(ElementtimesConfig.FURNACE.maxEnergy);
+    }
+
+    public static MachineRecipeHandler sRecipeHandler;
+
+    public static void init() {
+        sRecipeHandler = new MachineRecipeHandler()
+                .add("0")
+                .addItemInput(itemStack -> !FurnaceRecipes.instance().getSmeltingResult(itemStack).isEmpty(),
+                              itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
+                              Collections.emptyList())
+                .addItemOutput((recipe, input, fluids, i) -> {
+                    if (input == null || input.isEmpty() || input.get(0).isEmpty()) {
+                        return ItemStack.EMPTY;
+                    }
+                    return FurnaceRecipes.instance().getSmeltingResult(input.get(0)).copy();
+                }, Collections.emptyList())
+                .addCost(100)
+                .build();
+    }
+
+    @Nonnull
+    @Override
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return sRecipeHandler;
     }
 
     @Override
-    protected IBlockState updateState(IBlockState old) {
-        if (isProc != old.getValue(Furnace.BURNING)) {
-            Elementtimes.getLogger().warn("furnace: change {} -> {}", old.getValue(Furnace.BURNING), isProc);
-            return old.withProperty(Furnace.BURNING, isProc);
-        }
-        return super.updateState(old);
+    public int getMaxEnergyChange() {
+        return ElementtimesConfig.FURNACE.maxExtract;
     }
 
     @Override
-    protected ItemStack getInput(ItemStackHandler handler) {
-        return handler.extractItem(0, 1, true);
-    }
-
-    @Override
-    protected ItemStack getOutput(ItemStackHandler handler, boolean simulate) {
-        ItemStack input = handler.extractItem(0, 1, simulate);
-        if (input.isEmpty()) return ItemStack.EMPTY;
-        return FurnaceRecipes.instance().getSmeltingResult(input).copy();
-    }
-
-    @Override
-    protected int getTotalEnergyCost(ItemStackHandler handler) {
-        return ElementtimesConfig.furnace.totalTime * getEnergyCostPerTick(handler);
-    }
-
-    @Override
-    protected int getEnergyCostPerTick(ItemStackHandler handler) {
-        return ElementtimesConfig.furnace.maxExtract;
-    }
-
-    @Override
-    protected boolean isInputItemValid(int slot, @Nonnull ItemStack stack) {
-        return !FurnaceRecipes.instance().getSmeltingResult(stack).isEmpty();
+    public void applyConfig() {
+        setMaxTransfer(ElementtimesConfig.FURNACE.maxReceive);
     }
 }
 

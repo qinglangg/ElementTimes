@@ -6,12 +6,13 @@
   },
   "pattern": [
     "AAA",
-    "BCB",
+    "BCG",
     "DEF"
   ],
   "key": {
     "A": {
-      "item": "elementtimes:diamondblock"
+      "type": "forge:ore_dict",
+      "ore": "blockSteel"
     },
     "B": {
       "item": "elementtimes:pulverizer"
@@ -30,6 +31,9 @@
     "F": {
       "type": "forge:ore_dict",
       "ore": "gearDiamond"
+    },
+    "G": {
+      "item": "elementtimes:compressor"
     }
   }
 }

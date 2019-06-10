@@ -12,31 +12,35 @@ import net.minecraftforge.common.config.Config;
 public class ElementtimesConfig {
     @Config.Name("General")
     @Config.LangKey("elementtimes.config.general")
-    public static final General general = new General();
+    public static final General GENERAL = new General();
 
     @Config.Name("GeneralFuel")
     @Config.LangKey("elementtimes.config.general.fuel")
-    public static final FuelGeneral fuelGeneral = new FuelGeneral();
+    public static final FuelGeneral FUEL_GENERAL = new FuelGeneral();
 
     @Config.Name("Pul")
     @Config.LangKey("elementtimes.config.pul")
-    public static final Pul pul = new Pul();
+    public static final Pul PUL = new Pul();
 
     @Config.Name("compressor")
     @Config.LangKey("elementtimes.config.compressor")
-    public static final Compressor compressor = new Compressor();
+    public static final Compressor COMPRESSOR = new Compressor();
 
     @Config.Name("furnace")
     @Config.LangKey("elementtimes.config.furnace")
-    public static final Furnace furnace = new Furnace();
+    public static final Furnace FURNACE = new Furnace();
+
+    @Config.Name("extractor")
+    @Config.LangKey("elementtimes.config.extractor")
+    public static final Extractor EXTRACTOR = new Extractor();
 
     @Config.Name("rebuild")
     @Config.LangKey("elementtimes.config.rebuild")
-    public static final Rebuild rebuild = new Rebuild();
+    public static final Rebuild REBUILD = new Rebuild();
 
     @Config.Name("forming")
     @Config.LangKey("elementtimes.config.forming")
-    public static final Forming forming = new Forming();
+    public static final Forming FORMING = new Forming();
 
     public static final class General {
         @Config.Comment("设置发电机最大容量")
@@ -75,6 +79,9 @@ public class ElementtimesConfig {
         @Config.Comment("设置影元素发电量")
         @Config.Name("generaterEnd")
         public int generaterEnd = 15000000;
+        @Config.Comment("设置橡胶树生成时,自带橡胶的概率(最大100)")
+        @Config.Name("rubberTreeGenRubberProbability")
+        public int rubberTreeGenRubberProbability = 50;
     }
 
     public static final class FuelGeneral {
@@ -111,19 +118,6 @@ public class ElementtimesConfig {
         @Config.Comment("设置打粉机每个矿物产粉量")
         @Config.Name("pulPowderCount")
         public int pulPowderCount = 5;
-
-        @Config.Comment("设置打粉机可放入的矿石")
-        @Config.Name("pulCanPutIn")
-        public String[] pulCanPutIn = new String[]{
-                "oreIron",
-                "oreRedstone",
-                "oreGold",
-                "oreDiamond",
-                "oreLapis",
-                "oreEmerald",
-                "oreCopper",
-                "oreCoal",
-                "orePlatinum"};
     }
 
     public static final class Compressor {
@@ -145,7 +139,7 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置压缩机每个矿物产粉量")
         @Config.Name("compressorPowderCount")
-        public int powderCount = 5;
+        public int powderCount = 1;
 
 //        @Config.Comment("设置压缩机可放入的矿石")
 //        @Config.Name("compressorCanPutIn")
@@ -173,10 +167,20 @@ public class ElementtimesConfig {
         @Config.Comment("设置熔炉最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
+    }
 
-        @Config.Comment("设置每个配方所需加工时间(tick)")
-        @Config.Name("totalTime")
-        public int totalTime = 10;
+    public static final class Extractor {
+        @Config.Comment("设置提取机最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 1000000;
+
+        @Config.Comment("设置提取机每Tick消耗电量")
+        @Config.Name("maxExtract")
+        public int maxExtract = 10;
+
+        @Config.Comment("设置提取机最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 10000;
     }
 
     public static final class Rebuild {
@@ -205,9 +209,5 @@ public class ElementtimesConfig {
         @Config.Comment("设置整形机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 10000;
-
-        @Config.Comment("设置每个配方所需加工时间(tick)")
-        @Config.Name("totalTime")
-        public int totalTime = 10;
     }
 }

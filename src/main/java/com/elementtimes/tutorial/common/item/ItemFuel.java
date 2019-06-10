@@ -5,6 +5,10 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.IntSupplier;
 
+/**
+ * 可然的物品
+ * @author luqin2007
+ */
 public class ItemFuel extends Item {
 
     private IntSupplier burningTimeProvider;

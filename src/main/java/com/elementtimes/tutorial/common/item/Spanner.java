@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.interface_.block.IDismantleBlock;
+import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -13,8 +13,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class Spanner extends Item {
 
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
@@ -23,7 +26,7 @@ public class Spanner extends Item {
                 Block b = worldIn.getBlockState(pos).getBlock();
                 if (b instanceof IDismantleBlock) {
                     IDismantleBlock d = (IDismantleBlock) b;
-                    ItemStack drop = d.dismantleBlock(worldIn, pos, worldIn.getBlockState(pos), true);
+                    ItemStack drop = d.dismantleBlock(worldIn, pos);
                     InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), drop);
 
                     worldIn.setBlockToAir(pos);

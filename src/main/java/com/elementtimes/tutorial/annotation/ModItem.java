@@ -17,8 +17,20 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface ModItem {
-    String registerName();
-    String unlocalizedName();
+    /**
+     * RegisterName，代表物品注册名
+     * 当该注解注解 Field 且物品 registerName 与属性名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * 当该注解注解 Class 且物品 registerName 与类名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * @return registerName
+     */
+    String registerName() default "";
+
+    /**
+     * UnlocalizedName，用于获取物品显示名
+     * 当 unlocalizedName 与 registerName 相同时，可省略
+     * @return unlocalizedName
+     */
+    String unlocalizedName() default "";
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**

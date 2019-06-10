@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.EnumHelper;
 
+import javax.annotation.Nonnull;
+
 public class Elementshovel  extends ItemSpade {
 
 	public Elementshovel() 
@@ -15,8 +17,8 @@ public class Elementshovel  extends ItemSpade {
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		super.getSubItems(tab, items); //  Item 实现：判断 添加一个物品
+	public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
+		super.getSubItems(tab, items);
 		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(ItemUtil::addMaxEnchantments);
 	}
 }

@@ -1,15 +1,13 @@
 package com.elementtimes.tutorial.plugin.jei;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import com.elementtimes.tutorial.common.tileentity.TilePulverize;
 import com.elementtimes.tutorial.common.tileentity.TileRebuild;
-import com.elementtimes.tutorial.plugin.jei.category.CompressorRecipe;
-import com.elementtimes.tutorial.plugin.jei.category.PulverizeRecipe;
-import com.elementtimes.tutorial.plugin.jei.category.RebuildRecipe;
-import com.elementtimes.tutorial.plugin.jei.wrapper.CompressorWrapper;
-import com.elementtimes.tutorial.plugin.jei.wrapper.PulverizeWrapper;
-import com.elementtimes.tutorial.plugin.jei.wrapper.RebuildWrapper;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.plugin.jei.category.MachineOneToOneRecipe;
+import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -17,13 +15,17 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @JEIPlugin
 public class JEISupport implements IModPlugin {
+
+    private static final String ID_COMPRESSOR = Elementtimes.MODID + ".compressor.jei.category";
+    private static final String ID_PULVERIZE = Elementtimes.MODID + ".pulverize.jei.category";
+    private static final String ID_REBUILD = Elementtimes.MODID + ".rebuild.jei.category";
 
     @Override
     public void register(IModRegistry registry) {
@@ -31,28 +33,12 @@ public class JEISupport implements IModPlugin {
         IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
         blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCrop));
         blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCropUp));
-        // 磨粉机
-        TilePulverize.init();
-        List<PulverizeWrapper> pulverizeWrappers = TilePulverize.dict.entrySet().stream()
-                .map(entity -> new PulverizeWrapper(entity.getKey(), entity.getValue()))
-                .collect(Collectors.toList());
-        registry.addRecipes(pulverizeWrappers, PulverizeRecipe.ID);
-        registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.pulverize), PulverizeRecipe.ID);
-        // 物质重构机
-        TileRebuild.init();
-        List<RebuildWrapper> rebuildWrappers = TileRebuild.rebuildMap.stream()
-                .map(entity -> new RebuildWrapper(entity.left, entity.right, TileRebuild.getEnergyCost(entity.left)))
-                .collect(Collectors.toList());
-        registry.addRecipes(rebuildWrappers, RebuildRecipe.ID);
-        registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.rebuild), RebuildRecipe.ID);
-        // 压缩机
-        TileCompressor.init();
-        List<CompressorWrapper> compressorWrappers = TileCompressor.recipes.entrySet().stream()
-                .map(recipe -> new CompressorWrapper(recipe.getKey(), recipe.getValue()))
-                .collect(Collectors.toList());
-        registry.addRecipes(compressorWrappers, CompressorRecipe.ID);
-        registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.compressor), CompressorRecipe.ID);
+        // 机器配方
+        registerJeiRecipes(registry, ElementtimesBlocks.pulverizer, TilePulverize.sRecipeHandler, ID_PULVERIZE);
+        registerJeiRecipes(registry, ElementtimesBlocks.rebuild, TileRebuild.sRecipeHandler, ID_REBUILD);
+        registerJeiRecipes(registry, ElementtimesBlocks.compressor, TileCompressor.sRecipeHandler, ID_COMPRESSOR);
         // TODO: 酿造台
+        // TODO: 成型机
         // 电炉
         registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.furnace), VanillaRecipeCategoryUid.SMELTING);
     }
@@ -60,8 +46,14 @@ public class JEISupport implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
-        registry.addRecipeCategories(new PulverizeRecipe(guiHelper));
-        registry.addRecipeCategories(new RebuildRecipe(guiHelper));
-        registry.addRecipeCategories(new CompressorRecipe(guiHelper));
+        registry.addRecipeCategories(new MachineOneToOneRecipe(guiHelper, ID_COMPRESSOR, "compressor"));
+        registry.addRecipeCategories(new MachineOneToOneRecipe(guiHelper, ID_REBUILD, "rebuild"));
+        registry.addRecipeCategories(new MachineOneToOneRecipe(guiHelper, ID_PULVERIZE, "pulverize"));
+    }
+
+    private void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {
+        List<MachineRecipeWrapper> wrappers = MachineRecipeWrapper.fromHandler(recipes);
+        registry.addRecipes(wrappers, id);
+        registry.addRecipeCatalyst(new ItemStack(machine), id);
     }
 }

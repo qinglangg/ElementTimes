@@ -40,6 +40,7 @@ extends Block{
     {
         return false;
     }
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
@@ -80,6 +81,7 @@ extends Block{
     public IBlockState getAgeBlockState(int age) {
     	return this.blockState.getBaseState().withProperty(AGE,age);
     }
+    @Override
     public IBlockState getStateFromMeta(int meta)
     {
         return this.withAge(meta);
@@ -88,11 +90,13 @@ extends Block{
     /**
      * Convert the BlockState into the correct metadata value
      */
+    @Override
     public int getMetaFromState(IBlockState state)
     {
         return this.getAge(state);
     }
 
+    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, AGE);

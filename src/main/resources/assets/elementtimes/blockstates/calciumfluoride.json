@@ -1,5 +1,17 @@
 {
-    "variants": {
-        "normal": { "model": "elementtimes:calciumfluoride" }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "elementtimes:blocks/ore/calciumfluoride"
     }
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
+  }
 }

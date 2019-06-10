@@ -1,5 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
+import com.elementtimes.tutorial.annotation.ModSkip;
+
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -12,12 +14,19 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * 加载 Class
+ *
+ * @author luqin2007
+ */
 public class ModClassLoader {
 
-    static void getClasses(@Nonnull Map<Class, ArrayList<AnnotatedElement>> elements, Class<? extends Annotation>... support) {
+    @SafeVarargs
+    public static void getClasses(@Nonnull Map<Class, ArrayList<AnnotatedElement>> elements, Class<? extends Annotation>... support) {
         for (Class aClass : support) {
-            if (!elements.containsKey(aClass))
+            if (!elements.containsKey(aClass)) {
                 elements.put(aClass, new ArrayList<>());
+            }
         }
 
         try {
@@ -46,11 +55,11 @@ public class ModClassLoader {
 
     /**
      * 从包package中获取所有的Class
+     * 修改：忽略 ModSkip 注解
      * 代码来自 http://guoliangqi.iteye.com/blog/644876
      */
     private static Set<Class<?>> getClasses(String pack) throws Exception {
         Set<Class<?>> classes = new LinkedHashSet<>();
-        boolean recursive = true;
         String packageName = pack;
         String packageDirName = packageName.replace('.', '/');
         Enumeration<URL> dirs;
@@ -61,25 +70,54 @@ public class ModClassLoader {
             if ("file".equals(protocol)) {
                 System.err.println("file类型的扫描");
                 String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
-                findAndAddClassesInPackageByFile(packageName, filePath, recursive, classes);
+                findAndAddClassesInPackageByFile(packageName, filePath, classes);
             } else if ("jar".equals(protocol)) {
                 System.err.println("jar类型的扫描");
                 JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
                 Enumeration<JarEntry> entries = jar.entries();
+                Set<String> classTmp = new LinkedHashSet<>();
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
                     String name = entry.getName();
-                    if (name.charAt(0) == '/') name = name.substring(1);
+                    if (name.charAt(0) == '/') {
+                        name = name.substring(1);
+                    }
                     if (name.startsWith(packageDirName)) {
                         int idx = name.lastIndexOf('/');
-                        if (idx != -1) packageName = name.substring(0, idx).replace('/', '.');
-                        if ((idx != -1) || recursive) {
-                            if (name.endsWith(".class") && !entry.isDirectory()) {
-                                String className = name.substring(packageName.length() + 1, name.length() - 6);
-                                classes.add(Class.forName(packageName + '.' + className));
-                            }
+                        if (idx != -1) {
+                            packageName = name.substring(0, idx).replace('/', '.');
+                        }
+                        if (name.endsWith(".class") && !entry.isDirectory()) {
+                            String className = name.substring(packageName.length() + 1, name.length() - 6);
+                            classTmp.add(packageName + "." + className);
                         }
                     }
+                }
+                // 排除
+                Set<String> remove = new LinkedHashSet<>();
+                classTmp.stream()
+                        .filter(c -> c.endsWith("package-info"))
+                        .forEach(pInfos -> {
+                            try {
+                                Class aClass = Thread.currentThread().getContextClassLoader().loadClass(pInfos);
+                                Annotation annotation = aClass.getAnnotation(ModSkip.class);
+                                if (annotation != null) {
+                                    String name = aClass.getPackage().getName();
+                                    System.out.println("跳过：" + name);
+                                    remove.add(name);
+                                }
+                            } catch (ClassNotFoundException ignored) {}
+                        });
+                classTmp.removeIf(r -> {
+                    for (String s : remove) {
+                        if (r.startsWith(s)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+                for (String s : classTmp) {
+                    classes.add(Class.forName(s));
                 }
             }
         }
@@ -87,19 +125,44 @@ public class ModClassLoader {
         return classes;
     }
 
+    private static void findAndAddClassesInPackageByJarDirectory(Set<String> classNames, Set<Class<?>> classes) throws ClassNotFoundException {
+        String pInfos = classNames.stream().filter(name -> name.endsWith("package-info")).findFirst().orElse(null);
+        if (pInfos != null && pInfos.length() > 0) {
+
+        }
+
+        for (String className : classNames) {
+            if (className != null) {
+                System.out.println(className);
+                classes.add(Class.forName(className));
+            }
+        }
+        classNames.clear();
+    }
+
     /**
+     * 修改：忽略 ModSkip 注解
      * 以文件的形式来获取包下的所有Class
      */
-    private static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive, Set<Class<?>> classes) throws Exception {
+    private static void findAndAddClassesInPackageByFile(String packageName, String packagePath, Set<Class<?>> classes) throws Exception {
         File dir = new File(packagePath);
         if (!dir.exists() || !dir.isDirectory()) {
             return;
         }
-        File[] dirfiles = dir.listFiles(file -> (recursive && file.isDirectory())
-                || (file.getName().endsWith(".class")));
+        // 忽略 ModSkip
+        File[] pInfos = dir.listFiles(file -> file.getName().equals("package-info.class"));
+        if (pInfos != null && pInfos.length > 0) {
+            Class<?> aClass = Thread.currentThread().getContextClassLoader().loadClass(packageName + ".package-info");
+            Annotation annotation = aClass.getAnnotation(ModSkip.class);
+            if (annotation != null) {
+                System.out.println("跳过：" + aClass.getPackage().getName());
+                return;
+            }
+        }
+        File[] dirfiles = dir.listFiles(file -> file.isDirectory() || (file.getName().endsWith(".class")));
         for (File file : dirfiles) {
             if (file.isDirectory()) {
-                findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), recursive, classes);
+                findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), classes);
             } else {
                 String className = file.getName().substring(0, file.getName().length() - 6);
                 classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
@@ -119,7 +182,7 @@ public class ModClassLoader {
 //    private static void initFluid(Object fluidHolder, List<Fluid> into) {
 //        Fluid fluid = null;
 //        ModFluid info = null;
-//        into.add(fluid);
+//        into.set(fluid);
 //    }
 //
 //    /**
@@ -131,7 +194,7 @@ public class ModClassLoader {
 //            sElementClasses.get(ModCommand.class)
 //                    .forEach(aClass -> {
 //                        try {
-//                            sCommands.add((CommandBase) get(aClass));
+//                            sCommands.set((CommandBase) get(aClass));
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -153,7 +216,7 @@ public class ModClassLoader {
 //                            Enchantment enchantment = (Enchantment) get(aClass);
 //                            enchantment.setName(info.name());
 //                            enchantment.setRegistryName(info.registerName());
-//                            sEnchantments.add(enchantment);
+//                            sEnchantments.set(enchantment);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -175,7 +238,7 @@ public class ModClassLoader {
 //                            Potion potion = (Potion) get(aClass);
 //                            potion.setPotionName(info.name());
 //                            potion.setRegistryName(info.registerName());
-//                            sPotions.add(potion);
+//                            sPotions.set(potion);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -200,7 +263,7 @@ public class ModClassLoader {
 //                            item.setRegistryName(info.registerName());
 //                            item.setUnlocalizedName(info.unlocalizedName());
 //                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
-//                            sBuckets.add(item);
+//                            sBuckets.set(item);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
@@ -235,7 +298,7 @@ public class ModClassLoader {
 //        if (sCapabilities == null) {
 //            sCapabilities = new ArrayList<>();
 //            sElementClasses.get(ModCapability.class)
-//                    .forEach(aClass -> sCapabilities.add((ModCapability) aClass.getAnnotation(ModCapability.class)));
+//                    .forEach(aClass -> sCapabilities.set((ModCapability) aClass.getAnnotation(ModCapability.class)));
 //        }
 //        return sCapabilities;
 //    }

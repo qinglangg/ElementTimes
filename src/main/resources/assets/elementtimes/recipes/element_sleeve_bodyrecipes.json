@@ -1,11 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "elementtimes:max_enchantment",
   "pattern": [
     "F F",
-    "FFF",
-    "FFF"
+    "FEF",
+    "FPF"
   ],
   "key": {
+    "E": {
+      "item": "elementtimes:endelement"
+    },
+    "P": {
+      "item": "elementtimes:photoelement"
+    },
     "F": {
       "item": "elementtimes:fiveelements"
     }

@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "leaves",
+    "textures": {
+      "all": "elementtimes:blocks/rubber_tree/leaf"
+    }
+  },
+  "variants": {
+    "inventory": [{}],
+    "check_decay": {
+      "true": {},
+      "false": {}
+    },
+    "decayable": {
+      "true": {},
+      "false": {}
+    }
+  }
+}

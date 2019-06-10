@@ -11,45 +11,84 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ModItemLoader {
+import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 
-    static Map<Item, String> sItemOreDict = new HashMap<>();
-    static Map<Item, Int2ObjectMap<ModelResourceLocation>> sSubItemModel = new HashMap<>();
+/**
+ * 加载物品
+ * 处理所有 ModItem 注解的成员
+ *
+ * @author luqin2007
+ */
+public class ModItemLoader {
 
-    static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
+    public static Map<Item, String> sItemOreDict = new HashMap<>();
+    public static Map<Item, Int2ObjectMap<ModelResourceLocation>> sSubItemModel = new HashMap<>();
+
+    public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
         elements.get(ModItem.class).forEach(element -> buildItem(element, into));
     }
 
     private static void buildItem(AnnotatedElement itemHolder, List<Item> into) {
         // object
         final ModItem info = itemHolder.getAnnotation(ModItem.class);
-        if (info == null) return;
+        if (info == null) {
+            return;
+        }
         Item item = ReflectUtil.getFromAnnotated(itemHolder, new Item()).orElse(new Item());
 
+        String defaultName;
+        if (itemHolder instanceof Class) {
+            defaultName = ((Class) itemHolder).getSimpleName().toLowerCase();
+        } else if (itemHolder instanceof Field) {
+            defaultName = ((Field) itemHolder).getName().toLowerCase();
+        } else {
+            defaultName = null;
+        }
+
         initOreDict(item, itemHolder);
-        initItem(item, info);
+        // 矿辞
+        initItem(item, info, defaultName);
+        // 子类型
         initSubItem(item, itemHolder);
+        // 合成表保留
         initRetainedItem(item, itemHolder);
+        // 耐久
         initDamageable(item, itemHolder);
 
         into.add(item);
     }
 
-    private static void initItem(Item item, ModItem info) {
-        if (item.getRegistryName() == null)
-            item.setRegistryName(info.registerName());
-        item.setUnlocalizedName(Elementtimes.MODID + "." + info.unlocalizedName());
+    private static void initItem(Item item, ModItem info, String defaultName) {
+        String registryName = info.registerName();
+        if (registryName.isEmpty()) {
+            registryName = defaultName;
+        }
+        if (item.getRegistryName() == null) {
+            if (registryName == null) {
+                warn("Item {} don't have a RegisterName. It's a Bug!!!", item);
+            } else {
+                item.setRegistryName(registryName);
+            }
+        }
+        String unlocalizedName = info.unlocalizedName();
+        if (unlocalizedName.isEmpty()) {
+            unlocalizedName = registryName;
+        }
+        item.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
     }
 
     private static void initOreDict(Item item, AnnotatedElement itemHolder) {
         ModOreDict oreDict = itemHolder.getAnnotation(ModOreDict.class);
-        if (oreDict != null) sItemOreDict.put(item, oreDict.value());
+        if (oreDict != null) {
+            sItemOreDict.put(item, oreDict.value());
+        }
     }
 
     private static void initSubItem(Item item, AnnotatedElement itemHolder) {
@@ -106,8 +145,9 @@ class ModItemLoader {
         if (damageable != null) {
             item.setMaxDamage(damageable.value());
             item.setMaxStackSize(1);
-            if (damageable.noRepair())
+            if (damageable.noRepair()) {
                 item.setNoRepair();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.annotation;
 
+import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 
 import java.lang.annotation.ElementType;
@@ -12,12 +13,25 @@ import java.lang.annotation.Target;
  * 可将其注解到类或静态变量中。
  *  注解类则会使用无参构造实例化被标记类，并注册
  *  注解成员变量则会尝试使用无参构造实例化成员变量类型，并注册
+ *  成员请手动赋值，否则对其引用可能会出问题（编译器优化时会直接给他赋值为 null）
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface ModBlock {
-    String registerName();
-    String unlocalizedName();
+    /**
+     * RegisterName，代表方块注册名
+     * 当该注解注解 Field 且方块 registerName 与属性名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * 当该注解注解 Class 且方块 registerName 与类名相同（忽略大小写，使用 toLowerCase 处理）时，可省略
+     * @return registerName
+     */
+    String registerName() default "";
+
+    /**
+     * UnlocalizedName，用于获取方块显示名
+     * 当 unlocalizedName 与 registerName 相同时，可省略
+     * @return unlocalizedName
+     */
+    String unlocalizedName() default "";
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**
@@ -110,5 +124,80 @@ public @interface ModBlock {
          * 否则，为 inventory
          */
         String[] properties() default {};
+    }
+
+    /**
+     * 相当于 setHarvestLevel 方法
+     * 用于消灭 Block 类
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface HarvestLevel {
+        String toolClass() default "pickaxe";
+        int level() default 2;
+    }
+
+    /**
+     * 用于定义方块的世界生成
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface WorldGen {
+        /**
+         * @return 可生成高度范围
+         */
+        int YRange() default 48;
+
+        /**
+         * @return 最低生成高度
+         */
+        int YMin() default 16;
+
+        /**
+         * @return 矿物生成规模
+         */
+        int count() default 8;
+
+        /**
+         * @return 尝试生成次数
+         */
+        int times() default 4;
+
+        /**
+         * @return 每次尝试生成的成功率，范围 (0, 1)
+         */
+        float probability() default 0.5f;
+
+        /**
+         * @return 不生成的维度
+         */
+        int[] dimBlackList() default {};
+
+        /**
+         * @return 允许生成的维度。留空则不限制
+         */
+        int[] dimWhiteList() default {0};
+
+        /**
+         * @return 世界生成的种类
+         */
+        GenType type() default GenType.Ore;
+    }
+
+    /**
+     * 用于自定义世界生成，允许包含一个接受 Block 类型参数的构造
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface WorldGenClass {
+        /**
+         * @return 自定义世界生成 WorldGenerator 的全类名
+         */
+        String value();
+
+        /**
+         * @return 世界生成的种类
+         */
+        GenType type() default GenType.Ore;
     }
 }

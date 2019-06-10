@@ -25,6 +25,9 @@
 	{
         "item": "minecraft:sapling",
         "data": 5
+    },
+    {
+        "item": "elementtimes:rubber_sapling"
     }
 	],
 	"result": 

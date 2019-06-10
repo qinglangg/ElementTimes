@@ -1,86 +1,55 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.tileentity.base.TileOneToOne;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.oredict.OreDictionary;
+import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import net.minecraft.init.Items;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 压缩机
  * @author lq2007 create in 2019/5/19
  */
-public class TileCompressor extends TileOneToOne {
+@ModElement
+@ModElement.ModInvokeStatic("init")
+public class TileCompressor extends BaseOneToOne {
     public TileCompressor() {
-        super(ElementtimesConfig.compressor.maxEnergy,
-                ElementtimesConfig.compressor.maxReceive);
+        super(ElementtimesConfig.COMPRESSOR.maxEnergy);
     }
 
-    // key: OreDictionaryName or Item
-    public static Map<Object, ItemStack> recipes = new HashMap<>();
+    public static MachineRecipeHandler sRecipeHandler;
 
     public static void init() {
-        if (recipes.isEmpty()) {
-            recipes.put("logWood", new ItemStack(ElementtimesItems.platewood));
-            recipes.put(ElementtimesItems.sucroseCharCoal, new ItemStack(ElementtimesItems.plateCarbon));
-            recipes.put("ingotCopper", new ItemStack(ElementtimesItems.plateCopper));
-            recipes.put("gemDiamond", new ItemStack(ElementtimesItems.plateDiamond));
-            recipes.put("ingotGold", new ItemStack(ElementtimesItems.plateGold));
-            recipes.put("ingotIron", new ItemStack(ElementtimesItems.plateIron));
-            recipes.put("ingotPlatinum", new ItemStack(ElementtimesItems.platePlatinum));
-            recipes.put("gemQuartz", new ItemStack(ElementtimesItems.plateQuartz));
-            recipes.put("ingotSteel", new ItemStack(ElementtimesItems.plateSteel));
-            recipes.put("stone", new ItemStack(ElementtimesItems.plateStone));
-        }
+        sRecipeHandler = new MachineRecipeHandler()
+                .add("0", ElementtimesConfig.COMPRESSOR.powderEnergy, "logWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("1", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotCopper", 1, ElementtimesItems.plateCopper, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("2", ElementtimesConfig.COMPRESSOR.powderEnergy, "gemDiamond", 1, ElementtimesItems.plateDiamond, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("3", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotGold", 1, ElementtimesItems.plateGold, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("4", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotIron", 1, ElementtimesItems.plateIron, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("5", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotPlatinum", 1, ElementtimesItems.platePlatinum, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("6", ElementtimesConfig.COMPRESSOR.powderEnergy, "gemQuartz", 1, ElementtimesItems.plateQuartz, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("7", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSteel", 1, ElementtimesItems.plateSteel, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("8", ElementtimesConfig.COMPRESSOR.powderEnergy, "stone", 1, ElementtimesItems.plateStone, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("9", ElementtimesConfig.COMPRESSOR.powderEnergy, Items.COAL, 1, ElementtimesItems.plateCarbon, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("10", ElementtimesConfig.COMPRESSOR.powderEnergy, Items.BLAZE_ROD, 1, Items.BLAZE_POWDER, 8)
+                .add("11", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount);
+    }
+
+    @Nonnull
+    @Override
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return sRecipeHandler;
     }
 
     @Override
-    protected ItemStack getOutput(ItemStackHandler handler, boolean simulate) {
-        ItemStack input = handler.extractItem(0, 1, simulate);
-        if (input.isEmpty()) return ItemStack.EMPTY;
-        // item
-        if (recipes.containsKey(input.getItem()))
-            return recipes.get(input.getItem()).copy();
-        // OreDictionary
-        int[] oreIDs = OreDictionary.getOreIDs(input);
-        for (int oreID : oreIDs) {
-            String name = OreDictionary.getOreName(oreID);
-            ItemStack stack = recipes.get(name);
-            if (stack != null) return stack;
-        }
-        // Item
-        return ItemStack.EMPTY;
+    public void applyConfig() {
+        setMaxTransfer(ElementtimesConfig.COMPRESSOR.maxReceive);
     }
 
     @Override
-    protected ItemStack getInput(ItemStackHandler handler) {
-        return handler.extractItem(0, 1, true);
-    }
-
-    @Override
-    protected boolean isInputItemValid(int slot, @Nonnull ItemStack itemStack) {
-        // Item
-        if (recipes.containsKey(itemStack.getItem())) return true;
-        // OreDictionary
-        for (int oreID : OreDictionary.getOreIDs(itemStack)) {
-            if (recipes.containsKey(OreDictionary.getOreName(oreID))) return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected int getTotalEnergyCost(ItemStackHandler handler) {
-        return ElementtimesConfig.compressor.powderEnergy;
-    }
-
-    @Override
-    protected int getEnergyCostPerTick(ItemStackHandler handler) {
-        return ElementtimesConfig.compressor.maxExtract;
+    public int getMaxEnergyChange() {
+        return ElementtimesConfig.COMPRESSOR.maxExtract;
     }
 }

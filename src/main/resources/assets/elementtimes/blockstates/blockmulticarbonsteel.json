@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_bottom_top",
+    "textures": {
+      "bottom": "elementtimes:blocks/blockmulticarbonsteel/bottom",
+      "top": "elementtimes:blocks/blockmulticarbonsteel/top",
+      "side": "elementtimes:blocks/blockmulticarbonsteel/side"
+    }
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
+  }
+}
