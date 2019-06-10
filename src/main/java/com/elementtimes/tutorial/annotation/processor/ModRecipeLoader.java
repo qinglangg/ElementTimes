@@ -26,6 +26,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.*;
 import java.util.function.Supplier;
 
+import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
+
 /**
  * 加载合成表
  * 处理所有 ModRecipe 注解的成员
@@ -55,6 +57,7 @@ public class ModRecipeLoader {
         ModRecipe.Crafting info = element.getAnnotation(ModRecipe.Crafting.class);
         if (info != null) {
             into.add(() -> {
+                String rName = info.value().isEmpty() ? name : info.value();
                 Object obj = ReflectUtil.getFromAnnotated(element, null).orElse(null);
                 if (obj instanceof IRecipe) {
                     return (IRecipe) obj;
@@ -75,12 +78,21 @@ public class ModRecipeLoader {
                     }
                     IRecipe recipe;
                     CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
-                    primer.input = NonNullList.create();
+                    int size = info.width() * info.height();
+                    primer.input = NonNullList.withSize(size, Ingredient.EMPTY);
                     primer.width = info.width();
                     primer.height = info.height();
+                    if (size < objects.length - 1) {
+                        warn("You want to register a recipe({}) with {} items, but you put {} items in it. Some items will ignore.",
+                                rName, size, objects.length - 1);
+                    }
                     for (int i = 1; i < objects.length; i++) {
                         Object o = objects[i];
-                        primer.input.add(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
+                        if (i - 1 >= size) {
+                            warn("Ignore item[()]: {}.", i - 1, o);
+                            break;
+                        }
+                        primer.input.set(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
                     }
                     if (info.shaped()) {
                         if (info.ore()) {
@@ -95,7 +107,7 @@ public class ModRecipeLoader {
                             recipe = new ShapelessRecipes("recipe", r, primer.input);
                         }
                     }
-                    recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, info.value().isEmpty() ? name : info.value()));
+                    recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, rName));
                     return recipe;
                 }
                 return null;

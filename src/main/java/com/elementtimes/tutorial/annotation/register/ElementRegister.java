@@ -1,10 +1,7 @@
 package com.elementtimes.tutorial.annotation.register;
 
 import com.elementtimes.tutorial.Elementtimes;
-import com.elementtimes.tutorial.annotation.ModBlock;
-import com.elementtimes.tutorial.annotation.ModElement;
-import com.elementtimes.tutorial.annotation.ModItem;
-import com.elementtimes.tutorial.annotation.ModRecipe;
+import com.elementtimes.tutorial.annotation.*;
 import com.elementtimes.tutorial.annotation.processor.*;
 import com.elementtimes.tutorial.annotation.util.RegisterUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -56,7 +53,7 @@ public class ElementRegister {
         if (!sInInit) {
             HashMap<Class, ArrayList<AnnotatedElement>> elements = new HashMap<>();
             ModClassLoader.getClasses(elements,
-                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class);
+                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class);
             ModBlockLoader.getBlocks(elements, sBlocks);
             warn("[Elementtimes] 共计 {} Block", sBlocks.size());
             ModBlockLoader.sGenerators.forEach((genType, generators) -> {
@@ -76,7 +73,8 @@ public class ElementRegister {
             ModElementLoader.getElements(elements);
             warn("[Elementtimes] 共计 {} Static Functions", ModElementLoader.sInvokers.size());
 
-            MinecraftForge.ORE_GEN_BUS.register(new OreBusRegister());
+            MinecraftForge.ORE_GEN_BUS.register(OreBusRegister.class);
+            MinecraftForge.EVENT_BUS.register(TerrainBusRegister.class);
             sInInit = true;
         }
     }

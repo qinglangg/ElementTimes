@@ -131,7 +131,7 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
     public static Block cornCropUp = new CornCropUp();
     @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
-    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator", type = GenType.Tree)
+    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log")
     @ModOreDict("logWood")
