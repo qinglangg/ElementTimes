@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.annotation.other.DefaultOreGenerator;
+import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -31,13 +31,12 @@ import static com.elementtimes.tutorial.annotation.util.ReflectUtil.getField;
  */
 public class ModBlockLoader {
 
-    public static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> sTileEntities = new HashMap<>();
-    public static Map<Block, IStateMapper> sStateMaps = new HashMap<>();
-    public static Map<Block, ModBlock.StateMap> sBlockStates = new HashMap<>();
-    public static Map<Block, String> sBlockOreDict = new HashMap<>();
-    public static Map<GenType, List<WorldGenerator>> sGenerators = new HashMap<>();
-    public static boolean useB3D = false;
-    public static boolean useOBJ = false;
+    public static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> TILE_ENTITIES = new HashMap<>();
+    public static Map<Block, IStateMapper> STATE_MAPS = new HashMap<>();
+    public static Map<Block, ModBlock.StateMap> BLOCK_STATES = new HashMap<>();
+    public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
+    public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
+    public static boolean B3D = false, OBJ = false;
 
     /**
      * 获取所有方块
@@ -90,7 +89,7 @@ public class ModBlockLoader {
         if (unlocalizedName.isEmpty()) {
             unlocalizedName = registryName;
         }
-        block.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
+        block.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
         block.setCreativeTab(info.creativeTab().tab);
     }
 
@@ -104,7 +103,7 @@ public class ModBlockLoader {
     private static void initOreDict(Block block, AnnotatedElement blockHolder) {
         ModOreDict oreDict = blockHolder.getAnnotation(ModOreDict.class);
         if (oreDict != null) {
-            sBlockOreDict.put(block, oreDict.value());
+            ORE_DICTIONARY.put(block, oreDict.value());
         }
 
     }
@@ -113,7 +112,7 @@ public class ModBlockLoader {
         ModBlock.TileEntity tileEntity = blockHolder.getAnnotation(ModBlock.TileEntity.class);
         if (tileEntity != null) {
             try {
-                sTileEntities.put(block, ImmutablePair.of(tileEntity.name(), (Class<? extends TileEntity>) Class.forName(tileEntity.clazz())));
+                TILE_ENTITIES.put(block, ImmutablePair.of(tileEntity.name(), (Class<? extends TileEntity>) Class.forName(tileEntity.clazz())));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -131,7 +130,7 @@ public class ModBlockLoader {
                 IProperty[] ignoreProperties = Arrays.stream(smInfo.propertyIgnore())
                         .map(ignoreProperty -> getField(propertyContainer, ignoreProperty, block)).toArray(IProperty[]::new);
                 builder.ignore(ignoreProperties);
-                sStateMaps.put(block, builder.build());
+                STATE_MAPS.put(block, builder.build());
             }
         } catch (ClassNotFoundException e) {
             warn("Cannot load mapper: " + smInfo.propertyName());
@@ -143,22 +142,22 @@ public class ModBlockLoader {
             IStateMapper mapper = mscInfo.value().isEmpty()
                     ? new DefaultStateMapper()
                     : (IStateMapper) ReflectUtil.create(mscInfo.value()).orElse(new DefaultStateMapper());
-            sStateMaps.put(block, mapper);
+            STATE_MAPS.put(block, mapper);
         }
     }
 
     private static void initBlockState(Block block, AnnotatedElement blockHolder) {
         ModBlock.StateMap bsInfo = blockHolder.getAnnotation(ModBlock.StateMap.class);
         if (bsInfo != null) {
-            if (!useB3D) {
-                useB3D = bsInfo.useB3D();
+            if (!B3D) {
+                B3D = bsInfo.useB3D();
             }
-            if (!useOBJ) {
-                useOBJ = bsInfo.useOBJ();
+            if (!OBJ) {
+                OBJ = bsInfo.useOBJ();
             }
 
             if (bsInfo.metadatas().length > 0) {
-                sBlockStates.put(block, bsInfo);
+                BLOCK_STATES.put(block, bsInfo);
             }
         }
     }
@@ -170,12 +169,12 @@ public class ModBlockLoader {
             wgcObject = ReflectUtil.<WorldGenerator>create(wgcInfo.value(), new Object[] {block}).orElse(null);
         }
         if (wgcObject != null) {
-            List<WorldGenerator> worldGenerators = sGenerators.computeIfAbsent(wgcInfo.type(), k -> new ArrayList<>());
+            List<WorldGenerator> worldGenerators = WORLD_GENERATORS.computeIfAbsent(wgcInfo.type(), k -> new ArrayList<>());
             worldGenerators.add(wgcObject);
         } else {
             ModBlock.WorldGen wgInfo = blockHolder.getAnnotation(ModBlock.WorldGen.class);
             if (wgInfo != null) {
-                List<WorldGenerator> worldGenerators = sGenerators.computeIfAbsent(wgInfo.type(), k -> new ArrayList<>());
+                List<WorldGenerator> worldGenerators = WORLD_GENERATORS.computeIfAbsent(wgInfo.type(), k -> new ArrayList<>());
                 worldGenerators.add(new DefaultOreGenerator(wgInfo, block.getDefaultState()));
             }
         }

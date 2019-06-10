@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial;
 
 import com.elementtimes.tutorial.common.CommonProxy;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +20,10 @@ import org.apache.logging.log4j.Logger;
  */
 @Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
 public class Elementtimes {
+    public Elementtimes() {
+        FluidRegistry.enableUniversalBucket();
+    }
+
     public static final String MODID = "elementtimes";
 
     @SidedProxy(serverSide = "com.elementtimes.tutorial.common.CommonProxy", clientSide = "com.elementtimes.tutorial.client.ClientProxy")

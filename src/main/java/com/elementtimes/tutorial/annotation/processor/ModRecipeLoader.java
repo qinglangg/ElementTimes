@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.annotation.ModRecipe;
 import com.elementtimes.tutorial.annotation.other.DamageIngredient;
+import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.RecipeUtil;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
@@ -112,18 +112,18 @@ public class ModRecipeLoader {
                     }
                     if (info.shaped()) {
                         if (info.ore()) {
-                            recipe = new ShapedOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), r, primer);
+                            recipe = new ShapedOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), r, primer);
                         } else {
                             recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
                         }
                     } else {
                         if (info.ore()) {
-                            recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), primer.input, r);
+                            recipe = new ShapelessOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), primer.input, r);
                         } else {
                             recipe = new ShapelessRecipes("recipe", r, primer.input);
                         }
                     }
-                    recipe.setRegistryName(new ResourceLocation(Elementtimes.MODID, rName));
+                    recipe.setRegistryName(new ResourceLocation(ModInfo.MODID, rName));
                     return recipe;
                 }
                 return null;
@@ -169,7 +169,7 @@ public class ModRecipeLoader {
 
     private static ShapelessOreRecipe getRecipeHammer(NonNullList<Ingredient> input, ItemStack output, int damage, String name) {
         input.add(new DamageIngredient(new Item[] {ElementtimesItems.smallHammer, ElementtimesItems.bigHammer}, damage));
-        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ResourceLocation(Elementtimes.MODID, "recipe"), input, output){
+        ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), input, output){
             @Nonnull
             @Override
             public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
@@ -177,14 +177,14 @@ public class ModRecipeLoader {
                 for (int i = 0; i < ret.size(); i++) {
                     ItemStack stack = inv.getStackInSlot(i);
                     if (stack.getItem() == ElementtimesItems.smallHammer || stack.getItem() == ElementtimesItems.bigHammer) {
-                        stack.getOrCreateSubCompound(Elementtimes.MODID + "_bind").setInteger("damage", damage);
+                        stack.getOrCreateSubCompound(ModInfo.MODID + "_bind").setInteger("damage", damage);
                     }
                     ret.set(i, ForgeHooks.getContainerItem(stack));
                 }
                 return ret;
             }
         };
-        recipe.setRegistryName(Elementtimes.MODID, name);
+        recipe.setRegistryName(ModInfo.MODID, name);
         return recipe;
     }
 

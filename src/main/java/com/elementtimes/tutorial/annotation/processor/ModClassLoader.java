@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
 import com.elementtimes.tutorial.annotation.ModSkip;
+import com.elementtimes.tutorial.annotation.other.ModInfo;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -30,7 +31,7 @@ public class ModClassLoader {
         }
 
         try {
-            Set<Class<?>> clazzes = getClasses("com.elementtimes.tutorial");
+            Set<Class<?>> clazzes = getClasses(ModInfo.PKG_NAME);
             for (Class<?> aClass : clazzes) {
                 for (Class annotation : support) {
                     if (aClass.getAnnotation(annotation) != null) {
@@ -123,21 +124,6 @@ public class ModClassLoader {
         }
 
         return classes;
-    }
-
-    private static void findAndAddClassesInPackageByJarDirectory(Set<String> classNames, Set<Class<?>> classes) throws ClassNotFoundException {
-        String pInfos = classNames.stream().filter(name -> name.endsWith("package-info")).findFirst().orElse(null);
-        if (pInfos != null && pInfos.length() > 0) {
-
-        }
-
-        for (String className : classNames) {
-            if (className != null) {
-                System.out.println(className);
-                classes.add(Class.forName(className));
-            }
-        }
-        classNames.clear();
     }
 
     /**

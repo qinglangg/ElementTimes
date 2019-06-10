@@ -21,7 +21,7 @@ import static org.jline.utils.Log.warn;
  */
 public class ModElementLoader {
 
-    public static List<Method> sInvokers = new LinkedList<>();
+    public static List<Method> STATIC_FUNCTIONS = new LinkedList<>();
 
     public static void getElements(Map<Class, ArrayList<AnnotatedElement>> elements) {
         elements.get(ModElement.class).forEach(ModElementLoader::buildInvoker);
@@ -51,7 +51,7 @@ public class ModElementLoader {
             }
             if (method != null) {
                 method.setAccessible(true);
-                sInvokers.add(method);
+                STATIC_FUNCTIONS.add(method);
             }
         }
     }
