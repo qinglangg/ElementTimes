@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator;
 import com.elementtimes.tutorial.client.gui.base.GuiContainerOneToOne;
 import com.elementtimes.tutorial.common.tileentity.*;
@@ -31,7 +31,7 @@ public class ElementtimesGUI implements IGuiHandler {
     public static final int EXTRACTOR = 6;
 
     public void init() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(Elementtimes.instance, this);
+        NetworkRegistry.INSTANCE.registerGuiHandler(ElementTimes.instance, this);
         GUI = this;
     }
 

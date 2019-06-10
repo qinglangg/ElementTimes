@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.block.base;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
 import net.minecraft.block.BlockContainer;
@@ -81,7 +81,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
             if (e instanceof BaseMachine) {
-                playerIn.openGui(Elementtimes.instance, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                playerIn.openGui(ElementTimes.instance, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

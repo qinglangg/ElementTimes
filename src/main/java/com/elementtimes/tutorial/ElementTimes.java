@@ -17,15 +17,16 @@ import org.apache.logging.log4j.Logger;
  * TODO: 1.7.10 兼容（优先度极低）
  * @author KSGFK
  */
-@Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
-public class Elementtimes {
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@")
+public class ElementTimes {
     public static final String MODID = "elementtimes";
+    public static final boolean DEBUG = true;
 
     @SidedProxy(serverSide = "com.elementtimes.tutorial.common.CommonProxy", clientSide = "com.elementtimes.tutorial.client.ClientProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance(Elementtimes.MODID)
-    public static Elementtimes instance;
+    @Mod.Instance(ElementTimes.MODID)
+    public static ElementTimes instance;
 
     private static Logger logger = LogManager.getLogger("ElementsTime");
 

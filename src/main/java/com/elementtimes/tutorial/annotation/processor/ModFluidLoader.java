@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.ModFluid;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import net.minecraft.util.ResourceLocation;
@@ -23,8 +23,8 @@ public class ModFluidLoader {
         ModFluid info = element.getAnnotation(ModFluid.class);
         Fluid fluid = (Fluid) ReflectUtil.getFromAnnotated(element, null).orElse(null);
         if (fluid == null) {
-            ResourceLocation overlay = info.overlayResource().isEmpty() ? null : new ResourceLocation(Elementtimes.MODID, info.overlayResource());
-            fluid = new Fluid(info.name(), new ResourceLocation(Elementtimes.MODID, info.stillResource()), new ResourceLocation(Elementtimes.MODID, info.flowingResource()), overlay, info.color());
+            ResourceLocation overlay = info.overlayResource().isEmpty() ? null : new ResourceLocation(ElementTimes.MODID, info.overlayResource());
+            fluid = new Fluid(info.name(), new ResourceLocation(ElementTimes.MODID, info.stillResource()), new ResourceLocation(ElementTimes.MODID, info.flowingResource()), overlay, info.color());
         }
         fluid.setUnlocalizedName(info.unlocalizedName());
         sBucket = sBucket || info.bucket();

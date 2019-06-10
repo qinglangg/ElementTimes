@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
@@ -90,7 +90,7 @@ public class ModBlockLoader {
         if (unlocalizedName.isEmpty()) {
             unlocalizedName = registryName;
         }
-        block.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
+        block.setUnlocalizedName(ElementTimes.MODID + "." + unlocalizedName);
         block.setCreativeTab(info.creativeTab().tab);
     }
 

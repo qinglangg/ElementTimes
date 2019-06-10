@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.ModItem;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
@@ -80,7 +80,7 @@ public class ModItemLoader {
         if (unlocalizedName.isEmpty()) {
             unlocalizedName = registryName;
         }
-        item.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
+        item.setUnlocalizedName(ElementTimes.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
     }
 
@@ -118,7 +118,7 @@ public class ModItemLoader {
                         resource = model.substring(domainIndex + 1);
                     }
                 } else {
-                    domain = Elementtimes.MODID;
+                    domain = ElementTimes.MODID;
                     if (variantIndex > 0) {
                         variant = model.substring(variantIndex + 1);
                         resource = model.substring(0, variantIndex);

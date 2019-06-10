@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.register;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.*;
 import com.elementtimes.tutorial.annotation.processor.*;
 import com.elementtimes.tutorial.annotation.util.RegisterUtil;
@@ -55,7 +55,7 @@ public class ElementRegister {
             ModClassLoader.getClasses(elements,
                     ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class);
             ModBlockLoader.getBlocks(elements, sBlocks);
-            warn("[Elementtimes] 共计 {} Block", sBlocks.size());
+            warn("[ElementTimes] 共计 {} Block", sBlocks.size());
             ModBlockLoader.sGenerators.forEach((genType, generators) -> {
                 warn("\tGenerator[{}]: {}", genType.name(), generators.size());
             });
@@ -65,13 +65,13 @@ public class ElementRegister {
             warn("\tTileEntity: {}", ModBlockLoader.sTileEntities.size());
             warn("\tB3D: {}, OBJ: {}", ModBlockLoader.useB3D ? "on" : "off", ModBlockLoader.useOBJ ? "on" : "off");
             ModItemLoader.getItems(elements, sItems);
-            warn("[Elementtimes] 共计 {} Item", sItems.size());
+            warn("[ElementTimes] 共计 {} Item", sItems.size());
             warn("\tOreDictionary Name: {}", ModItemLoader.sItemOreDict.size());
             warn("\tSubItem Model: {}", ModItemLoader.sSubItemModel.size());
             ModRecipeLoader.getRecipes(elements, sRecipes);
-            warn("[Elementtimes] 共计 {} Recipe", sRecipes.size());
+            warn("[ElementTimes] 共计 {} Recipe", sRecipes.size());
             ModElementLoader.getElements(elements);
-            warn("[Elementtimes] 共计 {} Static Functions", ModElementLoader.sInvokers.size());
+            warn("[ElementTimes] 共计 {} Static Functions", ModElementLoader.sInvokers.size());
 
             MinecraftForge.ORE_GEN_BUS.register(OreBusRegister.class);
             MinecraftForge.EVENT_BUS.register(TerrainBusRegister.class);
@@ -117,7 +117,7 @@ public class ElementRegister {
                 OreDictionary.registerOre(ModBlockLoader.sBlockOreDict.get(block), block);
             }
             if (ModBlockLoader.sTileEntities.containsKey(block)) {
-                GameRegistry.registerTileEntity(ModBlockLoader.sTileEntities.get(block).right, new ResourceLocation(Elementtimes.MODID, ModBlockLoader.sTileEntities.get(block).left));
+                GameRegistry.registerTileEntity(ModBlockLoader.sTileEntities.get(block).right, new ResourceLocation(ElementTimes.MODID, ModBlockLoader.sTileEntities.get(block).left));
             }
         });
     }
@@ -126,10 +126,10 @@ public class ElementRegister {
     public static void registerModel(ModelRegistryEvent event) {
         // 三方渲染
         if (ModBlockLoader.useOBJ) {
-            OBJLoader.INSTANCE.addDomain(Elementtimes.MODID);
+            OBJLoader.INSTANCE.addDomain(ElementTimes.MODID);
         }
         if (ModBlockLoader.useB3D) {
-            B3DLoader.INSTANCE.addDomain(Elementtimes.MODID);
+            B3DLoader.INSTANCE.addDomain(ElementTimes.MODID);
         }
         // 注册渲染
         sItems.forEach(item -> {

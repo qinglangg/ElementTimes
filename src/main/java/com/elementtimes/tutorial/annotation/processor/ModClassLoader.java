@@ -316,7 +316,7 @@ public class ModClassLoader {
 //                            ModNetwork info = (ModNetwork) aClass.getAnnotation(ModNetwork.class);
 //                            IMessageHandler handler = (IMessageHandler) get(Class.forName(info.handlerClass()));
 //                            for (Side side : info.side()) {
-//                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(Elementtimes.MODID);
+//                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(ElementTimes.MODID);
 //                                instance.registerMessage(handler, aClass, info.id(), side);
 //                                if (!sNetworks.containsKey(info.id()))
 //                                    sNetworks.put(info.id(), HashBiMap.create());
