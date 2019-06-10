@@ -86,31 +86,22 @@ public class ElementtimesItems {
     @ModOreDict("ingotSilver")
     public static Item silver = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustEmerald")
     public static Item greenstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustSilver")
     public static Item silverPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustRedstone")
     public static Item redstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustLapisLazuli")
     public static Item bluestonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustIron")
     public static Item ironPower = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustGold")
     public static Item goldPowder;
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustCoal")
     public static Item coalPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustDiamond")
     public static Item diamondPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustCopper")
     public static Item copperPowder = new Item();
     @ModItem
     public static Item spanner = new Spanner();
@@ -146,7 +137,6 @@ public class ElementtimesItems {
     @ModOreDict("ingotPlatinum")
     public static Item platinumIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModOreDict("dustPlatinum")
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot = new Item();
