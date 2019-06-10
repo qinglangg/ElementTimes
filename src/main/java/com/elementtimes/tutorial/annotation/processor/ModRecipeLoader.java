@@ -7,6 +7,7 @@ import com.elementtimes.tutorial.annotation.util.RecipeUtil;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -73,6 +74,13 @@ public class ModRecipeLoader {
                         r = (ItemStack) result;
                     } else if (result instanceof Ingredient) {
                         r = ((Ingredient) result).getMatchingStacks()[0];
+                    } else if (result instanceof String && ((String) result).contains(":")){
+                        Item resultItem = Item.getByNameOrId((String) result);
+                        if (resultItem == null || resultItem == Items.AIR) {
+                            warn("The recipe {} return an NULL item.", rName);
+                            return null;
+                        }
+                        r = new ItemStack(resultItem);
                     } else {
                         r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
                     }
@@ -91,6 +99,14 @@ public class ModRecipeLoader {
                         if (i - 1 >= size) {
                             warn("Ignore item[()]: {}.", i - 1, o);
                             break;
+                        }
+                        if (o instanceof String && ((String) o).contains(":")) {
+                            Item item = Item.getByNameOrId((String) o);
+                            if (item == null || item == Items.AIR) {
+                                warn("The recipe {} have an NULL item.", rName);
+                                return null;
+                            }
+                            o = new ItemStack(item);
                         }
                         primer.input.set(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
                     }

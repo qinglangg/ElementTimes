@@ -31,8 +31,6 @@ public class ElementtimesItems {
     @ModItem
     public static Item goldElement = new Item();
     @ModItem
-    public static Item saplingEssence = new Item();
-    @ModItem
     public static Item cropesSence = new Item();
     @ModItem
     public static Item elementSword = new Elementsword();
