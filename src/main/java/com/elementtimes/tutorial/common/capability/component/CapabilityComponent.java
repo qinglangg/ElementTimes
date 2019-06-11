@@ -1,15 +1,23 @@
-package com.elementtimes.tutorial.capability.component;
+package com.elementtimes.tutorial.common.capability.component;
 
-import com.elementtimes.tutorial.capability.CapabilityLoader;
+import com.elementtimes.tutorial.annotation.ModCapability;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 import javax.annotation.Nullable;
 
+@ModCapability(storageClass = "com.elementtimes.tutorial.common.capability.component.CapabilityComponent$Storage",
+        typeInterfaceClass = "com.elementtimes.tutorial.common.capability.component.IComponentContain",
+        typeImplementationClass = "com.elementtimes.tutorial.common.capability.component.CapabilityComponent$Implementation")
 public class CapabilityComponent {
+
+    @CapabilityInject(IComponentContain.class)
+    public static Capability<IComponentContain> positionHistory;
+
     public static class Storage implements Capability.IStorage<IComponentContain>
     {
         @Nullable
@@ -20,8 +28,9 @@ public class CapabilityComponent {
 
         @Override
         public void readNBT(Capability<IComponentContain> capability, IComponentContain instance, EnumFacing side, NBTBase nbt) {
-            if(nbt instanceof NBTTagCompound)
+            if(nbt instanceof NBTTagCompound) {
                 instance.setComponent(new Component((NBTTagCompound) nbt));
+            }
         }
     }
 
@@ -41,7 +50,7 @@ public class CapabilityComponent {
     public static class ProviderPlayer implements ICapabilitySerializable<NBTTagCompound>
     {
         private IComponentContain histories = new Implementation();
-        private Capability.IStorage<IComponentContain> storage = CapabilityLoader.positionHistory.getStorage();
+        private Capability.IStorage<IComponentContain> storage = positionHistory.getStorage();
         public ProviderPlayer(){
 
         }
@@ -51,13 +60,13 @@ public class CapabilityComponent {
         @Override
         public boolean hasCapability(Capability<?> capability, EnumFacing facing)
         {
-            return CapabilityLoader.positionHistory.equals(capability);
+            return positionHistory.equals(capability);
         }
 
         @Override
         public <T> T getCapability(Capability<T> capability, EnumFacing facing)
         {
-            if (CapabilityLoader.positionHistory.equals(capability))
+            if (positionHistory.equals(capability))
             {
                 @SuppressWarnings("unchecked")
                 T result = (T) histories;
@@ -70,7 +79,7 @@ public class CapabilityComponent {
         public NBTTagCompound serializeNBT()
         {
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setTag("component", storage.writeNBT(CapabilityLoader.positionHistory, histories, null));
+            compound.setTag("component", storage.writeNBT(positionHistory, histories, null));
             return compound;
         }
 
@@ -78,7 +87,7 @@ public class CapabilityComponent {
         public void deserializeNBT(NBTTagCompound compound)
         {
             NBTTagCompound list = (NBTTagCompound) compound.getTag("component");
-            storage.readNBT(CapabilityLoader.positionHistory, histories, null, list);
+            storage.readNBT(positionHistory, histories, null, list);
         }
     }
 }

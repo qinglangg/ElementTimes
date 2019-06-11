@@ -6,12 +6,15 @@ import com.elementtimes.tutorial.annotation.register.OreBusRegister;
 import com.elementtimes.tutorial.annotation.register.TerrainBusRegister;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -113,6 +116,13 @@ public class AnnotationInitializer {
 
         ModFluidLoader.FLUID_BLOCK.forEach((fluid, fluidBlockFunction) ->
                 fluid.setBlock(fluidBlockFunction.apply(fluid)));
+    }
+
+    private static void applyBucketCreativeTabs() {
+        ModFluidLoader.FLUID_TAB.forEach((fluid, creativeTabs) -> {
+            ItemStack bucket = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
+            bucket.getItem().setCreativeTab(creativeTabs);
+        });
     }
 
     private static void registerCapabilities() {

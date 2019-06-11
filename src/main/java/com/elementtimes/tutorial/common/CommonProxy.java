@@ -2,12 +2,12 @@ package com.elementtimes.tutorial.common;
 
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.AnnotationInitializer;
-import com.elementtimes.tutorial.capability.CapabilityLoader;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.test.ComponentHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -22,8 +22,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         AnnotationInitializer.onPreInit(event, ElementTimes.MODID, "com.elementtimes.tutorial");
         if (ElementTimes.DEBUG) {
-            new CapabilityLoader(event);
-            new ComponentHandler();
+            MinecraftForge.EVENT_BUS.register(new ComponentHandler());
         }
         String flammPfeil = "flammpfeil.slashblade";
         if (Loader.isModLoaded(flammPfeil)) {

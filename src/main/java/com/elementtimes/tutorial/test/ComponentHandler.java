@@ -1,9 +1,8 @@
 package com.elementtimes.tutorial.test;
 
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.capability.CapabilityLoader;
-import com.elementtimes.tutorial.capability.component.CapabilityComponent;
-import com.elementtimes.tutorial.capability.component.IComponentContain;
+import com.elementtimes.tutorial.common.capability.component.CapabilityComponent;
+import com.elementtimes.tutorial.common.capability.component.IComponentContain;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,8 +36,8 @@ public class ComponentHandler {
     @SubscribeEvent
     public void onToolTip(ItemTooltipEvent event)
     {
-        if(event.getItemStack().hasCapability(CapabilityLoader.positionHistory,null)){
-           IComponentContain componentContain = event.getItemStack().getCapability(CapabilityLoader.positionHistory,null);
+        if(event.getItemStack().hasCapability(CapabilityComponent.positionHistory,null)){
+           IComponentContain componentContain = event.getItemStack().getCapability(CapabilityComponent.positionHistory,null);
            List<String> toolTip = event.getToolTip();
            toolTip.addAll(componentContain.getComponent().getComponents());
        }

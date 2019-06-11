@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.capability.component;
+package com.elementtimes.tutorial.common.capability.component;
 
 public interface IComponentContain {
     Component getComponent();

@@ -1,11 +1,10 @@
-package com.elementtimes.tutorial.capability.component;
+package com.elementtimes.tutorial.common.capability.component;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagFloat;
 
 import java.util.Set;
-
 
 public class Component {
     private NBTTagCompound compound;
@@ -18,7 +17,9 @@ public class Component {
         this.compound = compound;
     }
     public float getWeight() {
-        if (weight > 0) return weight;
+        if (weight > 0) {
+            return weight;
+        }
         return weight = getWeight(compound);
     }
 
