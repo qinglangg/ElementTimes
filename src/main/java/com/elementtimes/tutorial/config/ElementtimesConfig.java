@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.config;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import net.minecraftforge.common.config.Config;
 
 /**
@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Config;
  *
  * @author KSGFK create in 2019/2/17
  */
-@Config(modid = Elementtimes.MODID)
+@Config(modid = ElementTimes.MODID)
 public class ElementtimesConfig {
     @Config.Name("General")
     @Config.LangKey("elementtimes.config.general")

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.plugin.jei;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import com.elementtimes.tutorial.common.tileentity.TilePulverize;
@@ -23,9 +23,9 @@ import java.util.List;
 @JEIPlugin
 public class JEISupport implements IModPlugin {
 
-    private static final String ID_COMPRESSOR = Elementtimes.MODID + ".compressor.jei.category";
-    private static final String ID_PULVERIZE = Elementtimes.MODID + ".pulverize.jei.category";
-    private static final String ID_REBUILD = Elementtimes.MODID + ".rebuild.jei.category";
+    private static final String ID_COMPRESSOR = ElementTimes.MODID + ".compressor.jei.category";
+    private static final String ID_PULVERIZE = ElementTimes.MODID + ".pulverize.jei.category";
+    private static final String ID_REBUILD = ElementTimes.MODID + ".rebuild.jei.category";
 
     @Override
     public void register(IModRegistry registry) {
