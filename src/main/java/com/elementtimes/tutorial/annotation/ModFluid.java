@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * 流体注册
  * 通常，应当忽略 name/stillResource/flowingResource/overlayResource/color 参数
  * 以上参数用于当对应注解成员不存在时，用于新建 Fluid 对象。这种用法是不推荐的。
- * 因此 实际有用的 仅为 bucket，creativeTabClass 参数
+ * 因此 实际有用的 仅为 bucket，creativeTab 参数
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
@@ -54,7 +54,7 @@ public @interface ModFluid {
     /**
      * @return 流体桶所在创造列表
      */
-    ModCreativeTabs creativeTabClass() default ModCreativeTabs.Main;
+    ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**
      * 流体方块

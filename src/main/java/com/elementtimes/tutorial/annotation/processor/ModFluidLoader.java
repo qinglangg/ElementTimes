@@ -48,7 +48,7 @@ public class ModFluidLoader {
         if (info.bucket()) {
             HAS_BUCKET.add(fluid);
         }
-        FLUID_TAB.put(fluid, info.creativeTabClass().tab);
+        FLUID_TAB.put(fluid, info.creativeTab().tab);
     }
 
     private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name) {
@@ -92,6 +92,7 @@ public class ModFluidLoader {
                 fluidBlock.setRegistryName(ModInfo.MODID, registerName);
             }
             registerName = fluidBlock.getRegistryName().getResourcePath();
+            fluidBlock.setCreativeTab(fbInfo.creativeTab().tab);
 
             String unlocalizedName = fbInfo.unlocalizedName().isEmpty() ? registerName.toLowerCase() : fbInfo.unlocalizedName();
             if ("tile.null".equals(fluidBlock.getUnlocalizedName())) {

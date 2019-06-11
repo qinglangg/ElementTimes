@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -35,11 +37,13 @@ public class AnnotationInitializer {
     public static List<Item> ITEMS = new ArrayList<>();
     public static List<Supplier<IRecipe>> RECIPES = new ArrayList<>();
     public static List<Fluid> FLUIDS = new ArrayList<>();
+    public static List<ModCapability> CAPABILITIES = new ArrayList<>();
 
     public static void onPreInit(FMLPreInitializationEvent event, String modId, String packageName) {
         ModInfo.MODID = modId;
         ModInfo.PKG_NAME = packageName;
         init();
+        registerCapabilities();
         registerFluids();
     }
 
@@ -54,7 +58,7 @@ public class AnnotationInitializer {
         if (!sInInit) {
             HashMap<Class, ArrayList<AnnotatedElement>> elements = new HashMap<>();
             ModClassLoader.getClasses(elements,
-                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class);
+                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class, ModCapability.class);
             ModBlockLoader.getBlocks(elements, BLOCKS);
             warn("---> Find {} Block", BLOCKS.size());
             ModBlockLoader.WORLD_GENERATORS.forEach((genType, generators) -> {
@@ -78,9 +82,10 @@ public class AnnotationInitializer {
             warn("\tLoad fluid resource: {}", ModFluidLoader.FLUID_RESOURCES.size());
             warn("\tReset blockstate.json: {}", ModFluidLoader.FLUID_BLOCK_STATE.size());
             warn("\tReset CreativeTab: {}", ModFluidLoader.FLUID_TAB.size());
+            ModCapabilityLoader.getCapabilities(elements, CAPABILITIES);
+            warn("---> Find {} Capabilities", CAPABILITIES.size());
             ModElementLoader.getElements(elements);
             warn("---> Find {} Static Functions", ModElementLoader.STATIC_FUNCTIONS.size());
-
             MinecraftForge.ORE_GEN_BUS.register(OreBusRegister.class);
             MinecraftForge.EVENT_BUS.register(TerrainBusRegister.class);
             sInInit = true;
@@ -108,5 +113,20 @@ public class AnnotationInitializer {
 
         ModFluidLoader.FLUID_BLOCK.forEach((fluid, fluidBlockFunction) ->
                 fluid.setBlock(fluidBlockFunction.apply(fluid)));
+    }
+
+    private static void registerCapabilities() {
+        CAPABILITIES.forEach(modCapability -> {
+            try {
+                Class type = Class.forName(modCapability.typeInterfaceClass());
+                Class impl = Class.forName(modCapability.typeImplementationClass());
+                Class storage = Class.forName(modCapability.storageClass());
+                Capability.IStorage storageObj = (Capability.IStorage) storage.getConstructor().newInstance();
+                CapabilityManager.INSTANCE.register(type, storageObj, () -> impl.getConstructor().newInstance());
+            } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+                e.printStackTrace();
+                warn("Can't register the capability, because " + e.getMessage());
+            }
+        });
     }
 }

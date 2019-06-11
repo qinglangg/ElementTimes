@@ -248,7 +248,7 @@ public class ModClassLoader {
 //                            ItemBucket item = (ItemBucket) get(aClass);
 //                            item.setRegistryName(info.registerName());
 //                            item.setUnlocalizedName(info.unlocalizedName());
-//                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
+//                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTab())));
 //                            sBuckets.set(item);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
