@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.capability.test;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
@@ -14,7 +14,7 @@ public class Test {
 
     @SubscribeEvent
     public static void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
-        event.addCapability(new ResourceLocation(Elementtimes.MODID, "test"), new CapabilityTest.Provider());
+        event.addCapability(new ResourceLocation(ElementTimes.MODID, "test"), new CapabilityTest.Provider());
     }
 
     @SubscribeEvent

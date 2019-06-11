@@ -3,17 +3,15 @@
   "defaults": {
     "model": "cube"
   },
-  {
-    "variants": {
-        "normal": {
-		"model": "elementtimes:mak/compressor"
-			},
-		"facing": {
-		"north": { "y": 90 },
-		"east": { "y": 180 },
-		"south": { "y": 270 },
-		"west": { "y": 0 }
+  "variants": {
+    "normal": {
+      "model": "elementtimes:mak/compressor"
+    },
+    "facing": {
+      "north": { "y": 90 },
+      "east": { "y": 180 },
+      "south": { "y": 270 },
+      "west": { "y": 0 }
     }
-    }
-}
+  }
 }

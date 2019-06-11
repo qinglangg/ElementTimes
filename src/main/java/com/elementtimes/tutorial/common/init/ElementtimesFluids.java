@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.Elementtimes;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.ModFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -14,6 +14,6 @@ public class ElementtimesFluids {
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid naCl = new Fluid("elementtimes.nacl",
-            new ResourceLocation(Elementtimes.MODID, "fluid/nacl_still"),
-            new ResourceLocation(Elementtimes.MODID, "fluid/nacl_fluid"), 0xFF719595);
+            new ResourceLocation(ElementTimes.MODID, "fluid/nacl_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/nacl_fluid"), 0xFF719595);
 }
