@@ -1,38 +1,18 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube"
+    "model": "elementtimes:mak/compressor"
   },
   "variants": {
     "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/compressor/top",
-          "down": "elementtimes:blocks/compressor/top",
-          "up": "elementtimes:blocks/compressor/top",
-          "north": "elementtimes:blocks/compressor/side",
-          "south": "elementtimes:blocks/compressor/side",
-          "west": "elementtimes:blocks/compressor/side",
-          "east": "elementtimes:blocks/compressor/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/compressor/top",
-          "down": "elementtimes:blocks/compressor/top",
-          "up": "elementtimes:blocks/compressor/top",
-          "north": "elementtimes:blocks/compressor/side",
-          "south": "elementtimes:blocks/compressor/side",
-          "west": "elementtimes:blocks/compressor/side",
-          "east": "elementtimes:blocks/compressor/on"
-        }
-      }
+      "true": {},
+      "false": {}
     },
     "facing": {
-      "north": { "y": 90 },
-      "east": { "y": 180 },
-      "south": { "y": 270 },
-      "west": { "y": 0 }
+      "north": {"y": 180},
+      "east": {"y": 270},
+      "south": {"y": 0},
+      "west": {"y": 90}
     }
   }
 }
