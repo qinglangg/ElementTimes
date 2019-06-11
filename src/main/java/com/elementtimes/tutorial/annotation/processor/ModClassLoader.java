@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
 import com.elementtimes.tutorial.annotation.ModSkip;
+import com.elementtimes.tutorial.annotation.other.ModInfo;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -30,7 +31,7 @@ public class ModClassLoader {
         }
 
         try {
-            Set<Class<?>> clazzes = getClasses("com.elementtimes.tutorial");
+            Set<Class<?>> clazzes = getClasses(ModInfo.PKG_NAME);
             for (Class<?> aClass : clazzes) {
                 for (Class annotation : support) {
                     if (aClass.getAnnotation(annotation) != null) {
@@ -123,21 +124,6 @@ public class ModClassLoader {
         }
 
         return classes;
-    }
-
-    private static void findAndAddClassesInPackageByJarDirectory(Set<String> classNames, Set<Class<?>> classes) throws ClassNotFoundException {
-        String pInfos = classNames.stream().filter(name -> name.endsWith("package-info")).findFirst().orElse(null);
-        if (pInfos != null && pInfos.length() > 0) {
-
-        }
-
-        for (String className : classNames) {
-            if (className != null) {
-                System.out.println(className);
-                classes.add(Class.forName(className));
-            }
-        }
-        classNames.clear();
     }
 
     /**
@@ -262,7 +248,7 @@ public class ModClassLoader {
 //                            ItemBucket item = (ItemBucket) get(aClass);
 //                            item.setRegistryName(info.registerName());
 //                            item.setUnlocalizedName(info.unlocalizedName());
-//                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTabClass())));
+//                            item.setCreativeTab((CreativeTabs) get(Class.forName(info.creativeTab())));
 //                            sBuckets.set(item);
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
@@ -316,7 +302,7 @@ public class ModClassLoader {
 //                            ModNetwork info = (ModNetwork) aClass.getAnnotation(ModNetwork.class);
 //                            IMessageHandler handler = (IMessageHandler) get(Class.forName(info.handlerClass()));
 //                            for (Side side : info.side()) {
-//                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(Elementtimes.MODID);
+//                                SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(ElementTimes.MODID);
 //                                instance.registerMessage(handler, aClass, info.id(), side);
 //                                if (!sNetworks.containsKey(info.id()))
 //                                    sNetworks.put(info.id(), HashBiMap.create());
