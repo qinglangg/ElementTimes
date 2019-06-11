@@ -16,7 +16,7 @@ public class OreBusRegister {
     @SubscribeEvent
     public static void onGenerateOre(OreGenEvent.Post event) {
         if (!event.getWorld().isRemote) {
-            for (WorldGenerator generator: ModBlockLoader.WORLD_GENERATORS.get(GenType.Ore)) {
+            for (WorldGenerator generator: ModBlockLoader.sGenerators.get(GenType.Ore)) {
                 if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(), OreGenEvent.GenerateMinable.EventType.CUSTOM)) {
                     generator.generate(event.getWorld(), event.getRand(), event.getPos());
                 }

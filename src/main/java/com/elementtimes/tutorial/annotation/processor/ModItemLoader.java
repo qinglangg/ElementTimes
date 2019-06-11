@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.annotation.processor;
 
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.annotation.ModItem;
 import com.elementtimes.tutorial.annotation.ModOreDict;
-import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -27,8 +27,8 @@ import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
  */
 public class ModItemLoader {
 
-    public static Map<Item, String> ORE_DICTIONARY = new HashMap<>();
-    public static Map<Item, Int2ObjectMap<ModelResourceLocation>> SUB_ITEM_MODEL = new HashMap<>();
+    public static Map<Item, String> sItemOreDict = new HashMap<>();
+    public static Map<Item, Int2ObjectMap<ModelResourceLocation>> sSubItemModel = new HashMap<>();
 
     public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
         elements.get(ModItem.class).forEach(element -> buildItem(element, into));
@@ -80,14 +80,14 @@ public class ModItemLoader {
         if (unlocalizedName.isEmpty()) {
             unlocalizedName = registryName;
         }
-        item.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
+        item.setUnlocalizedName(Elementtimes.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
     }
 
     private static void initOreDict(Item item, AnnotatedElement itemHolder) {
         ModOreDict oreDict = itemHolder.getAnnotation(ModOreDict.class);
         if (oreDict != null) {
-            ORE_DICTIONARY.put(item, oreDict.value());
+            sItemOreDict.put(item, oreDict.value());
         }
     }
 
@@ -118,7 +118,7 @@ public class ModItemLoader {
                         resource = model.substring(domainIndex + 1);
                     }
                 } else {
-                    domain = ModInfo.MODID;
+                    domain = Elementtimes.MODID;
                     if (variantIndex > 0) {
                         variant = model.substring(variantIndex + 1);
                         resource = model.substring(0, variantIndex);
@@ -129,7 +129,7 @@ public class ModItemLoader {
                 }
                 map.put(metadata[i], new ModelResourceLocation(new ResourceLocation(domain, resource), variant));
             }
-            SUB_ITEM_MODEL.put(item, map);
+            sSubItemModel.put(item, map);
         }
     }
 

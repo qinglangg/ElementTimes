@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.plugin.jei.category;
 
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -28,7 +28,7 @@ public class MachineOneToOneRecipe implements IRecipeCategory<MachineRecipeWrapp
     private String id;
 
     public MachineOneToOneRecipe(IGuiHelper helper, String id, String machine) {
-        mBackground = helper.createDrawable(new ResourceLocation(ElementTimes.MODID, "textures/gui/5.png"), 43, 15, 90, 44);
+        mBackground = helper.createDrawable(new ResourceLocation(Elementtimes.MODID, "textures/gui/5.png"), 43, 15, 90, 44);
         this.machine = machine;
         this.id = id;
     }
@@ -42,13 +42,13 @@ public class MachineOneToOneRecipe implements IRecipeCategory<MachineRecipeWrapp
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format(String.format("jei.%s.%s", ElementTimes.MODID, machine));
+        return I18n.format(String.format("jei.%s.%s", Elementtimes.MODID, machine));
     }
 
     @Nonnull
     @Override
     public String getModName() {
-        return ElementTimes.MODID;
+        return Elementtimes.MODID;
     }
 
     @Nonnull

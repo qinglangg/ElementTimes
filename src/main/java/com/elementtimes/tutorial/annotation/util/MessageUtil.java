@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.util;
 
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.Elementtimes;
 
 /**
  * 处理 log，消息等
@@ -15,6 +15,6 @@ public class MessageUtil {
      * @param params Log 信息格式化成分
      */
     public static void warn(String message, Object... params) {
-        ElementTimes.getLogger().warn("[ElementTimes] " + message, params);
+        Elementtimes.getLogger().warn("[Elementtimes] " + message, params);
     }
 }

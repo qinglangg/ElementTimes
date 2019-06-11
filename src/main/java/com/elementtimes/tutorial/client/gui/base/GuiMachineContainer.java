@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.client.gui.base;
 
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.Elementtimes;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.client.gui.GuiButton;
@@ -32,7 +32,7 @@ public class GuiMachineContainer<T extends BaseMachine> extends GuiContainer {
         this.machine = machine;
         xSize = 176;
         ySize = 156;
-        this.texture = new ResourceLocation(ElementTimes.MODID, texture);
+        this.texture = new ResourceLocation(Elementtimes.MODID, texture);
     }
 
     @Override

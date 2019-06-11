@@ -8,7 +8,6 @@ import com.elementtimes.tutorial.common.block.OreSalt;
 import com.elementtimes.tutorial.common.block.Sulfurore;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
-import com.elementtimes.tutorial.common.block.machine.Compressor;
 import com.elementtimes.tutorial.common.block.tree.*;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.tileentity.*;
@@ -108,7 +107,7 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "compressor", clazz = "com.elementtimes.tutorial.common.tileentity.TileCompressor")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block compressor = new Compressor();
+    public static Block compressor = new BaseClosableMachine<>(ElementtimesGUI.COMPRESSOR, TileCompressor.class, false);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "forming", clazz = "com.elementtimes.tutorial.common.tileentity.TileForming")
     @ModBlock.StateMapperCustom

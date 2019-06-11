@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.Elementtimes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -29,13 +29,13 @@ public class Hammer extends Item {
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
-        NBTTagCompound bind = itemStack.getOrCreateSubCompound(ElementTimes.MODID + "_bind");
+        NBTTagCompound bind = itemStack.getOrCreateSubCompound(Elementtimes.MODID + "_bind");
         int d = 1;
         if (bind.hasKey(TAG_DAMAGE)) {
             d = bind.getInteger(TAG_DAMAGE);
         }
         ItemStack container = itemStack.copy();
-        container.removeSubCompound(ElementTimes.MODID + "_bind");
+        container.removeSubCompound(Elementtimes.MODID + "_bind");
         container.attemptDamageItem(d, itemRand, null);
         return container;
     }

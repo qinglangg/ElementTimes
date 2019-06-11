@@ -136,9 +136,6 @@ tile.elementtimes.blockmulticarbonsteel.name=碳钢多层块
 tile.elementtimes.blockmultigoldplatinum.name=铂金多层块
 tile.elementtimes.blockmultisilvercopper.name=银铜多层块
 tile.elementtimes.blockmultiwoodstone.name=木石多层块
-# fluid
-fluid.elementtimes.nacl=盐水
-tile.elementtimes.nacl.name=盐水
 # jei
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机

@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial;
 
 import com.elementtimes.tutorial.common.CommonProxy;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -18,20 +17,15 @@ import org.apache.logging.log4j.Logger;
  * TODO: 1.7.10 兼容（优先度极低）
  * @author KSGFK
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@")
-public class ElementTimes {
+@Mod(modid = Elementtimes.MODID, name = "Element Times", version = "@version@")
+public class Elementtimes {
     public static final String MODID = "elementtimes";
-    public static final boolean DEBUG = true;
-
-    public ElementTimes() {
-        FluidRegistry.enableUniversalBucket();
-    }
 
     @SidedProxy(serverSide = "com.elementtimes.tutorial.common.CommonProxy", clientSide = "com.elementtimes.tutorial.client.ClientProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance(ElementTimes.MODID)
-    public static ElementTimes instance;
+    @Mod.Instance(Elementtimes.MODID)
+    public static Elementtimes instance;
 
     private static Logger logger = LogManager.getLogger("ElementsTime");
 
