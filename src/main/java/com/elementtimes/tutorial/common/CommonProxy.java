@@ -2,6 +2,7 @@ package com.elementtimes.tutorial.common;
 
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.AnnotationInitializer;
+import com.elementtimes.tutorial.common.init.ElementTimesRender;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * 服务器端 Proxy
+ *
  * @author KSGFK
  */
 public class CommonProxy {
@@ -28,6 +30,8 @@ public class CommonProxy {
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
+
+        ElementTimesRender.init();
     }
 
     public void init(FMLInitializationEvent event) {

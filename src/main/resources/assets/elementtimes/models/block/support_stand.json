@@ -1,8 +1,8 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"0": "elementtimes:blocks/ironstand/is_hj",
-		"particle": "elementtimes:blocks/ironstand/is_hj"
+		"0": "elementtimes:blocks/support_stand/iron",
+		"particle": "elementtimes:blocks/support_stand/iron"
 	},
 	"elements": [
 		{

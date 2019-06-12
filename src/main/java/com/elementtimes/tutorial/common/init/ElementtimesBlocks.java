@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.init;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
+import com.elementtimes.tutorial.common.block.BlockSupportStand;
 import com.elementtimes.tutorial.common.block.CornCropUp;
 import com.elementtimes.tutorial.common.block.OreSalt;
 import com.elementtimes.tutorial.common.block.Sulfurore;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 /**
  * 所有方块
+ *
  * @author KSGFK
  */
 @Mod.EventBusSubscriber
@@ -125,6 +127,9 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
     public static Block elementGenerator = new BlockTileBase<>(ElementtimesGUI.ELEMENT_GENERATOR, TileGeneratorElement.class, true);
+    @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
+    public static Block supportStand = new BlockSupportStand();
 
     // 其他
 
