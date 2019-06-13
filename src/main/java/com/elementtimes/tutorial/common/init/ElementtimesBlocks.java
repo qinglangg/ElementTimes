@@ -3,10 +3,7 @@ package com.elementtimes.tutorial.common.init;
 import com.elementtimes.tutorial.annotation.ModBlock;
 import com.elementtimes.tutorial.annotation.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
-import com.elementtimes.tutorial.common.block.BlockSupportStand;
-import com.elementtimes.tutorial.common.block.CornCropUp;
-import com.elementtimes.tutorial.common.block.OreSalt;
-import com.elementtimes.tutorial.common.block.Sulfurore;
+import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.block.base.BlockTileBase;
 import com.elementtimes.tutorial.common.block.machine.Compressor;
@@ -165,5 +162,8 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiCarbonSteel = new Block(Material.IRON);
-
+    @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Industry)
+    public static Block alcoholLamp = new BlockAlcoholLamp();
+    @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Industry)
+    public static Block evaporatingDish = new BlockEvaporatingDish();
 }
