@@ -56,7 +56,6 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
         assert recipe != null;
         machine.setWorkingRecipe(recipe);
         machine.setEnergyUnprocessed(recipe.energy.applyAsInt(recipe));
-        machine.setWorking(true);
         // items
         for (int i = recipe.inputs.size() - 1; i >= 0; i--) {
             inputItems.extractItem(i, recipe.inputs.get(i).getCount(), false);

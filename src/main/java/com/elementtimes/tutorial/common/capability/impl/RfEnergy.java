@@ -16,20 +16,8 @@ public class RfEnergy extends EnergyStorage implements INBTSerializable<NBTTagCo
 
     private int transfer = Integer.MAX_VALUE;
 
-    public RfEnergy(int capacity) {
-        super(capacity);
-    }
-
-    public RfEnergy(int capacity, int maxTransfer) {
-        super(capacity, maxTransfer);
-    }
-
     public RfEnergy(int capacity, int maxReceive, int maxExtract) {
         super(capacity, maxReceive, maxExtract);
-    }
-
-    public RfEnergy(int capacity, int maxReceive, int maxExtract, int energy) {
-        super(capacity, maxReceive, maxExtract, energy);
     }
 
     public void setTransfer(int transfer) {
@@ -83,8 +71,7 @@ public class RfEnergy extends EnergyStorage implements INBTSerializable<NBTTagCo
             if (!canReceive() || maxReceive == 0) {
                 return 0;
             }
-            int r = RfEnergy.this.receiveEnergy(Math.min(maxReceive, this.maxReceive), simulate);
-            return r == 0 ? 0 : maxReceive;
+            return RfEnergy.this.receiveEnergy(Math.min(maxReceive, this.maxReceive), simulate);
         }
 
         @Override
@@ -92,8 +79,7 @@ public class RfEnergy extends EnergyStorage implements INBTSerializable<NBTTagCo
             if (!canExtract() || maxExtract == 0) {
                 return 0;
             }
-            int r = RfEnergy.this.extractEnergy(Math.min(maxExtract, this.maxExtract), simulate);
-            return r == 0 ? 0 : maxExtract;
+            return RfEnergy.this.extractEnergy(Math.min(maxExtract, this.maxExtract), simulate);
         }
 
         @Override

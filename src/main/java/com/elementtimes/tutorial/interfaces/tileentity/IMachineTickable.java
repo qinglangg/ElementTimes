@@ -35,6 +35,13 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
     }
 
     @Override
+    default void onStart() {
+        IMachineLifecycleManager.super.onStart();
+        setPause(false);
+        setWorking(true);
+    }
+
+    @Override
     default void onResume() {
         IMachineLifecycleManager.super.onResume();
         setPause(false);
@@ -98,16 +105,16 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
 
     default void processEnergy(int delta) {
         int unprocessed = getEnergyUnprocessed();
-        if (unprocessed != 0) {
-            if (unprocessed > 0) {
-                int newUnprocessed = Math.max(0, unprocessed - delta);
-                setEnergyUnprocessed(newUnprocessed);
-                setEnergyProcessed(getEnergyProcessed() + (unprocessed - newUnprocessed));
-            } else {
-                int newUnprocessed = Math.min(0, unprocessed + delta);
-                setEnergyUnprocessed(newUnprocessed);
-                setEnergyProcessed(getEnergyProcessed() + (unprocessed - newUnprocessed));
-            }
+        if (unprocessed > 0) {
+            int newUnprocessed = Math.max(0, unprocessed - delta);
+            int rDelta = unprocessed - newUnprocessed;
+            setEnergyUnprocessed(newUnprocessed);
+            setEnergyProcessed(getEnergyProcessed() + rDelta);
+        } else if (unprocessed < 0) {
+            int newUnprocessed = Math.min(0, unprocessed + delta);
+            int rDelta = unprocessed - newUnprocessed;
+            setEnergyUnprocessed(newUnprocessed);
+            setEnergyProcessed(getEnergyProcessed() + rDelta);
         }
     }
 
@@ -201,9 +208,10 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                 IBlockState state = world.getBlockState(pos);
                 IBlockState newState = updateState(state);
                 if (state != newState) {
-                    world.setBlockState(pos, state, 3);
+                    world.setBlockState(pos, newState, 3);
                     tileEntity.validate();
                     world.setTileEntity(pos, tileEntity);
+                    world.markBlockRangeForRenderUpdate(pos, pos);
                 }
                 tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
             }

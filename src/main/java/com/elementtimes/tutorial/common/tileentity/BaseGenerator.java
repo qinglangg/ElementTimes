@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.interfaces.tileentity.IEnergyProvider;
 import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
@@ -28,7 +29,8 @@ public abstract class BaseGenerator extends BaseMachine implements IEnergyProvid
             @Override
             public void onTickFinish() {
                 for (EnumFacing value : EnumFacing.values()) {
-                    sendEnergy(getMaxEnergyChange(), value, world.getTileEntity(pos.offset(value)), getEnergyProxy(value));
+                    RfEnergy.EnergyProxy proxy = getEnergyProxy(value);
+                    sendEnergy(proxy.getEnergyStored(), value.getOpposite(), world.getTileEntity(pos.offset(value)), proxy);
                 }
             }
         });

@@ -48,6 +48,7 @@ public class ElementtimesConfig {
         public int generaterMaxEnergy = 100000000;
 
         @Config.Comment("设置发电机最大输出")
+        @Config.RequiresWorldRestart
         @Config.Name("generaterMaxExtract")
         public int generaterMaxExtract = 500000;
 

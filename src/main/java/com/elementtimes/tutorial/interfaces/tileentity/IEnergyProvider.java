@@ -26,21 +26,18 @@ public interface IEnergyProvider extends INBTSerializable<NBTTagCompound> {
      * @param proxy 使用的代理，将从其中提取能量
      * @return 接收的能量
      */
-    default int sendEnergy(int count, @Nullable EnumFacing facing, @Nullable TileEntity te, @Nonnull RfEnergy.EnergyProxy proxy) {
+    default void sendEnergy(int count, @Nullable EnumFacing facing, @Nullable TileEntity te, @Nonnull RfEnergy.EnergyProxy proxy) {
         if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, facing) && proxy.canExtract() && proxy.getEnergyStored() > 0) {
             IEnergyStorage storage = te.getCapability(CapabilityEnergy.ENERGY, facing);
-            if (storage == null || !storage.canReceive()) {
-                return 0;
-            }
-            int extract = proxy.extractEnergy(count, true);
-            int receive = storage.receiveEnergy(extract, true);
-            if (receive > 0) {
-                proxy.extractEnergy(extract, false);
-                storage.receiveEnergy(receive, false);
-                return receive;
+            if (storage != null && storage.canReceive()) {
+                int extract = proxy.extractEnergy(count, true);
+                int receive = storage.receiveEnergy(extract, true);
+                if (receive > 0) {
+                    int r = storage.receiveEnergy(receive, false);
+                    proxy.extractEnergy(r, false);
+                }
             }
         }
-        return 0;
     }
 
     /**
