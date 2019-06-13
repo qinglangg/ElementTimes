@@ -103,6 +103,14 @@ public class ItemHandler extends ItemStackHandler {
     }
 
     public void unbindAll() {
+        // 防止 stacks 不允许 add
+        if (!replaced) {
+            NonNullList<ItemStack> newStacks = NonNullList.create();
+            for (int i = 0; i < stacks.size(); i++) {
+                newStacks.add(i, stacks.get(i));
+            }
+            stacks = newStacks;
+        }
         int expend = stacks.size() - mSize;
         if (expend >= 0) {
             ItemStack[] itemStacks = new ItemStack[expend];

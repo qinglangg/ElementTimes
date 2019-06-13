@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
+ * 酒精灯
  * @author KSGFK create in 2019/6/12
  */
 public class BlockAlcoholLamp extends Block {
