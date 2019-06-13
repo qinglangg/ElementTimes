@@ -1,13 +1,16 @@
 package com.elementtimes.tutorial.util;
 
+import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -85,6 +88,11 @@ public class RecipeUtil {
         public void onCraftMatrixChanged(IInventory inventoryIn) { }
     }, 3, 3);
 
+    /**
+     * 测试合成表
+     * @param input 输入
+     * @return 输出
+     */
     public static ItemStack getCraftingResult(@Nonnull NonNullList<ItemStack> input) {
         tempCrafting.clear();
         for (int i = 0; i < input.size(); i++) {
@@ -95,10 +103,48 @@ public class RecipeUtil {
         return resultEntry;
     }
 
+    /**
+     * 获取单物品输入的输出
+     * @param oreName 输入矿辞名
+     * @param receiver 输出
+     */
     public static void collectOneBlockCraftingResult(String oreName, Map<ItemStack, ItemStack> receiver) {
         Arrays.stream(CraftingHelper.getIngredient(oreName).getMatchingStacks())
                 .filter(stack -> !stack.isEmpty() && Block.getBlockFromItem(stack.getItem()) != Blocks.AIR)
                 .map(stack -> ItemHandlerHelper.copyStackWithSize(stack, 1))
                 .forEach(stack -> receiver.put(stack, RecipeUtil.getCraftingResult(NonNullList.withSize(1, stack))));
+    }
+
+    /**
+     * 创建齿轮合成表
+     * @param inputCenter 中心物品
+     * @param inputSide 四边物品
+     * @param output 输出物品
+     * @return 合成表
+     */
+    public static ShapedOreRecipe gearRecipe(Object inputCenter, Object inputSide, Item output) {
+        Ingredient in1;
+        if (inputCenter instanceof Block) {
+            // 避免 meta = OreDictionary.WILDCARD_VALUE 的特殊值，对 Block 特殊处理
+            in1 = Ingredient.fromStacks(new ItemStack((Block) inputCenter));
+        } else {
+            in1 = CraftingHelper.getIngredient(inputCenter);
+        }
+        Ingredient in4;
+        if (inputSide instanceof Block) {
+            in4 = Ingredient.fromStacks(new ItemStack((Block) inputSide));
+        } else {
+            in4 = CraftingHelper.getIngredient(inputSide);
+        }
+        Ingredient emp = Ingredient.EMPTY;
+        ItemStack out = new ItemStack(output, 3);
+        CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
+        primer.width = 3;
+        primer.height = 3;
+        primer.input = NonNullList.from(emp,
+                emp, in4, emp,
+                in4, in1, in4,
+                emp, in4, emp);
+        return new ShapedOreRecipe(new ResourceLocation(ElementTimes.MODID, "recipe"), out, primer);
     }
 }

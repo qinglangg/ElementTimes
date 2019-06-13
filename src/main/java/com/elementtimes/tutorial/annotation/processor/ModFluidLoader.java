@@ -6,6 +6,7 @@ import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 
 import java.lang.reflect.AnnotatedElement;
@@ -39,7 +40,7 @@ public class ModFluidLoader {
         String name = ReflectUtil.getName(element).orElse("").toLowerCase();
 
         initFluid(fluid, info, name);
-        initFluidBlock(fluid, element, name);
+        initFluidBlock(fluid, element, name, info.density());
 
         into.add(fluid);
     }
@@ -48,17 +49,19 @@ public class ModFluidLoader {
         if (info.bucket()) {
             HAS_BUCKET.add(fluid);
         }
+        fluid.setDensity(info.density());
+        fluid.setGaseous(info.density() <= 0);
         FLUID_TAB.put(fluid, info.creativeTab().tab);
     }
 
-    private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name) {
+    private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name, int density) {
         ModFluid.FluidBlock fbInfo = element.getAnnotation(ModFluid.FluidBlock.class);
         if (fbInfo != null) {
             Function<Fluid, Block> fluidBlock = null;
             if (!fbInfo.className().isEmpty()) {
                 Optional<Object> o = ReflectUtil.create(fbInfo.className(), new Object[]{fluid});
                 Block block = (Block) o.filter(obj -> obj instanceof Block).orElse(null);
-                decorateFluidBlock(fluid, block, fbInfo, name);
+                decorateFluidBlock(fluid, block, fbInfo, name, density);
                 if (block != null) {
                     fluidBlock = (f) -> block;
                 }
@@ -67,7 +70,7 @@ public class ModFluidLoader {
             if (fluidBlock == null) {
                 fluidBlock = f -> {
                     Block block = fbInfo.type().create(f);
-                    decorateFluidBlock(f, block, fbInfo, name);
+                    decorateFluidBlock(f, block, fbInfo, name, density);
                     return block;
                 };
             }
@@ -85,7 +88,7 @@ public class ModFluidLoader {
         }
     }
 
-    private static void decorateFluidBlock(Fluid fluid, Block fluidBlock, ModFluid.FluidBlock fbInfo, String name) {
+    private static void decorateFluidBlock(Fluid fluid, Block fluidBlock, ModFluid.FluidBlock fbInfo, String name, int density) {
         if (fluidBlock != null) {
             String registerName = fbInfo.registerName().isEmpty() ? name : fbInfo.registerName();
             if (fluidBlock.getRegistryName() == null) {
@@ -97,6 +100,10 @@ public class ModFluidLoader {
             String unlocalizedName = fbInfo.unlocalizedName().isEmpty() ? registerName.toLowerCase() : fbInfo.unlocalizedName();
             if ("tile.null".equals(fluidBlock.getUnlocalizedName())) {
                 fluidBlock.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
+            }
+
+            if (fluidBlock instanceof BlockFluidBase) {
+                ((BlockFluidBase) fluidBlock).setDensity(density);
             }
         }
     }

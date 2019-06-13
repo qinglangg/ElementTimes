@@ -31,11 +31,22 @@ public class ElementtimesBlocks {
     public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();
     @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
     public static Block cornCropUp = new CornCropUp();
-    @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
+    @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling", creativeTab = ModCreativeTabs.Agriculture)
     @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
     public static Block rubberSapling = new RubberSapling();
-    @ModBlock
+    @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log", burningTime = 300, creativeTab = ModCreativeTabs.Agriculture)
+    @ModOreDict("logWood")
+    public static Block rubberLog = new RubberLog();
+    @ModBlock(registerName = "rubber_leaf", unlocalizedName = "rubber_leaf", creativeTab = ModCreativeTabs.Agriculture)
+    public static Block rubberLeaf = new RubberLeaf();
+    @ModBlock(creativeTab = ModCreativeTabs.Agriculture)
     public static Block saplingEssence = new EssenceSapling();
+    @ModBlock(creativeTab = ModCreativeTabs.Agriculture)
+    @ModBlock.HarvestLevel(toolClass = "axe")
+    @ModOreDict("logWood")
+    public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
+    @ModBlock(creativeTab = ModCreativeTabs.Agriculture)
+    public static Block leafesSence = new EssenceLeaf();
 
     // ore
 
@@ -115,7 +126,7 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "forming", clazz = "com.elementtimes.tutorial.common.tileentity.TileForming")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block forming = new BaseClosableMachine<>(ElementtimesGUI.REBUILD, TileForming.class, false);
+    public static Block forming = new BaseClosableMachine<>(ElementtimesGUI.FORMING, TileForming.class, false);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "extractor", clazz = "com.elementtimes.tutorial.common.tileentity.TileExtractor")
     @ModBlock.StateMapperCustom
@@ -133,12 +144,6 @@ public class ElementtimesBlocks {
 
     // 其他
 
-    @ModBlock
-    @ModBlock.HarvestLevel(toolClass = "axe")
-    @ModOreDict("logWood")
-    public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
-    @ModBlock
-    public static Block leafesSence = new EssenceLeaf();
     @ModBlock(creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.HarvestLevel
     public static Block stoneBlock = new Block(Material.ROCK).setHardness(100f).setResistance(15f);
@@ -148,21 +153,16 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.HarvestLevel(level = 4)
     public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(10000f).setResistance(150f);
-    @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log")
-    @ModOreDict("logWood")
-    public static Block rubberLog = new RubberLog();
-    @ModBlock(registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")
-    public static Block rubberLeaf = new RubberLeaf();
-    @ModBlock
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiSilverCopper = new Block(Material.IRON);
-    @ModBlock
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiWoodStone = new Block(Material.IRON);
-    @ModBlock
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiGoldPlatinum = new Block(Material.IRON);
-    @ModBlock
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiCarbonSteel = new Block(Material.IRON);
 

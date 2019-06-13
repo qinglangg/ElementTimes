@@ -7,6 +7,7 @@ import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
@@ -29,6 +30,7 @@ public class ModItemLoader {
 
     public static Map<Item, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<Item, Int2ObjectMap<ModelResourceLocation>> SUB_ITEM_MODEL = new HashMap<>();
+    public static Map<Item, IItemColor> ITEM_COLOR = new HashMap<>();
 
     public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
         elements.get(ModItem.class).forEach(element -> buildItem(element, into));
@@ -82,6 +84,11 @@ public class ModItemLoader {
         }
         item.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
+        if (!info.itemColorClass().isEmpty()) {
+            ReflectUtil.create(info.itemColorClass())
+                    .filter(obj -> obj instanceof IItemColor)
+                    .ifPresent(obj -> ITEM_COLOR.put(item, (IItemColor) obj));
+        }
     }
 
     private static void initOreDict(Item item, AnnotatedElement itemHolder) {

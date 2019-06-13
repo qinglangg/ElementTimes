@@ -52,6 +52,12 @@ public @interface ModFluid {
     int color() default 0xFFFFFFFF;
 
     /**
+     * 设置流体密度，同时自动设置gaseous属性
+     * @return 流体密度。水为1000，熔岩3000，小于0为气体
+     */
+    int density() default 1000;
+
+    /**
      * @return 流体桶所在创造列表
      */
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;

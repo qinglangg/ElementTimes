@@ -56,4 +56,15 @@ public class ElementTimesTabs {
             return new ItemStack(ElementtimesBlocks.elementGenerator);
         }
     }
+
+    /**
+     * 元素时代-农业
+     */
+    public static class Agriculture extends CreativeTabs {
+        public Agriculture() { super(ElementTimes.MODID + ".Agriculture"); }
+        @Override
+        public ItemStack getTabIconItem() {
+            return new ItemStack(ElementtimesItems.corn);
+        }
+    }
 }

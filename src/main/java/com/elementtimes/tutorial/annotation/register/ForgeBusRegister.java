@@ -16,8 +16,10 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -31,6 +33,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 注解注册
@@ -59,7 +63,12 @@ public class ForgeBusRegister {
             }
         });
         AnnotationInitializer.BLOCKS.forEach(block -> {
-            ItemBlock itemBlock = new ItemBlock(block);
+            ItemBlock itemBlock = new ItemBlock(block) {
+                @Override
+                public int getItemBurnTime(ItemStack itemStack) {
+                    return ModBlockLoader.BURNING_TIMES.getOrDefault(block, 0);
+                }
+            };
             //noinspection ConstantConditions
             itemBlock.setRegistryName(block.getRegistryName());
             registry.register(itemBlock);
@@ -132,7 +141,9 @@ public class ForgeBusRegister {
     @SubscribeEvent
     public static void registerRecipe(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistry<IRecipe> registry = event.getRegistry();
-        AnnotationInitializer.RECIPES.forEach(getter -> registry.register(getter.get()));
+        AnnotationInitializer.RECIPES.forEach(getter -> {
+            Arrays.stream(getter.get()).filter(Objects::nonNull).forEach(registry::register);
+        });
     }
 
     @SubscribeEvent
@@ -151,5 +162,11 @@ public class ForgeBusRegister {
                 textureMap.registerSprite(fluid.getOverlay());
             }
         });
+    }
+
+    @SubscribeEvent
+    public static void registerItemColor(ColorHandlerEvent.Item event) {
+        ModItemLoader.ITEM_COLOR.forEach((item, iItemColor) ->
+                event.getItemColors().registerItemColorHandler(iItemColor, item));
     }
 }

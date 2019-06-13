@@ -32,6 +32,12 @@ public @interface ModBlock {
      * @return unlocalizedName
      */
     String unlocalizedName() default "";
+
+    /**
+     * @return 燃烧时间
+     */
+    int burningTime() default 0;
+
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**

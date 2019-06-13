@@ -2,21 +2,21 @@ package com.elementtimes.tutorial.plugin.jei;
 
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import com.elementtimes.tutorial.common.tileentity.TilePulverize;
 import com.elementtimes.tutorial.common.tileentity.TileRebuild;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.plugin.jei.category.MachineOneToOneRecipe;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
-import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
@@ -26,6 +26,12 @@ public class JEISupport implements IModPlugin {
     private static final String ID_COMPRESSOR = ElementTimes.MODID + ".compressor.jei.category";
     private static final String ID_PULVERIZE = ElementTimes.MODID + ".pulverize.jei.category";
     private static final String ID_REBUILD = ElementTimes.MODID + ".rebuild.jei.category";
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
+        subtypeRegistry.registerSubtypeInterpreter(ElementtimesItems.bottle,
+                itemStack -> ItemBottleFuel.getFluidNBT(itemStack).getKeySet().stream().findFirst().orElse(ISubtypeRegistry.ISubtypeInterpreter.NONE));
+    }
 
     @Override
     public void register(IModRegistry registry) {

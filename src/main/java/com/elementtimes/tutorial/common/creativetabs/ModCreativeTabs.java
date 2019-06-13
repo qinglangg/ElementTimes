@@ -30,6 +30,11 @@ public enum ModCreativeTabs {
     Industry(new ElementTimesTabs.Industry()),
 
     /**
+     * 元素时代-农业
+     */
+    Agriculture(new ElementTimesTabs.Agriculture()),
+
+    /**
      * 不显示
      */
     None(null);

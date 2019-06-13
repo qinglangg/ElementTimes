@@ -1,41 +1,40 @@
 {
-    "type":"minecraft:crafting_shapeless",
-    "ingredients":[
-        {
-      "type":"forge:ore_dict",
-      "ore":"blockPlatinum"
-        },
-        {
-      "type":"forge:ore_dict",
-      "ore":"blockSteel"
-        },
-        {
-            "item":"minecraft:redstone_block"
-        },
-        {
-            "item":"minecraft:gold_block"
-        },
-        {
-            "item":"minecraft:lapis_block"
-        },
-      {
-        "type":"forge:ore_dict",
-        "ore":"blockSteel"
-      },
-        {
-            "item":"minecraft:emerald_block"
-        },
-        {
-            "item":"minecraft:quartz_block",
-            "data":0
-        },
-        {
-      "type":"forge:ore_dict",
-      "ore":"blockCopper"
-        }
-    ],
-    "result":{
-        "item":"elementtimes:goldelement",
-        "count":1
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockPlatinum"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockSteel"
+    },
+    {
+      "item": "minecraft:redstone_block"
+    },
+    {
+      "item": "minecraft:gold_block"
+    },
+    {
+      "item": "minecraft:lapis_block"
+    },
+    {
+      "item": "elementtimes:diamondblock"
+    },
+    {
+      "item": "minecraft:emerald_block"
+    },
+    {
+      "item": "minecraft:quartz_block",
+      "data": 0
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
     }
+  ],
+  "result": {
+    "item": "elementtimes:goldelement",
+    "count": 1
+  }
 }

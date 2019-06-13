@@ -1,0 +1,23 @@
+{
+  "joints": {
+    "joint_default": {"0": [1.0]}
+  },
+  "clips": {
+    "move": {
+      "loop": true,
+      "joint_clips": {
+        "joint_default": [
+          {
+            "variable": "offset_y",
+            "type": "uniform",
+            "interpolation": "linear",
+            "samples": [0, 10]
+          }
+        ]
+      },
+      "events": {
+        "0.5": "event_half"
+      }
+    }
+  }
+}

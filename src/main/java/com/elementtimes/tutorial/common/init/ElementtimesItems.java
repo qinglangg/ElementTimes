@@ -38,15 +38,15 @@ public class ElementtimesItems {
     public static Item elementAxe = new Elementaxe();
     @ModItem
     public static Item elementPickaxe = new Elementpickaxe();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item amylum = new Amylum();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item puremeat = new ItemFood(4, 0f, false);
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item corn = new Corn();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item bakedCorn = new ItemFood(5, 2.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot = new Item();
@@ -101,7 +101,7 @@ public class ElementtimesItems {
     public static Item diamondPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item copperPowder = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item spanner = new Spanner();
     @ModItem
     public static Item twiningSunCompound = new Item();
@@ -138,10 +138,8 @@ public class ElementtimesItems {
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static Item hydrogen = new ItemBottleFuel(1600);
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle steam = new ItemGlassBottle();
+    @ModItem(creativeTab = ModCreativeTabs.Chemical, itemColorClass = "com.elementtimes.tutorial.other.BottleItemStackColor")
+    public static Item bottle = new ItemBottleFuel();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sodiumBisulfite = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
@@ -166,12 +164,12 @@ public class ElementtimesItems {
     public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
     @ModItem
     public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("rubber")
     public static Item rubber = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item rubberRaw = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("salt")
     public static Item salt = new Item();
     @ModItem

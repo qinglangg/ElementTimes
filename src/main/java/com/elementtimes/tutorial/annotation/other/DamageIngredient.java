@@ -31,8 +31,7 @@ public class DamageIngredient extends Ingredient {
             ItemStack itemStack = new ItemStack(item);
             tools.add(itemStack.copy());
             if (item.isDamageable() && damageCount > 0) {
-                int delta = 2;
-                for (int i = 1; i < item.getMaxDamage(itemStack) - damageCount + delta; i++) {
+                for (int i = 1; i < item.getMaxDamage(itemStack) - damageCount + 1; i++) {
                     ItemStack stack = itemStack.copy();
                     stack.setItemDamage(i);
                     tools.add(stack);

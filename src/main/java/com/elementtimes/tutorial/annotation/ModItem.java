@@ -31,6 +31,14 @@ public @interface ModItem {
      * @return unlocalizedName
      */
     String unlocalizedName() default "";
+
+    /**
+     * 物品染色
+     * 只要物品材质直接或间接继承自 item/generated 就能支持染色
+     * @return 物品染色所需 IItemColor 类全类名
+     */
+    String itemColorClass() default "";
+
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**

@@ -38,7 +38,7 @@ public class AnnotationInitializer {
 
     public static List<Block> BLOCKS = new ArrayList<>();
     public static List<Item> ITEMS = new ArrayList<>();
-    public static List<Supplier<IRecipe>> RECIPES = new ArrayList<>();
+    public static List<Supplier<IRecipe[]>> RECIPES = new ArrayList<>();
     public static List<Fluid> FLUIDS = new ArrayList<>();
     public static List<ModCapability> CAPABILITIES = new ArrayList<>();
 
@@ -76,6 +76,7 @@ public class AnnotationInitializer {
             warn("---> Find {} Item", ITEMS.size());
             warn("\tOreDictionary Name: {}", ModItemLoader.ORE_DICTIONARY.size());
             warn("\tSubItem Model: {}", ModItemLoader.SUB_ITEM_MODEL.size());
+            warn("\tIItemColor: {}", ModItemLoader.ITEM_COLOR.size());
             ModRecipeLoader.getRecipes(elements, RECIPES);
             warn("---> Find {} Recipe", RECIPES.size());
             ModFluidLoader.getFluids(elements, FLUIDS);

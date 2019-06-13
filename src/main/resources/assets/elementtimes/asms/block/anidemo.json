@@ -1,0 +1,11 @@
+{
+  "parameters": {
+    "anim_cycle": ["/", "#cycle_length"]
+  },
+  "clips": {
+    "default": ["apply", "elementtimes:block/anidemo.json@move", "#anim_cycle"]
+  },
+  "states": ["default"],
+  "transitions": {},
+  "start_state": "default"
+}

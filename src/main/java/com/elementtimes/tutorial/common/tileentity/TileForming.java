@@ -1,17 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.ModElement;
-import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
-import com.elementtimes.tutorial.util.RecipeUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 成型机
@@ -21,58 +15,30 @@ import java.util.Map;
 @ModElement.ModInvokeStatic("init")
 public class TileForming extends BaseOneToOne {
 
-    private Mode mode = Mode.Gear;
-
     public TileForming() {
         super(ElementtimesConfig.FORMING.maxEnergy);
     }
 
-    public void setMode(Mode mode) {
-        if (this.mode != mode) {
-            interrupt();
-            this.mode = mode;
-            updateRecipe(getRecipes());
-        }
-    }
-
-    enum Mode {
-        /**
-         * 成型模式
-         */
-        Forming,
-
-        /**
-         * 齿轮模式
-         */
-        Gear
-    }
-
     public static MachineRecipeHandler sGearRecipeHandler;
-    public static MachineRecipeHandler sFormingRecipeHandler;
 
     public static void init() {
         sGearRecipeHandler = new MachineRecipeHandler()
-                .add("1", ElementtimesConfig.FORMING.maxExtract, "plankWood", 4, ElementtimesItems.gearWood, 1)
-                .add("2", ElementtimesConfig.FORMING.maxExtract, "gemQuartz", 4, ElementtimesItems.gearQuartz, 1)
-                .add("3", ElementtimesConfig.FORMING.maxExtract, "stone", 4, ElementtimesItems.gearStone, 1)
-                .add("4", ElementtimesConfig.FORMING.maxExtract, "coal", 4, ElementtimesItems.gearCarbon, 1)
-                .add("5", ElementtimesConfig.FORMING.maxExtract, "ingotGold", 4, ElementtimesItems.gearGold, 1)
-                .add("6", ElementtimesConfig.FORMING.maxExtract, "ingotSteel", 4, ElementtimesItems.gearSteel, 1)
-                .add("7", ElementtimesConfig.FORMING.maxExtract, "gemDiamond", 4, ElementtimesItems.gearDiamond, 1)
-                .add("8", ElementtimesConfig.FORMING.maxExtract, "ingotIron", 4, ElementtimesItems.gearIron, 1)
-                .add("9", ElementtimesConfig.FORMING.maxExtract, "ingotPlatinum", 4, ElementtimesItems.gearPlatinum, 1)
-                .add("0", ElementtimesConfig.FORMING.maxExtract, "ingotCopper", 4, ElementtimesItems.gearCopper, 1);
-        sFormingRecipeHandler = new MachineRecipeHandler();
-        Map<ItemStack, ItemStack> woods = new HashMap<>();
-        RecipeUtil.collectOneBlockCraftingResult("logWood", woods);
-        woods.forEach((in, out) -> sFormingRecipeHandler.add(in.getUnlocalizedName() + "_to_" + out.getUnlocalizedName(), ElementtimesConfig.FORMING.maxExtract, in, out));
-
+                .add("1", 10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
+                .add("2", 10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
+                .add("3", 10000, "stone", 9, ElementtimesItems.gearStone, 3)
+                .add("4", 10000, "coal", 9, ElementtimesItems.gearCarbon, 3)
+                .add("5", 10000, "ingotGold", 9, ElementtimesItems.gearGold, 3)
+                .add("6", 10000, "ingotSteel", 9, ElementtimesItems.gearSteel, 3)
+                .add("7", 10000, "gemDiamond", 9, ElementtimesItems.gearDiamond, 3)
+                .add("8", 10000, "ingotIron", 9, ElementtimesItems.gearIron, 3)
+                .add("9", 10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
+                .add("0", 10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3);
     }
 
     @Nonnull
     @Override
     public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
-        return mode == Mode.Forming ? sFormingRecipeHandler : sGearRecipeHandler;
+        return sGearRecipeHandler;
     }
 
     @Override
@@ -85,22 +51,4 @@ public class TileForming extends BaseOneToOne {
         return ElementtimesConfig.FORMING.maxExtract;
     }
 
-    @Nonnull
-    @Override
-    public GuiButton[] createButton() {
-        return new GuiButton[] {
-                new GuiButton(0, 0, 0, mode == Mode.Forming ? Mode.Gear.name() : Mode.Forming.name())
-        };
-    }
-
-    @Override
-    public void actionPerformed(GuiButton button, GuiMachineContainer guiContainer) {
-        if (button.id == 0) {
-            if (mode == Mode.Forming) {
-                setMode(Mode.Gear);
-            } else {
-                setMode(Mode.Forming);
-            }
-        }
-    }
 }

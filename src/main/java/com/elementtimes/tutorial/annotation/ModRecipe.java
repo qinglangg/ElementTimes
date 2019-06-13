@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * 该系列注解只能用于成员变量，不能用于类
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface ModRecipe {
 
     /**
@@ -46,12 +46,14 @@ public @interface ModRecipe {
     /**
      * 工作台合成
      * 注解 IRecipe 类/对象上
-     * 类型为 IRecipe 或 Object[]，若为数组，第一个元素为返回值
+     * 类型为 IRecipe/Supplier<IRecipe> 或 Object[]，或生成他们的方法。
+     * 若为数组或集合，且该数组或集合第一个元素为 IRecipe/Supplier<IRecipe>，则只会解析 IRecipe/Supplier<IRecipe>
+     *     否则，会被当作一个合成表解析，第一个元素为返回物品，其余依次为合成槽位内的物品
      * 数组/列表值使用 CraftingHelper.getIngredient 解析
      * @see net.minecraftforge.common.crafting.CraftingHelper#getIngredient(Object)
      */
     @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
+    @Target({ElementType.FIELD, ElementType.METHOD})
     @interface Crafting {
         /**
          * 合成表名

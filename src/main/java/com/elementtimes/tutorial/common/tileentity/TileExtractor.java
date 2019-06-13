@@ -25,9 +25,9 @@ public class TileExtractor extends BaseOneToOne {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0", 100000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
-                .add("1", 100000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 2)
-                .add("2", 100000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2);
+                .add("0", 1000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
+                .add("1", 4000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 4)
+                .add("2", 2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2);
     }
 
     @Nonnull

@@ -6,6 +6,8 @@ import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.annotation.other.DefaultOreGenerator;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -36,6 +38,7 @@ public class ModBlockLoader {
     public static Map<Block, ModBlock.StateMap> BLOCK_STATES = new HashMap<>();
     public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
+    public static Object2IntMap<Block> BURNING_TIMES = new Object2IntArrayMap<>();
     public static boolean B3D = false, OBJ = false;
 
     /**
@@ -91,6 +94,10 @@ public class ModBlockLoader {
         }
         block.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
         block.setCreativeTab(info.creativeTab().tab);
+        int burningTime = info.burningTime();
+        if (burningTime > 0) {
+            BURNING_TIMES.put(block, burningTime);
+        }
     }
 
     private static void initBlock2(Block block, AnnotatedElement blockHolder) {

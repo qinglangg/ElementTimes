@@ -8,6 +8,7 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -44,6 +45,15 @@ public class ModClassLoader {
                     for (Class annotation : support) {
                         if (field.getAnnotation(annotation) != null) {
                             elements.get(annotation).add(field);
+                            break;
+                        }
+                    }
+                }
+                for (Method method : aClass.getDeclaredMethods()) {
+                    method.setAccessible(true);
+                    for (Class annotation : support) {
+                        if (method.getAnnotation(annotation) != null) {
+                            elements.get(annotation).add(method);
                             break;
                         }
                     }

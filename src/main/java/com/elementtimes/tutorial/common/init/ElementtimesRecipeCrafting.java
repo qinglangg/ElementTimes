@@ -1,8 +1,23 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.ModRecipe;
-import net.minecraft.init.Blocks;
+import com.elementtimes.tutorial.common.item.ItemBottleFuel;
+import com.elementtimes.tutorial.util.RecipeUtil;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 所有合成表
@@ -31,7 +46,7 @@ public class ElementtimesRecipeCrafting {
 	public static String oreSilver = "oreSilver";
 
 	@ModRecipe
-	@ModRecipe.Ore(value = "salt", output = "elementtimes:salt")
+	@ModRecipe.Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)
 	public static String oreSalt = "oreSalt";
 
 	@ModRecipe
@@ -153,10 +168,61 @@ public class ElementtimesRecipeCrafting {
 
 	@ModRecipe
 	@ModRecipe.Crafting
-	public static Object[] gearCarbon = new Object[] {
-			ElementtimesItems.gearCarbon,
-			null, Items.COAL, null,
-			Items.COAL, Blocks.COAL_BLOCK, Items.COAL,
-			null, Items.COAL, null
-	};
+	public static IRecipe gearCarbon = RecipeUtil.gearRecipe("blockCoal", "coal", ElementtimesItems.gearCarbon);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearCopper = RecipeUtil.gearRecipe("blockCopper", "ingotCopper", ElementtimesItems.gearCopper);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearDiamond = RecipeUtil.gearRecipe("blockDiamond", "gemDiamond", ElementtimesItems.gearDiamond);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearGold = RecipeUtil.gearRecipe("blockGold", "ingotGold", ElementtimesItems.gearGold);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearIron = RecipeUtil.gearRecipe("blockIron", "ingotIron", ElementtimesItems.gearIron);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearPlatinum = RecipeUtil.gearRecipe("blockPlatinum", "ingotPlatinum", ElementtimesItems.gearPlatinum);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearQuartz = RecipeUtil.gearRecipe("blockQuartz", "gemQuartz", ElementtimesItems.gearQuartz);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearSteel = RecipeUtil.gearRecipe("blockSteel", "ingotSteel", ElementtimesItems.gearSteel);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearStone = RecipeUtil.gearRecipe(ElementtimesBlocks.stoneBlock, "stone", ElementtimesItems.gearStone);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearWood = RecipeUtil.gearRecipe("logWood", "plankWood", ElementtimesItems.gearWood);
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe gearSilver = RecipeUtil.gearRecipe("blockSilver", "ingotSilver", ElementtimesItems.gearSilver);
+
+	@ModRecipe
+	@ModRecipe.Crafting
+	public static IRecipe[] createFluidRecipes() {
+		List<IRecipe> recipeList = new LinkedList<>();
+		FluidRegistry.getRegisteredFluids().entrySet().stream()
+				.filter(set -> set.getKey().startsWith(ElementTimes.MODID))
+				.map(Map.Entry::getValue)
+				.forEach(fluid -> {
+					ItemStack bottle = ItemBottleFuel.createByFluid(fluid);
+					ItemStack bucket = FluidUtil.getFilledBucket(new FluidStack(fluid, 1000));
+					NonNullList<Ingredient> input0 = NonNullList.create();
+					input0.add(Ingredient.fromItem(Items.GLASS_BOTTLE));
+					input0.add(Ingredient.fromStacks(bucket));
+					IRecipe bucketToBottle = new ShapelessRecipes("recipes", bottle, input0);
+					bucketToBottle.setRegistryName(new ResourceLocation(ElementTimes.MODID, fluid.getName() + "_convert_0"));
+					NonNullList<Ingredient> input1 = NonNullList.create();
+					input1.add(Ingredient.fromItem(Items.BUCKET));
+					input1.add(Ingredient.fromStacks(ItemBottleFuel.createByFluid(fluid)));
+					IRecipe bottleToBucket = new ShapelessRecipes("recipes", bucket, input1);
+					bottleToBucket.setRegistryName(new ResourceLocation(ElementTimes.MODID, fluid.getName() + "_convert_1"));
+					recipeList.add(bottleToBucket);
+					recipeList.add(bucketToBottle);
+				});
+		return recipeList.toArray(new IRecipe[0]);
+	}
 }
