@@ -103,6 +103,8 @@ item.elementtimes.rubberraw.name=rubberraw
 item.elementknife.name=elementknife
 item.elementtimes.sodiumbisulfite.name=sodium bisulfite
 item.elementtimes.sodiummetabisulfite.name=sodium metabisulfite
+item.elementtimes.carbonrod.name=carbonrod
+item.elementtimes.starchball.name=starchball
 # block
 tile.elementtimes.woodessence.name=woodessenc
 tile.elementtimes.leafessence.name=leafessence
@@ -136,7 +138,9 @@ tile.elementtimes.blockmulticarbonsteel.name=Carbon and Steel Block
 tile.elementtimes.blockmultigoldplatinum.name=Gold and Platinum Block
 tile.elementtimes.blockmultisilvercopper.name=Silver and Copper Block
 tile.elementtimes.blockmultiwoodstone.name=Wood and Stone Block
-
+tile.elementtimes.support_stand.name=support stand
+tile.elementtimes.alcohol_lamp.name=alcohol lamp
+tile.elementtimes.evaporating_dish.name=evaporating dish
 # fluid
 fluid.elementtimes.nacl=NaCl
 tile.elementtimes.nacl.name=NaCl

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 public class Amylum extends ItemFood {
 
 	public Amylum() {
-		super(5, 5.0F, false);
+		super(5, 4.5F, false);
 	}
 
 	@Override

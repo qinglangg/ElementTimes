@@ -103,6 +103,8 @@ item.elementtimes.rubberraw.name=粘性树脂
 item.elementknife.name=元素刀
 item.elementtimes.sodiumbisulfite.name=亚硫酸氢钠
 item.elementtimes.sodiummetabisulfite.name=焦亚硫酸钠
+item.elementtimes.carbonrod.name=碳棒
+item.elementtimes.starchball.name=淀粉球
 # block
 tile.elementtimes.woodessence.name=精华木材
 tile.elementtimes.leafessence.name=精华树叶
@@ -136,6 +138,9 @@ tile.elementtimes.blockmulticarbonsteel.name=碳钢多层块
 tile.elementtimes.blockmultigoldplatinum.name=铂金多层块
 tile.elementtimes.blockmultisilvercopper.name=银铜多层块
 tile.elementtimes.blockmultiwoodstone.name=木石多层块
+tile.elementtimes.support_stand.name=铁架台
+tile.elementtimes.alcohol_lamp.name=酒精灯
+tile.elementtimes.evaporating_dish.name=蒸发皿
 # fluid
 fluid.elementtimes.nacl=熔融氯化钠
 tile.elementtimes.nacl.name=熔融氯化钠

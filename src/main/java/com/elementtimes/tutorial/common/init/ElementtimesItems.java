@@ -53,6 +53,8 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("ingotSteel")
     public static Item steelIngot = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item carbonRod = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumCarbonate = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
