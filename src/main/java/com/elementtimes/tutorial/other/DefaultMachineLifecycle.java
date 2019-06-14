@@ -6,8 +6,12 @@ import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Map;
 
 /**
  * 默认机器的生命周期方法
@@ -16,12 +20,14 @@ import net.minecraftforge.fluids.FluidStack;
 public class DefaultMachineLifecycle implements IMachineLifeCycle {
 
     private BaseMachine machine;
+    private boolean needBind = true;
 
     private MachineRecipeCapture recipe;
     private ItemHandler inputItems;
     private TankHandler inputTanks;
     private ItemHandler outputItems;
     private TankHandler outputTanks;
+    private Int2IntMap mBindInputToOutputMap = new Int2IntOpenHashMap();
 
     public DefaultMachineLifecycle(final BaseMachine machine) {
         this.machine = machine;
@@ -29,6 +35,44 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
         inputTanks = machine.getTanks(SideHandlerType.INPUT);
         outputItems = machine.getItemHandler(SideHandlerType.OUTPUT);
         outputTanks = machine.getTanks(SideHandlerType.OUTPUT);
+        inputItems.onItemChangeListener.add(slot -> {
+            if (mBindInputToOutputMap.containsKey(slot)) {
+                ItemStack input = inputItems.getStackInSlot(slot);
+                outputItems.setStackInSlot(mBindInputToOutputMap.get(slot), input.copy());
+            }
+        });
+        outputItems.onItemChangeListener.add(slot -> {
+            if (mBindInputToOutputMap.containsValue(slot)) {
+                ItemStack output = outputItems.getStackInSlot(slot);
+                mBindInputToOutputMap.entrySet().stream()
+                        .filter(kv -> kv.getValue().equals(slot))
+                        .findFirst()
+                        .map(Map.Entry::getKey)
+                        .ifPresent(slotInput -> {
+                            if (output.isEmpty() || inputItems.isItemValid(slotInput, output)) {
+                                mBindInputToOutputMap.remove(slotInput);
+                                inputItems.setSlotIgnoreChangeListener(slotInput, output);
+                            }
+                        });
+            }
+        });
+        outputItems.onUnbindAllListener.add(itemStacks -> {
+            mBindInputToOutputMap.clear();
+            needBind = true;
+        });
+    }
+
+    @Override
+    public void onTickStart() {
+        if (needBind) {
+            for (int i = 0; i < inputItems.getSlots(); i++) {
+                ItemStack is = inputItems.getStackInSlot(i);
+                if (!is.isEmpty() && !inputItems.isItemValid(i, is)) {
+                    bind(i);
+                }
+            }
+            needBind = false;
+        }
     }
 
     @Override
@@ -53,12 +97,19 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
 
     @Override
     public void onStart() {
+        outputItems.unbindAll();
+        needBind = false;
         assert recipe != null;
         machine.setWorkingRecipe(recipe);
         machine.setEnergyUnprocessed(recipe.energy.applyAsInt(recipe));
         // items
         for (int i = recipe.inputs.size() - 1; i >= 0; i--) {
-            inputItems.extractItem(i, recipe.inputs.get(i).getCount(), false);
+            ItemStack input = recipe.inputs.get(i);
+            inputItems.extractItem(i, input.getCount(), false);
+            if (input.getItem().hasContainerItem(input)) {
+                inputItems.insertItemIgnoreValid(i, input.getItem().getContainerItem(input), false);
+                bind(i);
+            }
         }
         // fluids
         for (int i = 0; i < recipe.fluidInputs.size(); i++) {
@@ -155,5 +206,11 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
             }
         }
         return pushAll;
+    }
+
+    private void bind(int slotInput) {
+        ItemStack input = inputItems.getStackInSlot(slotInput).copy();
+        int bind = outputItems.bind(input);
+        mBindInputToOutputMap.put(slotInput, bind);
     }
 }

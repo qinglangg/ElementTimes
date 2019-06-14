@@ -3,6 +3,8 @@ package com.elementtimes.tutorial.annotation.processor;
 import com.elementtimes.tutorial.annotation.ModFluid;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +25,7 @@ public class ModFluidLoader {
     public static Map<Fluid, CreativeTabs> FLUID_TAB = new HashMap<>();
     public static Map<Fluid, Function<Fluid, Block>> FLUID_BLOCK = new HashMap<>();
     public static Map<Fluid, String> FLUID_BLOCK_STATE = new HashMap<>();
+    public static Object2IntMap<String> FLUID_BURNING_TIME = new Object2IntArrayMap<>();
     public static List<Fluid> FLUID_RESOURCES = new LinkedList<>();
 
     public static void getFluids(Map<Class, ArrayList<AnnotatedElement>> elements, List<Fluid> into) {
@@ -52,6 +55,9 @@ public class ModFluidLoader {
         fluid.setDensity(info.density());
         fluid.setGaseous(info.density() <= 0);
         FLUID_TAB.put(fluid, info.creativeTab().tab);
+        if (info.burningTime() > 0) {
+            FLUID_BURNING_TIME.put(fluid.getName(), info.burningTime());
+        }
     }
 
     private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name, int density) {

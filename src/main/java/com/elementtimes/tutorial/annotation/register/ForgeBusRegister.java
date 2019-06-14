@@ -7,6 +7,8 @@ import com.elementtimes.tutorial.annotation.processor.ModBlockLoader;
 import com.elementtimes.tutorial.annotation.processor.ModFluidLoader;
 import com.elementtimes.tutorial.annotation.processor.ModItemLoader;
 import com.elementtimes.tutorial.annotation.util.RegisterUtil;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +27,13 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.b3d.B3DLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -35,6 +43,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 注解注册
@@ -168,5 +177,29 @@ public class ForgeBusRegister {
     public static void registerItemColor(ColorHandlerEvent.Item event) {
         ModItemLoader.ITEM_COLOR.forEach((item, iItemColor) ->
                 event.getItemColors().registerItemColorHandler(iItemColor, item));
+    }
+
+    @SubscribeEvent
+    public static void onBurningTime(FurnaceFuelBurnTimeEvent event) {
+        ItemStack itemStack = event.getItemStack();
+        String name = null;
+        if (itemStack.getItem() == ElementtimesItems.bottle) {
+            Optional<String> fluidName = ItemBottleFuel.getFluidNBT(itemStack).getKeySet().stream().findFirst();
+            if (fluidName.isPresent()) {
+                name = fluidName.get();
+            }
+        } else if (FluidRegistry.isUniversalBucketEnabled() && itemStack.getItem() == ForgeModContainer.getInstance().universalBucket) {
+            Optional<IFluidTankProperties> fluidBucket = Arrays.stream(FluidUtil.getFluidHandler(itemStack).getTankProperties()).findFirst();
+            if (fluidBucket.isPresent()) {
+                Fluid fluid = fluidBucket.get().getContents().getFluid();
+                if (fluid != null) {
+                    name = fluid.getName();
+                }
+            }
+        }
+        int time = ModFluidLoader.FLUID_BURNING_TIME.getOrDefault(name, -1);
+        if (time > 0) {
+            event.setBurnTime(time);
+        }
     }
 }

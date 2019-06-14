@@ -1,11 +1,17 @@
 package com.elementtimes.tutorial.common.capability.impl;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
+import java.util.function.Supplier;
 
 /**
  * 自定义实现的 IItemHandler
@@ -16,16 +22,16 @@ import java.util.function.BiPredicate;
 public class ItemHandler extends ItemStackHandler {
     public static final ItemHandler EMPTY = new ItemHandler(0);
 
+    private int mSize;
+
+    private boolean replaced = false;
+
     public ItemHandler() {
         this(1);
     }
 
     public ItemHandler(int size) {
-        this(NonNullList.withSize(size, ItemStack.EMPTY));
-    }
-
-    public ItemHandler(NonNullList<ItemStack> stacks) {
-        this(stacks, (integer, itemStack) -> true);
+        this(size, (integer, itemStack) -> true);
     }
 
     public ItemHandler(BiPredicate<Integer, ItemStack> check) {
@@ -33,12 +39,26 @@ public class ItemHandler extends ItemStackHandler {
     }
 
     public ItemHandler(int size, BiPredicate<Integer, ItemStack> check) {
-        this(NonNullList.withSize(size, ItemStack.EMPTY), check);
+        super(size);
+        mSize = size;
+        mInputValid = check;
     }
 
-    public ItemHandler(NonNullList<ItemStack> stacks, BiPredicate<Integer, ItemStack> check) {
-        super(stacks);
-        this.mInputValid = check;
+    public void setSlotIgnoreChangeListener(int slot, ItemStack stack) {
+        validateSlotIndex(slot);
+        this.stacks.set(slot, stack);
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        unbindAll();
+        return super.serializeNBT();
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        unbindAll();
+        super.deserializeNBT(nbt);
     }
 
     /**
@@ -66,5 +86,49 @@ public class ItemHandler extends ItemStackHandler {
     @Nonnull
     public ItemStack insertItemIgnoreValid(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return super.insertItem(slot, stack, simulate);
+    }
+
+    public int bind(ItemStack itemStack) {
+        // 防止 stacks 不允许 add
+        if (!replaced) {
+            NonNullList<ItemStack> newStacks = NonNullList.create();
+            for (int i = 0; i < stacks.size(); i++) {
+                newStacks.add(i, stacks.get(i));
+            }
+            stacks = newStacks;
+        }
+        int index = stacks.size();
+        stacks.add(itemStack);
+        return index;
+    }
+
+    public void unbindAll() {
+        // 防止 stacks 不允许 add
+        if (!replaced) {
+            NonNullList<ItemStack> newStacks = NonNullList.create();
+            for (int i = 0; i < stacks.size(); i++) {
+                newStacks.add(i, stacks.get(i));
+            }
+            stacks = newStacks;
+        }
+        int expend = stacks.size() - mSize;
+        if (expend >= 0) {
+            ItemStack[] itemStacks = new ItemStack[expend];
+            int pointer = expend - 1;
+            while (stacks.size() > mSize) {
+                itemStacks[pointer] = stacks.remove(stacks.size() - 1);
+                pointer--;
+            }
+            onUnbindAllListener.forEach(consumer -> consumer.accept(itemStacks));
+        }
+    }
+
+    public final List<IntConsumer> onItemChangeListener = new LinkedList<>();
+    public final List<Consumer<ItemStack[]>> onUnbindAllListener = new LinkedList<>();
+
+    @Override
+    protected void onContentsChanged(int slot) {
+        super.onContentsChanged(slot);
+        onItemChangeListener.forEach(i -> i.accept(slot));
     }
 }

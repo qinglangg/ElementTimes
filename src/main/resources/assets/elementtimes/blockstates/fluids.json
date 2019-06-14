@@ -73,6 +73,12 @@
         "fluid": "elementtimes.methane"
       }
     },
+    "elementtimes.ethane": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.ethane"
+      }
+    },
     "elementtimes.chlorine": {
       "model": "forge:fluid",
       "custom": {

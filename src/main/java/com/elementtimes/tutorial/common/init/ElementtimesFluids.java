@@ -29,7 +29,7 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
 
-    @ModFluid(density = -10)
+    @ModFluid(density = -10, burningTime = 4000)
     @ModFluid.FluidBlock
     public static Fluid H = new Fluid("elementtimes.h",
             new ResourceLocation(ElementTimes.MODID, "fluid/h_still"),
@@ -53,13 +53,13 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/butter_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/butter_fluid"), 0xFF92925E);
 
-    @ModFluid(density = -10)
+    @ModFluid(density = -10, burningTime = 5000)
     @ModFluid.FluidBlock
     public static Fluid acetylene = new Fluid("elementtimes.acetylene",
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_fluid"), 0xFF3B3B3B);
 
-    @ModFluid(density = -10)
+    @ModFluid(density = -10, burningTime = 10000)
     @ModFluid.FluidBlock
     public static Fluid ethylene = new Fluid("elementtimes.ethylene",
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
@@ -80,6 +80,12 @@ public class ElementtimesFluids {
     @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid methane = new Fluid("elementtimes.methane",
+            new ResourceLocation(ElementTimes.MODID, "fluid/methane_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/methane_fluid"), 0xFF868686);
+
+    @ModFluid(density = -10, burningTime = 16000)
+    @ModFluid.FluidBlock
+    public static Fluid ethane = new Fluid("elementtimes.ethane",
             new ResourceLocation(ElementTimes.MODID, "fluid/methane_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/methane_fluid"), 0xFF868686);
 

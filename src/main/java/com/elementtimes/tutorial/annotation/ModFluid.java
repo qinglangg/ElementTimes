@@ -52,6 +52,11 @@ public @interface ModFluid {
     int color() default 0xFFFFFFFF;
 
     /**
+     * @return 燃烧时间，包括桶和瓶
+     */
+    int burningTime() default -1;
+
+    /**
      * 设置流体密度，同时自动设置gaseous属性
      * @return 流体密度。水为1000，熔岩3000，小于0为气体
      */
