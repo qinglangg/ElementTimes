@@ -16,8 +16,8 @@ import java.util.List;
  * @author KSGFK create in 2019/6/12
  */
 public class TileSupportStand extends BaseMachine implements ITESRSupport {
-    public ItemStack alcoholLamp = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp));
-    public ItemStack evaporatingDish = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish));
+    public final ItemStack alcoholLamp = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp));
+    public final ItemStack evaporatingDish = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish));
 
     private List<ItemStack> tesr = new ArrayList<>();
 
@@ -35,6 +35,11 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     @Override
     public boolean hasFastRenderer() {
         return true;
+    }
+
+    @Override
+    public void update() {
+        //TODO:暂时不需要逻辑
     }
 
     @Override
@@ -90,6 +95,26 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     }
 
     @Override
+    public boolean containsRenderItem(Enum<?> itemEnum) {
+        if (!(itemEnum instanceof CanPutInItem)) {
+            return false;
+        }
+
+        CanPutInItem e = (CanPutInItem) itemEnum;
+        ItemStack will = null;
+        switch (e) {
+            case AlcoholLamp:
+                will = alcoholLamp;
+                break;
+            case EvaporatingDish:
+                will = evaporatingDish;
+                break;
+        }
+
+        return tesr.contains(will);
+    }
+
+    @Override
     public void initCanRendItems() {
         NBTTagCompound pos = new NBTTagCompound();
         pos.setFloat("x", 0.5F);
@@ -97,7 +122,7 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
         pos.setFloat("z", 0.5F);
         alcoholLamp.setTagCompound(pos.copy());
         pos.setFloat("y", 0.375F);
-        evaporatingDish.setTagCompound(pos.copy());
+        evaporatingDish.setTagCompound(pos);
     }
 
     public enum CanPutInItem {

@@ -1,8 +1,8 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"0": "elementtimes:blocks/alcohol_lamp",
-		"particle": "elementtimes:blocks/alcohol_lamp"
+		"0": "#fire",
+		"particle": "#fire"
 	},
 	"elements": [
 		{

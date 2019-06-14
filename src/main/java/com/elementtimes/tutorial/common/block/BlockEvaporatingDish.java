@@ -8,11 +8,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
- * 蒸发皿？
+ * 蒸发皿
+ *
  * @author KSGFK create in 2019/6/12
  */
 public class BlockEvaporatingDish extends Block {
-    private AxisAlignedBB aabb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+    private AxisAlignedBB aabb = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.25D, 0.75D);
 
     public BlockEvaporatingDish() {
         super(Material.GLASS);

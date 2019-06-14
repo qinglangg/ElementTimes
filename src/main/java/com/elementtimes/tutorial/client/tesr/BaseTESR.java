@@ -12,7 +12,7 @@ import net.minecraftforge.client.model.animation.FastTESR;
  * @author KSGFK create in 2019/6/13
  */
 public abstract class BaseTESR<T extends TileEntity> extends FastTESR<T> {
-    private static boolean isInit = false;
+    private boolean isInit = false;
     BlockRendererDispatcher blockRedner;
     RenderItem renderItem;
 
