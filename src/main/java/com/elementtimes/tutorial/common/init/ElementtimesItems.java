@@ -175,6 +175,9 @@ public class ElementtimesItems {
     @ModItem
     @ModItem.Damageable(10)
     public static WoodenHalter woodenHalter = new WoodenHalter();
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
+    public static Item starchball = new Starchball();
+
 
     // gear
 
