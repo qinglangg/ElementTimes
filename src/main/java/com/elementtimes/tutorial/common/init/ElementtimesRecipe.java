@@ -31,6 +31,7 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.quartzPowder),new ItemStack(Items.QUARTZ,2));
     	BrewingRecipeRegistry.addRecipe(new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.DIAMOND_BLOCK), new ItemStack(ElementtimesItems.diamondIngot));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulfiteSolution), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.salt),new ItemStack(ElementtimesItems.sodiumBisulfite));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sodiumBisulfite), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.salt),new ItemStack(ElementtimesItems.sodiumSulfiteSolution));
 
     	
 		GameRegistry.addSmelting(Blocks.STONE, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
