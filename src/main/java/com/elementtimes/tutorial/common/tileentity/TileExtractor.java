@@ -1,7 +1,8 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
@@ -44,6 +45,11 @@ public class TileExtractor extends BaseOneToOne {
     @Override
     public void applyConfig() {
         setMaxTransfer(ElementtimesConfig.EXTRACTOR.maxReceive);
+    }
+
+    @Override
+    public ElementtimesGUI.Machines getGuiType() {
+        return ElementtimesGUI.Machines.Extractor;
     }
 }
 

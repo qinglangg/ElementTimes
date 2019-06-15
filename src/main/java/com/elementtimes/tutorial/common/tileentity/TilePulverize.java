@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
@@ -51,5 +52,10 @@ public class TilePulverize extends BaseOneToOne {
     @Override
     public int getMaxEnergyChange() {
         return ElementtimesConfig.PUL.pulMaxExtract;
+    }
+
+    @Override
+    public ElementtimesGUI.Machines getGuiType() {
+        return ElementtimesGUI.Machines.Pulverize;
     }
 }

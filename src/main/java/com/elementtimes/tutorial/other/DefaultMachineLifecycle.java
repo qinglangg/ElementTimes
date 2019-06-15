@@ -3,13 +3,16 @@ package com.elementtimes.tutorial.other;
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import java.util.Map;
 
@@ -111,10 +114,6 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
                 bind(i);
             }
         }
-        // fluids
-        for (int i = 0; i < recipe.fluidInputs.size(); i++) {
-            inputTanks.drain(recipe.fluidInputs.get(i), true);
-        }
     }
 
     @Override
@@ -122,23 +121,31 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
         assert recipe != null;
         int unprocessed = machine.getEnergyUnprocessed();
 
+        int change = 0;
         RfEnergy handler = machine.getEnergyHandler();
         if (unprocessed > 0) {
             // 耗能过程
-            int change = Math.min(machine.getMaxEnergyChange(), unprocessed);
-            if (handler.extractEnergy(change, true) >= change) {
-                handler.extractEnergy(change, false);
-                machine.processEnergy(change);
-                return true;
+            change = Math.min(machine.getMaxEnergyChange(), unprocessed);
+            if (handler.extractEnergy(change, true) < change) {
+                return false;
             }
+            handler.extractEnergy(change, false);
+            machine.processEnergy(change);
         } else if (unprocessed < 0) {
             // 产能过程
-            int change = Math.min(machine.getMaxEnergyChange(), -unprocessed);
+            change = Math.min(machine.getMaxEnergyChange(), -unprocessed);
             change = handler.receiveEnergy(change, false);
             machine.processEnergy(change);
-            return true;
         }
-        return false;
+
+        // 流体消耗/产出
+        float a = (float) change / (float) Math.abs(machine.getEnergyProcessed() + machine.getEnergyUnprocessed());
+        if (fluid(true, a)) {
+            fluid(false, a);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -152,10 +159,11 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
         assert recipe != null;
         int change = Math.min(machine.getMaxEnergyChange(), Math.abs(machine.getEnergyUnprocessed()));
 
+        float a = (float) change / (float) Math.abs(machine.getEnergyProcessed() + machine.getEnergyUnprocessed());
         if (machine.getWorkingRecipe().energy.applyAsInt(recipe) > 0) {
-            return machine.getEnergyHandler().extractEnergy(change, true) >= change;
+            return machine.getEnergyHandler().extractEnergy(change, true) >= change && fluid(true, a);
         } else {
-            return machine.getEnergyHandler().receiveEnergy(change, true) > 0;
+            return machine.getEnergyHandler().receiveEnergy(change, true) > 0 && fluid(true, a);
         }
     }
 
@@ -206,6 +214,50 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
             }
         }
         return pushAll;
+    }
+
+    private boolean fluid(boolean simulate, float a) {
+        int max = Math.max(recipe.fluidInputs.size(), recipe.fluidOutputs.size());
+        for (int i = 0; i < max; i++) {
+            if (recipe.fluidInputs.size() > i) {
+                final FluidStack fluid = recipe.fluidInputs.get(i);
+                int amount = (int) (fluid.amount * a);
+                if (simulate) {
+                    FluidStack drain = inputTanks.drain(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
+                    if (drain == null || drain.amount < amount) {
+                        return false;
+                    }
+                } else {
+                    inputTanks.drain(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), true);
+                }
+            }
+
+            if (recipe.fluidOutputs.size() > i) {
+                final FluidStack fluid = recipe.fluidOutputs.get(i);
+                int amount = (int) (fluid.amount * a);
+                final FluidStack fillStack = new FluidStack(fluid, amount);
+                if (simulate) {
+                    int fill = outputTanks.fill(fillStack, false);
+                    if (fill < amount) {
+                        return false;
+                    }
+                } else {
+                    outputTanks.fill(fillStack, true);
+                }
+            }
+        }
+
+        for (int i = 0; i < recipe.fluidOutputs.size(); i++) {
+            final FluidStack fluid = recipe.fluidOutputs.get(i);
+            int amount = (int) (fluid.amount * a);
+            int fill = outputTanks.fill(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
+            if (fill == amount) {
+                outputTanks.fill(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void bind(int slotInput) {

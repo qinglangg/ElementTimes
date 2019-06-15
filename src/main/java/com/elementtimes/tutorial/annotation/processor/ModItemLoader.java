@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModItem;
-import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.annotations.ModItem;
+import com.elementtimes.tutorial.annotation.annotations.ModOreDict;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;

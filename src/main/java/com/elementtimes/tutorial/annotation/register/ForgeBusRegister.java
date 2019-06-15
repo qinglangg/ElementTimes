@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.annotation.register;
 
 import com.elementtimes.tutorial.annotation.AnnotationInitializer;
-import com.elementtimes.tutorial.annotation.ModBlock;
+import com.elementtimes.tutorial.annotation.annotations.ModBlock;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.processor.ModBlockLoader;
 import com.elementtimes.tutorial.annotation.processor.ModFluidLoader;

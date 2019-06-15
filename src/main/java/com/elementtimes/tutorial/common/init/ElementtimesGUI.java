@@ -1,17 +1,23 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical;
 import com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator;
-import com.elementtimes.tutorial.client.gui.base.GuiContainerOneToOne;
-import com.elementtimes.tutorial.common.tileentity.*;
+import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * GUI初始化
@@ -22,14 +28,24 @@ public class ElementtimesGUI implements IGuiHandler {
 
     public static ElementtimesGUI GUI;
 
-    public static final int ELEMENT_GENERATOR = 0;
-    public static final int PULVERIZE = 1;
-    public static final int COMPRESSOR = 2;
-    public static final int FUEL_GENERATOR = 3;
-    public static final int FURNACE = 4;
-    public static final int REBUILD = 5;
-    public static final int EXTRACTOR = 6;
-    public static final int FORMING = 7;
+    public static Map<Machines, Set<EntityPlayerMP>> GUI_DISPLAYED = new HashMap<>();
+
+    public enum Machines {
+        // 已完成
+        ElementGenerator, Pulverize, Compressor, FuelGenerator,
+        Furnace, Rebuild, Extractor, Forming,
+        // 未完成
+        SolidMelter, SolidReactor, FluidReactor, SolidFluidReactor,
+        FluidHeater, ElectrolyticCell;
+
+        public int id() {
+            return ordinal();
+        }
+
+        public static Machines fromId(int id) {
+            return Machines.values()[id];
+        }
+    }
 
     public void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(ElementTimes.instance, this);
@@ -39,50 +55,59 @@ public class ElementtimesGUI implements IGuiHandler {
     @Nullable
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        switch (id) {
-            case ELEMENT_GENERATOR:
-                return new ContainerMachine<>((TileGeneratorElement) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case PULVERIZE:
-                return new ContainerMachine<>((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case COMPRESSOR:
-                return new ContainerMachine<>((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case FUEL_GENERATOR:
-                return new ContainerMachine<>((TileGeneratorFuel) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case FURNACE:
-                return new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case REBUILD:
-                return new ContainerMachine<>((TileRebuild) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case EXTRACTOR:
-                return new ContainerMachine<>((TileExtractor) world.getTileEntity(new BlockPos(x, y, z)), player);
-            case FORMING:
-                return new ContainerMachine<>((TileForming) world.getTileEntity(new BlockPos(x, y, z)), player);
-            default:
-                return null;
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+        if (tileEntity instanceof BaseMachine) {
+            BaseMachine machine = (BaseMachine) tileEntity;
+            Machines type = machine.getGuiType();
+            if (!GUI_DISPLAYED.containsKey(type)) {
+                GUI_DISPLAYED.put(type, new HashSet<>());
+            }
+            GUI_DISPLAYED.get(type).add((EntityPlayerMP) player);
+            System.out.println("save " + player + " in " + type.name());
+            switch (type) {
+                case ElementGenerator:
+                case Pulverize:
+                case SolidMelter:
+                case Forming:
+                case Extractor:
+                case Rebuild:
+                case Furnace:
+                case FuelGenerator:
+                case Compressor:
+                    return new ContainerMachine<>(machine, player);
+                default:
+                    return null;
+            }
+        } else {
+            return null;
         }
     }
 
     @Nullable
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        switch (id) {
-            case ELEMENT_GENERATOR:
-                return new GuiContainerGenerator<>(new ContainerMachine<>((TileGeneratorElement) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case PULVERIZE:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TilePulverize) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case COMPRESSOR:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileCompressor) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case FUEL_GENERATOR:
-                return new GuiContainerGenerator<>(new ContainerMachine<>((TileGeneratorFuel) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case FURNACE:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileFurnace) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case REBUILD:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileRebuild) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case EXTRACTOR:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileExtractor) world.getTileEntity(new BlockPos(x, y, z)), player));
-            case FORMING:
-                return new GuiContainerOneToOne<>(new ContainerMachine<>((TileForming) world.getTileEntity(new BlockPos(x, y, z)), player));
-            default:
-                return null;
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+        if (tileEntity instanceof BaseMachine) {
+            BaseMachine machine = (BaseMachine) tileEntity;
+            switch (machine.getGuiType()) {
+                case ElementGenerator:
+                case FuelGenerator:
+                    return new GuiContainerGenerator(new ContainerMachine<>(machine, player));
+                case Pulverize:
+                case Compressor:
+                case Furnace:
+                case Rebuild:
+                case Extractor:
+                case Forming:
+                    return new GuiContainerElectrical(new ContainerMachine<>(machine, player));
+                case SolidMelter:
+                    return new GuiContainerElectrical(new ContainerMachine<>(machine, player), "textures/gui/solidmelter.png",
+                            65, 31, 0, 166, 24, 17, 43, 72, 24, 166, 90, 4);
+                default:
+                    return null;
+            }
+        } else {
+            return null;
         }
     }
 }

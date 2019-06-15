@@ -14,7 +14,7 @@ import net.minecraft.world.IBlockAccess;
 public class Compressor extends BaseClosableMachine<TileCompressor> {
 
     public Compressor() {
-        super(ElementtimesGUI.COMPRESSOR, TileCompressor.class, false);
+        super(TileCompressor.class, false);
     }
 
     @Override

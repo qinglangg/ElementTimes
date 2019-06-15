@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModBlock;
-import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.annotations.ModBlock;
+import com.elementtimes.tutorial.annotation.annotations.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.annotation.other.DefaultOreGenerator;
 import com.elementtimes.tutorial.annotation.other.ModInfo;

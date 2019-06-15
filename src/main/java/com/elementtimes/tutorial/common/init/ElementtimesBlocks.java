@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.annotation.ModBlock;
-import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.annotations.ModBlock;
+import com.elementtimes.tutorial.annotation.annotations.ModOreDict;
 import com.elementtimes.tutorial.annotation.enums.GenType;
 import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
@@ -103,17 +103,17 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "furnace", clazz = "com.elementtimes.tutorial.common.tileentity.TileFurnace")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block furnace = new BaseClosableMachine<>(ElementtimesGUI.FURNACE, TileFurnace.class, false);
+    public static Block furnace = new BaseClosableMachine<>(TileFurnace.class);
     @ModBlock(registerName = "fuelGenerator", unlocalizedName = "fuelGenerator", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "fuel_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFuel")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block fuelGenerator = new BaseClosableMachine<>(ElementtimesGUI.FUEL_GENERATOR, TileGeneratorFuel.class, false);
+    public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class, true);
     @ModBlock(registerName = "rebuild", unlocalizedName = "rebuild", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block rebuild = new BaseClosableMachine<>(ElementtimesGUI.REBUILD, TileRebuild.class, false);
+    public static Block rebuild = new BaseClosableMachine<>(TileRebuild.class);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "compressor", clazz = "com.elementtimes.tutorial.common.tileentity.TileCompressor")
     @ModBlock.StateMapperCustom
@@ -123,21 +123,26 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "forming", clazz = "com.elementtimes.tutorial.common.tileentity.TileForming")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block forming = new BaseClosableMachine<>(ElementtimesGUI.FORMING, TileForming.class, false);
+    public static Block forming = new BaseClosableMachine<>(TileForming.class);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "extractor", clazz = "com.elementtimes.tutorial.common.tileentity.TileExtractor")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block extractor = new BaseClosableMachine<>(ElementtimesGUI.EXTRACTOR, TileExtractor.class, false);
+    public static Block extractor = new BaseClosableMachine<>(TileExtractor.class);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "pulverizer", clazz = "com.elementtimes.tutorial.common.tileentity.TilePulverize")
-    public static Block pulverizer = new BlockTileBase<>(ElementtimesGUI.PULVERIZE, TilePulverize.class, false);
+    public static Block pulverizer = new BlockTileBase<>(TilePulverize.class);
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
-    public static Block elementGenerator = new BlockTileBase<>(ElementtimesGUI.ELEMENT_GENERATOR, TileGeneratorElement.class, true);
+    public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, true);
     @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
     public static Block supportStand = new BlockSupportStand();
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "solidmelter", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidMelter")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solidMelter = new BaseClosableMachine<>(TileSolidMelter.class);
 
     // 其他
 

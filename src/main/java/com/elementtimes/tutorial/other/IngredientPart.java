@@ -2,13 +2,13 @@ package com.elementtimes.tutorial.other;
 
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.interfaces.function.Function5;
+import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreIngredient;
@@ -181,12 +181,12 @@ public class IngredientPart<T> {
     }
 
     public static IngredientPart<ItemStack> EMPTY_ITEM = new IngredientPart<>(
-            (recipe, slot, inputItems, inputFluids, input) -> false,
+            (recipe, slot, inputItems, inputFluids, input) -> true,
             (recipe, items, fluids, slot) -> ItemStack.EMPTY,
             () -> Collections.singletonList(ItemStack.EMPTY));
 
     public static IngredientPart<FluidStack> EMPTY_FLUID = new IngredientPart<>(
-            (recipe, slot, inputItems, inputFluids, input) -> false,
-            (recipe, items, fluids, slot) -> null,
-            () -> Collections.singletonList(new FluidStack(FluidRegistry.WATER, 0)));
+            (recipe, slot, inputItems, inputFluids, input) -> true,
+            (recipe, items, fluids, slot) -> FluidUtil.EMPTY,
+            () -> Collections.singletonList(FluidUtil.EMPTY));
 }

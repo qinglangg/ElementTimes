@@ -2,6 +2,7 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.Item;
@@ -123,6 +124,11 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
         alcoholLamp.setTagCompound(pos.copy());
         pos.setFloat("y", 0.375F);
         evaporatingDish.setTagCompound(pos);
+    }
+
+    @Override
+    public ElementtimesGUI.Machines getGuiType() {
+        return null;
     }
 
     public enum CanPutInItem {

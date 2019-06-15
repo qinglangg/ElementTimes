@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;

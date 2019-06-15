@@ -38,7 +38,9 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
 
     @Override
     default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && getTankType(facing) != SideHandlerType.NONE;
+        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
+                && getTankType(facing) != SideHandlerType.NONE
+                && getTanks(getTankType(facing)).getTankProperties().length > 0;
     }
 
     @Nullable
@@ -78,5 +80,5 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
         return nbtTagCompound;
     }
 
-    default boolean isFillValid(Fluid fluid, int count) { return false; }
+    default boolean isFillValid(int slot, Fluid fluid, int count) { return false; }
 }

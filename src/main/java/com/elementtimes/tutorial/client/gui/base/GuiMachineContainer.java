@@ -7,6 +7,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.io.IOException;
 
@@ -27,7 +29,7 @@ public class GuiMachineContainer<T extends BaseMachine> extends GuiContainer {
      */
     protected ResourceLocation texture;
 
-    GuiMachineContainer(ContainerMachine<T> machine, String texture) {
+    public GuiMachineContainer(ContainerMachine<T> machine, String texture) {
         super(machine);
         this.machine = machine;
         xSize = 176;
@@ -55,6 +57,19 @@ public class GuiMachineContainer<T extends BaseMachine> extends GuiContainer {
         this.mc.getTextureManager().bindTexture(texture);
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+        // 流体
+        ContainerMachine.FLUIDS.keySet().forEach(type -> ContainerMachine.FLUIDS.get(type).keySet().forEach(slot -> {
+            FluidStack fluidStack = ContainerMachine.FLUIDS.get(type).get(slot).left;
+            if (fluidStack == null) {
+                fluidStack = new FluidStack(FluidRegistry.WATER, 0);
+            }
+            float total = ContainerMachine.FLUIDS.get(type).get(slot).right;
+            // x y w h
+            int[] p = machine.getFluidPositions().get(type).get(slot);
+            mc.getTextureManager().bindTexture(fluidStack.getFluid().getStill());
+            int h = (int) (p[3] * fluidStack.amount / total);
+            this.drawTexturedModalRect(p[0], p[1], 0, 0, p[2], h);
+        }));
     }
 
     @Override

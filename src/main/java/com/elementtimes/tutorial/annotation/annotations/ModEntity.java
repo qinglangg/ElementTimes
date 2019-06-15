@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.annotation;
+package com.elementtimes.tutorial.annotation.annotations;
 
 import net.minecraft.entity.EnumCreatureType;
 

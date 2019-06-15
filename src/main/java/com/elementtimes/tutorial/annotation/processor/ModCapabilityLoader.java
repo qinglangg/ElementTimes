@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModCapability;
+import com.elementtimes.tutorial.annotation.annotations.ModCapability;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;

@@ -35,6 +35,7 @@ import java.util.Set;
 public abstract class BaseMachine extends TileEntity implements
         IMachineTickable, IMachineRecipe, ITileHandler, IGuiProvider, IConfigApply {
     public static ItemStackHandler EMPTY = new ItemStackHandler(0);
+    protected DefaultMachineLifecycle mDefaultMachineLifecycle;
     private RfEnergy mEnergyHandler;
     private Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
     private Map<SideHandlerType, ItemHandler> mItemHandlers = new HashMap<>();
@@ -52,6 +53,10 @@ public abstract class BaseMachine extends TileEntity implements
     private GuiButton[] mGuiButtons;
 
     BaseMachine(int energyCapacity, int inputCount, int outputCount) {
+        this(energyCapacity, inputCount, outputCount, 0, 0, 0, 0);
+    }
+
+    BaseMachine(int energyCapacity, int inputCount, int outputCount, int fluidInput, int inputCapacity, int fluidOutput, int outputCapacity) {
         mEnergyHandler = new RfEnergy(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE);
         mItemHandlers.put(SideHandlerType.INPUT, new ItemHandler(inputCount, this::isInputValid));
         mItemHandlers.put(SideHandlerType.OUTPUT, new ItemHandler(outputCount, (integer, itemStack) -> false));
@@ -59,8 +64,8 @@ public abstract class BaseMachine extends TileEntity implements
         mItemHandlers.put(SideHandlerType.NONE, ItemHandler.EMPTY);
         mItemHandlers.put(SideHandlerType.READONLY, ItemHandler.EMPTY);
         mItemHandlers.put(SideHandlerType.IN_OUT, ItemHandler.EMPTY);
-        mTanks.put(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE));
-        mTanks.put(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE));
+        mTanks.put(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, fluidInput, inputCapacity));
+        mTanks.put(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, fluidOutput, outputCapacity));
         // 空闲
         mTanks.put(SideHandlerType.NONE, TankHandler.EMPTY);
         mTanks.put(SideHandlerType.READONLY, TankHandler.EMPTY);
@@ -76,7 +81,8 @@ public abstract class BaseMachine extends TileEntity implements
         mRecipe = updateRecipe(mRecipe);
         mGuiSlots = createSlots();
         mGuiButtons = createButton();
-        addLifeCycle(new DefaultMachineLifecycle(this));
+        mDefaultMachineLifecycle = new DefaultMachineLifecycle(this);
+        addLifeCycle(mDefaultMachineLifecycle);
         applyConfig();
     }
 
@@ -162,9 +168,9 @@ public abstract class BaseMachine extends TileEntity implements
     @Override
     public Map<SideHandlerType, TankHandler> getTanksMap() { return mTanks; }
     @Override
-    public boolean isFillValid(Fluid fluid, int count) {
+    public boolean isFillValid(int slot, Fluid fluid, int count) {
         ItemStackHandler itemHandler = getItemHandler(SideHandlerType.INPUT);
-        return getRecipes().accept(0,
+        return getRecipes().accept(slot,
                 ItemUtil.toList(itemHandler),
                 getTanks(SideHandlerType.INPUT).getFluidStacks(),
                 new FluidStack(fluid, count));

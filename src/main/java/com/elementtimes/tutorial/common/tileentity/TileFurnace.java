@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.ModElement;
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.ItemStack;
@@ -54,6 +55,11 @@ public class TileFurnace extends BaseOneToOne {
     @Override
     public void applyConfig() {
         setMaxTransfer(ElementtimesConfig.FURNACE.maxReceive);
+    }
+
+    @Override
+    public ElementtimesGUI.Machines getGuiType() {
+        return ElementtimesGUI.Machines.Furnace;
     }
 }
 

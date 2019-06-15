@@ -93,7 +93,9 @@ public interface ITileItemHandler extends ICapabilityProvider, INBTSerializable<
     
     @Override
     default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && getItemType(facing) != SideHandlerType.NONE;
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+                && getItemType(facing) != SideHandlerType.NONE
+                && getItemHandler(facing).getSlots() > 0;
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package com.elementtimes.tutorial.util;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
@@ -37,4 +38,6 @@ public class FluidUtil {
         }
         return fluidStacks;
     }
+
+    public static final FluidStack EMPTY = new FluidStack(FluidRegistry.WATER, 0);
 }

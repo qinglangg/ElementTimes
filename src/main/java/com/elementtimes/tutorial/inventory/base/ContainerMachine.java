@@ -2,17 +2,26 @@ package com.elementtimes.tutorial.inventory.base;
 
 import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
+import com.elementtimes.tutorial.other.SideHandlerType;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 一个机器的 Container
@@ -21,12 +30,15 @@ import javax.annotation.Nonnull;
 public class ContainerMachine<T extends BaseMachine> extends Container {
     private T machine;
 
+    public static Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> FLUIDS = new HashMap<>();
+    public static ElementtimesGUI.Machines MACHINE = null;
+
     public ContainerMachine(T tileEntity, EntityPlayer player) {
         this(tileEntity, player, 8, 74, 8, 132);
     }
 
     private ContainerMachine(T tileEntity, EntityPlayer player, int xOffsetA, int yOffsetA, int xOffsetB, int yOffsetB) {
-        this.machine = tileEntity;
+        machine = tileEntity;
         int line = 3, slotCount = 9;
 
         for (int i = 0; i < line; ++i) {
@@ -161,6 +173,22 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
             return I18n.format(localizedName);
         } else {
             return localizedName;
+        }
+    }
+
+    public Map<SideHandlerType, Int2ObjectMap<int[]>> getFluidPositions() {
+        return machine.getFluids();
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+        if (playerIn instanceof EntityPlayerMP) {
+            Set<EntityPlayerMP> set = ElementtimesGUI.GUI_DISPLAYED.get(machine.getGuiType());
+            set.remove(playerIn);
+            if (set.isEmpty()) {
+                ElementtimesGUI.GUI_DISPLAYED.remove(machine.getGuiType());
+            }
         }
     }
 }

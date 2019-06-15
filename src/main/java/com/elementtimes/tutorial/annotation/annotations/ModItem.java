@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.annotation;
+package com.elementtimes.tutorial.annotation.annotations;
 
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import net.minecraft.creativetab.CreativeTabs;

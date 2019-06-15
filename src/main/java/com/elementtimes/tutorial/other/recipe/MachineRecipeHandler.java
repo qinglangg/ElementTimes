@@ -4,6 +4,7 @@ import com.elementtimes.tutorial.other.IngredientPart;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
@@ -170,6 +171,30 @@ public class MachineRecipeHandler {
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input))
                 .addItemOutput(IngredientPart.forItem(output))
+                .build();
+    }
+
+    public MachineRecipeHandler add(String name, int energy, Item input, Fluid output) {
+        return add(name)
+                .addCost(energy)
+                .addItemInput(IngredientPart.forItem(input, 1))
+                .addFluidOutput(output, 1000)
+                .build();
+    }
+
+    public MachineRecipeHandler add(String name, int energy, Block input, Fluid output) {
+        return add(name)
+                .addCost(energy)
+                .addItemInput(IngredientPart.forItem(input, 1))
+                .addFluidOutput(output, 1000)
+                .build();
+    }
+
+    public MachineRecipeHandler add(String name, int energy, Fluid input, Fluid output) {
+        return add(name)
+                .addCost(energy)
+                .addFluidInput(input, 1000)
+                .addFluidOutput(output, 1000)
                 .build();
     }
 

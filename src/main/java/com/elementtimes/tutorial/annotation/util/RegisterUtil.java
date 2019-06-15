@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.util;
 
-import com.elementtimes.tutorial.annotation.ModBlock;
+import com.elementtimes.tutorial.annotation.annotations.ModBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

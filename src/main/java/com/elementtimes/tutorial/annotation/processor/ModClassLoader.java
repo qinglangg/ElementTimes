@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModSkip;
+import com.elementtimes.tutorial.annotation.annotations.ModSkip;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 
 import javax.annotation.Nonnull;

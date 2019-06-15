@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.tutorial.annotation.ModItem;
-import com.elementtimes.tutorial.annotation.ModOreDict;
+import com.elementtimes.tutorial.annotation.annotations.ModItem;
+import com.elementtimes.tutorial.annotation.annotations.ModOreDict;
 import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.item.*;
 import net.minecraft.init.SoundEvents;

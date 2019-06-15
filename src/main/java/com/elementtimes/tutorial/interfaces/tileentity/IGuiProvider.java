@@ -1,12 +1,21 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
 import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.google.common.collect.Table;
+import com.sun.istack.internal.NotNull;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.Slot;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -14,6 +23,12 @@ import java.util.function.Function;
  * @author luqin2007
  */
 public interface IGuiProvider {
+
+    /**
+     * 获取 GUI 类型，ElementtimesGui 根据此打开对应的 GUI
+     * @return GUI 类型
+     */
+    ElementtimesGUI.Machines getGuiType();
 
     /**
      * 创建物品槽位。该方法将在 MachineTile 构造中调用
@@ -40,6 +55,14 @@ public interface IGuiProvider {
      * @return 按钮
      */
     GuiButton[] getButtons();
+
+    /**
+     * @return 流体位置。type -> slot -> [x, y, w, h]
+     */
+    @NotNull
+    default Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids() {
+        return new HashMap<>(0);
+    }
 
     /**
      * 按钮响应

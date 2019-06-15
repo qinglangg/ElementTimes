@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.other;
 
-import com.elementtimes.tutorial.annotation.ModBlock;
+import com.elementtimes.tutorial.annotation.annotations.ModBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

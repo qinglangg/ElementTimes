@@ -30,21 +30,30 @@ import javax.annotation.Nullable;
 public class BlockTileBase<T extends TileEntity> extends BlockContainer implements IDismantleBlock {
 //    private static List<Class> keepInventory = new ArrayList<>();
 
-    private int gui;
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
+    private int mGui = 0;
 
     private BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
         super(materialIn);
         setHardness(15.0F);
         setResistance(25.0F);
-        this.gui = gui;
+        mGui = gui;
         this.addFullEnergyBlock = addFullEnergyBlock;
     }
 
     public BlockTileBase(int gui, Class<T> entityClass, boolean addFullEnergyBlock) {
         this(Material.IRON, gui, addFullEnergyBlock);
         this.mEntityClass = entityClass;
+    }
+
+    public <T2 extends BaseMachine> BlockTileBase(Class<T2> entityClass, boolean addFullEnergyBlock) {
+        this(Material.IRON, 0, addFullEnergyBlock);
+        this.mEntityClass = (Class<T>) entityClass;
+    }
+
+    public <T2 extends BaseMachine> BlockTileBase(Class<T2> entityClas) {
+        this(Material.IRON, 0, false);
     }
 
     @Nullable
@@ -81,7 +90,9 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
         if (!worldIn.isRemote) {
             TileEntity e = worldIn.getTileEntity(pos);
             if (e instanceof BaseMachine) {
-                playerIn.openGui(ElementTimes.instance, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                playerIn.openGui(ElementTimes.instance, ((BaseMachine) e).getGuiType().id(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            } else {
+                playerIn.openGui(ElementTimes.instance, mGui, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

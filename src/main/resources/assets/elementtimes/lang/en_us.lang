@@ -127,6 +127,7 @@ tile.elementtimes.fuelGenerator.name=Fuel Generator
 tile.elementtimes.rebuild.name=Item Rebuilder
 tile.elementtimes.forming.name=Forming
 tile.elementtimes.extractor.name=Extractor
+tile.elementtimes.solidmelter.name=Solid Melter
 tile.elementtimes.saplingessence.name=Essence Sapling
 tile.elementtimes.rubber_sapling.name=Rubber Sapling
 tile.elementtimes.rubber_log.name=Rubber Log

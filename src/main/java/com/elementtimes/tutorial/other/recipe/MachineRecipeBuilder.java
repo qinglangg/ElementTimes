@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.other.recipe;
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.other.IngredientPart;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Collections;
@@ -121,6 +122,27 @@ public class MachineRecipeBuilder {
                 outputGetter,
                 () -> allInputValues));
     }
+
+    public MachineRecipeBuilder addFluidOutput(Fluid fluid, int amount) {
+        outputFluids.add(IngredientPart.forFluid(fluid, amount));
+        return this;
+    }
+
+    public MachineRecipeBuilder addFluidOutput(FluidStack fluid) {
+        outputFluids.add(IngredientPart.forFluid(fluid));
+        return this;
+    }
+
+    public MachineRecipeBuilder addFluidInput(Fluid fluid, int amount) {
+        inputFluids.add(IngredientPart.forFluid(fluid, amount));
+        return this;
+    }
+
+    public MachineRecipeBuilder addFluidInput(FluidStack fluid) {
+        inputFluids.add(IngredientPart.forFluid(fluid));
+        return this;
+    }
+
 
     /**
      * 创建并添加配方

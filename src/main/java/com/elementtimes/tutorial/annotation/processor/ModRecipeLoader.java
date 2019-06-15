@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.annotation.processor;
 
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.annotation.ModRecipe;
+import com.elementtimes.tutorial.annotation.annotations.ModRecipe;
 import com.elementtimes.tutorial.annotation.other.DamageIngredient;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.RecipeUtil;

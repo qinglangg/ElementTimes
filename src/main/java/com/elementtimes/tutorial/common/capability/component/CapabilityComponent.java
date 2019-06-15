@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.capability.component;
 
-import com.elementtimes.tutorial.annotation.ModCapability;
+import com.elementtimes.tutorial.annotation.annotations.ModCapability;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

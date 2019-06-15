@@ -1,15 +1,14 @@
-package com.elementtimes.tutorial.annotation;
+package com.elementtimes.tutorial.annotation.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * 注册矿辞
- */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE})
-public @interface ModOreDict {
-    String value();
+@Target(ElementType.TYPE)
+@Deprecated
+public @interface ModEnchantment {
+    String registerName();
+    String name();
 }

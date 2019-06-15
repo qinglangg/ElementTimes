@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.annotation.processor;
 
-import com.elementtimes.tutorial.annotation.ModFluid;
+import com.elementtimes.tutorial.annotation.annotations.ModFluid;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;

@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.annotation.ModRecipe;
+import com.elementtimes.tutorial.annotation.annotations.ModRecipe;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.util.RecipeUtil;
 import net.minecraft.init.Items;
