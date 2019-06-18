@@ -2,12 +2,14 @@ package com.elementtimes.tutorial.interfaces.tileentity;
 
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 import javax.annotation.Nonnull;
@@ -66,13 +68,13 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
         NBTTagCompound nbt = new NBTTagCompound();
         // input
         TankHandler inputs = getTanks(SideHandlerType.INPUT);
-        if (!inputs.isEmpty()) {
-            nbt.setTag(NBT_FLUID_INPUT, getTanksMap().get(SideHandlerType.INPUT).serializeNBT());
+        if (!FluidUtil.isNoCapability(inputs.getTankProperties())) {
+            nbt.setTag(NBT_FLUID_INPUT, inputs.serializeNBT());
         }
         // output
         TankHandler outputs = getTanks(SideHandlerType.OUTPUT);
-        if (!outputs.isEmpty()) {
-            nbt.setTag(NBT_FLUID_OUTPUT, getTanksMap().get(SideHandlerType.OUTPUT).serializeNBT());
+        if (!FluidUtil.isNoCapability(outputs.getTankProperties())) {
+            nbt.setTag(NBT_FLUID_OUTPUT, outputs.serializeNBT());
         }
         if (!nbt.hasNoTags()) {
             nbtTagCompound.setTag(NBT_FLUID, nbt);
@@ -80,5 +82,5 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
         return nbtTagCompound;
     }
 
-    default boolean isFillValid(int slot, Fluid fluid, int count) { return false; }
+    default boolean isFillValid(int slot, FluidStack fluidStack) { return false; }
 }

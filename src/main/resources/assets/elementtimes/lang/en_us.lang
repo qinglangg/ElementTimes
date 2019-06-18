@@ -3,6 +3,7 @@ itemGroup.elementtimes.Elementtimes=Elementtimes
 itemGroup.elementtimes.Elementtimesore=Elementtimes Ore
 itemGroup.elementtimes.Elementtimeschemicalindustry=Elementtimes Chemical Industry
 itemGroup.elementtimes.Industry=Elementtimes Industry
+itemGroup.elementtimes.Agriculture=Elementtimes Agriculture
 # item
 item.elementtimes.fiveelements.name=fiveelements
 item.elementtimes.endelement.name=endelement
@@ -142,6 +143,13 @@ tile.elementtimes.blockmultiwoodstone.name=Wood and Stone Block
 tile.elementtimes.support_stand.name=support stand
 tile.elementtimes.alcohol_lamp.name=alcohol lamp
 tile.elementtimes.evaporating_dish.name=evaporating dish
+tile.elementtimes.condenser.name=Condenser
+tile.elementtimes.fluidreactor.name=Fluid Reactor
+tile.elementtimes.solidreactor.name=Solid Reactor
+tile.elementtimes.solidfluidreactor.name=Solid Fluid Reactor
+tile.elementtimes.fluidheater.name=Fluid Heater
+tile.elementtimes.electrolyticcell.name=Electrolytic Cell
+
 # fluid
 fluid.elementtimes.nacl=NaCl
 tile.elementtimes.nacl.name=NaCl

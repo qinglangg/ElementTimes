@@ -1,8 +1,11 @@
 package com.elementtimes.tutorial.common.capability.impl;
 
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.*;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -23,6 +26,8 @@ public class ItemHandler extends ItemStackHandler {
     public static final ItemHandler EMPTY = new ItemHandler(0);
 
     private int mSize;
+
+    private Int2IntMap mSlotSize = new Int2IntOpenHashMap();
 
     private boolean replaced = false;
 
@@ -52,13 +57,24 @@ public class ItemHandler extends ItemStackHandler {
     @Override
     public NBTTagCompound serializeNBT() {
         unbindAll();
-        return super.serializeNBT();
+        NBTTagCompound nbt = super.serializeNBT();
+        NBTTagList slotCount = new NBTTagList();
+        mSlotSize.int2IntEntrySet().forEach(entry -> {
+            slotCount.appendTag(new NBTTagIntArray(new int[]{entry.getIntKey(), entry.getIntValue()}));
+        });
+        nbt.setTag("_bind_slot_count_", slotCount);
+        return nbt;
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         unbindAll();
         super.deserializeNBT(nbt);
+        NBTTagList slotCounts = (NBTTagList) nbt.getTag("_bind_slot_count_");
+        slotCounts.forEach(nbtArray -> {
+            int[] slotCount = ((NBTTagIntArray) nbtArray).getIntArray();
+            mSlotSize.put(slotCount[0], slotCount[1]);
+        });
     }
 
     /**
@@ -89,7 +105,7 @@ public class ItemHandler extends ItemStackHandler {
     }
 
     public int bind(ItemStack itemStack) {
-        // 防止 stacks 不允许 add
+        // 防止 stacks 不允许 newRecipe
         if (!replaced) {
             NonNullList<ItemStack> newStacks = NonNullList.create();
             for (int i = 0; i < stacks.size(); i++) {
@@ -103,7 +119,7 @@ public class ItemHandler extends ItemStackHandler {
     }
 
     public void unbindAll() {
-        // 防止 stacks 不允许 add
+        // 防止 stacks 不允许 newRecipe
         if (!replaced) {
             NonNullList<ItemStack> newStacks = NonNullList.create();
             for (int i = 0; i < stacks.size(); i++) {
@@ -130,5 +146,17 @@ public class ItemHandler extends ItemStackHandler {
     protected void onContentsChanged(int slot) {
         super.onContentsChanged(slot);
         onItemChangeListener.forEach(i -> i.accept(slot));
+    }
+
+    public void setSize(int slot, int count) {
+        mSlotSize.put(slot, count);
+        if (getStackInSlot(slot).getCount() > count) {
+            getStackInSlot(slot).setCount(count);
+        }
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+        return mSlotSize.getOrDefault(slot, super.getSlotLimit(slot));
     }
 }

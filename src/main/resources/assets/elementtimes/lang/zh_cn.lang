@@ -3,6 +3,7 @@ itemGroup.elementtimes.Elementtimes=元素时代
 itemGroup.elementtimes.Elementtimesore=元素时代-矿物
 itemGroup.elementtimes.Elementtimeschemicalindustry=元素时代-化工业
 itemGroup.elementtimes.Industry=元素时代-工业
+itemGroup.elementtimes.Agriculture=元素时代-农业
 # item
 item.elementtimes.fiveelements.name=五行元素
 item.elementtimes.endelement.name=阴元素
@@ -127,6 +128,7 @@ tile.elementtimes.fuelGenerator.name=火力发电机
 tile.elementtimes.rebuild.name=物质重构机
 tile.elementtimes.forming.name=成型机
 tile.elementtimes.extractor.name=提取机
+tile.elementtimes.solidmelter.name=固体融化机
 tile.elementtimes.saplingessence.name=精华树苗
 tile.elementtimes.rubber_sapling.name=橡胶树苗
 tile.elementtimes.rubber_log.name=橡胶树树干
@@ -141,6 +143,13 @@ tile.elementtimes.blockmultiwoodstone.name=木石多层块
 tile.elementtimes.support_stand.name=铁架台
 tile.elementtimes.alcohol_lamp.name=酒精灯
 tile.elementtimes.evaporating_dish.name=蒸发皿
+tile.elementtimes.condenser.name=冷凝器
+tile.elementtimes.fluidreactor.name=流体反应器
+tile.elementtimes.solidreactor.name=固体反应器
+tile.elementtimes.solidfluidreactor.name=固液反应器
+tile.elementtimes.fluidheater.name=流体加热器
+tile.elementtimes.electrolyticcell.name=电解器
+
 # fluid
 fluid.elementtimes.nacl=熔融氯化钠
 tile.elementtimes.nacl.name=熔融氯化钠

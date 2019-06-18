@@ -17,13 +17,11 @@ import java.util.Random;
  */
 public class DefaultOreGenerator extends WorldGenerator {
     private final ModBlock.WorldGen mWorldGen;
-    private final IBlockState mBlock;
     private final WorldGenMinable mWorldGenerator;
 
     public DefaultOreGenerator(ModBlock.WorldGen wgInfo, IBlockState block) {
         this.mWorldGen = wgInfo;
-        this.mBlock = block;
-        this.mWorldGenerator = new WorldGenMinable(mBlock, mWorldGen.count());
+        this.mWorldGenerator = new WorldGenMinable(block, mWorldGen.count());
     }
 
     @Override

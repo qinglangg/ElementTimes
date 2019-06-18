@@ -14,6 +14,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -82,10 +83,10 @@ public class ModBlockLoader {
             registryName = defaultName;
         }
         if (block.getRegistryName() == null) {
-            if (registryName == null) {
+            if (registryName == null || registryName.isEmpty()) {
                 warn("Block {} don't have a RegisterName. It's a Bug!!!", block);
             } else {
-                block.setRegistryName(registryName);
+                block.setRegistryName(ModInfo.MODID, registryName);
             }
         }
         String unlocalizedName = info.unlocalizedName();

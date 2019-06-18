@@ -27,7 +27,7 @@ public class TileGeneratorFuel extends BaseGenerator {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0")
+                .newRecipe("0")
                 .addItemInput(itemStack -> TileEntityFurnace.getItemBurnTime(itemStack) > 0,
                               itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
                               Collections.emptyList())
@@ -37,7 +37,7 @@ public class TileGeneratorFuel extends BaseGenerator {
                     }
                     ItemStack stack = value.inputs.get(0);
                     return -TileEntityFurnace.getItemBurnTime(stack) * 10;
-                }).build();
+                }).endAdd();
     }
 
     @Nonnull

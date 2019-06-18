@@ -143,6 +143,36 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block solidMelter = new BaseClosableMachine<>(TileSolidMelter.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "condenser", clazz = "com.elementtimes.tutorial.common.tileentity.TileCondenser")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block condenser = new BaseClosableMachine<>(TileCondenser.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "fluidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileFluidReactor")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block fluidReactor = new BaseClosableMachine<>(TileFluidReactor.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "solidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidReactor")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solidReactor = new BaseClosableMachine<>(TileSolidReactor.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "fluidheater", clazz = "com.elementtimes.tutorial.common.tileentity.TileFluidHeater")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block fluidHeater = new BaseClosableMachine<>(TileFluidHeater.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "electrolyticcell", clazz = "com.elementtimes.tutorial.common.tileentity.TileElectrolyticCell")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block electrolyticCell = new BaseClosableMachine<>(TileElectrolyticCell.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "solidFluidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidFluidReactor")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solidFluidReactor = new BaseClosableMachine<>(TileSolidFluidReactor.class);
 
     // 其他
 

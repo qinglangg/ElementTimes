@@ -29,8 +29,7 @@ public class JEISupport implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.registerSubtypeInterpreter(ElementtimesItems.bottle,
-                itemStack -> ItemBottleFuel.getFluidNBT(itemStack).getKeySet().stream().findFirst().orElse(ISubtypeRegistry.ISubtypeInterpreter.NONE));
+        subtypeRegistry.useNbtForSubtypes(ElementtimesItems.bottle);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.other.recipe;
 
 import com.elementtimes.tutorial.interfaces.function.Function4;
-import com.elementtimes.tutorial.other.IngredientPart;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -123,23 +122,13 @@ public class MachineRecipeBuilder {
                 () -> allInputValues));
     }
 
-    public MachineRecipeBuilder addFluidOutput(Fluid fluid, int amount) {
-        outputFluids.add(IngredientPart.forFluid(fluid, amount));
+    public MachineRecipeBuilder addFluidOutput(IngredientPart<FluidStack> fluid) {
+        outputFluids.add(fluid);
         return this;
     }
 
-    public MachineRecipeBuilder addFluidOutput(FluidStack fluid) {
-        outputFluids.add(IngredientPart.forFluid(fluid));
-        return this;
-    }
-
-    public MachineRecipeBuilder addFluidInput(Fluid fluid, int amount) {
-        inputFluids.add(IngredientPart.forFluid(fluid, amount));
-        return this;
-    }
-
-    public MachineRecipeBuilder addFluidInput(FluidStack fluid) {
-        inputFluids.add(IngredientPart.forFluid(fluid));
+    public MachineRecipeBuilder addFluidInput(IngredientPart<FluidStack> fluid) {
+        inputFluids.add(fluid);
         return this;
     }
 
@@ -148,7 +137,7 @@ public class MachineRecipeBuilder {
      * 创建并添加配方
      * @return MachineRecipeHandler
      */
-    public MachineRecipeHandler build() {
+    public MachineRecipeHandler endAdd() {
         MachineRecipe recipe = new MachineRecipe();
         recipe.name = name;
         recipe.energy = cost;

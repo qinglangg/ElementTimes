@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
@@ -36,6 +37,9 @@ public abstract class BaseOneToOne extends BaseMachine {
     @Nonnull
     @Override
     public Slot[] getSlots() {
-        return IGuiProvider.SLOT_ONE_TO_ONE.apply(this);
+        return new Slot[] {
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 56, 30),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 110, 30)
+        };
     }
 }

@@ -19,7 +19,6 @@ import java.util.function.ToIntFunction;
  * 主要是考虑到能量消耗可能因配置文件或其他原因随时更改，且能量准确值在确定消耗前用处不大
  * @author luqin2007
  */
-@SuppressWarnings("WeakerAccess")
 public class MachineRecipeCapture implements INBTSerializable<NBTTagCompound> {
     public MachineRecipe recipe;
     public List<ItemStack> inputs;

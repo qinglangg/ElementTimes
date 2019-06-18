@@ -10,6 +10,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,7 @@ import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * 与合成表有关的方法
@@ -122,29 +124,31 @@ public class RecipeUtil {
      * @param output 输出物品
      * @return 合成表
      */
-    public static ShapedOreRecipe gearRecipe(Object inputCenter, Object inputSide, Item output) {
-        Ingredient in1;
-        if (inputCenter instanceof Block) {
-            // 避免 meta = OreDictionary.WILDCARD_VALUE 的特殊值，对 Block 特殊处理
-            in1 = Ingredient.fromStacks(new ItemStack((Block) inputCenter));
-        } else {
-            in1 = CraftingHelper.getIngredient(inputCenter);
-        }
-        Ingredient in4;
-        if (inputSide instanceof Block) {
-            in4 = Ingredient.fromStacks(new ItemStack((Block) inputSide));
-        } else {
-            in4 = CraftingHelper.getIngredient(inputSide);
-        }
-        Ingredient emp = Ingredient.EMPTY;
-        ItemStack out = new ItemStack(output, 3);
-        CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
-        primer.width = 3;
-        primer.height = 3;
-        primer.input = NonNullList.from(emp,
-                emp, in4, emp,
-                in4, in1, in4,
-                emp, in4, emp);
-        return new ShapedOreRecipe(new ResourceLocation(ElementTimes.MODID, "recipe"), out, primer);
+    public static Supplier<IRecipe> gearRecipe(Object inputCenter, Object inputSide, Item output) {
+        return () -> {
+            Ingredient in1;
+            if (inputCenter instanceof Block) {
+                // 避免 meta = OreDictionary.WILDCARD_VALUE 的特殊值，对 Block 特殊处理
+                in1 = Ingredient.fromStacks(new ItemStack((Block) inputCenter));
+            } else {
+                in1 = CraftingHelper.getIngredient(inputCenter);
+            }
+            Ingredient in4;
+            if (inputSide instanceof Block) {
+                in4 = Ingredient.fromStacks(new ItemStack((Block) inputSide));
+            } else {
+                in4 = CraftingHelper.getIngredient(inputSide);
+            }
+            Ingredient emp = Ingredient.EMPTY;
+            ItemStack out = new ItemStack(output, 3);
+            CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
+            primer.width = 3;
+            primer.height = 3;
+            primer.input = NonNullList.from(emp,
+                    emp, in4, emp,
+                    in4, in1, in4,
+                    emp, in4, emp);
+            return new ShapedOreRecipe(new ResourceLocation(ElementTimes.MODID, "recipe"), out, primer);
+        };
     }
 }

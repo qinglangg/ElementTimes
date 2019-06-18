@@ -1,8 +1,6 @@
 package com.elementtimes.tutorial.client.gui.base;
 
-import com.elementtimes.tutorial.common.tileentity.BaseGenerator;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -12,13 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author KSGFK create in 2019/2/17
  */
 @SideOnly(Side.CLIENT)
-public class GuiContainerGenerator<T extends BaseGenerator> extends GuiMachineContainer<T> {
+public class GuiContainerGenerator extends GuiMachineContainer {
 
-    public GuiContainerGenerator(ContainerMachine<T> inventorySlotsIn) {
-        super(inventorySlotsIn, "textures/gui/0.png");
-        this.xSize = 176;
-        this.ySize = 156;
-        this.machine = inventorySlotsIn;
+    public GuiContainerGenerator(ContainerMachine inventorySlotsIn) {
+        super(inventorySlotsIn, "textures/gui/0.png", 60);
     }
 
     @Override

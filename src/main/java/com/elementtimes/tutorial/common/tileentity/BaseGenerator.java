@@ -9,6 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,7 +49,9 @@ public abstract class BaseGenerator extends BaseMachine implements IEnergyProvid
     @Nonnull
     @Override
     public Slot[] createSlots() {
-        return IGuiProvider.SLOT_ONE.apply(this);
+        return new Slot[] {
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 80, 30)
+        };
     }
 }
 

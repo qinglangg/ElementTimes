@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.plugin.jei.wrapper;
 
-import com.elementtimes.tutorial.other.IngredientPart;
+import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;

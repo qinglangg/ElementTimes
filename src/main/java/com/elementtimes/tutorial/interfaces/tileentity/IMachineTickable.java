@@ -144,7 +144,7 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
         // fluids
         for (int i = 0; i < recipeCapture.fluidInputs.size(); i++) {
             FluidStack fluid = recipeCapture.fluidInputs.get(i);
-            FluidStack drain = tankHandler.drain(fluid, false);
+            FluidStack drain = tankHandler.drainIgnoreCheck(i, fluid, false);
             if (!fluid.isFluidEqual(drain) || fluid.amount > drain.amount) {
                 return false;
             }

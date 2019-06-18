@@ -113,7 +113,7 @@ public class ElementtimesItems {
     public static Item largeRubbingSunCompound = new Item();
     @ModItem
     public static Item photoElement = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item quartzPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(100)
@@ -123,7 +123,7 @@ public class ElementtimesItems {
     @ModItem.Damageable(10)
     @ModItem.RetainInCrafting
     public static Item smallHammer = new Hammer();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item cornBroth = new ItemSoup(20);
     @ModItem
     public static Item money = new Item();
@@ -131,7 +131,7 @@ public class ElementtimesItems {
     public static Item sulfurOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item sulfurPowder = new ItemFuel(800);
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item sucroseCharCoal = new ItemFuel(800);
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotPlatinum")
@@ -171,10 +171,10 @@ public class ElementtimesItems {
     public static Item rubber = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item rubberRaw = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
     @ModOreDict("salt")
     public static Item salt = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     @ModItem.Damageable(10)
     public static WoodenHalter woodenHalter = new WoodenHalter();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)

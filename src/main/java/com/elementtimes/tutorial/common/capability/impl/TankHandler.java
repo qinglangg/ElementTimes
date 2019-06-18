@@ -1,19 +1,15 @@
 package com.elementtimes.tutorial.common.capability.impl;
 
-import com.elementtimes.tutorial.interfaces.function.Function3;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * 自定义实现的 IFluidHandler
@@ -26,14 +22,14 @@ import java.util.stream.Collectors;
 public class TankHandler extends FluidHandlerConcatenate implements INBTSerializable<NBTTagCompound> {
 
     public static final TankHandler EMPTY = new TankHandler(TankHandler.FALSE, TankHandler.FALSE, 0);
-    public static final Function3.FluidCheck TRUE = (i, fluid, integer) -> true;
-    public static final Function3.FluidCheck FALSE = (i, fluid, integer) -> false;
+    public static final BiPredicate<Integer, FluidStack> TRUE = (i, fluid) -> true;
+    public static final BiPredicate<Integer, FluidStack> FALSE = (i, fluid) -> false;
 
-    public TankHandler(Function3.FluidCheck fillCheck, Function3.FluidCheck drankCheck, int size) {
+    public TankHandler(BiPredicate<Integer, FluidStack> fillCheck, BiPredicate<Integer, FluidStack> drankCheck, int size) {
         this(fillCheck, drankCheck, size, 1000);
     }
 
-    public TankHandler(Function3.FluidCheck fillCheck, Function3.FluidCheck drankCheck, int size, int... capacities) {
+    public TankHandler(BiPredicate<Integer, FluidStack> fillCheck, BiPredicate<Integer, FluidStack> drankCheck, int size, int... capacities) {
         this(((Supplier<IFluidHandler[]>) () -> {
             IFluidHandler[] handlers = new IFluidHandler[size];
             int last = -1;
@@ -59,8 +55,8 @@ public class TankHandler extends FluidHandlerConcatenate implements INBTSerializ
         super(fluidHandlers);
     }
 
-    private Function3.FluidCheck mInputValid;
-    private Function3.FluidCheck mOutputValid;
+    private BiPredicate<Integer, FluidStack> mInputValid;
+    private BiPredicate<Integer, FluidStack> mOutputValid;
 
     @Override
     public NBTTagCompound serializeNBT() {
@@ -95,33 +91,43 @@ public class TankHandler extends FluidHandlerConcatenate implements INBTSerializ
     }
 
     @Override
+    @Deprecated
     public int fill(FluidStack resource, boolean doFill) {
-        if (!mInputValid.apply(-1, resource.getFluid(), resource.amount)) {
+        if (!mInputValid.test(-1, resource)) {
             return 0;
         }
         return super.fill(resource, doFill);
     }
 
     public int fill(int slot, FluidStack resource, boolean doFill) {
-        if (!mInputValid.apply(slot, resource.getFluid(), resource.amount)) {
+        if (!mInputValid.test(slot, resource)) {
             return 0;
         }
-        if (resource.amount <= 0) {
+        if (resource == null || resource.amount <= 0) {
+            return 0;
+        }
+        return subHandlers[slot].fill(resource, doFill);
+    }
+
+    public int fillIgnoreCheck(int slot, FluidStack resource, boolean doFill) {
+        if (resource == null || resource.amount <= 0) {
             return 0;
         }
         return subHandlers[slot].fill(resource, doFill);
     }
 
     @Override
+    @Deprecated
     public FluidStack drain(FluidStack resource, boolean doDrain) {
-        if (!mOutputValid.apply(-1, resource.getFluid(), resource.amount)) {
+        if (!mOutputValid.test(-1, resource)) {
             return null;
         }
         return super.drain(resource, doDrain);
     }
 
     public FluidStack drain(int slot, FluidStack resource, boolean doDrain) {
-        if (!mOutputValid.apply(slot, resource.getFluid(), resource.amount)
+        if (!mOutputValid.test(slot, resource)
+                || resource == null
                 || resource.amount <= 0) {
             return null;
         }
@@ -129,35 +135,32 @@ public class TankHandler extends FluidHandlerConcatenate implements INBTSerializ
         return subHandlers[slot].drain(resource, doDrain);
     }
 
-    @Override
-    public FluidStack drain(int maxDrain, boolean doDrain) {
-        if (!mOutputValid.apply(-1, null, maxDrain)) {
+    public FluidStack drainIgnoreCheck(int slot, FluidStack resource, boolean doDrain) {
+        if (resource == null || resource.amount <= 0) {
             return null;
         }
+
+        return subHandlers[slot].drain(resource, doDrain);
+    }
+
+    @Override
+    @Deprecated
+    public FluidStack drain(int maxDrain, boolean doDrain) {
         return super.drain(maxDrain, doDrain);
     }
 
     public FluidStack drain(int slot, int maxDrain, boolean doDrain) {
-        if (!mOutputValid.apply(-1, null, maxDrain) || maxDrain == 0) {
+        if (!mOutputValid.test(-1, new FluidStack(subHandlers[slot].getTankProperties()[0].getContents(), maxDrain))
+                || maxDrain <= 0) {
             return null;
         }
         return subHandlers[slot].drain(maxDrain, doDrain);
     }
 
-    /**
-     * 获取所有流体。
-     * 用于合成表识别
-     * @return 所有流体信息
-     */
-    public List<FluidStack> getFluidStacks() {
-        return Arrays.stream(getTankProperties()).map(IFluidTankProperties::getContents).collect(Collectors.toList());
-    }
-
-    /**
-     * 获取是否为空
-     * @return 没有槽位
-     */
-    public boolean isEmpty() {
-        return subHandlers.length == 0;
+    public FluidStack drainIgnoreCheck(int slot, int maxDrain, boolean doDrain) {
+        if (maxDrain <= 0) {
+            return null;
+        }
+        return subHandlers[slot].drain(maxDrain, doDrain);
     }
 }

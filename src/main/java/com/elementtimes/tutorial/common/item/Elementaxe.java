@@ -13,7 +13,7 @@ public class Elementaxe  extends ItemAxe {
 
 	public Elementaxe() 
 	{
-		super(EnumHelper.addToolMaterial("elementsword", 4, 3000, 1000.0F, 15.0F, 25),100.0F,0.0F);
+		super(EnumHelper.addToolMaterial("elementaxe", 4, 3000, 1000.0F, 15.0F, 25),100.0F,0.0F);
 	}
 
 	@Override

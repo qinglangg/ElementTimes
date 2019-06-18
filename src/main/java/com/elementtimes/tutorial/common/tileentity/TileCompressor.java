@@ -24,7 +24,7 @@ public class TileCompressor extends BaseOneToOne {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0", ElementtimesConfig.COMPRESSOR.powderEnergy, "logWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("0", ElementtimesConfig.COMPRESSOR.powderEnergy, "plankWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("1", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotCopper", 1, ElementtimesItems.plateCopper, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("2", ElementtimesConfig.COMPRESSOR.powderEnergy, "gemDiamond", 1, ElementtimesItems.plateDiamond, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("3", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotGold", 1, ElementtimesItems.plateGold, ElementtimesConfig.COMPRESSOR.powderCount)

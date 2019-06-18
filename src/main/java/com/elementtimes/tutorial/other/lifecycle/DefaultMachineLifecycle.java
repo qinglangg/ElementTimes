@@ -1,18 +1,16 @@
-package com.elementtimes.tutorial.other;
+package com.elementtimes.tutorial.other.lifecycle;
 
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
+import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import java.util.Map;
 
@@ -159,7 +157,7 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
         assert recipe != null;
         int change = Math.min(machine.getMaxEnergyChange(), Math.abs(machine.getEnergyUnprocessed()));
 
-        float a = (float) change / (float) Math.abs(machine.getEnergyProcessed() + machine.getEnergyUnprocessed());
+        float a = (float) (Math.abs(machine.getEnergyProcessed()) + change) / (float) Math.abs(machine.getEnergyProcessed() + machine.getEnergyUnprocessed());
         if (machine.getWorkingRecipe().energy.applyAsInt(recipe) > 0) {
             return machine.getEnergyHandler().extractEnergy(change, true) >= change && fluid(true, a);
         } else {
@@ -178,9 +176,7 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
     }
 
     private boolean output(boolean simulate) {
-        int itemCount = Math.min(recipe.outputs.size(), outputItems.getSlots());
-        int fluidCount = Math.min(recipe.fluidOutputs.size(), outputTanks.getTankProperties().length);
-
+        int itemCount = recipe.outputs.size();
         boolean pushAll = true;
         // item
         for (int i = 0; pushAll && i < itemCount; i++) {
@@ -203,16 +199,6 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
                 pushAll = left.isEmpty();
             }
         }
-        // fluid
-        for (int i = 0; pushAll && i < fluidCount; i++) {
-            FluidStack stack = recipe.fluidOutputs.get(i);
-            if (simulate) {
-                FluidStack drain = outputTanks.drain(stack, false);
-                pushAll = drain != null && drain.amount >= stack.amount;
-            } else {
-                outputTanks.drain(stack, true);
-            }
-        }
         return pushAll;
     }
 
@@ -223,12 +209,12 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
                 final FluidStack fluid = recipe.fluidInputs.get(i);
                 int amount = (int) (fluid.amount * a);
                 if (simulate) {
-                    FluidStack drain = inputTanks.drain(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
+                    FluidStack drain = inputTanks.drainIgnoreCheck(i, new FluidStack(fluid, amount), false);
                     if (drain == null || drain.amount < amount) {
                         return false;
                     }
                 } else {
-                    inputTanks.drain(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), true);
+                    inputTanks.drainIgnoreCheck(i, new FluidStack(fluid, amount), true);
                 }
             }
 
@@ -237,24 +223,13 @@ public class DefaultMachineLifecycle implements IMachineLifeCycle {
                 int amount = (int) (fluid.amount * a);
                 final FluidStack fillStack = new FluidStack(fluid, amount);
                 if (simulate) {
-                    int fill = outputTanks.fill(fillStack, false);
+                    int fill = outputTanks.fillIgnoreCheck(i, fillStack, false);
                     if (fill < amount) {
                         return false;
                     }
                 } else {
-                    outputTanks.fill(fillStack, true);
+                    outputTanks.fillIgnoreCheck(i, fillStack, true);
                 }
-            }
-        }
-
-        for (int i = 0; i < recipe.fluidOutputs.size(); i++) {
-            final FluidStack fluid = recipe.fluidOutputs.get(i);
-            int amount = (int) (fluid.amount * a);
-            int fill = outputTanks.fill(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
-            if (fill == amount) {
-                outputTanks.fill(new FluidStack(fluid.getFluid(), amount, fluid.writeToNBT(new NBTTagCompound())), false);
-            } else {
-                return false;
             }
         }
         return true;

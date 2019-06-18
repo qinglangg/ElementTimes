@@ -8,7 +8,6 @@ import com.elementtimes.tutorial.annotation.processor.ModFluidLoader;
 import com.elementtimes.tutorial.annotation.processor.ModItemLoader;
 import com.elementtimes.tutorial.annotation.util.RegisterUtil;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -150,9 +149,8 @@ public class ForgeBusRegister {
     @SubscribeEvent
     public static void registerRecipe(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistry<IRecipe> registry = event.getRegistry();
-        AnnotationInitializer.RECIPES.forEach(getter -> {
-            Arrays.stream(getter.get()).filter(Objects::nonNull).forEach(registry::register);
-        });
+        AnnotationInitializer.RECIPES.forEach(getter ->
+                Arrays.stream(getter.get()).filter(Objects::nonNull).forEach(registry::register));
     }
 
     @SubscribeEvent
@@ -184,10 +182,7 @@ public class ForgeBusRegister {
         ItemStack itemStack = event.getItemStack();
         String name = null;
         if (itemStack.getItem() == ElementtimesItems.bottle) {
-            Optional<String> fluidName = ItemBottleFuel.getFluidNBT(itemStack).getKeySet().stream().findFirst();
-            if (fluidName.isPresent()) {
-                name = fluidName.get();
-            }
+            name = com.elementtimes.tutorial.util.FluidUtil.getFluid(itemStack).getFluid().getName();
         } else if (FluidRegistry.isUniversalBucketEnabled() && itemStack.getItem() == ForgeModContainer.getInstance().universalBucket) {
             Optional<IFluidTankProperties> fluidBucket = Arrays.stream(FluidUtil.getFluidHandler(itemStack).getTankProperties()).findFirst();
             if (fluidBucket.isPresent()) {

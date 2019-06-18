@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.other.recipe;
 
-import com.elementtimes.tutorial.other.IngredientPart;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -38,7 +37,33 @@ public class MachineRecipe {
         for (int i = 0; match && i < fluidInputs.size(); i++) {
             match = fluidInputs.get(i).matcher.apply(this, i, input, fluids, fluids.get(i));
         }
-        // build
+        // endAdd
         return match ? new MachineRecipeCapture(this, input, fluids) : null;
+    }
+
+    /**
+     * 根据输入 判断输入是否可能作为合成表的一部分
+     * @param input 输入物品
+     * @param fluids 输入流体
+     * @return 是否可能为该合成表
+     */
+    public boolean checkInput(List<ItemStack> input, List<FluidStack> fluids) {
+        if (input.size() >= inputs.size() || fluids.size() >= fluidInputs.size()) {
+            int size = Math.max(inputs.size(), fluidInputs.size());
+            for (int i = 0; i < size; i++) {
+                if (i < inputs.size()) {
+                    if (!input.get(i).isEmpty() && !inputs.get(i).matcher.apply(this, i, input, fluids, input.get(i))) {
+                        return false;
+                    }
+                }
+
+                if (i < fluidInputs.size()) {
+                    if (fluids.get(i) != null && fluids.get(i).amount > 0 && !fluidInputs.get(i).matcher.apply(this, i, input, fluids, fluids.get(i))) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

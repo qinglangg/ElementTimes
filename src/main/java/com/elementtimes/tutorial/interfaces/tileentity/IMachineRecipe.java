@@ -3,7 +3,9 @@ package com.elementtimes.tutorial.interfaces.tileentity;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.util.FluidUtil;
 import com.elementtimes.tutorial.util.ItemUtil;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -38,8 +40,8 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
      */
     @Nullable
     default MachineRecipeCapture getNextRecipe(IItemHandler input, TankHandler tankHandler) {
-        List<ItemStack> items = ItemUtil.toList(input);
-        MachineRecipeCapture[] captures = getRecipes().matchInput(items, tankHandler.getFluidStacks());
+        List<ItemStack> items = ItemUtil.toList(input, getRecipeSlotIgnore());
+        MachineRecipeCapture[] captures = getRecipes().matchInput(items, FluidUtil.toListNotNull(tankHandler.getTankProperties()));
         if (captures.length == 0) {
             return null;
         }
@@ -51,6 +53,12 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
      */
     @Nullable
     MachineRecipeCapture getWorkingRecipe();
+
+    /**
+     * @return 合成表检查时忽略的机器槽位
+     */
+    @Nonnull
+    IntSet getRecipeSlotIgnore();
 
     /**
      * 设置正在执行的合成表

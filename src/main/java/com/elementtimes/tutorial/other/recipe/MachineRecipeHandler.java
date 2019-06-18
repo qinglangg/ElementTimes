@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.other.recipe;
 
-import com.elementtimes.tutorial.other.IngredientPart;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,11 +29,11 @@ public class MachineRecipeHandler {
 
     /**
      * 创建一个 MachineRecipeBuilder 辅助创建新的合成配方。
-     * 所有 add 方法重载最终都会通过该方法添加
+     * 所有 newRecipe 方法重载最终都会通过该方法添加
      * @param name 合成配方名称
      * @return MachineRecipeBuilder
      */
-    public MachineRecipeBuilder add(String name) {
+    public MachineRecipeBuilder newRecipe(String name) {
         return new MachineRecipeBuilder(name, this);
     }
 
@@ -49,11 +48,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, String inputItemNameOrOreName, int inputCount, Item output, int outputCount) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(inputItemNameOrOreName, inputCount))
                 .addItemOutput(IngredientPart.forItem(output, outputCount))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -64,10 +63,10 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, ToIntFunction<MachineRecipeCapture> energy, Item input) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, 1))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -81,11 +80,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, Item input, int inputCount, Item output, int outputCount) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
                 .addItemOutput(IngredientPart.forItem(output, outputCount))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -99,11 +98,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, Block input, int inputCount, Item output, int outputCount) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
                 .addItemOutput(IngredientPart.forItem(output, outputCount))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -117,11 +116,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, Block input, int inputCount, Block output, int outputCount) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
                 .addItemOutput(IngredientPart.forItem(output, outputCount))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -134,11 +133,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, Item input, int inputCount, ItemStack output) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, inputCount))
                 .addItemOutput(IngredientPart.forItem(output))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -151,11 +150,11 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, ItemStack input, Item output, int outputCount) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input))
                 .addItemOutput(IngredientPart.forItem(output, outputCount))
-                .build();
+                .endAdd();
     }
 
     /**
@@ -167,35 +166,35 @@ public class MachineRecipeHandler {
      * @return MachineRecipeHandler
      */
     public MachineRecipeHandler add(String name, int energy, ItemStack input, ItemStack output) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input))
                 .addItemOutput(IngredientPart.forItem(output))
-                .build();
+                .endAdd();
     }
 
     public MachineRecipeHandler add(String name, int energy, Item input, Fluid output) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, 1))
-                .addFluidOutput(output, 1000)
-                .build();
+                .addFluidOutput(IngredientPart.forFluid(output, Fluid.BUCKET_VOLUME))
+                .endAdd();
     }
 
     public MachineRecipeHandler add(String name, int energy, Block input, Fluid output) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, 1))
-                .addFluidOutput(output, 1000)
-                .build();
+                .addFluidOutput(IngredientPart.forFluid(output, Fluid.BUCKET_VOLUME))
+                .endAdd();
     }
 
     public MachineRecipeHandler add(String name, int energy, Fluid input, Fluid output) {
-        return add(name)
+        return newRecipe(name)
                 .addCost(energy)
-                .addFluidInput(input, 1000)
-                .addFluidOutput(output, 1000)
-                .build();
+                .addFluidInput(IngredientPart.forFluid(input, Fluid.BUCKET_VOLUME))
+                .addFluidOutput(IngredientPart.forFluid(output, Fluid.BUCKET_VOLUME))
+                .endAdd();
     }
 
     /**
@@ -215,32 +214,15 @@ public class MachineRecipeHandler {
     }
 
     /**
-     * 判断对应槽位是否可接收物品
-     * 以后可能会挪到 TileEntity 中，或者在这里进行更严格的检查。
-     * 现在机器都只有一个槽 先这样
-     *
-     * @param slot 槽位
-     * @param inputItems 已输入物品
-     * @param inputFluids 已输入流体
-     * @param itemStack 待检查物品
-     * @return 是否可放入该槽位
+     * 可能输入有对应合成表
+     * @return 是否可能有合成
      */
-    public boolean accept(int slot, List<ItemStack> inputItems, List<FluidStack> inputFluids, ItemStack itemStack) {
-        return mMachineRecipes.stream().anyMatch(r -> r.inputs.get(slot).matcher.apply(r, slot, inputItems, inputFluids, itemStack));
-    }
-
-    /**
-     * 判断对应槽位是否可接收流体
-     * 以后可能会挪到 TileEntity 中，或者在这里进行更严格的检查。
-     * 现在机器都只有一个槽 先这样
-     *
-     * @param slot 槽位
-     * @param inputItems 已输入物品
-     * @param inputFluids 已输入流体
-     * @param fluid 待检查流体
-     * @return 是否可放入该槽位
-     */
-    public boolean accept(int slot, List<ItemStack> inputItems, List<FluidStack> inputFluids, FluidStack fluid) {
-        return mMachineRecipes.stream().anyMatch(r -> r.fluidInputs.get(slot).matcher.apply(r, slot, inputItems, inputFluids, fluid));
+    public boolean acceptInput(List<ItemStack> input, List<FluidStack> fluids) {
+        for (MachineRecipe recipe : mMachineRecipes) {
+           if (recipe.checkInput(input, fluids)) {
+               return true;
+           }
+        }
+        return false;
     }
 }

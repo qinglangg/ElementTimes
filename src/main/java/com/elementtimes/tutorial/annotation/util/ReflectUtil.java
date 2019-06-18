@@ -322,6 +322,8 @@ public class ReflectUtil {
             defaultName = ((Field) element).getName();
         } else if (element instanceof Class) {
             defaultName = ((Class) element).getSimpleName();
+        } else if (element instanceof Method) {
+            defaultName = ((Method) element).getName();
         }
         return Optional.ofNullable(defaultName);
     }

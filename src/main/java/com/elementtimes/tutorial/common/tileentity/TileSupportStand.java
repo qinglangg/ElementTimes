@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * @author KSGFK create in 2019/6/12
  */
+
 public class TileSupportStand extends BaseMachine implements ITESRSupport {
     public final ItemStack alcoholLamp = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp));
     public final ItemStack evaporatingDish = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish));

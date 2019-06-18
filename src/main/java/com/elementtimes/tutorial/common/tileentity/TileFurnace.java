@@ -27,7 +27,7 @@ public class TileFurnace extends BaseOneToOne {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0")
+                .newRecipe("0")
                 .addItemInput(itemStack -> !FurnaceRecipes.instance().getSmeltingResult(itemStack).isEmpty(),
                               itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
                               Collections.emptyList())
@@ -38,7 +38,7 @@ public class TileFurnace extends BaseOneToOne {
                     return FurnaceRecipes.instance().getSmeltingResult(input.get(0)).copy();
                 }, Collections.emptyList())
                 .addCost(100)
-                .build();
+                .endAdd();
     }
 
     @Nonnull

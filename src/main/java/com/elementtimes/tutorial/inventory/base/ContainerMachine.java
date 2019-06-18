@@ -27,27 +27,43 @@ import java.util.Set;
  * 一个机器的 Container
  * @author KSGFK create in 2019/3/9
  */
-public class ContainerMachine<T extends BaseMachine> extends Container {
-    private T machine;
+public class ContainerMachine extends Container {
+    private BaseMachine machine;
+    private int width, height;
 
     public static Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> FLUIDS = new HashMap<>();
     public static ElementtimesGUI.Machines MACHINE = null;
 
-    public ContainerMachine(T tileEntity, EntityPlayer player) {
-        this(tileEntity, player, 8, 74, 8, 132);
+    public static ContainerMachine cm176_156_74(BaseMachine tileEntity, EntityPlayer player) {
+        return new ContainerMachine(tileEntity, player, 176, 156, 74);
     }
 
-    private ContainerMachine(T tileEntity, EntityPlayer player, int xOffsetA, int yOffsetA, int xOffsetB, int yOffsetB) {
+    public static ContainerMachine cm176_166_84(BaseMachine tileEntity, EntityPlayer player) {
+        return new ContainerMachine(tileEntity, player, 176, 166, 84);
+    }
+
+    public static ContainerMachine cm176_204_122(BaseMachine tileEntity, EntityPlayer player) {
+        return new ContainerMachine(tileEntity, player, 176, 204, 122);
+    }
+
+    public ContainerMachine(BaseMachine tileEntity, EntityPlayer player, int width, int height, int offsetY) {
+        this(tileEntity, player, width, height, 8, offsetY);
+    }
+
+    public ContainerMachine(BaseMachine tileEntity, EntityPlayer player, int width, int height, int offsetX, int offsetY) {
         machine = tileEntity;
+        this.width = width;
+        this.height = height;
+
         int line = 3, slotCount = 9;
 
         for (int i = 0; i < line; ++i) {
             for (int j = 0; j < slotCount; ++j) {
-                this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, xOffsetA + j * 18, yOffsetA + i * 18));
+                this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, offsetX + j * 18, offsetY + i * 18));
             }
         }
         for (int i = 0; i < slotCount; ++i) {
-            this.addSlotToContainer(new Slot(player.inventory, i, xOffsetB + i * 18, yOffsetB));
+            this.addSlotToContainer(new Slot(player.inventory, i, offsetX + i * 18, offsetY + 58));
         }
 
         Slot[] slots = tileEntity.getSlots();
@@ -184,11 +200,15 @@ public class ContainerMachine<T extends BaseMachine> extends Container {
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         if (playerIn instanceof EntityPlayerMP) {
-            Set<EntityPlayerMP> set = ElementtimesGUI.GUI_DISPLAYED.get(machine.getGuiType());
-            set.remove(playerIn);
-            if (set.isEmpty()) {
-                ElementtimesGUI.GUI_DISPLAYED.remove(machine.getGuiType());
-            }
+            machine.getOpenedPlayers().remove(playerIn);
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

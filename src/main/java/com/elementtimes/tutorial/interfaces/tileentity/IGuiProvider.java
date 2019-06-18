@@ -3,26 +3,27 @@ package com.elementtimes.tutorial.interfaces.tileentity;
 import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.google.common.collect.Table;
-import com.sun.istack.internal.NotNull;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.items.SlotItemHandler;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
 
 /**
  * 为 GUI 提供交互元素
  * @author luqin2007
  */
 public interface IGuiProvider {
+
+    /**
+     * 获取所有打开该机器gui的玩家，用于向他们同步信息
+     * @return 所有打开该机器 gui 的玩家
+     */
+    Set<EntityPlayerMP> getOpenedPlayers();
 
     /**
      * 获取 GUI 类型，ElementtimesGui 根据此打开对应的 GUI
@@ -45,10 +46,25 @@ public interface IGuiProvider {
     default GuiButton[] createButton() { return new GuiButton[0]; }
 
     /**
+     * 创建流体槽位
+     * type -> slot -> [x, y, w, h]
+     * @return 流体
+     */
+    @Nonnull
+    default Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
+        return new HashMap<>(0);
+    }
+
+    /**
      * 获取物品槽位。该方法将会在 GUI 类种调用
      * @return 物品槽位
      */
     Slot[] getSlots();
+
+    /**
+     * @return 流体位置。type -> slot -> [x, y, w, h]
+     */
+    Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids();
 
     /**
      * 获取按钮。该方法将会在 GUI 类种调用
@@ -57,30 +73,7 @@ public interface IGuiProvider {
     GuiButton[] getButtons();
 
     /**
-     * @return 流体位置。type -> slot -> [x, y, w, h]
-     */
-    @NotNull
-    default Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids() {
-        return new HashMap<>(0);
-    }
-
-    /**
      * 按钮响应
      */
     default void actionPerformed(GuiButton button, GuiMachineContainer guiContainer) {}
-
-    /**
-     * 模板。只有一个槽位，位于中间
-     */
-    Function<ITileItemHandler, Slot[]> SLOT_ONE = provider -> new Slot[] {
-            new SlotItemHandler(provider.getItemHandler(SideHandlerType.INPUT), 0, 80, 30)
-    };
-
-    /**
-     * 模板。一个输入一个输出
-     */
-    Function<ITileItemHandler, Slot[]> SLOT_ONE_TO_ONE = provider -> new Slot[] {
-            new SlotItemHandler(provider.getItemHandler(SideHandlerType.INPUT), 0, 56, 30),
-            new SlotItemHandler(provider.getItemHandler(SideHandlerType.OUTPUT), 0, 110, 30)
-    };
 }

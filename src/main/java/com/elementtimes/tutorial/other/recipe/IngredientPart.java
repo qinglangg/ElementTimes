@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.other;
+package com.elementtimes.tutorial.other.recipe;
 
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.interfaces.function.Function5;
@@ -174,7 +174,7 @@ public class IngredientPart<T> {
     }
 
     public static IngredientPart<FluidStack> forFluid(Fluid fluid, int amount) {
-        Function5.Match<FluidStack> match = (recipe, slot, inputItems, inputFluids, input) -> fluid == input.getFluid() && amount <= input.amount;
+        Function5.Match<FluidStack> match = (recipe, slot, inputItems, inputFluids, input) -> input != null && fluid == input.getFluid() && amount <= input.amount;
         Function4.Stack<FluidStack> get = (recipe, items, fluids, slot) -> new FluidStack(fluid, amount);
         Supplier<List<FluidStack>> allViableValues = () -> Collections.singletonList(new FluidStack(fluid, amount));
         return new IngredientPart<>(match, get, allViableValues);

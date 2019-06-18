@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.util;
 
+import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -49,10 +50,12 @@ public class ItemUtil {
      * @param itemHandler 物品容器
      * @return 物品列表
      */
-    public static List<ItemStack> toList(IItemHandler itemHandler) {
+    public static List<ItemStack> toList(IItemHandler itemHandler, IntSet ignore) {
         List<ItemStack> input = new ArrayList<>(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
-            input.add(i, itemHandler.getStackInSlot(i));
+            if (!ignore.contains(i)) {
+                input.add(i, itemHandler.getStackInSlot(i));
+            }
         }
         return input;
     }

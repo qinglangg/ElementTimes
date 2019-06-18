@@ -2,8 +2,8 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.other.FluidMachineLifecycle;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -35,8 +35,8 @@ public class TileSolidMelter extends BaseMachine {
 
     public TileSolidMelter() {
         super(100000, 2, 1, 0, 0, 1, 16000);
-        init();
         addLifeCycle(new FluidMachineLifecycle(this, new Int2ObjectArrayMap<>(), new Int2ObjectArrayMap<>(new int[]{0}, new int[][] {new int[] {1, 0}})));
+        markBucketInput(1);
     }
 
     @Nonnull
@@ -50,8 +50,9 @@ public class TileSolidMelter extends BaseMachine {
         return ElementtimesGUI.Machines.SolidMelter;
     }
 
+    @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids() {
+    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
         HashMap<SideHandlerType, Int2ObjectMap<int[]>> map = new HashMap<>(1);
         Int2ObjectArrayMap<int[]> value = new Int2ObjectArrayMap<>();
         value.put(0, new int[] {95, 16, 16, 46});
@@ -63,14 +64,14 @@ public class TileSolidMelter extends BaseMachine {
     @Override
     public Slot[] createSlots() {
         return new Slot[] {
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 44, 30),
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 115, 27),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 115, 45)
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 45, 31),
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 116, 28),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 116, 46)
         };
     }
 
     @Override
     public int getMaxEnergyChange() {
-        return 1000;
+        return 10;
     }
 }

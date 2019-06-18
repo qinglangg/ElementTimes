@@ -18,6 +18,7 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -69,6 +70,10 @@ public class ModRecipeLoader {
                             iRecipe.setRegistryName(new ResourceLocation(ElementTimes.MODID, rName));
                         }
                         return new IRecipe[] {iRecipe};
+                    } else if (o2 instanceof IRecipe[]) {
+                        return (IRecipe[]) o2;
+                    } else if (o2 instanceof Collection) {
+                        return (IRecipe[]) ((Collection) o2).toArray(new IRecipe[0]);
                     } else {
                         warn("You annotated a Supplier but it can't provide a Recipe.");
                     }

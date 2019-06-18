@@ -1,0 +1,61 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"0": "elementtimes:blocks/eol_ylh",
+		"particle": "elementtimes:blocks/eol_ylh"
+	},
+	"elements": [
+		{
+			"name": "ekigg1",
+			"from": [3, 0, 3],
+			"to": [13, 8, 13],
+			"faces": {
+				"north": {"uv": [2.5, 2.5, 5, 4.5], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 2.5, 2.5, 4.5], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [7.5, 2.5, 10, 4.5], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [5, 2.5, 7.5, 4.5], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [2.5, 0, 5, 2.5], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [5, 0, 7.5, 2.5], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "ekigg2",
+			"from": [3.5, 8, 3.5],
+			"to": [12.5, 9, 12.5],
+			"faces": {
+				"north": {"uv": [2.25, 6.75, 4.5, 7], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 6.75, 2.25, 7], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [6.75, 6.75, 9, 7], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [4.5, 6.75, 6.75, 7], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [4.5, 6.75, 2.25, 4.5], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [4.5, 4.5, 6.75, 6.75], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "ekigg3",
+			"from": [10, 2, 9],
+			"to": [11, 12, 10],
+			"faces": {
+				"north": {"uv": [10.25, 0.25, 10.5, 2.75], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [10, 0.25, 10.25, 2.75], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [10.75, 0.25, 11, 2.75], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [10.5, 0.25, 10.75, 2.75], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [10.25, 0, 10.5, 0.25], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [10.5, 0, 10.75, 0.25], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "ekigg4",
+			"from": [5, 2, 6],
+			"to": [6, 12, 7],
+			"faces": {
+				"north": {"uv": [11.25, 0.25, 11.5, 2.75], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [11, 0.25, 11.25, 2.75], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [11.75, 0.25, 12, 2.75], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [11.5, 0.25, 11.75, 2.75], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [11.25, 0, 11.5, 0.25], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [11.5, 0, 11.75, 0.25], "texture": "#0", "cullface": "down"}
+			}
+		}
+	]
+}

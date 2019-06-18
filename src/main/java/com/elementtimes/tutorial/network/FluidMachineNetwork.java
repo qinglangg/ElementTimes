@@ -1,8 +1,10 @@
 package com.elementtimes.tutorial.network;
 
 import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
+import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.elementtimes.tutorial.util.FluidUtil;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -17,7 +19,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.HashMap;
@@ -60,7 +61,6 @@ public class FluidMachineNetwork implements IMessage {
      * @param buf bug
      */
     @Override
-    @SideOnly(Side.CLIENT)
     public void fromBytes(ByteBuf buf) {
         int typeCount = buf.readInt();
         for (int t = 0; t < typeCount; t++) {
@@ -76,12 +76,10 @@ public class FluidMachineNetwork implements IMessage {
             }
             fluids.put(type, rFluids);
             capabilities.put(type, rCapabilities);
-            System.out.println("parse");
         }
     }
 
     @Override
-    @SideOnly(Side.SERVER)
     public void toBytes(ByteBuf buf) {
         buf.writeInt(fluids.size());
         fluids.keySet().forEach(type -> {
@@ -92,29 +90,33 @@ public class FluidMachineNetwork implements IMessage {
             rFluids.keySet().forEach(slot -> {
                 buf.writeInt(slot);
                 FluidStack fluid = rFluids.get(slot);
+                if (fluid == null) {
+                    fluid = FluidUtil.EMPTY;
+                }
                 ByteBufUtils.writeTag(buf, fluid.writeToNBT(new NBTTagCompound()));
                 buf.writeInt(rCapabilities.get(slot));
             });
-            System.out.println("send");
         });
     }
 
     public static class Handler implements IMessageHandler<FluidMachineNetwork, IMessage> {
 
+        public Handler() {}
+
         @Override
-        public IMessage onMessage(FluidMachineNetwork message, MessageContext ctx) {
-            ContainerMachine.FLUIDS.clear();
+        synchronized public IMessage onMessage(FluidMachineNetwork message, MessageContext ctx) {
+            Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> fluids = new HashMap<>();
             message.fluids.keySet().forEach(type -> {
                 Int2ObjectMap<FluidStack> rFluids = message.fluids.get(type);
                 Int2IntMap rCapabilities = message.capabilities.get(type);
-                ContainerMachine.FLUIDS.put(type, new Int2ObjectArrayMap<>(rFluids.size()));
+                fluids.put(type, new Int2ObjectArrayMap<>(rFluids.size()));
                 rFluids.keySet().forEach(slot -> {
                     FluidStack fluidStack = rFluids.get(slot);
                     int capability = rCapabilities.get(slot);
-                    ContainerMachine.FLUIDS.get(type).put(slot, ImmutablePair.of(fluidStack, capability));
+                    fluids.get(type).put(slot, ImmutablePair.of(fluidStack, capability));
                 });
             });
-            System.out.println("receive");
+            ContainerMachine.FLUIDS = fluids;
             return null;
         }
     }
