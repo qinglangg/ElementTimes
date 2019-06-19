@@ -7,6 +7,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 
+import net.minecraft.init.Items;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -28,7 +30,8 @@ public class TileExtractor extends BaseOneToOne {
         sRecipeHandler = new MachineRecipeHandler()
                 .add("0", 1000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
                 .add("1", 4000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 4)
-                .add("2", 2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2);
+                .add("2", 2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2)
+                .add("3", 2000, Items.GUNPOWDER, 1, ElementtimesItems.sulfurPowder, 1);
     }
 
     @Nonnull

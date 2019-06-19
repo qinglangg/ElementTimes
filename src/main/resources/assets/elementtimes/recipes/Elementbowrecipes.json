@@ -1,0 +1,20 @@
+{
+  "type": "elementtimes:max_enchantment",
+  "pattern": [
+    " FS",
+    "F S",
+    " FS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementbow",
+    "count": 1
+    }
+}

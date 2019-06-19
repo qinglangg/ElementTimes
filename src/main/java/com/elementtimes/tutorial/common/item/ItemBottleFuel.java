@@ -27,6 +27,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStackSimple;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -82,7 +84,14 @@ public class ItemBottleFuel extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         Fluid fluid = FluidUtil.getFluidNotNull(stack).getFluid();
-        return I18n.format(stack.getUnlocalizedName() + ".name", fluid.getLocalizedName(null));
+        if (fluid != null) {
+            String name = fluid.getLocalizedName(new FluidStack(fluid, 1000));
+            if (name == null) {
+                name = "???";
+            }
+            return I18n.format(stack.getUnlocalizedName() + ".name", name);
+        }
+        return "???";
     }
 
     public static ItemStack createByFluid(Fluid fluid) {

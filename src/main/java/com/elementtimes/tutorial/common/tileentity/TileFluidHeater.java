@@ -3,10 +3,14 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -21,12 +25,21 @@ public class TileFluidHeater extends BaseMachine {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
-                    .add("test", 1000, FluidRegistry.WATER, ElementtimesFluids.steam);
+                    .newRecipe("0")
+                    .addCost(2000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe("1")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, Fluid.BUCKET_VOLUME))
+                    .endAdd();
         }
     }
 
     public TileFluidHeater() {
-        super(0, 2, 2, 1, 16000, 1, 16000);
+        super(1, 2, 2, 1, 16000, 1, 16000);
         markBucketInput(0, 1);
         init();
     }

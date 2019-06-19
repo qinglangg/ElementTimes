@@ -12,10 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * TODO: 酿造台 1000000-10000(io)-16000(/item)
- * TODO: 整形机测试及 jei 兼容
- * TODO: 树苗精华改为block，并且可以种植。
- * TODO: 1.13.2 1.14 兼容
- * TODO: 1.7.10 兼容（优先度极低）
+ * TODO: 新机器 jei 兼容
  * @author KSGFK
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@")

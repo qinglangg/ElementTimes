@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * 我也不知道几率掉什么
- * @author KSGFK
+ * 打草几率掉玉米事件
+ * @author 金竹
  */
 @Mod.EventBusSubscriber
 public class BreakBlockListener {
@@ -28,7 +28,7 @@ public class BreakBlockListener {
 		Random rand = world.rand;
 		BlockPos pos = e.getPos();
 		if (state.getBlock() == Blocks.TALLGRASS) {
-			//几率掉落
+			//几率掉落（二十分之一）
 			int chance = 20;
 			if (rand.nextInt(chance) == 0) {
 				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),

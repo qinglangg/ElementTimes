@@ -15,6 +15,7 @@ item.elementtimes.fireelement.name=火元素
 item.elementtimes.goldelement.name=金元素
 item.elementtimes.elementsword.name=元素剑
 item.elementtimes.elementaxe.name=元素斧子
+item.elementtimes.elementbow.name=元素弓
 item.elementtimes.elementpickaxe.name=元素镐子
 item.elementtimes.starchpowder.name=淀粉粉末
 item.elementtimes.amylum.name=淀粉
@@ -106,6 +107,7 @@ item.elementtimes.sodiumbisulfite.name=亚硫酸氢钠
 item.elementtimes.sodiummetabisulfite.name=焦亚硫酸钠
 item.elementtimes.carbonrod.name=碳棒
 item.elementtimes.starchball.name=淀粉球
+item.elementtimes.calciumacetylide.name=电石
 # block
 tile.elementtimes.woodessence.name=精华木材
 tile.elementtimes.leafessence.name=精华树叶
@@ -151,6 +153,10 @@ tile.elementtimes.fluidheater.name=流体加热器
 tile.elementtimes.electrolyticcell.name=电解器
 
 # fluid
+fluid.elementtimes.naoh=氢氧化钠
+tile.elementtimes.naoh.name=氢氧化钠
+fluid.elementtimes.co=一氧化碳
+tile.elementtimes.co.name=一氧化碳
 fluid.elementtimes.nacl=熔融氯化钠
 tile.elementtimes.nacl.name=熔融氯化钠
 fluid.elementtimes.naclsolutionconcentrated=浓盐水

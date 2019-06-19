@@ -4,9 +4,13 @@ import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -53,7 +57,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.corn, new ItemStack(ElementtimesItems.bakedCorn, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.platinumOre, new ItemStack(ElementtimesItems.platinumIngot, 1), 5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.platinumOrePowder, new ItemStack(ElementtimesItems.platinumIngot, 1), 4.0f);
-		GameRegistry.addSmelting(Items.POTIONITEM, ItemBottleFuel.createByFluid(ElementtimesFluids.steam), 3.0f);
+		GameRegistry.addSmelting(Items.POTIONITEM, ItemBottleFuel.createByFluid(ElementtimesFluids.steam), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sulfiteSolution, new ItemStack(ElementtimesItems.sulphuricAcid), 3.0f);
 		GameRegistry.addSmelting(ElementtimesItems.rubberRaw, new ItemStack(ElementtimesItems.rubber), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sodiumBisulfite, new ItemStack(ElementtimesItems.sodiumMetabisulfite), 2.0f);

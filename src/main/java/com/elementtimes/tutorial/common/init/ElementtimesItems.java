@@ -37,6 +37,8 @@ public class ElementtimesItems {
     @ModItem
     public static Item elementAxe = new Elementaxe();
     @ModItem
+    public static Item elementbow = new Elementbow();
+    @ModItem
     public static Item elementPickaxe = new Elementpickaxe();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
@@ -55,6 +57,8 @@ public class ElementtimesItems {
     public static Item steelIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item carbonRod = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
+    public static Item calciumacetylide = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item calciumCarbonate = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)

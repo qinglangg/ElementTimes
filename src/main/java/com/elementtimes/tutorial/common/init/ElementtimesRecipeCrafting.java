@@ -90,39 +90,39 @@ public class ElementtimesRecipeCrafting {
     public static String logWood = "logWood";
 
     @ModRecipe
-    @ModRecipe.Crafting(width = 2)
+    @ModRecipe.Crafting
     public static Object[] blockMultiSliverCopper = new Object[]{
             ElementtimesBlocks.blockMultiSilverCopper,
-            "plateSilver", "plateCopper",
-            "gearSilver", "gearCopper",
-            "plateSilver", "plateCopper"
+            "plateSilver", "rubber","plateCopper",
+            "gearSilver", "rubber","gearCopper",
+            "plateSilver", "rubber","plateCopper"
     };
 
     @ModRecipe
-    @ModRecipe.Crafting(width = 2)
+    @ModRecipe.Crafting
     public static Object[] blockMultiCarbonSteel = new Object[]{
             ElementtimesBlocks.blockMultiCarbonSteel,
-            "plateCarbon", "plateSteel",
-            "gearCarbon", "gearSteel",
-            "plateCarbon", "plateSteel"
+            "plateCarbon","rubber", "plateSteel",
+            "gearCarbon","rubber", "gearSteel",
+            "plateCarbon","rubber", "plateSteel"
     };
 
     @ModRecipe
-    @ModRecipe.Crafting(width = 2)
+    @ModRecipe.Crafting
     public static Object[] blockMultiGoldPlatinum = new Object[]{
             ElementtimesBlocks.blockMultiGoldPlatinum,
-            "platePlatinum", "plateGold",
-            "gearPlatinum", "gearGold",
-            "platePlatinum", "plateGold"
+            "platePlatinum","rubber", "plateGold",
+            "gearPlatinum","rubber", "gearGold",
+            "platePlatinum","rubber", "plateGold"
     };
 
     @ModRecipe
-    @ModRecipe.Crafting(width = 2)
+    @ModRecipe.Crafting
     public static Object[] blockMultiWoodStone = new Object[]{
             ElementtimesBlocks.blockMultiWoodStone,
-            "plateWood", "plateStone",
-            "gearWood", "gearStone",
-            "plateWood", "plateStone"
+            "plateWood", "rubber", "plateStone",
+            "gearWood","rubber", "gearStone",
+            "plateWood", "rubber","plateStone"
     };
 
     @ModRecipe
@@ -132,6 +132,50 @@ public class ElementtimesRecipeCrafting {
             null, null, "ingotSteel",
             null, "ingotCopper", null,
             "ingotCopper"
+    };
+    
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] condenser = new Object[]{
+            ElementtimesBlocks.condenser,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
+            ElementtimesItems.waterElement,ElementtimesItems.waterElement,ElementtimesItems.waterElement,
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+    };
+    
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] fluidheater = new Object[]{
+            ElementtimesBlocks.fluidHeater,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
+            ElementtimesItems.fireElement,ElementtimesItems.fireElement,ElementtimesItems.fireElement,
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+    };
+    
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] solidmelter = new Object[]{
+            ElementtimesBlocks.solidMelter,
+            "gearGold", "blockSteel", "gearGold",
+            ElementtimesBlocks.furnace,ElementtimesBlocks.furnace,ElementtimesBlocks.furnace,
+            "gearDiamond", "blockCopper", "gearDiamond"
+    };
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] solidreactor = new Object[]{
+            ElementtimesBlocks.solidReactor,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
+            "blockCopper",ElementtimesBlocks.diamondBlock,"blockSteel",
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+    };
+    
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] fluidreactor = new Object[]{
+            ElementtimesBlocks.fluidReactor,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
+            ElementtimesBlocks.fluidHeater,ElementtimesBlocks.diamondBlock,ElementtimesBlocks.condenser,
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
     };
 
     @ModRecipe
@@ -143,6 +187,14 @@ public class ElementtimesRecipeCrafting {
             "gearGold", "blockCopper", "gearGold"
     };
 
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] electrolyticCell = new Object[]{
+            ElementtimesBlocks.electrolyticCell,
+            ElementtimesItems.carbonRod,ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesItems.carbonRod,
+            ElementtimesBlocks.fluidHeater,ElementtimesBlocks.fluidReactor,ElementtimesBlocks.condenser,
+            ElementtimesItems.carbonRod,ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesItems.carbonRod,
+    };
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] woodenHalter = new Object[]{
@@ -157,7 +209,7 @@ public class ElementtimesRecipeCrafting {
     public static Object[] rebuild = new Object[]{
             ElementtimesBlocks.rebuild,
             ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiGoldPlatinum,
-            ElementtimesBlocks.pulverizer, ElementtimesBlocks.forming, ElementtimesBlocks.compressor,
+            ElementtimesBlocks.forming,ElementtimesBlocks.electrolyticCell,ElementtimesBlocks.extractor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel
     };
 
@@ -166,10 +218,18 @@ public class ElementtimesRecipeCrafting {
     public static Object[] forming = new Object[]{
             ElementtimesBlocks.forming,
             null, "blockSteel", null,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiSilverCopper,
-            null, "blockSteel", null
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiCarbonSteel,
+            null, "blockCopper", null
     };
 
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] extractor = new Object[]{
+            ElementtimesBlocks.extractor,
+            null, "blockSteel", null,
+            ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiGoldPlatinum,
+            null, "blockCopper", null
+    };
     @ModRecipe
     @ModRecipe.Crafting
     public static Object gearCarbon = RecipeUtil.gearRecipe(Blocks.COAL_BLOCK, new ItemStack(Items.COAL, 1, 0), ElementtimesItems.gearCarbon);

@@ -29,6 +29,12 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
 
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Naoh = new Fluid("elementtimes.naoh",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
+    
     @ModFluid(density = -10, burningTime = 4000)
     @ModFluid.FluidBlock
     public static Fluid H = new Fluid("elementtimes.h",
@@ -65,6 +71,12 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
 
+    @ModFluid(density = -10, burningTime = 10000)
+    @ModFluid.FluidBlock
+    public static Fluid co = new Fluid("elementtimes.co",
+            new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
+    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid ethanol = new Fluid("elementtimes.ethanol",

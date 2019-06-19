@@ -15,6 +15,7 @@ item.elementtimes.fireelement.name=fireelement
 item.elementtimes.goldelement.name=goldelement
 item.elementtimes.elementsword.name=elementsword
 item.elementtimes.elementaxe.name=elementaxe
+item.elementtimes.elementbow.name=elementbow
 item.elementtimes.elementpickaxe.name=elementpickaxe
 item.elementtimes.starchpowder.name=starchpowder
 item.elementtimes.amylum.name=amylum
@@ -106,6 +107,7 @@ item.elementtimes.sodiumbisulfite.name=sodium bisulfite
 item.elementtimes.sodiummetabisulfite.name=sodium metabisulfite
 item.elementtimes.carbonrod.name=carbonrod
 item.elementtimes.starchball.name=starchball
+item.elementtimes.calciumacetylide.name=calcium acetylide 
 # block
 tile.elementtimes.woodessence.name=woodessenc
 tile.elementtimes.leafessence.name=leafessence
@@ -151,6 +153,10 @@ tile.elementtimes.fluidheater.name=Fluid Heater
 tile.elementtimes.electrolyticcell.name=Electrolytic Cell
 
 # fluid
+fluid.elementtimes.naoh=naoh
+tile.elementtimes.naoh.name=naoh
+fluid.elementtimes.co=co
+tile.elementtimes.co.name=co
 fluid.elementtimes.nacl=NaCl
 tile.elementtimes.nacl.name=NaCl
 fluid.elementtimes.naclsolutionconcentrated=Concentrated brine

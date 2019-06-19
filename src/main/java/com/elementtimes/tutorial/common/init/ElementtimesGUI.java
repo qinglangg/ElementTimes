@@ -96,8 +96,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 case Extractor:
                 case Forming:
                     return new GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), "5", 60,
-                            43, 55, 24, 156, 90, 4,
-                            80, 30, 0, 156, 24, 17);
+                    		80, 30, 0, 156, 24, 17,
+                    	    43, 55, 24, 156, 90, 4);
                 case SolidMelter:
                     return new GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), "solidmelter", 4,
                             65, 31, 43, 72);

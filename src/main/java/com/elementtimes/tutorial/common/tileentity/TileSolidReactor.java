@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
 import com.elementtimes.tutorial.other.recipe.IngredientPart;
@@ -28,12 +29,12 @@ public class TileSolidReactor extends BaseMachine {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
-                    .newRecipe("test")
-                    .addCost(1000)
-                    .addItemInput(IngredientPart.forItem(Blocks.STONE, 1))
-                    .addItemInput(IngredientPart.forItem(Items.APPLE, 2))
-                    .addItemOutput(IngredientPart.forItem(Blocks.DIAMOND_BLOCK, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, Fluid.BUCKET_VOLUME))
+                    .newRecipe("0")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumAcetylide , 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd();
         }
     }

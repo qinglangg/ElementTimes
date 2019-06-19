@@ -21,12 +21,18 @@ public class TileElectrolyticCell extends BaseMachine {
     public static MachineRecipeHandler RECIPE = null;
     public static void init() {
         RECIPE = new MachineRecipeHandler()
-                .newRecipe("test")
-                .addCost(1000)
-                .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
-                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 2000))
+                .newRecipe("0")
+                .addCost(10000)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.steam, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
-                .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
+                .endAdd()
+                .newRecipe("1")
+                .addCost(10000)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                 .endAdd();
     }
 

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 固体熔化机
+ * 冷凝机
  * @author luqin2007
  */
 @ModElement
@@ -29,7 +29,7 @@ public class TileCondenser extends BaseMachine {
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE = new MachineRecipeHandler()
-                    .add("icetest", 1000, ElementtimesFluids.steam, FluidRegistry.WATER);
+                    .add("0", 1000, ElementtimesFluids.steam, FluidRegistry.WATER);
         }
     }
 

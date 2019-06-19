@@ -55,10 +55,16 @@
         "fluid": "elementtimes.ethylene"
       }
     },
-    "elementtimes.ethanol": {
+       "elementtimes.co": {
       "model": "forge:fluid",
       "custom": {
-        "fluid": "elementtimes.ethanol"
+        "fluid": "elementtimes.co"
+      }
+    },
+    "elementtimes.naoh": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.naoh"
       }
     },
     "elementtimes.calciumhydroxide": {
