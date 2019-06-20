@@ -33,7 +33,7 @@ public class TileSolidReactor extends BaseMachine {
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumAcetylide , 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd();
         }

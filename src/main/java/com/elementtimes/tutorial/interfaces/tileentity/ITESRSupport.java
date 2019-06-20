@@ -1,18 +1,21 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.tutorial.client.util.RenderObject;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 /**
  * @author KSGFK create in 2019/6/12
  */
 public interface ITESRSupport {
-    Iterable<ItemStack> getRenderItems();
+    List<RenderObject> getRenderItems();
 
     void initCanRendItems();
 
-    boolean addRenderItem(Enum<?> itemEnum);
+    boolean setRender(int index, boolean isRender);
 
-    boolean removeRenderItem(Enum<?> itemEnum);
+    boolean isRender(int index);
 
-    boolean containsRenderItem(Enum<?> itemEnum);
+    void setRenderItemState(int index, ItemStack state);
 }

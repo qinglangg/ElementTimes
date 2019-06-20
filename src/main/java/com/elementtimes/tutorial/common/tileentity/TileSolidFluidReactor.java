@@ -32,7 +32,7 @@ public class TileSolidFluidReactor extends BaseMachine {
                     .newRecipe("0")
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumAcetylide , 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calciumHydroxide, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
                     .endAdd();

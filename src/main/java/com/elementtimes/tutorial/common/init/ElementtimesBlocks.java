@@ -135,7 +135,7 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
     public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, true);
-    @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
     public static Block supportStand = new BlockSupportStand();
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
@@ -197,8 +197,8 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiCarbonSteel = new Block(Material.IRON);
-    @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Chemical)
     public static Block alcoholLamp = new BlockAlcoholLamp();
-    @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Industry)
+    @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Chemical)
     public static Block evaporatingDish = new BlockEvaporatingDish();
 }

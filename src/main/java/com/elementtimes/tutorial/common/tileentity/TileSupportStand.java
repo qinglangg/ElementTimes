@@ -1,139 +1,109 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.tutorial.client.util.RenderObject;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport;
+import com.elementtimes.tutorial.other.lifecycle.CustomMachineLifecycle;
+import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * tesr数组
+ * 0：酒精灯
+ * 1：蒸发皿
+ *
  * @author KSGFK create in 2019/6/12
  */
-
+@ModElement
+@ModElement.ModInvokeStatic("init")
 public class TileSupportStand extends BaseMachine implements ITESRSupport {
-    public final ItemStack alcoholLamp = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp));
-    public final ItemStack evaporatingDish = new ItemStack(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish));
+    public boolean isFire;
 
-    private List<ItemStack> tesr = new ArrayList<>();
+    public static MachineRecipeHandler mRecipe = new MachineRecipeHandler();
+
+    private List<RenderObject> tesr = new ArrayList<>();
 
     public TileSupportStand() {
-        super(0, 0, 0);
+        super(0, 0, 0, 1, 16000, 1, 16000);
+        removeLifecycle(mDefaultMachineLifecycle);
+        addLifeCycle(new CustomMachineLifecycle(this));
         initCanRendItems();
     }
 
-    @Nonnull
-    @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
-        return recipe;
-    }
-
-    @Override
-    public boolean hasFastRenderer() {
-        return true;
+    public static void init() {
+        mRecipe.newRecipe("0")
+                .addCost(0)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaCl, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 100))
+                .endAdd();
     }
 
     @Override
     public void update() {
-        //TODO:暂时不需要逻辑
+        super.update();
+        /*
+        if (!world.isRemote) {
+            TankHandler i = getTanks(SideHandlerType.INPUT);
+            List<FluidStack> il = FluidUtil.toListNotNull(i.getTankProperties());
+            ElementTimes.getLogger().info("I:{},{}", il.get(0).getFluid(), il.get(0).amount);
+            TankHandler o = getTanks(SideHandlerType.OUTPUT);
+            List<FluidStack> ol = FluidUtil.toListNotNull(o.getTankProperties());
+            ElementTimes.getLogger().info("O:{},{}", ol.get(0).getFluid(), ol.get(0).amount);
+        }
+
+         */
     }
 
+    //ITESRSupport
     @Override
-    public Iterable<ItemStack> getRenderItems() {
+    public List<RenderObject> getRenderItems() {
         return tesr;
     }
 
     @Override
-    public boolean addRenderItem(Enum<?> itemEnum) {
-        if (!(itemEnum instanceof CanPutInItem)) {
-            return false;
-        }
-
-        CanPutInItem e = (CanPutInItem) itemEnum;
-        ItemStack willAdd;
-        switch (e) {
-            case AlcoholLamp:
-                willAdd = alcoholLamp;
-                break;
-            case EvaporatingDish:
-                willAdd = evaporatingDish;
-                break;
-            default:
-                ElementTimes.getLogger().error("what the fuck...");
-                return false;
-        }
-
-        if (tesr.contains(willAdd)) {
-            return false;
-        }
-
-        return tesr.add(willAdd);
-    }
-
-    @Override
-    public boolean removeRenderItem(Enum<?> itemEnum) {
-        if (!(itemEnum instanceof CanPutInItem)) {
-            return false;
-        }
-
-        CanPutInItem e = (CanPutInItem) itemEnum;
-        ItemStack willRemove = null;
-        switch (e) {
-            case AlcoholLamp:
-                willRemove = alcoholLamp;
-                break;
-            case EvaporatingDish:
-                willRemove = evaporatingDish;
-                break;
-        }
-
-        return tesr.remove(willRemove);
-    }
-
-    @Override
-    public boolean containsRenderItem(Enum<?> itemEnum) {
-        if (!(itemEnum instanceof CanPutInItem)) {
-            return false;
-        }
-
-        CanPutInItem e = (CanPutInItem) itemEnum;
-        ItemStack will = null;
-        switch (e) {
-            case AlcoholLamp:
-                will = alcoholLamp;
-                break;
-            case EvaporatingDish:
-                will = evaporatingDish;
-                break;
-        }
-
-        return tesr.contains(will);
-    }
-
-    @Override
     public void initCanRendItems() {
-        NBTTagCompound pos = new NBTTagCompound();
-        pos.setFloat("x", 0.5F);
-        pos.setFloat("y", -0.13F);
-        pos.setFloat("z", 0.5F);
-        alcoholLamp.setTagCompound(pos.copy());
-        pos.setFloat("y", 0.375F);
-        evaporatingDish.setTagCompound(pos);
+        Vec3d v1 = new Vec3d(0.5F, -0.13F, 0.5F);
+        Vec3d v2 = new Vec3d(0.5F, 0.375F, 0.5F);
+        tesr.add(new RenderObject(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp), v1).setRender(false));
+        tesr.add(new RenderObject(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish), v2).setRender(false));
     }
 
+    @Override
+    public boolean setRender(int index, boolean isRender) {
+        tesr.get(index).setRender(isRender);
+        return isRender;
+    }
+
+    @Override
+    public boolean isRender(int index) {
+        return tesr.get(index).isRender();
+    }
+
+    @Override
+    public void setRenderItemState(int index, ItemStack state) {
+        tesr.get(index).obj = state;
+    }
+
+    //我也不知道什么接口需要的
     @Override
     public ElementtimesGUI.Machines getGuiType() {
         return null;
     }
 
-    public enum CanPutInItem {
-        AlcoholLamp,
-        EvaporatingDish
+    @Nonnull
+    @Override
+    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+        return mRecipe;
     }
 }
