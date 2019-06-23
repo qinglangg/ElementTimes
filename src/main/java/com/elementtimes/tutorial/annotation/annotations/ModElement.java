@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 一些支持的其他成分
+ * @author luqin2007
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})

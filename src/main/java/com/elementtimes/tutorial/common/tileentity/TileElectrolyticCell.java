@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
@@ -16,6 +17,12 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 电解池
+ * @author luqin2007
+ */
+@ModElement
+@ModElement.ModInvokeStatic("init")
 public class TileElectrolyticCell extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
@@ -42,7 +49,6 @@ public class TileElectrolyticCell extends BaseMachine {
                 new Int2ObjectArrayMap<>(new int[]{0}, new int[][]{new int[]{0, 0}}),
                 new Int2ObjectArrayMap<>(new int[]{0, 1, 2}, new int[][]{new int[]{1,1},new int[]{2,2},new int[]{3,3}})));
         markBucketInput(0, 1, 2, 3);
-        init();
     }
 
     @Override

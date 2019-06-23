@@ -118,6 +118,7 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "compressor", clazz = "com.elementtimes.tutorial.common.tileentity.TileCompressor")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
+    @ModBlock.AnimTESR
     public static Block compressor = new Compressor();
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "forming", clazz = "com.elementtimes.tutorial.common.tileentity.TileForming")
@@ -173,6 +174,16 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block solidFluidReactor = new BaseClosableMachine<>(TileSolidFluidReactor.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "pumpAir", clazz = "com.elementtimes.tutorial.common.tileentity.TilePumpAir")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block pumpAir = new BaseClosableMachine<>(TilePumpAir.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "pumpFluid", clazz = "com.elementtimes.tutorial.common.tileentity.TilePumpFluid")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block pumpFluid = new BaseClosableMachine<>(TilePumpFluid.class);
 
     // 其他
 
@@ -201,4 +212,6 @@ public class ElementtimesBlocks {
     public static Block alcoholLamp = new BlockAlcoholLamp();
     @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Chemical)
     public static Block evaporatingDish = new BlockEvaporatingDish();
+    @ModBlock(creativeTab = ModCreativeTabs.None)
+    public static Block fr = new FluidReplace();
 }

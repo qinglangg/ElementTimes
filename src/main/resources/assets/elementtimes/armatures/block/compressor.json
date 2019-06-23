@@ -1,0 +1,41 @@
+{
+  "joints": {
+    "joint_default": {
+      "5": [1.0],
+      "7": [1.0],
+      "2": [1.0]
+    }
+  },
+  "clips": {
+    "play": {
+      "loop": true,
+      "joint_clips": {
+        "joint_default": [
+          {
+            "variable": "offset_y",
+            "type": "uniform",
+            "interpolation": "linear",
+            "samples": [0, 1]
+          }
+        ]
+      },
+
+      "events": {}
+    },
+    "stop": {
+      "loop": false,
+      "joint_clips": {
+        "joint_default": [
+          {
+            "variable": "offset_y",
+            "type": "uniform",
+            "interpolation": "linear",
+            "samples": [0, 0]
+          }
+        ]
+      },
+
+      "events": {}
+    }
+  }
+}

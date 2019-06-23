@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
  * 与机器每 tick 执行的工作有关的接口
  * @author luqin
  */
-public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagCompound>, IMachineLifeCycle.IMachineLifecycleManager {
+public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagCompound>, IMachineLifecycle.IMachineLifecycleManager {
 
     String TICKABLE = "_tickable_";
     String TICKABLE_IS_PAUSE = "_tickable_pause_";
@@ -168,6 +168,11 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
         return old;
     }
 
+    /**
+     * onUpdate 在客户端执行的方法
+     */
+    default void updateClient() {}
+
     @Override
     default void update() {
         if (this instanceof TileEntity) {
@@ -214,6 +219,8 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                     world.markBlockRangeForRenderUpdate(pos, pos);
                 }
                 tileEntity.markDirty(); // 咱们这么滥用 markDirty 真的没问题吗
+            } else {
+                updateClient();
             }
         }
     }

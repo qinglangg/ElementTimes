@@ -1,14 +1,14 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
+import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
 import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -18,6 +18,12 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 流体加热器
+ * @author luqin2007
+ */
+@ModElement
+@ModElement.ModInvokeStatic("init")
 public class TileFluidHeater extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
@@ -41,7 +47,7 @@ public class TileFluidHeater extends BaseMachine {
     public TileFluidHeater() {
         super(1, 2, 2, 1, 16000, 1, 16000);
         markBucketInput(0, 1);
-        init();
+        addLifeCycle(new FluidMachineLifecycle(this, 1, 1, 0, 0));
     }
 
     @Override

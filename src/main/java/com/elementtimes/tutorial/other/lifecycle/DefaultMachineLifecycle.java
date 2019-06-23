@@ -4,7 +4,7 @@ import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
-import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
+import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -18,7 +18,7 @@ import java.util.Map;
  * 默认机器的生命周期方法
  * @author luqin2007
  */
-public class DefaultMachineLifecycle implements IMachineLifeCycle {
+public class DefaultMachineLifecycle implements IMachineLifecycle {
 
     private BaseMachine machine;
     private boolean needBind = true;

@@ -29,10 +29,14 @@ public class ElementtimesGUI implements IGuiHandler {
     public static ElementtimesGUI GUI;
 
     public enum Machines {
+        /**
+         * 所有以 BaseMachine 为 TileEntity 的基类的机器 GUI 枚举
+         */
         ElementGenerator, Pulverize, Compressor, FuelGenerator,
         Furnace, Rebuild, Extractor, Forming, SolidMelter,
         FluidReactor, SolidReactor, Condenser,
-        FluidHeater, ElectrolyticCell, SolidFluidReactor;
+        FluidHeater, ElectrolyticCell, SolidFluidReactor,
+        PumpAir, PumpFluid;
 
         public int id() {
             return ordinal();
@@ -70,6 +74,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 case SolidFluidReactor:
                 case FluidHeater:
                 case ElectrolyticCell:
+                case PumpAir:
+                case PumpFluid:
                     return ContainerMachine.cm176_204_122(machine, player);
                 default:
                     return null;
@@ -122,6 +128,10 @@ public class ElementtimesGUI implements IGuiHandler {
                     return new GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "electrolyticcell", 108,
                             new int[][] {new int[] {58, 20, 0, 204, 24, 17}, new int[] {63, 35, 0, 221, 16, 16}},
                             43, 107, 24, 204, 90, 4);
+                case PumpAir:
+                case PumpFluid:
+                    return new GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "pump", 85,
+                            new int[0][], 43, 108, 24, 204, 90, 4);
                 default:
                     return null;
             }

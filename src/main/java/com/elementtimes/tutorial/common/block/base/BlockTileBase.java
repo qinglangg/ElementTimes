@@ -32,7 +32,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
 
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
-    private int mGui = 0;
+    private int mGui;
 
     private BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
         super(materialIn);

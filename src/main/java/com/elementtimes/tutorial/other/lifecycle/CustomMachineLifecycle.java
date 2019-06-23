@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.other.lifecycle;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.common.tileentity.TileSupportStand;
-import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
+import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
 import com.elementtimes.tutorial.util.FluidUtil;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author KSGFK create in 2019/6/20
  */
-public class CustomMachineLifecycle implements IMachineLifeCycle {
+public class CustomMachineLifecycle implements IMachineLifecycle {
     private BaseMachine machine;
     private MachineRecipeCapture[] recipes;
     private MachineRecipeCapture now;

@@ -25,7 +25,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -48,7 +47,7 @@ public abstract class BaseMachine extends TileEntity implements
     private Map<SideHandlerType, TankHandler> mTanks = new HashMap<>();
     private Map<EnumFacing, SideHandlerType> mItemHandlerTypes = new HashMap<>();
     private MachineRecipeHandler mRecipe = new MachineRecipeHandler();
-    private Set<IMachineLifeCycle> mMachineLifeCycles = new LinkedHashSet<>();
+    private Set<IMachineLifecycle> mMachineLifeCycles = new LinkedHashSet<>();
     private MachineRecipeCapture mWorkingRecipe = null;
     private boolean isWorking = false;
     private boolean isPause = false;
@@ -93,7 +92,7 @@ public abstract class BaseMachine extends TileEntity implements
     }
 
     @Override
-    public Set<IMachineLifeCycle> getAllLifecycles() {
+    public Set<IMachineLifecycle> getAllLifecycles() {
         return mMachineLifeCycles;
     }
     @Override

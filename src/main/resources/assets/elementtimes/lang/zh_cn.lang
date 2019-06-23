@@ -151,6 +151,9 @@ tile.elementtimes.solidreactor.name=固体反应器
 tile.elementtimes.solidfluidreactor.name=固液反应器
 tile.elementtimes.fluidheater.name=流体加热器
 tile.elementtimes.electrolyticcell.name=电解器
+tile.elementtimes.pumpair.name=气泵
+tile.elementtimes.pumpfluid.name=液泵
+tile.elementtimes.fr.name=流体替换方块
 
 # fluid
 fluid.elementtimes.naoh=氢氧化钠

@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "anim_cycle": ["/", "#cycle_length"]
+  },
+  "clips": {
+    "play": ["apply", "elementtimes:block/compressor@play", "#anim_cycle"],
+    "stop": "elementtimes:block/compressor@stop"
+  },
+  "states": ["stop", "play"],
+  "transitions": {
+    "play": ["stop"],
+    "stop": ["play"]
+  },
+  "start_state": "play"
+}

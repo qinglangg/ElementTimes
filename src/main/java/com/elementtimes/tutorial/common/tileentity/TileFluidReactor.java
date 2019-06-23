@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
@@ -8,16 +9,20 @@ import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 流体反应器
+ * @author luqin2007
+ */
+@ModElement
+@ModElement.ModInvokeStatic("init")
 public class TileFluidReactor extends BaseMachine {
 
     public static MachineRecipeHandler RECIPES = null;
@@ -47,7 +52,6 @@ public class TileFluidReactor extends BaseMachine {
 
     public TileFluidReactor() {
         super(10000, 6, 5, 2, 16000, 3, 16000);
-        init();
         addLifeCycle(new FluidMachineLifecycle(this,
                 new Int2ObjectArrayMap<>(new int[] {0, 1}, new int[][]{new int[]{1, 0}, new int[]{2, 1}}),
                 new Int2ObjectArrayMap<>(new int[] {0, 1, 2}, new int[][]{new int[]{3, 2}, new int[]{4, 3}, new int[]{5, 4}})));

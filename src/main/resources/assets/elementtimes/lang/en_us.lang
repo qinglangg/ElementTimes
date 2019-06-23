@@ -151,6 +151,9 @@ tile.elementtimes.solidreactor.name=Solid Reactor
 tile.elementtimes.solidfluidreactor.name=Solid Fluid Reactor
 tile.elementtimes.fluidheater.name=Fluid Heater
 tile.elementtimes.electrolyticcell.name=Electrolytic Cell
+tile.elementtimes.pumpair.name=Air Pump
+tile.elementtimes.pumpfluid.name=Fluid Pump
+tile.elementtimes.fr.name=Block for Replace Fluid
 
 # fluid
 fluid.elementtimes.naoh=naoh

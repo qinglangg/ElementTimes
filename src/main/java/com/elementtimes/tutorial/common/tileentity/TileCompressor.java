@@ -1,13 +1,29 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.animation.TimeValues;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.model.animation.AnimationStateMachine;
+import net.minecraftforge.common.model.animation.CapabilityAnimation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * 压缩机
@@ -16,8 +32,17 @@ import javax.annotation.Nonnull;
 @ModElement
 @ModElement.ModInvokeStatic("init")
 public class TileCompressor extends BaseOneToOne {
+    private final static String ANIMATION_STATE_PLAY = "play";
+    private final static String ANIMATION_STATE_STOP = "stop";
+
     public TileCompressor() {
         super(ElementtimesConfig.COMPRESSOR.maxEnergy);
+        addLifeCycle(new IMachineLifecycle() {
+            @Override
+            public void onTickFinish() {
+
+            }
+        });
     }
 
     public static MachineRecipeHandler sRecipeHandler;
@@ -38,6 +63,8 @@ public class TileCompressor extends BaseOneToOne {
                 .add("11", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount);
     }
 
+    private AnimationStateMachine mAnimationStateMachine;
+
     @Nonnull
     @Override
     public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
@@ -57,5 +84,54 @@ public class TileCompressor extends BaseOneToOne {
     @Override
     public ElementtimesGUI.Machines getGuiType() {
         return ElementtimesGUI.Machines.Compressor;
+    }
+
+    @Override
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return super.hasCapability(capability, facing) || capability == CapabilityAnimation.ANIMATION_CAPABILITY;
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityAnimation.ANIMATION_CAPABILITY && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            return capability.cast((T) getASM());
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public AnimationStateMachine getASM() {
+        if (mAnimationStateMachine == null) {
+            mAnimationStateMachine = (AnimationStateMachine) ModelLoaderRegistry.loadASM(
+                    new ResourceLocation(ElementTimes.MODID, "asms/block/compressor.json"),
+                    ImmutableMap.of("cycle_length", new TimeValues.ConstValue(5)));
+        }
+        return mAnimationStateMachine;
+    }
+
+    @Override
+    public IBlockState updateState(IBlockState old) {
+        boolean working = isWorking();
+        if (old.getValue(BaseClosableMachine.IS_RUNNING) != working) {
+            return old.withProperty(BaseClosableMachine.IS_RUNNING, working);
+        }
+        return old;
+    }
+
+    @Override
+    public void updateClient() {
+        Boolean running = world.getBlockState(pos).getValue(BaseClosableMachine.IS_RUNNING);
+        String state = getASM().currentState();
+        if (running && ANIMATION_STATE_STOP.equals(state)) {
+            getASM().transition(ANIMATION_STATE_PLAY);
+        } else if (!running && ANIMATION_STATE_PLAY.equals(state)) {
+            getASM().transition(ANIMATION_STATE_STOP);
+        }
     }
 }

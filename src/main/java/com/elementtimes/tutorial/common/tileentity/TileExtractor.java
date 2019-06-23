@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 
 /**
  * 提取机
- * 未完成
  * @author luqin2007
  */
 @ModElement

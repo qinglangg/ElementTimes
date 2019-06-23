@@ -2,8 +2,7 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.interfaces.tileentity.IEnergyProvider;
-import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
-import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifeCycle;
+import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +25,7 @@ public abstract class BaseGenerator extends BaseMachine implements IEnergyProvid
             getEnergyTypeMap().put(value, SideHandlerType.OUTPUT);
         }
 
-        addLifeCycle(new IMachineLifeCycle() {
+        addLifeCycle(new IMachineLifecycle() {
             @Override
             public void onTickFinish() {
                 for (EnumFacing value : EnumFacing.values()) {

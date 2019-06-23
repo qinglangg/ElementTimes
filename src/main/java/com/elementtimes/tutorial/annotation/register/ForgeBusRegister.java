@@ -33,9 +33,12 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -90,6 +93,7 @@ public class ForgeBusRegister {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void registerModel(ModelRegistryEvent event) {
         // 三方渲染
         if (ModBlockLoader.OBJ) {
@@ -144,6 +148,8 @@ public class ForgeBusRegister {
                 return new ModelResourceLocation(location, fluid.getName());
             }
         }));
+        // 注册动画
+        ModBlockLoader.ANIMATION_HANDLER.forEach(ClientRegistry::bindTileEntitySpecialRenderer);
     }
 
     @SubscribeEvent

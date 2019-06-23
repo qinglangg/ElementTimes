@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
  *  注解类则会使用无参构造实例化被标记类，并注册
  *  注解成员变量则会尝试使用无参构造实例化成员变量类型，并注册
  *  成员请手动赋值，否则对其引用可能会出问题（编译器优化时会直接给他赋值为 null）
+ * @author luqin2007
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
@@ -205,5 +206,20 @@ public @interface ModBlock {
          * @return 世界生成的种类
          */
         GenType type() default GenType.Ore;
+    }
+
+    /**
+     * 为该 Block 注册一个 ASM
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface AnimTESR {
+        /**
+         * 用于处理动画回调，复写 handleEvents 方法
+         * 位于客户端，需要有一个无参构造
+         * 留空 则为一个默认空实现
+         * @return 该方块的 AnimationTESR 类全类名
+         */
+        String animationTESR() default "";
     }
 }

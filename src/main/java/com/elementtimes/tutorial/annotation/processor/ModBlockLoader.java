@@ -14,7 +14,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -40,6 +39,7 @@ public class ModBlockLoader {
     public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
     public static Object2IntMap<Block> BURNING_TIMES = new Object2IntArrayMap<>();
+    public static Map<Class, net.minecraftforge.client.model.animation.AnimationTESR> ANIMATION_HANDLER = new HashMap<>();
     public static boolean B3D = false, OBJ = false;
 
     /**
@@ -74,6 +74,8 @@ public class ModBlockLoader {
         initBlockState(block, blockHolder);
         // 世界生成
         initWorldGenerator(block, blockHolder);
+        // 动画
+        initAnimation(block, blockHolder);
         into.add(block);
     }
 
@@ -184,6 +186,33 @@ public class ModBlockLoader {
             if (wgInfo != null) {
                 List<WorldGenerator> worldGenerators = WORLD_GENERATORS.computeIfAbsent(wgInfo.type(), k -> new ArrayList<>());
                 worldGenerators.add(new DefaultOreGenerator(wgInfo, block.getDefaultState()));
+            }
+        }
+    }
+
+    private static void initAnimation(Block block, AnnotatedElement blockHolder) {
+        ModBlock.AnimTESR aInfo = blockHolder.getAnnotation(ModBlock.AnimTESR.class);
+
+        if (aInfo != null) {
+            Class<? extends TileEntity> teClass = TILE_ENTITIES.get(block).getRight();
+            if (teClass == null) {
+                warn("Animation must have a tileEntity");
+            } else {
+                String tesrClass = aInfo.animationTESR();
+                net.minecraftforge.client.model.animation.AnimationTESR tesr = null;
+                if (tesrClass.isEmpty()) {
+                    tesr = new net.minecraftforge.client.model.animation.AnimationTESR();
+                } else {
+                    Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
+                    if (o.isPresent()) {
+                        tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
+                    } else {
+                        warn("Can't create AnimationTESR object");
+                    }
+                }
+                if (tesr != null) {
+                    ANIMATION_HANDLER.put(teClass, tesr);
+                }
             }
         }
     }

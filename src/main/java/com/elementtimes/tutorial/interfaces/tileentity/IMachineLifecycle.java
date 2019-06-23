@@ -30,7 +30,7 @@ import java.util.Set;
  *
  * @author luqin2007
  */
-public interface IMachineLifeCycle {
+public interface IMachineLifecycle {
 
     /**
      * 检查机器是否可以启动，通常工作是检查是否有可用合成，检查能量和输入是否足够.
@@ -88,21 +88,21 @@ public interface IMachineLifeCycle {
      */
     default void onTickFinish() {}
 
-    interface IMachineLifecycleManager extends IMachineLifeCycle {
-        Set<IMachineLifeCycle> getAllLifecycles();
+    interface IMachineLifecycleManager extends IMachineLifecycle {
+        Set<IMachineLifecycle> getAllLifecycles();
 
-        default void addLifeCycle(IMachineLifeCycle lifeCycle) {
+        default void addLifeCycle(IMachineLifecycle lifeCycle) {
             getAllLifecycles().add(lifeCycle);
         }
 
-        default void removeLifecycle(IMachineLifeCycle lifeCycle) {
+        default void removeLifecycle(IMachineLifecycle lifeCycle) {
             getAllLifecycles().remove(lifeCycle);
         }
 
         @Override
         default boolean onCheckStart() {
             boolean ret = true;
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 ret = ret && lifecycle.onCheckStart();
             }
             return ret;
@@ -110,7 +110,7 @@ public interface IMachineLifeCycle {
 
         @Override
         default void onStart() {
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 lifecycle.onStart();
             }
         }
@@ -118,7 +118,7 @@ public interface IMachineLifeCycle {
         @Override
         default boolean onLoop() {
             boolean ret = true;
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 ret = ret && lifecycle.onLoop();
             }
             return ret;
@@ -127,7 +127,7 @@ public interface IMachineLifeCycle {
         @Override
         default boolean onCheckFinish() {
             boolean ret = true;
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 ret = ret && lifecycle.onCheckFinish();
             }
             return ret;
@@ -135,7 +135,7 @@ public interface IMachineLifeCycle {
 
         @Override
         default void onPause() {
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 lifecycle.onPause();
             }
         }
@@ -143,7 +143,7 @@ public interface IMachineLifeCycle {
         @Override
         default boolean onCheckResume() {
             boolean ret = true;
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 ret = ret && lifecycle.onCheckResume();
             }
             return ret;
@@ -151,7 +151,7 @@ public interface IMachineLifeCycle {
 
         @Override
         default void onResume() {
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 lifecycle.onResume();
             }
         }
@@ -159,7 +159,7 @@ public interface IMachineLifeCycle {
         @Override
         default boolean onFinish() {
             boolean ret = true;
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 ret = ret && lifecycle.onFinish();
             }
             return ret;
@@ -167,14 +167,14 @@ public interface IMachineLifeCycle {
 
         @Override
         default void onTickStart() {
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 lifecycle.onTickStart();
             }
         }
 
         @Override
         default void onTickFinish() {
-            for (IMachineLifeCycle lifecycle : getAllLifecycles()) {
+            for (IMachineLifecycle lifecycle : getAllLifecycles()) {
                 lifecycle.onTickFinish();
             }
         }

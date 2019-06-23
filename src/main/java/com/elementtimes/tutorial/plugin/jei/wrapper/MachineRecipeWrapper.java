@@ -4,8 +4,11 @@ import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mezz.jei.api.recipe.IIngredientType;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +19,10 @@ import java.util.List;
  */
 public class MachineRecipeWrapper implements IRecipeWrapper {
 
-    private List<List<ItemStack>> inputItems;
-    private List<List<ItemStack>> outputItems;
+    public List<List<ItemStack>> inputItems;
+    public List<List<FluidStack>> inputFluids;
+    public List<List<ItemStack>> outputItems;
+    public List<List<FluidStack>> outputFluids;
 
     private MachineRecipeWrapper(MachineRecipe recipe) {
         inputItems = new ArrayList<>(recipe.inputs.size());
@@ -25,16 +30,28 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
             inputItems.add(input.allViableValues.get());
         }
 
+        inputFluids = new ArrayList<>(recipe.fluidInputs.size());
+        for (IngredientPart<FluidStack> input : recipe.fluidInputs) {
+            inputFluids.add(input.allViableValues.get());
+        }
+
         outputItems = new ArrayList<>(recipe.outputs.size());
         for (IngredientPart<ItemStack> output : recipe.outputs) {
             outputItems.add(output.allViableValues.get());
+        }
+
+        outputFluids = new ArrayList<>(recipe.fluidOutputs.size());
+        for (IngredientPart<FluidStack> output : recipe.fluidOutputs) {
+            outputFluids.add(output.allViableValues.get());
         }
     }
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputLists(ItemStack.class, inputItems);
-        ingredients.setOutputLists(ItemStack.class, outputItems);
+        ingredients.setInputLists(VanillaTypes.ITEM, inputItems);
+        ingredients.setInputLists(VanillaTypes.FLUID, inputFluids);
+        ingredients.setOutputLists(VanillaTypes.ITEM, outputItems);
+        ingredients.setOutputLists(VanillaTypes.FLUID, outputFluids);
     }
 
     public static List<MachineRecipeWrapper> fromHandler(MachineRecipeHandler handler) {
