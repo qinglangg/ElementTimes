@@ -49,22 +49,6 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
                 .endAdd();
     }
 
-    @Override
-    public void update() {
-        super.update();
-        /*
-        if (!world.isRemote) {
-            TankHandler i = getTanks(SideHandlerType.INPUT);
-            List<FluidStack> il = FluidUtil.toListNotNull(i.getTankProperties());
-            ElementTimes.getLogger().info("I:{},{}", il.get(0).getFluid(), il.get(0).amount);
-            TankHandler o = getTanks(SideHandlerType.OUTPUT);
-            List<FluidStack> ol = FluidUtil.toListNotNull(o.getTankProperties());
-            ElementTimes.getLogger().info("O:{},{}", ol.get(0).getFluid(), ol.get(0).amount);
-        }
-
-         */
-    }
-
     //ITESRSupport
     @Override
     public List<RenderObject> getRenderItems() {

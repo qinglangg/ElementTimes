@@ -143,7 +143,7 @@ public class ModBlockLoader {
                 STATE_MAPS.put(block, builder.build());
             }
         } catch (ClassNotFoundException e) {
-            warn("Cannot load mapper: " + smInfo.propertyName());
+            warn("Cannot reload mapper: " + smInfo.propertyName());
             e.printStackTrace();
         }
 

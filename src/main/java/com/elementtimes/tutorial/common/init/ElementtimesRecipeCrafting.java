@@ -93,27 +93,27 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting
     public static Object[] blockMultiSliverCopper = new Object[]{
             ElementtimesBlocks.blockMultiSilverCopper,
-            "plateSilver", "rubber","plateCopper",
-            "gearSilver", "rubber","gearCopper",
-            "plateSilver", "rubber","plateCopper"
+            "plateSilver", "rubber", "plateCopper",
+            "gearSilver", "rubber", "gearCopper",
+            "plateSilver", "rubber", "plateCopper"
     };
 
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] blockMultiCarbonSteel = new Object[]{
             ElementtimesBlocks.blockMultiCarbonSteel,
-            "plateCarbon","rubber", "plateSteel",
-            "gearCarbon","rubber", "gearSteel",
-            "plateCarbon","rubber", "plateSteel"
+            "plateCarbon", "rubber", "plateSteel",
+            "gearCarbon", "rubber", "gearSteel",
+            "plateCarbon", "rubber", "plateSteel"
     };
 
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] blockMultiGoldPlatinum = new Object[]{
             ElementtimesBlocks.blockMultiGoldPlatinum,
-            "platePlatinum","rubber", "plateGold",
-            "gearPlatinum","rubber", "gearGold",
-            "platePlatinum","rubber", "plateGold"
+            "platePlatinum", "rubber", "plateGold",
+            "gearPlatinum", "rubber", "gearGold",
+            "platePlatinum", "rubber", "plateGold"
     };
 
     @ModRecipe
@@ -121,8 +121,8 @@ public class ElementtimesRecipeCrafting {
     public static Object[] blockMultiWoodStone = new Object[]{
             ElementtimesBlocks.blockMultiWoodStone,
             "plateWood", "rubber", "plateStone",
-            "gearWood","rubber", "gearStone",
-            "plateWood", "rubber","plateStone"
+            "gearWood", "rubber", "gearStone",
+            "plateWood", "rubber", "plateStone"
     };
 
     @ModRecipe
@@ -133,31 +133,31 @@ public class ElementtimesRecipeCrafting {
             null, "ingotCopper", null,
             "ingotCopper"
     };
-    
+
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] condenser = new Object[]{
             ElementtimesBlocks.condenser,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesItems.waterElement,ElementtimesItems.waterElement,ElementtimesItems.waterElement,
+            ElementtimesItems.waterElement, ElementtimesItems.waterElement, ElementtimesItems.waterElement,
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
     };
-    
+
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] fluidheater = new Object[]{
             ElementtimesBlocks.fluidHeater,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesItems.fireElement,ElementtimesItems.fireElement,ElementtimesItems.fireElement,
+            ElementtimesItems.fireElement, ElementtimesItems.fireElement, ElementtimesItems.fireElement,
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
     };
-    
+
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] solidmelter = new Object[]{
             ElementtimesBlocks.solidMelter,
             "gearGold", "blockSteel", "gearGold",
-            ElementtimesBlocks.furnace,ElementtimesBlocks.furnace,ElementtimesBlocks.furnace,
+            ElementtimesBlocks.furnace, ElementtimesBlocks.furnace, ElementtimesBlocks.furnace,
             "gearDiamond", "blockCopper", "gearDiamond"
     };
     @ModRecipe
@@ -165,16 +165,16 @@ public class ElementtimesRecipeCrafting {
     public static Object[] solidreactor = new Object[]{
             ElementtimesBlocks.solidReactor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            "blockCopper",ElementtimesBlocks.diamondBlock,"blockSteel",
+            "blockCopper", ElementtimesBlocks.diamondBlock, "blockSteel",
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
     };
-    
+
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] fluidreactor = new Object[]{
             ElementtimesBlocks.fluidReactor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesBlocks.fluidHeater,ElementtimesBlocks.diamondBlock,ElementtimesBlocks.condenser,
+            ElementtimesBlocks.fluidHeater, ElementtimesBlocks.pumpFluid, ElementtimesBlocks.condenser,
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
     };
 
@@ -191,9 +191,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting
     public static Object[] electrolyticCell = new Object[]{
             ElementtimesBlocks.electrolyticCell,
-            ElementtimesItems.carbonRod,ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesItems.carbonRod,
-            ElementtimesBlocks.fluidHeater,ElementtimesBlocks.fluidReactor,ElementtimesBlocks.condenser,
-            ElementtimesItems.carbonRod,ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesItems.carbonRod,
+            ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
+            ElementtimesBlocks.fluidHeater, ElementtimesBlocks.fluidReactor, ElementtimesBlocks.condenser,
+            ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
     };
     @ModRecipe
     @ModRecipe.Crafting
@@ -209,7 +209,7 @@ public class ElementtimesRecipeCrafting {
     public static Object[] rebuild = new Object[]{
             ElementtimesBlocks.rebuild,
             ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiGoldPlatinum,
-            ElementtimesBlocks.forming,ElementtimesBlocks.electrolyticCell,ElementtimesBlocks.extractor,
+            ElementtimesBlocks.forming, ElementtimesBlocks.electrolyticCell, ElementtimesBlocks.extractor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel
     };
 
@@ -230,6 +230,25 @@ public class ElementtimesRecipeCrafting {
             ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiGoldPlatinum,
             null, "blockCopper", null
     };
+
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] pumpAir = new Object[] {
+            ElementtimesBlocks.pumpAir,
+            Blocks.REDSTONE_BLOCK, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_BLOCK,
+            Blocks.LAPIS_BLOCK, ElementtimesBlocks.compressor, Blocks.LAPIS_BLOCK,
+            Blocks.REDSTONE_BLOCK, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_BLOCK
+    };
+
+    @ModRecipe
+    @ModRecipe.Crafting()
+    public static Object[] pumpFluid = new Object[] {
+            ElementtimesBlocks.pumpFluid,
+            null, ElementtimesBlocks.blockMultiSilverCopper, null,
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.pumpAir, ElementtimesBlocks.blockMultiCarbonSteel,
+            null, ElementtimesBlocks.blockMultiWoodStone, null
+    };
+
     @ModRecipe
     @ModRecipe.Crafting
     public static Object gearCarbon = RecipeUtil.gearRecipe(Blocks.COAL_BLOCK, new ItemStack(Items.COAL, 1, 0), ElementtimesItems.gearCarbon);
@@ -264,10 +283,10 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting
     public static Object gearSilver = RecipeUtil.gearRecipe("blockSilver", "ingotSilver", ElementtimesItems.gearSilver);
 
-	@ModRecipe
-	@ModRecipe.Crafting
-	public static Object createFluidRecipes() {
-		return (Supplier) () -> {
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object createFluidRecipes() {
+        return (Supplier) () -> {
             List<IRecipe> recipeList = new LinkedList<>();
             FluidRegistry.getBucketFluids()
                     .forEach(fluid -> {
@@ -288,5 +307,5 @@ public class ElementtimesRecipeCrafting {
                     });
             return recipeList;
         };
-	}
+    }
 }

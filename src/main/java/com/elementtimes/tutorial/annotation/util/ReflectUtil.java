@@ -111,7 +111,7 @@ public class ReflectUtil {
                 Class<?> aClass = Class.forName(className);
                 return (Optional<T>) create(aClass, params);
             } catch (ClassNotFoundException e) {
-                warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can load the class", className);
+                warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can reload the class", className);
                 e.printStackTrace();
             }
         }
@@ -132,7 +132,7 @@ public class ReflectUtil {
                 Class<?> aClass = Class.forName(className);
                 object = (T) create(aClass).orElse(null);
             } catch (ClassNotFoundException e) {
-                warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can load the class", className);
+                warn("Class {} is not exist. Please make sure the class is exist and the ClassLoader can reload the class", className);
                 e.printStackTrace();
             }
         }

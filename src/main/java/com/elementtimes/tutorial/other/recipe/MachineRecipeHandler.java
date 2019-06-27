@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.other.recipe;
 
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,6 +67,24 @@ public class MachineRecipeHandler {
         return newRecipe(name)
                 .addCost(energy)
                 .addItemInput(IngredientPart.forItem(input, 1))
+                .endAdd();
+    }
+
+    /**
+     * 创建一个合成表，有两个流体输入和一个流体输出
+     * @param name 配方名
+     * @param energy 能量消耗，产能则为负
+     * @param input1 输入流体1
+     * @param input2 输入流体2
+     * @param output 输出流体
+     * @return MachineRecipeHandler
+     */
+    public MachineRecipeHandler add(String name, int energy, Fluid input1, Fluid input2, Fluid output) {
+        return newRecipe(name)
+                .addCost(energy)
+                .addFluidInput(IngredientPart.forFluid(input1, Fluid.BUCKET_VOLUME))
+                .addFluidInput(IngredientPart.forFluid(input2, Fluid.BUCKET_VOLUME))
+                .addFluidOutput(IngredientPart.forFluid(output, Fluid.BUCKET_VOLUME))
                 .endAdd();
     }
 

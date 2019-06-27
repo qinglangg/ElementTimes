@@ -5,12 +5,10 @@ import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -29,24 +27,10 @@ public class TileFluidReactor extends BaseMachine {
     public static void init() {
         if (RECIPES == null) {
             RECIPES = new MachineRecipeHandler()
-                    .newRecipe("0")
-                    .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, Fluid.BUCKET_VOLUME))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.acetylene, Fluid.BUCKET_VOLUME))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethylene, Fluid.BUCKET_VOLUME))
-                    .endAdd()
-                    .newRecipe("1")
-                    .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, Fluid.BUCKET_VOLUME))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethylene, Fluid.BUCKET_VOLUME))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethane, Fluid.BUCKET_VOLUME))
-                    .endAdd()
-                    .newRecipe("2")
-                    .addCost(5000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethylene, Fluid.BUCKET_VOLUME))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethanol, Fluid.BUCKET_VOLUME))
-                    .endAdd();
+                    .add("0", 10000, ElementtimesFluids.H, ElementtimesFluids.acetylene, ElementtimesFluids.ethylene)
+                    .add("1", 10000, ElementtimesFluids.H, ElementtimesFluids.ethylene, ElementtimesFluids.ethane)
+                    .add("2", 10000, ElementtimesFluids.waterDistilled, ElementtimesFluids.ethylene, ElementtimesFluids.ethanol)
+                    .add("3", 10000, ElementtimesFluids.H, ElementtimesFluids.nitrogen, ElementtimesFluids.ammonia);
         }
     }
 
