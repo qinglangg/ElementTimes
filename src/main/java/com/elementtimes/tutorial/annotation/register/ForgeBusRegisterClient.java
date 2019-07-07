@@ -35,10 +35,10 @@ import javax.annotation.Nonnull;
  * @author luqin2007
  */
 @Mod.EventBusSubscriber
-@SideOnly(Side.CLIENT)
 public class ForgeBusRegisterClient {
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void registerModel(ModelRegistryEvent event) {
         // 三方渲染
         if (ModBlockLoader.OBJ) {
@@ -98,6 +98,7 @@ public class ForgeBusRegisterClient {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void regFluidSpirit(TextureStitchEvent.Pre event) {
         TextureMap textureMap = event.getMap();
         ModFluidLoader.FLUID_RESOURCES.forEach(fluid -> {
@@ -112,6 +113,7 @@ public class ForgeBusRegisterClient {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void registerItemColor(ColorHandlerEvent.Item event) {
         ModItemLoader.ITEM_COLOR.forEach((item, iItemColor) ->
                 event.getItemColors().registerItemColorHandler(iItemColor, item));
