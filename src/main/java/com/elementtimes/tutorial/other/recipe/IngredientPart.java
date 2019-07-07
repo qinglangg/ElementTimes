@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * 合成表匹配
  * @author luqin2007
  */
-@SuppressWarnings({"unused", "FieldCanBeLocal", "WeakerAccess", "unchecked"})
 public class IngredientPart<T> {
 
     private static String SYMBOL_ITEM_ALL = "[all]";
@@ -62,14 +61,12 @@ public class IngredientPart<T> {
         Function4.Stack<ItemStack> get = (recipe, items, fluids, slot) -> {
             if (items != null && !items.isEmpty() && !items.get(slot).isEmpty()) {
                 return ItemHandlerHelper.copyStackWithSize(items.get(slot), count);
-            } else {
-                ItemStack[] stacks = ingredient.getMatchingStacks();
-                if (stacks.length == 0) {
-                    return ItemStack.EMPTY;
-                } else {
-                    return ItemHandlerHelper.copyStackWithSize(stacks[0], count);
-                }
             }
+			ItemStack[] stacks = ingredient.getMatchingStacks();
+			if (stacks.length == 0) {
+			    return ItemStack.EMPTY;
+			}
+			return ItemHandlerHelper.copyStackWithSize(stacks[0], count);
         };
         Supplier<List<ItemStack>> allViableValues = () ->
                 Arrays.stream(ingredient.getMatchingStacks())
@@ -160,9 +157,8 @@ public class IngredientPart<T> {
             Item item = Item.getByNameOrId(nameOrOreName);
             if (item == null || item == Items.AIR) {
                 return IngredientPart.forItem(new OreIngredient(nameOrOreName), count);
-            } else {
-                return IngredientPart.forItem(item, count);
             }
+			return IngredientPart.forItem(item, count);
         }
     }
     

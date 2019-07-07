@@ -3,7 +3,6 @@ package com.elementtimes.tutorial.plugin.jei;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import com.elementtimes.tutorial.common.tileentity.TilePulverize;
 import com.elementtimes.tutorial.common.tileentity.TileRebuild;
@@ -16,7 +15,6 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
@@ -56,9 +54,15 @@ public class JEISupport implements IModPlugin {
         registry.addRecipeCategories(new MachineOneToOneRecipe(guiHelper, ID_PULVERIZE, "pulverize"));
     }
 
-    private void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {
+    private static void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {
         List<MachineRecipeWrapper> wrappers = MachineRecipeWrapper.fromHandler(recipes);
         registry.addRecipes(wrappers, id);
         registry.addRecipeCatalyst(new ItemStack(machine), id);
     }
+    
+    /*private void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {
+        List<MachineRecipeWrapper> wrappers = MachineRecipeWrapper.fromHandler(recipes);
+        registry.addRecipes(wrappers, id);
+        registry.addRecipeCatalyst(new ItemStack(machine), id);
+    }*/
 }

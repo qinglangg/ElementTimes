@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.other.pipeline;
 
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashSet;

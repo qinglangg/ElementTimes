@@ -5,7 +5,6 @@ import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IIngredientType;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

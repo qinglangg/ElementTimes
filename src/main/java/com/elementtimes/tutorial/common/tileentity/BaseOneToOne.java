@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
-import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;

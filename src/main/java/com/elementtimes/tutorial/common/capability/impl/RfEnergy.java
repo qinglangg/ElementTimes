@@ -11,7 +11,6 @@ import net.minecraftforge.energy.IEnergyStorage;
  *
  * @author KSGFK create in 2019/3/9
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class RfEnergy extends EnergyStorage implements INBTSerializable<NBTTagCompound> {
 
     private int transfer = Integer.MAX_VALUE;

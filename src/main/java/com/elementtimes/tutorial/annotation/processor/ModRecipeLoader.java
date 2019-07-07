@@ -18,7 +18,6 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -110,73 +109,71 @@ public class ModRecipeLoader {
                                 }
                             }
                             return recipes;
-                        } else {
-                            // 单一合成表
-                            Object result = objects[0];
-                            ItemStack r;
-                            if (result instanceof Item) {
-                                r = new ItemStack((Item) result);
-                            } else if (result instanceof Block) {
-                                r = new ItemStack((Block) result);
-                            } else if (result instanceof ItemStack) {
-                                r = (ItemStack) result;
-                            } else if (result instanceof Ingredient) {
-                                r = ((Ingredient) result).getMatchingStacks()[0];
-                            } else if (result instanceof String && ((String) result).contains(":")){
-                                Item resultItem = Item.getByNameOrId((String) result);
-                                if (resultItem == null || resultItem == Items.AIR) {
-                                    warn("The recipe {} return an NULL item.", rName);
-                                    return null;
-                                }
-                                r = new ItemStack(resultItem);
-                            } else {
-                                r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
-                            }
-                            IRecipe recipe;
-                            CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
-                            int size = info.width() * info.height();
-                            primer.input = NonNullList.withSize(size, Ingredient.EMPTY);
-                            primer.width = info.width();
-                            primer.height = info.height();
-                            if (size < objects.length - 1) {
-                                warn("You want to register a recipe({}) with {} items, but you put {} items in it. Some items will ignore.",
-                                        rName, size, objects.length - 1);
-                            }
-                            for (int i = 1; i < objects.length; i++) {
-                                Object o = objects[i];
-                                if (i - 1 >= size) {
-                                    warn("Ignore item[()]: {}.", i - 1, o);
-                                    break;
-                                }
-                                if (o instanceof String && ((String) o).contains(":")) {
-                                    Item item = Item.getByNameOrId((String) o);
-                                    if (item == null || item == Items.AIR) {
-                                        warn("The recipe {} have an NULL item.", rName);
-                                        return null;
-                                    }
-                                    o = new ItemStack(item);
-                                }
-                                primer.input.set(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
-                            }
-                            if (info.shaped()) {
-                                if (info.ore()) {
-                                    recipe = new ShapedOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), r, primer);
-                                } else {
-                                    recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
-                                }
-                            } else {
-                                if (info.ore()) {
-                                    recipe = new ShapelessOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), primer.input, r);
-                                } else {
-                                    recipe = new ShapelessRecipes("recipe", r, primer.input);
-                                }
-                            }
-                            recipe.setRegistryName(new ResourceLocation(ModInfo.MODID, rName));
-                            return new IRecipe[] {recipe};
                         }
-                    } else {
-                        warn("You want to convert an EMPTY array/collection to IRecipe!!!");
+						// 单一合成表
+						Object result = objects[0];
+						ItemStack r;
+						if (result instanceof Item) {
+						    r = new ItemStack((Item) result);
+						} else if (result instanceof Block) {
+						    r = new ItemStack((Block) result);
+						} else if (result instanceof ItemStack) {
+						    r = (ItemStack) result;
+						} else if (result instanceof Ingredient) {
+						    r = ((Ingredient) result).getMatchingStacks()[0];
+						} else if (result instanceof String && ((String) result).contains(":")){
+						    Item resultItem = Item.getByNameOrId((String) result);
+						    if (resultItem == null || resultItem == Items.AIR) {
+						        warn("The recipe {} return an NULL item.", rName);
+						        return null;
+						    }
+						    r = new ItemStack(resultItem);
+						} else {
+						    r = CraftingHelper.getIngredient(result).getMatchingStacks()[0];
+						}
+						IRecipe recipe;
+						CraftingHelper.ShapedPrimer primer = new CraftingHelper.ShapedPrimer();
+						int size = info.width() * info.height();
+						primer.input = NonNullList.withSize(size, Ingredient.EMPTY);
+						primer.width = info.width();
+						primer.height = info.height();
+						if (size < objects.length - 1) {
+						    warn("You want to register a recipe({}) with {} items, but you put {} items in it. Some items will ignore.",
+						            rName, size, objects.length - 1);
+						}
+						for (int i = 1; i < objects.length; i++) {
+						    Object o = objects[i];
+						    if (i - 1 >= size) {
+						        warn("Ignore item[()]: {}.", i - 1, o);
+						        break;
+						    }
+						    if (o instanceof String && ((String) o).contains(":")) {
+						        Item item = Item.getByNameOrId((String) o);
+						        if (item == null || item == Items.AIR) {
+						            warn("The recipe {} have an NULL item.", rName);
+						            return null;
+						        }
+						        o = new ItemStack(item);
+						    }
+						    primer.input.set(i - 1, CraftingHelper.getIngredient(o == null ? ItemStack.EMPTY : o));
+						}
+						if (info.shaped()) {
+						    if (info.ore()) {
+						        recipe = new ShapedOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), r, primer);
+						    } else {
+						        recipe = new ShapedRecipes("recipe", primer.width, primer.height, primer.input, r);
+						    }
+						} else {
+						    if (info.ore()) {
+						        recipe = new ShapelessOreRecipe(new ResourceLocation(ModInfo.MODID, "recipe"), primer.input, r);
+						    } else {
+						        recipe = new ShapelessRecipes("recipe", r, primer.input);
+						    }
+						}
+						recipe.setRegistryName(new ResourceLocation(ModInfo.MODID, rName));
+						return new IRecipe[] {recipe};
                     }
+					warn("You want to convert an EMPTY array/collection to IRecipe!!!");
                 }
                 return null;
             });

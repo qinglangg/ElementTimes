@@ -160,9 +160,8 @@ public class DefaultMachineLifecycle implements IMachineLifecycle {
         float a = (float) (Math.abs(machine.getEnergyProcessed()) + change) / (float) Math.abs(machine.getEnergyProcessed() + machine.getEnergyUnprocessed());
         if (machine.getWorkingRecipe().energy.applyAsInt(recipe) > 0) {
             return machine.getEnergyHandler().extractEnergy(change, true) >= change && fluid(true, a);
-        } else {
-            return machine.getEnergyHandler().receiveEnergy(change, true) > 0 && fluid(true, a);
         }
+		return machine.getEnergyHandler().receiveEnergy(change, true) > 0 && fluid(true, a);
     }
 
     @Override

@@ -14,10 +14,6 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * GUI初始化
@@ -80,9 +76,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 default:
                     return null;
             }
-        } else {
-            return null;
         }
+		return null;
     }
 
     @Nullable
@@ -135,8 +130,7 @@ public class ElementtimesGUI implements IGuiHandler {
                 default:
                     return null;
             }
-        } else {
-            return null;
         }
+		return null;
     }
 }

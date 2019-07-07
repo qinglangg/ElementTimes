@@ -231,7 +231,6 @@ public abstract class BaseMachine extends TileEntity implements
         return writeToNBT(new NBTTagCompound());
     }
     @Override
-    @SuppressWarnings("NullableProblems")
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         ITileHandler.super.writeToNBT(nbt);

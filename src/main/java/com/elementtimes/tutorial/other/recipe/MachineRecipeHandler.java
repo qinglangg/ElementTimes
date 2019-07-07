@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.other.recipe;
 
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

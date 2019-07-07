@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.network;
 
 import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
-import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.util.FluidUtil;

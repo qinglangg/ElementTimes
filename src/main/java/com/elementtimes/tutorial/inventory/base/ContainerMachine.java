@@ -21,7 +21,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 一个机器的 Container
@@ -187,9 +186,8 @@ public class ContainerMachine extends Container {
         String localizedName = machine.getBlockType().getLocalizedName();
         if (machine.getWorld().isRemote) {
             return I18n.format(localizedName);
-        } else {
-            return localizedName;
         }
+		return localizedName;
     }
 
     public Map<SideHandlerType, Int2ObjectMap<int[]>> getFluidPositions() {

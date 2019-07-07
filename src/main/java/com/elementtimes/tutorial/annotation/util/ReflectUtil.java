@@ -22,7 +22,6 @@ public class ReflectUtil {
      * 获得可被注解条目的值
      * 只能获取静态值
      */
-    @SuppressWarnings("unchecked")
     public static <T> Optional<T> getFromAnnotated(@Nonnull AnnotatedElement holder, @Nullable T defaultValue) {
         T obj;
         if (holder instanceof AccessibleObject) {
@@ -285,7 +284,6 @@ public class ReflectUtil {
      * @param <T> 成员类型
      * @return 尝试获取成员的结果
      */
-    @SuppressWarnings("unchecked")
     public static <T> Optional<T> getField(@Nonnull Class clazz, @Nonnull String fieldName, @Nullable Object object) {
         T field = null;
         try {

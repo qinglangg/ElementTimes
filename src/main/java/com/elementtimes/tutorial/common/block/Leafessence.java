@@ -17,14 +17,12 @@ public class Leafessence extends Block
 	
 	
 	@Override
-	@SuppressWarnings("NullableProblems")
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
 	
 	@Override
-	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state)
 	{
         return false;

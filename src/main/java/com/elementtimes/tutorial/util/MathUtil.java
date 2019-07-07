@@ -1,12 +1,5 @@
 package com.elementtimes.tutorial.util;
 
-import com.google.common.collect.Table;
-import com.google.common.graph.Graph;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * 二进制运算，主要用于 meta 计算
  * @author luqin2007
@@ -25,8 +18,7 @@ public class MathUtil {
 
         if (b) {
             return code | (0b1 << position);
-        } else {
-            return code & (~(0b1 << position));
         }
+		return code & (~(0b1 << position));
     }
 }

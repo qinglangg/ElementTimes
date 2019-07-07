@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.test_tesr;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraftforge.client.model.animation.FastTESR;
 

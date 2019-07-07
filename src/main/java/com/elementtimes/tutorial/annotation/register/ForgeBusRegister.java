@@ -170,10 +170,6 @@ public class ForgeBusRegister {
             if (fluid.getFlowing() != null) {
                 textureMap.registerSprite(fluid.getFlowing());
             }
-
-            if (fluid.getOverlay() != null) {
-                textureMap.registerSprite(fluid.getOverlay());
-            }
         });
     }
 

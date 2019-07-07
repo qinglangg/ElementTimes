@@ -2,7 +2,6 @@ package com.elementtimes.tutorial.other.recipe;
 
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Collections;
@@ -16,7 +15,6 @@ import java.util.function.ToIntFunction;
  * 用于辅助构建合成配方
  * @author luqin2007
  */
-@SuppressWarnings("WeakerAccess")
 public class MachineRecipeBuilder {
     private ToIntFunction<MachineRecipeCapture> cost = (a) -> 0;
     private List<IngredientPart<ItemStack>> inputItems = new LinkedList<>();

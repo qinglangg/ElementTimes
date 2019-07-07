@@ -23,7 +23,7 @@ public class SaltGenerator extends WorldGenerator {
         // 来自于 WorldGenClay
         if (worldIn.getBlockState(sPosition).getMaterial() == Material.WATER) {
             int i = rand.nextInt(2) + 2;
-            int j = 1;
+            //int j = 1;
 
             for (int k = sPosition.getX() - i; k <= sPosition.getX() + i; ++k) {
                 for (int l = sPosition.getZ() - i; l <= sPosition.getZ() + i; ++l) {

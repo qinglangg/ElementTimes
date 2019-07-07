@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static org.jline.utils.Log.warn;
+import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 
 /**
  * 加载其他被注解控制的元素

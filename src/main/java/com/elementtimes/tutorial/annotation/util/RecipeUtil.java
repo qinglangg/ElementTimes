@@ -62,9 +62,8 @@ public class RecipeUtil {
                     return Ingredient.fromStacks(getFromItemName(oreOrName));
                 }
                 return ingredient;
-            } else {
-                return CraftingHelper.getIngredient(obj);
             }
+			return CraftingHelper.getIngredient(obj);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return Ingredient.EMPTY;

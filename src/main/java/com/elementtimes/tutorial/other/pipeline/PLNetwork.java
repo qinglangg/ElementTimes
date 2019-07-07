@@ -3,7 +3,6 @@ package com.elementtimes.tutorial.other.pipeline;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
-import com.google.common.graph.EndpointPair;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 import net.minecraft.util.math.BlockPos;
@@ -103,7 +102,7 @@ public class PLNetwork {
      * @return 是否成功添加
      */
     public boolean add(World world, PLInfo pipeline) {
-        BlockPos pos = pipeline.getPos();
+        //BlockPos pos = pipeline.getPos();
         return false;
     }
 

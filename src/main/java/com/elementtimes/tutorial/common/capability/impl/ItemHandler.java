@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
-import java.util.function.Supplier;
 
 /**
  * 自定义实现的 IItemHandler
@@ -82,7 +80,6 @@ public class ItemHandler extends ItemStackHandler {
      */
     private BiPredicate<Integer, ItemStack> mInputValid;
 
-    @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return mInputValid.test(slot, stack);
     }

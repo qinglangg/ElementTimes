@@ -36,8 +36,8 @@ public class ModFluidLoader {
         ModFluid info = element.getAnnotation(ModFluid.class);
         Fluid fluid = (Fluid) ReflectUtil.getFromAnnotated(element, null).orElse(null);
         if (fluid == null) {
-            ResourceLocation overlay = info.overlayResource().isEmpty() ? null : new ResourceLocation(ModInfo.MODID, info.overlayResource());
-            fluid = new Fluid(info.name(), new ResourceLocation(ModInfo.MODID, info.stillResource()), new ResourceLocation(ModInfo.MODID, info.flowingResource()), overlay, info.color());
+            fluid = new Fluid(info.name(), new ResourceLocation(ModInfo.MODID,
+            		info.stillResource()), new ResourceLocation(ModInfo.MODID, info.flowingResource()), info.color());
         }
 
         String name = ReflectUtil.getName(element).orElse("").toLowerCase();

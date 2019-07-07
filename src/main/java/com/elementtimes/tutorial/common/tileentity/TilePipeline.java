@@ -4,19 +4,12 @@ import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.other.pipeline.*;
 import com.elementtimes.tutorial.util.MathUtil;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.apache.commons.lang3.tuple.MutablePair;
-
-import java.util.HashSet;
-import java.util.LinkedList;
 
 /**
  * 管道 TileEntity 类
@@ -37,7 +30,7 @@ public class TilePipeline extends TileEntity {
      * 更新管道连接信息
      */
     public void update() {
-        boolean isChange = false;
+        //boolean isChange = false;
         // 管道已删除
         if (world.getTileEntity(pos) != this || world.getBlockState(pos).getBlock() instanceof Pipeline) {
             mInfo.getNetwork().remove(mInfo);

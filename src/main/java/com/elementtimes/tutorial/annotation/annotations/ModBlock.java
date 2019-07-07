@@ -65,7 +65,7 @@ public @interface ModBlock {
     @Retention(RetentionPolicy.RUNTIME)
     @interface StateMapper {
         // suffix() 模型文件名的后缀
-        String suffix();
+        String suffix() default "";
         // IProperty 属性名
         // withName() 模型 state 文件名的主体
         String propertyName();

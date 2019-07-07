@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.item;
 
-import akka.japi.Effect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
