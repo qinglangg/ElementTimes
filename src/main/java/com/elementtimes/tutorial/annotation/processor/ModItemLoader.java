@@ -10,6 +10,9 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -29,7 +32,9 @@ import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 public class ModItemLoader {
 
     public static Map<Item, String> ORE_DICTIONARY = new HashMap<>();
+    @SideOnly(Side.CLIENT)
     public static Map<Item, Int2ObjectMap<ModelResourceLocation>> SUB_ITEM_MODEL = new HashMap<>();
+    @SideOnly(Side.CLIENT)
     public static Map<Item, IItemColor> ITEM_COLOR = new HashMap<>();
 
     public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
@@ -53,9 +58,9 @@ public class ModItemLoader {
             defaultName = null;
         }
 
-        initOreDict(item, itemHolder);
-        // 矿辞
         initItem(item, info, defaultName);
+        // 矿辞
+        initOreDict(item, itemHolder);
         // 子类型
         initSubItem(item, itemHolder);
         // 合成表保留
@@ -84,10 +89,12 @@ public class ModItemLoader {
         }
         item.setUnlocalizedName(ModInfo.MODID + "." + unlocalizedName);
         item.setCreativeTab(info.creativeTab().tab);
-        if (!info.itemColorClass().isEmpty()) {
-            ReflectUtil.create(info.itemColorClass())
-                    .filter(obj -> obj instanceof IItemColor)
-                    .ifPresent(obj -> ITEM_COLOR.put(item, (IItemColor) obj));
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            if (!info.itemColorClass().isEmpty()) {
+                ReflectUtil.create(info.itemColorClass())
+                        .filter(obj -> obj instanceof IItemColor)
+                        .ifPresent(obj -> ITEM_COLOR.put(item, (IItemColor) obj));
+            }
         }
     }
 
@@ -105,38 +112,40 @@ public class ModItemLoader {
             item.setMaxDamage(0);
             item.setNoRepair();
 
-            int[] metadata = subItem.metadatas();
-            String[] models = subItem.models();
-            Int2ObjectMap<ModelResourceLocation> map = new Int2ObjectArrayMap<>();
-            for (int i = 0; i < metadata.length; i++) {
-                String model = models[i];
-                int domainIndex = model.indexOf(":");
-                int variantIndex = model.indexOf("#");
-                String domain;
-                String variant;
-                String resource;
-                if (domainIndex > 0) {
-                    domain = model.substring(0, domainIndex);
-                    if (variantIndex > 0) {
-                        variant = model.substring(variantIndex + 1);
-                        resource = model.substring(domainIndex + 1, variantIndex);
+            if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+                int[] metadata = subItem.metadatas();
+                String[] models = subItem.models();
+                Int2ObjectMap<ModelResourceLocation> map = new Int2ObjectArrayMap<>();
+                for (int i = 0; i < metadata.length; i++) {
+                    String model = models[i];
+                    int domainIndex = model.indexOf(":");
+                    int variantIndex = model.indexOf("#");
+                    String domain;
+                    String variant;
+                    String resource;
+                    if (domainIndex > 0) {
+                        domain = model.substring(0, domainIndex);
+                        if (variantIndex > 0) {
+                            variant = model.substring(variantIndex + 1);
+                            resource = model.substring(domainIndex + 1, variantIndex);
+                        } else {
+                            variant = "inventory";
+                            resource = model.substring(domainIndex + 1);
+                        }
                     } else {
-                        variant = "inventory";
-                        resource = model.substring(domainIndex + 1);
+                        domain = ModInfo.MODID;
+                        if (variantIndex > 0) {
+                            variant = model.substring(variantIndex + 1);
+                            resource = model.substring(0, variantIndex);
+                        } else {
+                            variant = "inventory";
+                            resource = model;
+                        }
                     }
-                } else {
-                    domain = ModInfo.MODID;
-                    if (variantIndex > 0) {
-                        variant = model.substring(variantIndex + 1);
-                        resource = model.substring(0, variantIndex);
-                    } else {
-                        variant = "inventory";
-                        resource = model;
-                    }
+                    map.put(metadata[i], new ModelResourceLocation(new ResourceLocation(domain, resource), variant));
                 }
-                map.put(metadata[i], new ModelResourceLocation(new ResourceLocation(domain, resource), variant));
+                SUB_ITEM_MODEL.put(item, map);
             }
-            SUB_ITEM_MODEL.put(item, map);
         }
     }
 

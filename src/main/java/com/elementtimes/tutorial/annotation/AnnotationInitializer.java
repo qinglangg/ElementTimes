@@ -6,6 +6,7 @@ import com.elementtimes.tutorial.annotation.processor.*;
 import com.elementtimes.tutorial.annotation.register.OreBusRegister;
 import com.elementtimes.tutorial.annotation.register.TerrainBusRegister;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -37,15 +39,13 @@ public class AnnotationInitializer {
 
     private static boolean sInInit = false;
 
-
-
     public static List<Block> BLOCKS = new ArrayList<>();
     public static List<Item> ITEMS = new ArrayList<>();
     public static List<Supplier<IRecipe[]>> RECIPES = new ArrayList<>();
     public static List<Fluid> FLUIDS = new ArrayList<>();
     public static List<ModCapability> CAPABILITIES = new ArrayList<>();
-    // ModNetwork, Class<IMessageHandler>, Class<IMessage>
     public static List<Object[]> NETWORKS = new ArrayList<>();
+    public static List<Enchantment> ENCHANTMENTS = new ArrayList<>();
 
     public static void onPreInit(FMLPreInitializationEvent event, String modId, String packageName) {
         ModInfo.MODID = modId;
@@ -68,7 +68,8 @@ public class AnnotationInitializer {
             warn("Annotation init start...");
             HashMap<Class, ArrayList<AnnotatedElement>> elements = new HashMap<>();
             ModClassLoader.getClasses(elements,
-                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class, ModCapability.class, ModNetwork.class);
+                    ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class,
+                    ModCapability.class, ModNetwork.class, ModEnchantment.class);
             ModBlockLoader.getBlocks(elements, BLOCKS);
             warn("---> Find {} Block", BLOCKS.size());
             ModBlockLoader.WORLD_GENERATORS.forEach((genType, generators) -> {
@@ -83,8 +84,10 @@ public class AnnotationInitializer {
             ModItemLoader.getItems(elements, ITEMS);
             warn("---> Find {} Item", ITEMS.size());
             warn("\tOreDictionary Name: {}", ModItemLoader.ORE_DICTIONARY.size());
-            warn("\tSubItem Model: {}", ModItemLoader.SUB_ITEM_MODEL.size());
-            warn("\tIItemColor: {}", ModItemLoader.ITEM_COLOR.size());
+            if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+                warn("\tSubItem Model: {}", ModItemLoader.SUB_ITEM_MODEL.size());
+                warn("\tIItemColor: {}", ModItemLoader.ITEM_COLOR.size());
+            }
             ModRecipeLoader.getRecipes(elements, RECIPES);
             warn("---> Find {} Recipe", RECIPES.size());
             ModFluidLoader.getFluids(elements, FLUIDS);
@@ -100,6 +103,8 @@ public class AnnotationInitializer {
             warn("---> Find {} Static Functions", ModElementLoader.STATIC_FUNCTIONS.size());
             ModNetworkLoader.getElements(elements, NETWORKS);
             warn("---> Find {} Network", NETWORKS.size());
+            ModEnchantmentLoader.getEnchantments(elements, ENCHANTMENTS);
+            warn("---> Find {} Enchantments", ENCHANTMENTS.size());
 
             warn("Register Event Listener");
             MinecraftForge.ORE_GEN_BUS.register(OreBusRegister.class);
