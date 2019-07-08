@@ -5,7 +5,6 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.util.FluidUtil;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -27,6 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStackSimple;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -81,13 +82,15 @@ public class ItemBottleFuel extends Item {
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        Fluid fluid = FluidUtil.getFluidNotNull(stack).getFluid();
-        if (fluid != null) {
-            String name = fluid.getLocalizedName(new FluidStack(fluid, 1000));
-            if (name == null) {
-                name = "???";
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            Fluid fluid = FluidUtil.getFluidNotNull(stack).getFluid();
+            if (fluid != null) {
+                String name = fluid.getLocalizedName(new FluidStack(fluid, 1000));
+                if (name == null) {
+                    name = "???";
+                }
+                return net.minecraft.client.resources.I18n.format(stack.getUnlocalizedName() + ".name", name);
             }
-            return I18n.format(stack.getUnlocalizedName() + ".name", name);
         }
         return "???";
     }

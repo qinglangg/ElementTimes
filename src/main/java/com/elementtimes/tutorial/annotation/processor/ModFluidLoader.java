@@ -43,7 +43,7 @@ public class ModFluidLoader {
         String name = ReflectUtil.getName(element).orElse("").toLowerCase();
 
         initFluid(fluid, info, name);
-        initFluidBlock(fluid, element, name, info.density());
+        initFluidBlock(fluid, element, name, info);
 
         into.add(fluid);
     }
@@ -60,9 +60,10 @@ public class ModFluidLoader {
         }
     }
 
-    private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name, int density) {
+    private static void initFluidBlock(Fluid fluid, AnnotatedElement element, String name, ModFluid info) {
         ModFluid.FluidBlock fbInfo = element.getAnnotation(ModFluid.FluidBlock.class);
         if (fbInfo != null) {
+            int density = info.density();
             Function<Fluid, Block> fluidBlock = null;
             if (!fbInfo.className().isEmpty()) {
                 Optional<Object> o = ReflectUtil.create(fbInfo.className(), new Object[]{fluid});
@@ -86,11 +87,9 @@ public class ModFluidLoader {
                 FLUID_BLOCK_STATE.put(fluid, fbInfo.resource());
             }
 
-            if (fbInfo.loadTexture()) {
-                FLUID_RESOURCES.add(fluid);
-            }
-
             FLUID_BLOCK.put(fluid, fluidBlock);
+        } else if (info.loadTexture()) {
+            FLUID_RESOURCES.add(fluid);
         }
     }
 

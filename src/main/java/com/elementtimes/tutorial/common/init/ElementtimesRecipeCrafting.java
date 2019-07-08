@@ -27,6 +27,7 @@ import java.util.function.Supplier;
  *
  * @author luqin2007
  */
+@SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {
     @ModRecipe
     @ModRecipe.Ore(value = "ironpower", output = "elementtimes:ironpower")

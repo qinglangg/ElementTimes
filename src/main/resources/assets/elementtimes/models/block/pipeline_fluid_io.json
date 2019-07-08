@@ -1,0 +1,47 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"particle": "elementtimes:blocks/pipeline/fluid_io"
+	},
+	"elements": [
+		{
+			"name": "move",
+			"from": [5, 0, 5],
+			"to": [11, 1, 11],
+			"faces": {
+				"north": {"uv": [5.5, 3.25, 7, 3.5], "texture": "#particle", "cullface": "north"},
+				"east": {"uv": [4, 3.25, 5.5, 3.5], "texture": "#particle", "cullface": "east"},
+				"south": {"uv": [8.5, 3.25, 10, 3.5], "texture": "#particle", "cullface": "south"},
+				"west": {"uv": [7, 3.25, 8.5, 3.5], "texture": "#particle", "cullface": "west"},
+				"up": {"uv": [5.5, 1.75, 7, 3.25], "texture": "#particle", "cullface": "up"},
+				"down": {"uv": [7, 1.75, 8.5, 3.25], "texture": "#particle", "cullface": "down"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [5, 0, 5],
+			"to": [11, 1, 11],
+			"faces": {
+				"north": {"uv": [5.5, 1.5, 7, 1.75], "texture": "#particle", "cullface": "north"},
+				"east": {"uv": [4, 1.5, 5.5, 1.75], "texture": "#particle", "cullface": "east"},
+				"south": {"uv": [8.5, 1.5, 10, 1.75], "texture": "#particle", "cullface": "south"},
+				"west": {"uv": [7, 1.5, 8.5, 1.75], "texture": "#particle", "cullface": "west"},
+				"up": {"uv": [5.5, 0, 7, 1.5], "texture": "#particle", "cullface": "up"},
+				"down": {"uv": [7, 0, 8.5, 1.5], "texture": "#particle", "cullface": "down"}
+			}
+		},
+		{
+			"name": "pipeline",
+			"from": [6, 1, 6],
+			"to": [10, 15, 10],
+			"faces": {
+				"north": {"uv": [1, 1, 2, 4.5], "texture": "#particle", "cullface": "north"},
+				"east": {"uv": [0, 1, 1, 4.5], "texture": "#particle", "cullface": "east"},
+				"south": {"uv": [3, 1, 4, 4.5], "texture": "#particle", "cullface": "south"},
+				"west": {"uv": [2, 1, 3, 4.5], "texture": "#particle", "cullface": "west"},
+				"up": {"uv": [1, 0, 2, 1], "texture": "#particle", "cullface": "up"},
+				"down": {"uv": [2, 0, 3, 1], "texture": "#particle", "cullface": "down"}
+			}
+		}
+	]
+}

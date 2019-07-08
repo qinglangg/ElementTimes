@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.other.recipe.MachineRecipe;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
+import mezz.jei.api.recipe.IIngredientType;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -13,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 只有物品输入输出的机器 jei 合成表
+ * 机器 jei 合成表
  * @author luqin2007
  */
 public class MachineRecipeWrapper implements IRecipeWrapper {
 
-    public List<List<ItemStack>> inputItems;
-    public List<List<FluidStack>> inputFluids;
-    public List<List<ItemStack>> outputItems;
-    public List<List<FluidStack>> outputFluids;
+    public final List<List<ItemStack>> inputItems;
+    public final List<List<FluidStack>> inputFluids;
+    public final List<List<ItemStack>> outputItems;
+    public final List<List<FluidStack>> outputFluids;
 
     private MachineRecipeWrapper(MachineRecipe recipe) {
         inputItems = new ArrayList<>(recipe.inputs.size());

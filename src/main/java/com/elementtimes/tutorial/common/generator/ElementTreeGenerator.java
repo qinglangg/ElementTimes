@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.world.gen;
+package com.elementtimes.tutorial.common.generator;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -33,13 +33,10 @@ public class ElementTreeGenerator extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        //boolean canSpawn = true;
-    	//未使用
-    	
+        boolean canSpawn = true;
         if (position.getY() >= 1 && position.getY() + mTreeHeight + mTreeLeafUpper < worldIn.getHeight()) {
             // 检查是否可以替换
-            // canSpawn = 
-            		testSpawn(position, pos -> isReplaceable(worldIn, pos));
+            canSpawn = testSpawn(position, pos -> isReplaceable(worldIn, pos));
             // 检查是否可以生成
             BlockPos spawnPos = position.down();
             IBlockState spawnOn = worldIn.getBlockState(spawnPos);

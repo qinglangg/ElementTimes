@@ -2,6 +2,9 @@ package com.elementtimes.tutorial.annotation.processor;
 
 import com.elementtimes.tutorial.annotation.annotations.ModSkip;
 import com.elementtimes.tutorial.annotation.other.ModInfo;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -167,20 +170,6 @@ public class ModClassLoader {
     }
 }
 
-
-//    @Deprecated
-//    public static List<Fluid> getFluidBlocks() {
-//        List<Fluid> fluids = new ArrayList<>();
-//        sElementFields.get(ModFluid.class).forEach(field -> initFluid(field, fluids));
-//        sElementClasses.get(ModFluid.class).forEach(clazz -> initFluid(clazz, fluids));
-//        return fluids;
-//    }
-//    private static void initFluid(Object fluidHolder, List<Fluid> into) {
-//        Fluid fluid = null;
-//        ModFluid info = null;
-//        into.set(fluid);
-//    }
-//
 //    /**
 //     * 获取所有命令
 //     */
@@ -197,28 +186,6 @@ public class ModClassLoader {
 //                    });
 //        }
 //        return sCommands;
-//    }
-//
-//    /**
-//     * 获取所有附魔
-//     */
-//    public static ArrayList<Enchantment> getEnchantments() {
-//        if (sEnchantments == null) {
-//            sEnchantments = new ArrayList<>();
-//            sElementClasses.get(ModEnchantment.class)
-//                    .forEach(aClass -> {
-//                        try {
-//                            ModEnchantment info = (ModEnchantment) aClass.getAnnotation(ModEnchantment.class);
-//                            Enchantment enchantment = (Enchantment) get(aClass);
-//                            enchantment.setName(info.name());
-//                            enchantment.setRegistryName(info.registerName());
-//                            sEnchantments.set(enchantment);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    });
-//        }
-//        return sEnchantments;
 //    }
 //
 //    /**

@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
 /**
  * 自定义物品的基本信息
  * 包括 registerName，unlocalizedName，creativeTab
+ * @author luqin2007
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})

@@ -28,7 +28,6 @@ import javax.annotation.Nullable;
  * @author KSGFK create in 2019/2/17
  */
 public class BlockTileBase<T extends TileEntity> extends BlockContainer implements IDismantleBlock {
-//    private static List<Class> keepInventory = new ArrayList<>();
 
     private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
@@ -58,7 +57,7 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(@SuppressWarnings("NullableProblems") World worldIn, int meta) {
         try {
             return mEntityClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
@@ -68,16 +67,19 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public EnumBlockRenderType getRenderType(IBlockState state) {//渲染类型设为普通方块
         return EnumBlockRenderType.MODEL;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

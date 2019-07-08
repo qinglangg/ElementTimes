@@ -80,6 +80,7 @@ public class ItemHandler extends ItemStackHandler {
      */
     private BiPredicate<Integer, ItemStack> mInputValid;
 
+    @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return mInputValid.test(slot, stack);
     }

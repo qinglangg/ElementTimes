@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.block.tree;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.interfaces.tileentity.IConfigApply;
-import com.elementtimes.tutorial.world.gen.RubberGenerator;
+import com.elementtimes.tutorial.common.generator.RubberGenerator;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;

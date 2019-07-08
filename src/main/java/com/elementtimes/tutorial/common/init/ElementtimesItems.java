@@ -13,6 +13,7 @@ import net.minecraftforge.common.util.EnumHelper;
  * 所有物品
  * @author KSGFK
  */
+@SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "ConstantConditions"})
 public class ElementtimesItems {
 
     @ModItem
@@ -31,14 +32,6 @@ public class ElementtimesItems {
     public static Item goldElement = new Item();
     @ModItem
     public static Item cropesSence = new Item();
-    @ModItem
-    public static Item elementSword = new Elementsword();
-    @ModItem
-    public static Item elementAxe = new Elementaxe();
-    @ModItem
-    public static Item elementbow = new Elementbow();
-    @ModItem
-    public static Item elementPickaxe = new Elementpickaxe();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
@@ -66,22 +59,6 @@ public class ElementtimesItems {
     public static Item ingotColumn = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item concrete = new Item();
-    @ModItem(registerName = "element_sleeve_helmet", unlocalizedName = "elementsleevehelmet")
-    public static Item elementSleeveHelmet = new ElementSleeveHelmet();
-    @ModItem(registerName = "element_sleeve_body", unlocalizedName = "elementsleevebody")
-    public static Item elementSleeveBody = new ElementSleeveBody();
-    @ModItem(registerName = "element_sleeve_leggings", unlocalizedName = "elementsleeveleggings")
-    public static Item elementSleeveLeggings = new ElementSleeveLeggings();
-    @ModItem(registerName = "element_sleeve_boots", unlocalizedName = "elementsleeveboots")
-    public static Item elementSleeveBoots = new ElementSleeveBoots();
-    @ModItem(registerName = "platinum_sleeve_helmet", unlocalizedName = "platinumsleevehelmet")
-    public static Item platinumSleeveHelmet = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.HEAD);
-    @ModItem(registerName = "platinum_sleeve_body", unlocalizedName = "platinumsleevebody")
-    public static Item platinumSleeveBody = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleevebody", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 16.0F), 1, EntityEquipmentSlot.CHEST);
-    @ModItem(registerName = "platinum_sleeve_leggings", unlocalizedName = "platinumsleeveleggings")
-    public static Item platinumSleeveLeggings = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 12.0F), 1, EntityEquipmentSlot.LEGS);
-    @ModItem(registerName = "platinum_sleeve_boots", unlocalizedName = "platinumsleeveboots")
-    public static Item platinumSleeveBoots = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.FEET);
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotCopper")
     public static Item copper = new Item();
@@ -118,14 +95,6 @@ public class ElementtimesItems {
     public static Item photoElement = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item quartzPowder = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModItem.Damageable(100)
-    @ModItem.RetainInCrafting
-    public static Item bigHammer = new Hammer();
-    @ModItem(creativeTab = ModCreativeTabs.Ore)
-    @ModItem.Damageable(10)
-    @ModItem.RetainInCrafting
-    public static Item smallHammer = new Hammer();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item cornBroth = new ItemSoup(20);
     @ModItem
@@ -143,7 +112,7 @@ public class ElementtimesItems {
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     public static Item diamondIngot = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical, itemColorClass = "com.elementtimes.tutorial.other.BottleItemStackColor")
+    @ModItem(creativeTab = ModCreativeTabs.Chemical, itemColorClass = "com.elementtimes.tutorial.client.BottleItemStackColor")
     public static Item bottle = new ItemBottleFuel();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sodiumBisulfite = new ItemGlassBottle();
@@ -155,6 +124,27 @@ public class ElementtimesItems {
     public static ItemGlassBottle sulphuricAcid = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static ItemGlassBottle sodiumSulfiteSolution = new ItemGlassBottle();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("rubber")
+    public static Item rubber = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
+    public static Item rubberRaw = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Chemical)
+    @ModOreDict("salt")
+    public static Item salt = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
+    public static Item starchball = new Starchball();
+
+    // tools
+
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    @ModItem.Damageable(100)
+    @ModItem.RetainInCrafting
+    public static Item bigHammer = new Hammer();
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    @ModItem.Damageable(10)
+    @ModItem.RetainInCrafting
+    public static Item smallHammer = new Hammer();
     @ModItem
     public static Item elementShovel = new Elementshovel();
     @ModItem
@@ -169,20 +159,33 @@ public class ElementtimesItems {
     public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
     @ModItem
     public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
-    @ModItem(creativeTab = ModCreativeTabs.Industry)
-    @ModOreDict("rubber")
-    public static Item rubber = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
-    public static Item rubberRaw = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    @ModOreDict("salt")
-    public static Item salt = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     @ModItem.Damageable(10)
     public static WoodenHalter woodenHalter = new WoodenHalter();
-    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
-    public static Item starchball = new Starchball();
-
+    @ModItem(registerName = "element_sleeve_helmet", unlocalizedName = "elementsleevehelmet")
+    public static Item elementSleeveHelmet = new ElementSleeveHelmet();
+    @ModItem(registerName = "element_sleeve_body", unlocalizedName = "elementsleevebody")
+    public static Item elementSleeveBody = new ElementSleeveBody();
+    @ModItem(registerName = "element_sleeve_leggings", unlocalizedName = "elementsleeveleggings")
+    public static Item elementSleeveLeggings = new ElementSleeveLeggings();
+    @ModItem(registerName = "element_sleeve_boots", unlocalizedName = "elementsleeveboots")
+    public static Item elementSleeveBoots = new ElementSleeveBoots();
+    @ModItem(registerName = "platinum_sleeve_helmet", unlocalizedName = "platinumsleevehelmet")
+    public static Item platinumSleeveHelmet = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.HEAD);
+    @ModItem(registerName = "platinum_sleeve_body", unlocalizedName = "platinumsleevebody")
+    public static Item platinumSleeveBody = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleevebody", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 16.0F), 1, EntityEquipmentSlot.CHEST);
+    @ModItem(registerName = "platinum_sleeve_leggings", unlocalizedName = "platinumsleeveleggings")
+    public static Item platinumSleeveLeggings = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 12.0F), 1, EntityEquipmentSlot.LEGS);
+    @ModItem(registerName = "platinum_sleeve_boots", unlocalizedName = "platinumsleeveboots")
+    public static Item platinumSleeveBoots = new ItemArmor(EnumHelper.addArmorMaterial("platinumsleeve", "elementtimes:platinum_sleeve", 2000, new int[] {3,6,8,3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 6.0F), 1, EntityEquipmentSlot.FEET);
+    @ModItem
+    public static Item elementSword = new Elementsword();
+    @ModItem
+    public static Item elementAxe = new Elementaxe();
+    @ModItem
+    public static Item elementbow = new Elementbow();
+    @ModItem
+    public static Item elementPickaxe = new Elementpickaxe();
 
     // gear
 
@@ -219,7 +222,6 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSilver")
     public static Item gearSilver = new Item();
-
 
     // plate
 

@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -50,8 +51,8 @@ public class ForgeBusRegisterClient {
         // 注册渲染
         AnnotationInitializer.ITEMS.forEach(item -> {
             if (ModItemLoader.SUB_ITEM_MODEL.containsKey(item)) {
-                Int2ObjectMap<ModelResourceLocation> map = ModItemLoader.SUB_ITEM_MODEL.get(item);
-                map.forEach((meta, model) -> ModelLoader.setCustomModelResourceLocation(item, meta, model));
+                Int2ObjectMap<Object> map = ModItemLoader.SUB_ITEM_MODEL.get(item);
+                map.forEach((meta, model) -> ModelLoader.setCustomModelResourceLocation(item, meta, (ModelResourceLocation) model));
             } else {
                 ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
@@ -59,7 +60,7 @@ public class ForgeBusRegisterClient {
         AnnotationInitializer.BLOCKS.forEach(block -> {
             if (ModBlockLoader.STATE_MAPS.containsKey(block)) {
                 // IStateMapper
-                IStateMapper mapper = ModBlockLoader.STATE_MAPS.get(block);
+                IStateMapper mapper = (IStateMapper) ModBlockLoader.STATE_MAPS.get(block);
                 ModelLoader.setCustomStateMapper(block, mapper);
                 // ResourceLocation
                 ModBlock.StateMap stateMap = ModBlockLoader.BLOCK_STATES.get(block);
@@ -109,6 +110,10 @@ public class ForgeBusRegisterClient {
             if (fluid.getFlowing() != null) {
                 textureMap.registerSprite(fluid.getFlowing());
             }
+
+            if (fluid.getOverlay() != null) {
+                textureMap.registerSprite(fluid.getOverlay());
+            }
         });
     }
 
@@ -116,6 +121,6 @@ public class ForgeBusRegisterClient {
     @SideOnly(Side.CLIENT)
     public static void registerItemColor(ColorHandlerEvent.Item event) {
         ModItemLoader.ITEM_COLOR.forEach((item, iItemColor) ->
-                event.getItemColors().registerItemColorHandler(iItemColor, item));
+                event.getItemColors().registerItemColorHandler((IItemColor) iItemColor, item));
     }
 }

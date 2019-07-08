@@ -1,12 +1,10 @@
 package com.elementtimes.tutorial.inventory.base;
 
-import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -159,23 +157,6 @@ public class ContainerMachine extends Container {
      */
     public short getEnergyStored() {
         return mEnergyStored;
-    }
-
-    /**
-     * 获取所有按钮
-     * @return 按钮数组
-     */
-    public GuiButton[] getButtons() {
-        return machine.getButtons();
-    }
-
-    /**
-     * 处理按钮事件
-     * @param button 被按下的按钮
-     * @param container 按钮所在 GuiContainer
-     */
-    public void actionPerformed(GuiButton button, GuiMachineContainer container) {
-        machine.actionPerformed(button, container);
     }
 
     /**

@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  *
  * @author KSGFK
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 @Mod.EventBusSubscriber
 public class ElementtimesBlocks {
 
@@ -29,7 +30,7 @@ public class ElementtimesBlocks {
     @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp", creativeTab = ModCreativeTabs.None)
     public static Block cornCropUp = new CornCropUp();
     @ModBlock(registerName = "rubber_sapling", unlocalizedName = "rubber_sapling", creativeTab = ModCreativeTabs.Agriculture)
-    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.world.gen.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
+    @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.common.generator.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(registerName = "rubber_log", unlocalizedName = "rubber_log", burningTime = 300, creativeTab = ModCreativeTabs.Agriculture)
     @ModOreDict("logWood")
@@ -64,7 +65,7 @@ public class ElementtimesBlocks {
     public static Block SilverOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSalt")
-    @ModBlock.WorldGenClass("com.elementtimes.tutorial.world.gen.SaltGenerator")
+    @ModBlock.WorldGenClass("com.elementtimes.tutorial.common.generator.SaltGenerator")
     public static OreSalt oreSalt = new OreSalt();
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSulfur")
@@ -184,6 +185,11 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block pumpFluid = new BaseClosableMachine<>(TilePumpFluid.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
+    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
+    @ModBlock.StateMap
+    public static Block pipeline = new Pipeline();
 
     // 其他
 

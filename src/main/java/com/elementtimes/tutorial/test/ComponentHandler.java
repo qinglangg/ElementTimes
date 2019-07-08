@@ -12,6 +12,8 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class ComponentHandler {
         }
     }
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onToolTip(ItemTooltipEvent event)
     {
         if(event.getItemStack().hasCapability(CapabilityComponent.positionHistory,null)){

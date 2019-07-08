@@ -1,9 +1,6 @@
 package com.elementtimes.tutorial.common.event;
 
-import java.util.Random;
-
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -14,12 +11,14 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Random;
+
 /**
  * 打草几率掉玉米事件
  * @author 金竹
  */
 @Mod.EventBusSubscriber
-public class BreakBlockListener {
+public class ElementTimesEventListener {
 
 	@SubscribeEvent
 	public static void onBreakGrass(BlockEvent.BreakEvent e) {

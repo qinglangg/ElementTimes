@@ -1,10 +1,8 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
-import com.elementtimes.tutorial.client.gui.base.GuiMachineContainer;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
 
@@ -39,13 +37,6 @@ public interface IGuiProvider {
     default Slot[] createSlots() { return new Slot[0]; };
 
     /**
-     * 创建按钮。该方法将在 MachineTile 构造中调用
-     * @return 按钮
-     */
-    @Nonnull
-    default GuiButton[] createButton() { return new GuiButton[0]; }
-
-    /**
      * 创建流体槽位
      * type -> slot -> [x, y, w, h]
      * @return 流体
@@ -65,15 +56,4 @@ public interface IGuiProvider {
      * @return 流体位置。type -> slot -> [x, y, w, h]
      */
     Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids();
-
-    /**
-     * 获取按钮。该方法将会在 GUI 类种调用
-     * @return 按钮
-     */
-    GuiButton[] getButtons();
-
-    /**
-     * 按钮响应
-     */
-    default void actionPerformed(GuiButton button, GuiMachineContainer guiContainer) {}
 }

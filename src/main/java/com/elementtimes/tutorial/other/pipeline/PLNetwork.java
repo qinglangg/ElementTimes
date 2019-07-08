@@ -1,126 +1,173 @@
 package com.elementtimes.tutorial.other.pipeline;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Table;
+import com.google.common.graph.EndpointPair;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class PLNetwork {
-    private MutableGraph<BlockPos> mGraph = GraphBuilder.undirected().build();
-    private Map<BlockPos, PLInfo> mInfos = new HashMap<>();
-    // row: in, column: out
-    private Table<BlockPos, BlockPos, ImmutableList<BlockPos>> mPaths = HashBasedTable.create();
-    private boolean mValid = true;
-    private PLNetwork mNextNetwork = this;
-    private int mDim;
-    private final PLElementType mType;
+@SuppressWarnings({"UnstableApiUsage", "WeakerAccess"})
+public class PLNetwork implements INBTSerializable<NBTTagCompound> {
+    private static final String NBT_BIND_PIPELINE_NETWORK = "_pipeline_network_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_KEY = "_pipeline_network_key_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_DIM = "_pipeline_network_dim_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_TYPE = "_pipeline_network_type_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_OWNER = "_pipeline_network_owner_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_U = "_pipeline_network_graph_path_u_";
+    private static final String NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_V = "_pipeline_network_graph_path_v_";
 
-    public PLNetwork(@Nonnull PLElementType type, int dim) {
+    private long mKey;
+    private UUID mOwner;
+    private MutableGraph<PLInfo> mGraph;
+    private Set<PLPath> mPaths = new HashSet<>();
+    private int mDim = 0;
+    private PLType.PLElementType mType;
+
+    public PLNetwork(long key, @Nullable UUID owner, @Nonnull PLType.PLElementType type, int dim) {
+        mKey = key;
         mDim = dim;
         mType = type;
+        mOwner = owner;
+        mGraph = GraphBuilder.undirected().build();
+    }
+
+    public PLNetwork(long key, @Nullable UUID owner, PLNetwork network, MutableGraph<PLInfo> graph) {
+        mKey = key;
+        mDim = network.getDim();
+        mType = network.getType();
+        mOwner = owner;
+        mGraph = graph;
     }
 
     /**
-     * 获取某位置的管道信息
-     * 如果所在位置不存在管道或管道不在该网络，返回 null
-     * @param pos 管道位置
-     * @return 管道信息
+     * 通过 NBT 创建网络
+     * 在初始化时使用，因此如果存在相同网络 key，会跳过创建。
+     * @param nbt NBT
+     * @return 网络
      */
-    @Nullable
-    public PLInfo get(@Nonnull BlockPos pos) {
-        return mInfos.get(pos);
+    public static PLNetwork fromNbt(NBTTagCompound nbt) {
+        NBTTagCompound nbtNetwork = nbt.getCompoundTag(NBT_BIND_PIPELINE_NETWORK);
+        long key = nbtNetwork.getLong(NBT_BIND_PIPELINE_NETWORK_KEY);
+        PLNetwork network = PLNetworkManager.getNetwork(key)
+                .orElse(new PLNetwork(0, null, PLType.PLElementType.Item, 0));
+        network.deserializeNBT(nbt);
+        return network;
+    }
+
+    public long getKey() {
+        return mKey;
     }
 
     /**
-     * 判断某节管道是否可以作为管道起点（元素入口）
-     * @param pos 管道位置
-     * @return 是否可以作为入口
-     */
-    public boolean isStartNode(@Nonnull BlockPos pos) {
-        PLInfo plInfo = get(pos);
-        return plInfo != null && plInfo.getType().in();
-    }
-
-    /**
-     * 判断某节管道是否可以作为管道终点（元素出口）
-     * @param pos 管道位置
-     * @return 是否可以作为出口
-     */
-    public boolean isEndNode(@Nonnull BlockPos pos) {
-        PLInfo plInfo = get(pos);
-        return plInfo != null && plInfo.getType().out();
-    }
-
-    /**
-     * TODO
      * 查询元素需要经过的管道路径
      * @param start 起始管道
      * @param end 终止管道
-     * @return 最短路径
+     * @return 最短路径，若无法达到或没有缓存当前路径则返回 null
      */
-    public ImmutableList<BlockPos> queryPath(@Nonnull BlockPos start, @Nonnull BlockPos end) {
-        if (isStartNode(start) && isEndNode(end)) {
-            return mPaths.get(start, end);
+    @Nullable
+    public PLPath queryPath(@Nonnull PLInfo start, @Nonnull PLInfo end) {
+        PLPath path = queryPathNotCalc(start, end);
+        if (path == null) {
+            calcPath(start);
         }
-        return ImmutableList.of();
+        return queryPathNotCalc(start, end);
     }
 
-    /**
-     * 当前网络是否有效
-     * 当网络发生变动时（如使用管道连接两个网络），可能使网络无效
-     * @return 是否有效
-     */
-    public boolean isValid() {
-        return mValid;
-    }
+    @Nullable
+    public PLPath queryPath(@Nonnull BlockPos start, @Nonnull BlockPos end) {
+        Set<PLInfo> nodes = mGraph.nodes();
+        PLInfo plStart = null;
+        PLInfo plEnd = null;
+        for (PLInfo node : nodes) {
+            if (plStart == null && node.getPos().equals(start)) {
+                plStart = node;
+            }
 
-    /**
-     * 获取有效管道
-     * 当网络被替换（如两个网络合并）导致其中一个网络失效，使用此方法获取新的网络
-     * 返回 null 则表示该网络被删除，并没有与其他网络合并
-     * @return 有效管道
-     */
-    public PLNetwork getValidNetwork() {
-        PLNetwork ptr = this;
-        while (!ptr.isValid() && ptr != ptr.mNextNetwork) {
-            ptr = ptr.mNextNetwork;
+            if (plEnd == null && node.getPos().equals(end)) {
+                plEnd = node;
+            }
+
+            if (plStart != null && plEnd != null) {
+                break;
+            }
         }
-        return ptr.isValid() ? ptr : null;
+        if (plStart != null && plEnd != null) {
+            return queryPath(plStart, plEnd);
+        }
+        return null;
+    }
+
+    private PLPath queryPathNotCalc(@Nonnull PLInfo start, @Nonnull PLInfo end) {
+        return getPaths().stream()
+                .filter(p -> p.getStart().equals(start) && p.getEnd().equals(end))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
-     * TODO: 添加管道，检查网络
      * 为网络添加管道
+     * @param world 世界
      * @param pipeline 管道
-     * @return 是否成功添加
+     * @param linkedLines 连接网络，可为 null
      */
-    public boolean add(World world, PLInfo pipeline) {
-        //BlockPos pos = pipeline.getPos();
-        return false;
+    public void add(World world, PLInfo pipeline, @Nullable Collection<PLInfo> linkedLines) {
+        pipeline.setNetwork(this);
+        Set<PLInfo> nodes = mGraph.nodes();
+        if (!nodes.contains(pipeline)) {
+            mGraph.addNode(pipeline);
+        }
+        if (linkedLines != null) {
+            for (PLInfo plInfo : linkedLines) {
+                link(world, pipeline, plInfo);
+            }
+        }
     }
 
     /**
-     * TODO: 移除管道，检查网络
-     * 从网络中删除管道
-     * @param pipeline 管道
+     * 设置两个管道联通
+     * @param p1 管道1
+     * @param p2 管道2
      */
-    public void remove(PLInfo pipeline) {
-        // TODO REMOVE
+    public void link(World world, PLInfo p1, PLInfo p2) {
+        if (this != p1.getNetwork()) {
+            PLNetworkManager.merge(world, this, p1.getNetwork());
+        }
+        if (this != p2.getNetwork()) {
+            PLNetworkManager.merge(world, this, p2.getNetwork());
+        }
+        mGraph.putEdge(p1, p2);
     }
 
     /**
-     * 当前网络中是否为空
-     * @return 是否没有管道
+     * 从网络中删除管道，删除管道后，网络可能不变，可能分裂为多个网络，也可能消失
+     * TODO: 优化：删除管道后，更新网络策略
+     * @param pipeline 管道
      */
-    public boolean isEmpty() {
-        return mGraph.nodes().isEmpty();
+    public void remove(World world, PLInfo pipeline) {
+        Set<PLInfo> nodes = mGraph.nodes();
+        if (nodes.contains(pipeline)) {
+            if (nodes.size() == 1) {
+                PLNetworkManager.removeNetwork(world, this);
+                return;
+            } else {
+                Set<PLInfo> adjacentNodes = mGraph.adjacentNodes(pipeline.getPos());
+                for (PLInfo node : adjacentNodes) {
+                    mGraph.removeEdge(pipeline.getPos(), node);
+                }
+                mGraph.removeNode(pipeline.getPos());
+            }
+            pipeline.remove(world);
+        }
+        List<PLNetwork> networks = rebuild();
+        PLNetworkManager.removeNetwork(world, this);
+        PLNetworkManager.addNetworks(world, networks);
     }
 
     /**
@@ -132,49 +179,194 @@ public class PLNetwork {
     }
 
     /**
-     * 管道传输元素类型
-     * @return 传输元素类型
+     * 获取所有路径
+     * @return 缓存的最短路径
      */
-    public PLElementType getType() {
-        return mType;
+    @Nonnull
+    public Set<PLPath> getPaths() {
+        return mPaths;
     }
 
     /**
-     * 分裂网络
-     * 当管道被删除时
-     * @return 派生子网络
+     * 管道传输元素类型
+     * @return 传输元素类型
      */
-    public PLNetwork[] childNet(World world) {
-        if (isValid() && mGraph.nodes().size() > 1) {
-            Set<BlockPos> unlinkNodes = new HashSet<>(mGraph.nodes());
-            BlockPos pos = unlinkNodes.stream().findFirst().get();
-            findAndRemove(unlinkNodes, pos);
-            if (unlinkNodes.size() == 1) {
-                PLNetwork net = new PLNetwork(mType, mDim);
-                PLInfo plInfo = get(unlinkNodes.stream().findFirst().get());
-                net.add(world, plInfo);
-                return new PLNetwork[] {net};
-            } else if (unlinkNodes.size() > 1) {
-
-            }
-        }
-        return new PLNetwork[0];
+    @Nonnull
+    public PLType.PLElementType getType() {
+        return mType;
     }
 
-    private void findAndRemove(Set<BlockPos> all, BlockPos start) {
-        all.remove(start);
-        for (BlockPos node : mGraph.adjacentNodes(start)) {
-            findAndRemove(all, node);
+    public MutableGraph<PLInfo> getGraph() {
+        return mGraph;
+    }
+
+    /**
+     * 重新计算所有最短路径
+     * TODO: 可优化：当管道变动时，判断是否只需要部分更新
+     */
+    public void calcPath(PLInfo start) {
+        Set<PLInfo> nodes = mGraph.nodes();
+        mPaths = new HashSet<>(nodes.size());
+        long mark = System.currentTimeMillis();
+        List<PLInfo> findNodes = new ArrayList<>(nodes);
+        findNodes.remove(start);
+        for (int i = 0; i < findNodes.size(); i++) {
+            PLPath nearestPath = getNearestPath(findNodes, start, mark);
+            if (nearestPath != null) {
+                updatePath(nearestPath, mark, start);
+            }
+        }
+
+    }
+
+    @Nullable
+    private PLPath getNearestPath(List<PLInfo> findNodes, PLInfo start, long mark) {
+        long tick = Long.MAX_VALUE;
+        PLPath select = null;
+        for (PLInfo temp : findNodes) {
+            PLPath path = queryPathNotCalc(start, temp);
+            if (path == null) {
+                for (PLInfo adjNode : mGraph.adjacentNodes(temp)) {
+                    PLPath adjPath = queryPathNotCalc(start, adjNode);
+                    if (adjPath != null) {
+                        PLPath rPath = new PLPath(adjPath.getPaths(), temp);
+                        if (rPath.getTotalTick() < tick) {
+                            tick = rPath.getTotalTick();
+                            select = rPath;
+                        }
+                    }
+                }
+            } else if (path.findFlag != mark) {
+                if (path.getTotalTick() < tick) {
+                    tick = path.getTotalTick();
+                    select = path;
+                }
+            }
+        }
+        return select;
+    }
+
+    private void updatePath(PLPath nearestPath, long mark, PLInfo start) {
+        nearestPath.findFlag = mark;
+        mPaths.add(nearestPath);
+
+        PLInfo endNode = nearestPath.getEnd();
+        for (PLInfo node : mGraph.adjacentNodes(endNode)) {
+            PLPath path = new PLPath(nearestPath, node);
+            PLPath plPath = queryPath(start, node);
+            if (plPath == null) {
+                mPaths.add(path);
+            } else {
+                plPath.update(path);
+            }
+        }
+    }
+
+    /**
+     * 重建网络
+     * 当网络增加管道时，使用该方法生成新的网络，进行网络分裂操作
+     * TODO: 可优化：当删除管道时，判断是否真正需要分裂网络，不需要的话可以继续使用原网络
+     * @return 新网络
+     */
+    public List<PLNetwork> rebuild() {
+        Set<PLInfo> nodes = mGraph.nodes();
+        List<PLInfo> nodeCheck = new ArrayList<>(nodes);
+        List<PLNetwork> networks = new ArrayList<>(1);
+        if (nodeCheck.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            while (!nodeCheck.isEmpty()) {
+                networks.add(getSubNetwork(nodeCheck.get(0), nodeCheck));
+            }
+            return networks;
+        }
+    }
+
+    private PLNetwork getSubNetwork(PLInfo node, List<PLInfo> check) {
+        MutableGraph<PLInfo> subGraph = GraphBuilder.undirected().build();
+        PLNetwork subNetwork = new PLNetwork(mKey, mOwner, this, subGraph);
+        List<PLInfo[]> edges = new LinkedList<>();
+        resetAdjNode(subNetwork, node, check, edges);
+        for (PLInfo[] edge : edges) {
+            subGraph.putEdge(edge[0], edge[1]);
+        }
+        return subNetwork;
+    }
+
+    private void resetAdjNode(PLNetwork network, PLInfo node, List<PLInfo> removeFrom, List<PLInfo[]> edgeCollect) {
+        node.setNetwork(network);
+        removeFrom.remove(node);
+        for (PLInfo adjacentNode : mGraph.adjacentNodes(node)) {
+            edgeCollect.add(new PLInfo[]{node, adjacentNode});
+            resetAdjNode(network, adjacentNode, removeFrom, edgeCollect);
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        return obj instanceof PLNetwork
+                && ((PLNetwork) obj).mDim == mDim
+                && ((PLNetwork) obj).mKey == mKey
+                && ((PLNetwork) obj).mType == mType
+                && ((PLNetwork) obj).mOwner.equals(mOwner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mGraph, mInfos, mDim, mType);
+        return Objects.hash(mDim, mKey, mType, mOwner);
+    }
+
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        NBTTagCompound nbtNetwork = new NBTTagCompound();
+
+        nbtNetwork.setLong(NBT_BIND_PIPELINE_NETWORK_KEY, mKey);
+        nbtNetwork.setInteger(NBT_BIND_PIPELINE_NETWORK_DIM, mDim);
+        nbtNetwork.setInteger(NBT_BIND_PIPELINE_NETWORK_TYPE, mType.toInt());
+        Set<EndpointPair<PLInfo>> edges = mGraph.edges();
+        NBTTagList listU = new NBTTagList();
+        NBTTagList listV = new NBTTagList();
+        for (EndpointPair<PLInfo> edge : edges) {
+            listU.appendTag(edge.nodeU().serializeNBT());
+            listV.appendTag(edge.nodeV().serializeNBT());
+        }
+        nbtNetwork.setTag(NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_U, listU);
+        nbtNetwork.setTag(NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_V, listV);
+        if (mOwner != null) {
+            nbtNetwork.setUniqueId(NBT_BIND_PIPELINE_NETWORK_OWNER, mOwner);
+        }
+
+        nbt.setTag(NBT_BIND_PIPELINE_NETWORK, nbtNetwork);
+        return nbt;
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        NBTTagCompound nbtNetwork = nbt.getCompoundTag(NBT_BIND_PIPELINE_NETWORK);
+
+        mKey = nbtNetwork.getLong(NBT_BIND_PIPELINE_NETWORK_KEY);
+        mDim = nbtNetwork.getInteger(NBT_BIND_PIPELINE_NETWORK_DIM);
+        int type = nbtNetwork.getInteger(NBT_BIND_PIPELINE_NETWORK_TYPE);
+        mType = PLType.PLElementType.fromInt(type);
+        if (nbtNetwork.hasKey(NBT_BIND_PIPELINE_NETWORK_OWNER)) {
+            mOwner = nbtNetwork.getUniqueId(NBT_BIND_PIPELINE_NETWORK_OWNER);
+        }
+        NBTTagList listU = (NBTTagList) nbtNetwork.getTag(NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_U);
+        NBTTagList listV = (NBTTagList) nbtNetwork.getTag(NBT_BIND_PIPELINE_NETWORK_GRAPH_NODE_V);
+        int pathCount = Math.min(listU.tagCount(), listV.tagCount());
+        for (int i = 0; i < pathCount; i++) {
+            PLInfo nodeU = new PLInfo();
+            nodeU.deserializeNBT(listU.getCompoundTagAt(i));
+            PLInfo nodeV = new PLInfo();
+            nodeV.deserializeNBT(listV.getCompoundTagAt(i));
+
+            mGraph.addNode(nodeU);
+            mGraph.addNode(nodeV);
+            mGraph.putEdge(nodeU, nodeV);
+        }
     }
 }

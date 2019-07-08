@@ -16,6 +16,8 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author luqin2007
  */
@@ -33,6 +35,7 @@ public class Compressor extends BaseClosableMachine<TileCompressor> {
                 new IUnlistedProperty[]{Properties.AnimationProperty});
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.475D, 1.0D);

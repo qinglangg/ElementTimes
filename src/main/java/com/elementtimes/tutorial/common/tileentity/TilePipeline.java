@@ -1,104 +1,142 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.common.block.Pipeline;
-import com.elementtimes.tutorial.other.pipeline.*;
+import com.elementtimes.tutorial.other.pipeline.PLInfo;
+import com.elementtimes.tutorial.other.pipeline.PLType;
+import com.elementtimes.tutorial.util.BlockUtil;
 import com.elementtimes.tutorial.util.MathUtil;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 /**
  * 管道 TileEntity 类
  * @author luqin2007
  */
+@SuppressWarnings("unused")
 public class TilePipeline extends TileEntity {
+
+    private static final String NBT_BIND_TP = "_pipeline_te_";
+    private static final String NBT_BIND_TP_CONNECTED = "_pipeline_te_conn";
+    private static final String NBT_BIND_TP_DISCONNECTED = "_pipeline_te_disconn";
+    private static final String NBT_BIND_TP_INFO = "_pipeline_te_info";
 
     private int mConnected = 0b000000;
     private int mDisconnected = 0b000000;
-    private boolean mHasElement = false;
-    private PLInfo mInfo;
+    private PLInfo mInfo = new PLInfo(pos, 20, PLType.Item);
 
-    public TilePipeline() {
-        mInfo = new PLInfo(world, pos, 20, getType());
-    }
-
-    /**
-     * 更新管道连接信息
-     */
-    public void update() {
-        //boolean isChange = false;
-        // 管道已删除
-        if (world.getTileEntity(pos) != this || world.getBlockState(pos).getBlock() instanceof Pipeline) {
-            mInfo.getNetwork().remove(mInfo);
-            return;
-        }
-        PLType type = getWorld().getBlockState(pos).getValue(Pipeline.PL_TYPE);
-        for (EnumFacing facing : EnumFacing.values()) {
-            if (!isDisconnected(facing)) {
-                TileEntity te = world.getTileEntity(pos.offset(facing));
-                if (te instanceof TilePipeline) {
-                    TilePipeline tp = (TilePipeline) te;
-                    if (type.type().equals(tp.getType().type()) && !tp.isDisconnected(facing.getOpposite())) {
-                        setConnected(facing, true);
-                    } else {
-                        setConnected(facing, false);
-                    }
-                } else if (te == null) {
-                    setConnected(facing, false);
-                } else {
-                    if (type.type() == PLElementType.Fluid) {
-                        IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
-                        setConnected(facing, capability != null);
-                    } else if (type.type() == PLElementType.Item) {
-                        IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
-                        setConnected(facing, capability != null);
-                    }
-                }
-            }
-        }
+    public void init(int keepTick) {
+        mInfo.setPos(pos);
+        mInfo.setKeepTick(keepTick);
+        mInfo.setType(getType());
     }
 
     public PLType getType() {
         return world.getBlockState(pos).getValue(Pipeline.PL_TYPE);
     }
 
+    public PLInfo getInfo() {
+        return mInfo;
+    }
+
     public void setDisconnected(int disconnected) {
         mDisconnected = disconnected;
+        boolean update = false;
+        for (EnumFacing facing : EnumFacing.values()) {
+            tryConnect(facing);
+            update = true;
+        }
+        if (update) {
+            update();
+        }
     }
 
     public void setDisconnected(EnumFacing facing, boolean disconnect) {
-        mDisconnected = MathUtil.setByte(mDisconnected, facing.getIndex(), disconnect);
+        setDisconnected(MathUtil.setByte(mDisconnected, facing.getIndex(), disconnect));
     }
 
     public boolean isDisconnected(EnumFacing facing) {
         return MathUtil.fromByte(mDisconnected, facing.getIndex());
     }
 
+    public boolean canConnect(EnumFacing facing, PLInfo pipeline) {
+        PLType type1 = getType();
+        PLType type2 = pipeline.getType();
+        return !isDisconnected(facing) && type1.type() == type2.type() && !(type1.in() && type2.in());
+    }
+
     public void setConnected(int connected) {
-        mConnected = connected;
+        if (mConnected != connected) {
+            mConnected = connected;
+            update();
+        }
     }
 
     public void setConnected(EnumFacing facing, boolean connected) {
-        mConnected = MathUtil.setByte(mConnected, facing.getIndex(), connected);
+        setConnected(MathUtil.setByte(mConnected, facing.getIndex(), connected));
     }
 
     public boolean isConnected(EnumFacing facing) {
         return MathUtil.fromByte(mConnected, facing.getIndex());
     }
 
-    public IBlockState getActualState(IBlockState state) {
-        return state.withProperty(Pipeline.PL_DISCONNECTED, mDisconnected)
-                .withProperty(Pipeline.PL_CONNECTED, mConnected)
-                .withProperty(Pipeline.PL_HAS_ELEM, mHasElement);
+    public IBlockState bindActualState(IBlockState state) {
+        IBlockState newState = state;
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_UP, isConnected(EnumFacing.UP));
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_DOWN, isConnected(EnumFacing.DOWN));
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_EAST, isConnected(EnumFacing.EAST));
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_WEST, isConnected(EnumFacing.WEST));
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_NORTH, isConnected(EnumFacing.NORTH));
+        newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_SOUTH, isConnected(EnumFacing.SOUTH));
+        return newState;
     }
 
-    public static void notifyUpdate(TileEntity te) {
-        if (te instanceof TilePipeline) {
-            ((TilePipeline) te).update();
+    public void tryConnect(EnumFacing facing) {
+        PLInfo info = getInfo();
+        TileEntity te = world.getTileEntity(pos.offset(facing));
+        if (te != null) {
+            EnumFacing opposite = facing.getOpposite();
+            if (te instanceof TilePipeline) {
+                TilePipeline tp = (TilePipeline) te;
+                if (canConnect(facing, tp.getInfo()) && tp.canConnect(opposite, info)) {
+                    setConnected(facing, true);
+                    tp.setConnected(opposite, true);
+                } else {
+                    setConnected(facing, false);
+                    tp.setConnected(facing, false);
+                }
+            } else if (info.getType().canConnect(te, opposite)) {
+                setConnected(facing, true);
+            } else {
+                setConnected(facing, false);
+            }
         }
+    }
+
+    public void update() {
+        markDirty();
+        IBlockState newState = bindActualState(world.getBlockState(pos));
+        BlockUtil.setBlockState(world, pos, newState, this);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+        NBTTagCompound pipeline = new NBTTagCompound();
+        pipeline.setInteger(NBT_BIND_TP_CONNECTED, mConnected);
+        pipeline.setInteger(NBT_BIND_TP_DISCONNECTED, mConnected);
+        pipeline.setTag(NBT_BIND_TP_INFO, mInfo.serializeNBT());
+        compound.setTag(NBT_BIND_TP, pipeline);
+        return compound;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        NBTTagCompound pipeline = compound.getCompoundTag(NBT_BIND_TP);
+        mInfo.deserializeNBT(pipeline.getCompoundTag(NBT_BIND_TP_INFO));
+        mDisconnected = pipeline.getInteger(NBT_BIND_TP_DISCONNECTED);
+        setConnected(pipeline.getInteger(NBT_BIND_TP_CONNECTED));
     }
 }

@@ -68,6 +68,7 @@ public class CapabilityComponent {
         {
             if (positionHistory.equals(capability))
             {
+                @SuppressWarnings("unchecked")
                 T result = (T) histories;
                 return result;
             }

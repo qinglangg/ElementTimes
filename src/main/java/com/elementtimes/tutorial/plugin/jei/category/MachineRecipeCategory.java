@@ -9,7 +9,6 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -30,22 +29,27 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     private int[][] items;
     private int[][] fluids;
 
-    public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine, int u, int v, int width, int height, int[][] itemXYWHs, int[][] fluidXYWHs) {
+    public MachineRecipeCategory(IGuiHelper helper, String id, String machine) {
+        this(helper, "5", id, machine, 43, 15, 90, 44,
+                new int[][]{new int[] {56,30}, new int[]{110,30}}, new int[][]{});
+    }
+
+    public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine, int u, int v, int width, int height, int[][] itemXYs, int[][] fluidXYs) {
         mBackground = helper.createDrawable(new ResourceLocation(ElementTimes.MODID, "textures/gui/" + texture + ".png"), u, v, width, height);
         this.machine = machine;
         this.id = id;
-        for (int i = 0; i < itemXYWHs.length; i++) {
-            int[] xywh = itemXYWHs[i];
-            xywh[0] = xywh[0] - width;
-            xywh[1] = xywh[1] - height;
+        for (int i = 0; i < itemXYs.length; i++) {
+            int[] xy = itemXYs[i];
+            xy[0] = xy[0] - u;
+            xy[1] = xy[1] - v;
         }
-        for (int i = 0; i < fluidXYWHs.length; i++) {
-            int[] xywh = fluidXYWHs[i];
-            xywh[0] = xywh[0] - width;
-            xywh[1] = xywh[1] - height;
+        for (int i = 0; i < fluidXYs.length; i++) {
+            int[] xy = fluidXYs[i];
+            xy[0] = xy[0] - u;
+            xy[1] = xy[1] - v;
         }
-        items = itemXYWHs;
-        fluids = fluidXYWHs;
+        items = itemXYs;
+        fluids = fluidXYs;
     }
 
     @Nonnull
@@ -57,7 +61,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     @Nonnull
     @Override
     public String getTitle() {
-        return I18n.format(String.format("jei.%s.%s", ElementTimes.MODID, machine));
+        return net.minecraft.client.resources.I18n.format(String.format("jei.%s.%s", ElementTimes.MODID, machine));
     }
 
     @Nonnull

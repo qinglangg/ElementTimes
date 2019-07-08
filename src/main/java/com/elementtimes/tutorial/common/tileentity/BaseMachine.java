@@ -13,7 +13,6 @@ import com.elementtimes.tutorial.util.ItemUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -54,7 +53,6 @@ public abstract class BaseMachine extends TileEntity implements
     private int mEnergyProcessed = 0;
     private int mEnergyUnprocessed = 0;
     private Slot[] mGuiSlots = null;
-    private GuiButton[] mGuiButtons = null;
     private Map<SideHandlerType, Int2ObjectMap<int[]>> mFluids = null;
     private IntSet mIgnoreInputSlot = new IntOpenHashSet();
     private Set<EntityPlayerMP> mPlayers = new HashSet<>();
@@ -200,13 +198,6 @@ public abstract class BaseMachine extends TileEntity implements
         return mGuiSlots;
     }
     @Override
-    public GuiButton[] getButtons() {
-        if (mGuiButtons == null) {
-            mGuiButtons = createButton();
-        }
-        return mGuiButtons;
-    }
-    @Override
     public Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids() {
         if (mFluids == null) {
             mFluids = createFluids();
@@ -231,6 +222,7 @@ public abstract class BaseMachine extends TileEntity implements
         return writeToNBT(new NBTTagCompound());
     }
     @Override
+    @SuppressWarnings("NullableProblems")
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         ITileHandler.super.writeToNBT(nbt);

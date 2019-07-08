@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
-import com.elementtimes.tutorial.client.util.RenderObject;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
@@ -12,6 +11,8 @@ import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
 
     public static MachineRecipeHandler mRecipe = new MachineRecipeHandler();
 
-    private List<RenderObject> tesr = new ArrayList<>();
+    private List tesr = new ArrayList<>();
 
     public TileSupportStand() {
         super(0, 0, 0, 1, 16000, 1, 16000);
@@ -50,32 +51,37 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
 
     //ITESRSupport
     @Override
-    public List<RenderObject> getRenderItems() {
+    @SideOnly(Side.CLIENT)
+    public List<com.elementtimes.tutorial.client.util.RenderObject> getRenderItems() {
         return tesr;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void initCanRendItems() {
         Vec3d v1 = new Vec3d(0.5F, -0.13F, 0.5F);
         Vec3d v2 = new Vec3d(0.5F, 0.375F, 0.5F);
-        tesr.add(new RenderObject(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp), v1).setRender(false));
-        tesr.add(new RenderObject(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish), v2).setRender(false));
+        tesr.add(new com.elementtimes.tutorial.client.util.RenderObject(Item.getItemFromBlock(ElementtimesBlocks.alcoholLamp), v1).setRender(false));
+        tesr.add(new com.elementtimes.tutorial.client.util.RenderObject(Item.getItemFromBlock(ElementtimesBlocks.evaporatingDish), v2).setRender(false));
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean setRender(int index, boolean isRender) {
-        tesr.get(index).setRender(isRender);
+        ((com.elementtimes.tutorial.client.util.RenderObject) tesr.get(index)).setRender(isRender);
         return isRender;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean isRender(int index) {
-        return tesr.get(index).isRender();
+        return ((com.elementtimes.tutorial.client.util.RenderObject) tesr.get(index)).isRender();
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void setRenderItemState(int index, ItemStack state) {
-        tesr.get(index).obj = state;
+        ((com.elementtimes.tutorial.client.util.RenderObject) tesr.get(index)).obj = state;
     }
 
     //我也不知道什么接口需要的

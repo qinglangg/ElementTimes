@@ -9,6 +9,7 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -41,7 +42,8 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
     @Nullable
     default MachineRecipeCapture getNextRecipe(IItemHandler input, TankHandler tankHandler) {
         List<ItemStack> items = ItemUtil.toList(input, getRecipeSlotIgnore());
-        MachineRecipeCapture[] captures = getRecipes().matchInput(items, FluidUtil.toListNotNull(tankHandler.getTankProperties()));
+        List<FluidStack> fluids = FluidUtil.toListNotNull(tankHandler.getTankProperties());
+        MachineRecipeCapture[] captures = getRecipes().matchInput(items, fluids);
         if (captures.length == 0) {
             return null;
         }

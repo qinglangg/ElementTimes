@@ -23,6 +23,7 @@ public class Leafessence extends Block
 	
 	
 	@Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state)
 	{
         return false;

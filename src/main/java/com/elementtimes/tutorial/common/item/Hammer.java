@@ -1,7 +1,12 @@
 package com.elementtimes.tutorial.common.item;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.block.Pipeline;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.common.init.ElementtimesMagic;
+import com.elementtimes.tutorial.other.pipeline.PLNetworkManager;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -15,8 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 大小锤子
@@ -26,6 +35,20 @@ import java.util.Arrays;
 public class Hammer extends Item {
 
     private static final String TAG_DAMAGE = "damage";
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        if (EnchantmentHelper.getEnchantments(stack).containsKey(ElementtimesMagic.hammerDebugger)) {
+            tooltip.add(net.minecraft.client.resources.I18n.format("tooltip.elementtimes.enchantment.debug"));
+        }
+    }
+
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+        return repair.getItem() == ElementtimesItems.diamondIngot;
+    }
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
@@ -44,32 +67,53 @@ public class Hammer extends Item {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
-            Block block = worldIn.getBlockState(pos).getBlock();
-            if (block == Blocks.AIR) {
-                // 空气
-                player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
-            } else {
-                TileEntity te = worldIn.getTileEntity(pos);
-                if (te == null) {
-                    // 无 te
-                    player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblockte", new ItemStack(block).getDisplayName()));
-                } else {
-                    NBTTagCompound nbt = te.writeToNBT(new NBTTagCompound());
-                    if (nbt.getKeySet().isEmpty()) {
-                        // 无 nbt
-                        player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.nonbt", new ItemStack(block).getDisplayName()));
-                    } else {
-                        sendNBTChat(player, block, "", nbt, 0);
-                        player.sendMessage(new TextComponentString("============================================================"));
-                    }
-                }
+            ItemStack stack = player.getHeldItem(hand);
+            if (EnchantmentHelper.getEnchantments(stack).containsKey(ElementtimesMagic.hammerDebugger)) {
+                debug(worldIn, pos, player);
             }
-
         }
         return EnumActionResult.PASS;
     }
 
-    private void sendNBTChat(EntityPlayer player, Block block, String lastKey, NBTBase nbt, int level) {
+    private void debug(World worldIn, BlockPos pos, EntityPlayer player) {
+        Block block = worldIn.getBlockState(pos).getBlock();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (block == Blocks.AIR) {
+            // 空气
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
+        } else if (block instanceof Pipeline) {
+            if (player.isSneaking()) {
+                debugTe(te, block, player);
+            } else {
+                debugPl(block, player);
+            }
+        } else {
+            debugTe(te, block, player);
+        }
+    }
+
+    private void debugTe(TileEntity te, Block block, EntityPlayer player) {
+        if (te == null) {
+            // 无 te
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblockte", new ItemStack(block).getDisplayName()));
+        } else {
+            NBTTagCompound nbt = te.writeToNBT(new NBTTagCompound());
+            if (nbt.getKeySet().isEmpty()) {
+                // 无 nbt
+                player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.nonbt", new ItemStack(block).getDisplayName()));
+            } else {
+                sendDebugChat(player, block, "", nbt, 0);
+                player.sendMessage(new TextComponentString("============================================================"));
+            }
+        }
+    }
+
+    private void debugPl(Block block, EntityPlayer player) {
+        sendDebugChat(player, block, "", PLNetworkManager.serializeNbt(), 0);
+        player.sendMessage(new TextComponentString("============================================================"));
+    }
+
+    private void sendDebugChat(EntityPlayer player, Block block, String lastKey, NBTBase nbt, int level) {
         String name = new ItemStack(block).getDisplayName();
         StringBuilder space = new StringBuilder(name).append(": ");
         for (int i = 0; i < level; i++) {
@@ -78,12 +122,12 @@ public class Hammer extends Item {
         if (nbt instanceof NBTTagCompound) {
             player.sendMessage(new TextComponentString(space.toString() + lastKey));
             ((NBTTagCompound) nbt).getKeySet().forEach(key -> {
-                sendNBTChat(player, block, key, ((NBTTagCompound) nbt).getTag(key), level + 1);
+                sendDebugChat(player, block, key, ((NBTTagCompound) nbt).getTag(key), level + 1);
             });
         } else {
             if (nbt instanceof NBTTagList) {
                 for (int i = 0; i < ((NBTTagList) nbt).tagCount(); i++) {
-                    sendNBTChat(player, block, lastKey + "[" + i + "]", ((NBTTagList) nbt).get(i), level);
+                    sendDebugChat(player, block, lastKey + "[" + i + "]", ((NBTTagList) nbt).get(i), level);
                 }
             } else if (nbt instanceof NBTTagByte) {
                 player.sendMessage(new TextComponentString(space.toString() + lastKey + " = " + ((NBTTagByte) nbt).getByte()));

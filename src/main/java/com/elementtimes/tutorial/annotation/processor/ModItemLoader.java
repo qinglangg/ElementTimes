@@ -6,13 +6,10 @@ import com.elementtimes.tutorial.annotation.other.ModInfo;
 import com.elementtimes.tutorial.annotation.util.ReflectUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -32,10 +29,8 @@ import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
 public class ModItemLoader {
 
     public static Map<Item, String> ORE_DICTIONARY = new HashMap<>();
-    @SideOnly(Side.CLIENT)
-    public static Map<Item, Int2ObjectMap<ModelResourceLocation>> SUB_ITEM_MODEL = new HashMap<>();
-    @SideOnly(Side.CLIENT)
-    public static Map<Item, IItemColor> ITEM_COLOR = new HashMap<>();
+    public static Map<Item, Int2ObjectMap<Object>> SUB_ITEM_MODEL = new HashMap<>();
+    public static Map<Item, Object> ITEM_COLOR = new HashMap<>();
 
     public static void getItems(Map<Class, ArrayList<AnnotatedElement>> elements, List<Item> into) {
         elements.get(ModItem.class).forEach(element -> buildItem(element, into));
@@ -92,8 +87,7 @@ public class ModItemLoader {
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             if (!info.itemColorClass().isEmpty()) {
                 ReflectUtil.create(info.itemColorClass())
-                        .filter(obj -> obj instanceof IItemColor)
-                        .ifPresent(obj -> ITEM_COLOR.put(item, (IItemColor) obj));
+                        .ifPresent(obj -> ITEM_COLOR.put(item, obj));
             }
         }
     }
@@ -115,7 +109,7 @@ public class ModItemLoader {
             if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
                 int[] metadata = subItem.metadatas();
                 String[] models = subItem.models();
-                Int2ObjectMap<ModelResourceLocation> map = new Int2ObjectArrayMap<>();
+                Int2ObjectMap<Object> map = new Int2ObjectArrayMap<>();
                 for (int i = 0; i < metadata.length; i++) {
                     String model = models[i];
                     int domainIndex = model.indexOf(":");
@@ -142,7 +136,8 @@ public class ModItemLoader {
                             resource = model;
                         }
                     }
-                    map.put(metadata[i], new ModelResourceLocation(new ResourceLocation(domain, resource), variant));
+                    map.put(metadata[i],
+                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(new ResourceLocation(domain, resource), variant));
                 }
                 SUB_ITEM_MODEL.put(item, map);
             }

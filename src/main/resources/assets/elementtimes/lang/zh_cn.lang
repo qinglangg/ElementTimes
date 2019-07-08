@@ -154,7 +154,6 @@ tile.elementtimes.electrolyticcell.name=电解器
 tile.elementtimes.pumpair.name=气泵
 tile.elementtimes.pumpfluid.name=液泵
 tile.elementtimes.fr.name=流体替换方块
-
 # fluid
 fluid.elementtimes.naoh=氢氧化钠
 tile.elementtimes.naoh.name=氢氧化钠
@@ -198,12 +197,15 @@ fluid.elementtimes.oxygen=氧气
 tile.elementtimes.oxygen.name=氧气
 fluid.elementtimes.butter=黄油
 tile.elementtimes.butter.name=黄油
+# enchantment
+enchantment.elementtimes.hammerdebugger=调试
 # jei
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机
 jei.elementtimes.compressor=压缩机
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
+tooltip.elementtimes.enchantment.debug=开发者专用调试工具
 # chat
 chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
 chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity

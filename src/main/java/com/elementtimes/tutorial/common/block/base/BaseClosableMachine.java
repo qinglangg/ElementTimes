@@ -44,10 +44,11 @@ public class BaseClosableMachine<T extends BaseMachine> extends BlockTileBase<T>
     }
 
     @Override
+    @SuppressWarnings({"NullableProblems", "deprecation"})
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getHorizontal(meta & 0b0011);
-        boolean burning = (meta & 0b0100) == 0b0100;
-        return super.getStateFromMeta(meta).withProperty(FACING, facing).withProperty(IS_RUNNING, burning);
+        boolean running = (meta & 0b0100) == 0b0100;
+        return super.getStateFromMeta(meta).withProperty(FACING, facing).withProperty(IS_RUNNING, running);
     }
 
     @Override

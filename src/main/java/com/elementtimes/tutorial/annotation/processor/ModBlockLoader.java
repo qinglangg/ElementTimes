@@ -11,10 +11,10 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
-import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.lang.reflect.AnnotatedElement;
@@ -34,7 +34,7 @@ import static com.elementtimes.tutorial.annotation.util.ReflectUtil.getField;
 public class ModBlockLoader {
 
     public static Map<Block, ImmutablePair<String, Class<? extends TileEntity>>> TILE_ENTITIES = new HashMap<>();
-    public static Map<Block, IStateMapper> STATE_MAPS = new HashMap<>();
+    public static Map<Block, Object> STATE_MAPS = new HashMap<>();
     public static Map<Block, ModBlock.StateMap> BLOCK_STATES = new HashMap<>();
     public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
@@ -130,29 +130,31 @@ public class ModBlockLoader {
     }
 
     private static void initStateMapper(final Block block, AnnotatedElement blockHolder) {
-        ModBlock.StateMapper smInfo = blockHolder.getAnnotation(ModBlock.StateMapper.class);
-        try {
-            if (smInfo != null) {
-                Class propertyContainer = Class.forName(smInfo.propertyIn());
-                net.minecraft.client.renderer.block.statemap.StateMap.Builder builder = new net.minecraft.client.renderer.block.statemap.StateMap.Builder().withSuffix(smInfo.suffix());
-                IProperty property = (IProperty) ReflectUtil.getField(propertyContainer, smInfo.propertyName(), block).orElse(null);
-                builder.withName(property);
-                IProperty[] ignoreProperties = Arrays.stream(smInfo.propertyIgnore())
-                        .map(ignoreProperty -> getField(propertyContainer, ignoreProperty, block)).toArray(IProperty[]::new);
-                builder.ignore(ignoreProperties);
-                STATE_MAPS.put(block, builder.build());
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            ModBlock.StateMapper smInfo = blockHolder.getAnnotation(ModBlock.StateMapper.class);
+            try {
+                if (smInfo != null) {
+                    Class propertyContainer = Class.forName(smInfo.propertyIn());
+                    net.minecraft.client.renderer.block.statemap.StateMap.Builder builder = new net.minecraft.client.renderer.block.statemap.StateMap.Builder().withSuffix(smInfo.suffix());
+                    IProperty property = (IProperty) ReflectUtil.getField(propertyContainer, smInfo.propertyName(), block).orElse(null);
+                    builder.withName(property);
+                    IProperty[] ignoreProperties = Arrays.stream(smInfo.propertyIgnore())
+                            .map(ignoreProperty -> getField(propertyContainer, ignoreProperty, block)).toArray(IProperty[]::new);
+                    builder.ignore(ignoreProperties);
+                    STATE_MAPS.put(block, builder.build());
+                }
+            } catch (ClassNotFoundException e) {
+                warn("Cannot reload mapper: " + smInfo.propertyName());
+                e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            warn("Cannot reload mapper: " + smInfo.propertyName());
-            e.printStackTrace();
-        }
 
-        ModBlock.StateMapperCustom mscInfo = blockHolder.getAnnotation(ModBlock.StateMapperCustom.class);
-        if (mscInfo != null) {
-            IStateMapper mapper = mscInfo.value().isEmpty()
-                    ? new DefaultStateMapper()
-                    : (IStateMapper) ReflectUtil.create(mscInfo.value()).orElse(new DefaultStateMapper());
-            STATE_MAPS.put(block, mapper);
+            ModBlock.StateMapperCustom mscInfo = blockHolder.getAnnotation(ModBlock.StateMapperCustom.class);
+            if (mscInfo != null) {
+                Object mapper = mscInfo.value().isEmpty()
+                        ? new net.minecraft.client.renderer.block.statemap.DefaultStateMapper()
+                        : ReflectUtil.create(mscInfo.value()).orElse(new net.minecraft.client.renderer.block.statemap.DefaultStateMapper());
+                STATE_MAPS.put(block, mapper);
+            }
         }
     }
 
@@ -191,27 +193,28 @@ public class ModBlockLoader {
     }
 
     private static void initAnimation(Block block, AnnotatedElement blockHolder) {
-        ModBlock.AnimTESR aInfo = blockHolder.getAnnotation(ModBlock.AnimTESR.class);
-
-        if (aInfo != null) {
-            Class<? extends TileEntity> teClass = TILE_ENTITIES.get(block).getRight();
-            if (teClass == null) {
-                warn("Animation must have a tileEntity");
-            } else {
-                String tesrClass = aInfo.animationTESR();
-                net.minecraftforge.client.model.animation.AnimationTESR tesr = null;
-                if (tesrClass.isEmpty()) {
-                    tesr = new net.minecraftforge.client.model.animation.AnimationTESR();
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            ModBlock.AnimTESR aInfo = blockHolder.getAnnotation(ModBlock.AnimTESR.class);
+            if (aInfo != null) {
+                Class<? extends TileEntity> teClass = TILE_ENTITIES.get(block).getRight();
+                if (teClass == null) {
+                    warn("Animation must have a tileEntity");
                 } else {
-                    Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
-                    if (o.isPresent()) {
-                        tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
+                    String tesrClass = aInfo.animationTESR();
+                    net.minecraftforge.client.model.animation.AnimationTESR tesr = null;
+                    if (tesrClass.isEmpty()) {
+                        tesr = new net.minecraftforge.client.model.animation.AnimationTESR();
                     } else {
-                        warn("Can't create AnimationTESR object");
+                        Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
+                        if (o.isPresent()) {
+                            tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
+                        } else {
+                            warn("Can't create AnimationTESR object");
+                        }
                     }
-                }
-                if (tesr != null) {
-                    ANIMATION_HANDLER.put(teClass, tesr);
+                    if (tesr != null) {
+                        ANIMATION_HANDLER.put(teClass, tesr);
+                    }
                 }
             }
         }

@@ -4,7 +4,6 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +11,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -47,14 +45,6 @@ public class GuiMachineContainer extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
-    }
-
-    @Override
-    public void initGui() {
-        super.initGui();
-        for (GuiButton button : machine.getButtons()) {
-            addButton(button);
-        }
     }
 
     @Override
@@ -95,11 +85,5 @@ public class GuiMachineContainer extends GuiContainer {
                 });
             }
         });
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
-        super.actionPerformed(button);
-        machine.actionPerformed(button, this);
     }
 }

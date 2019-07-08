@@ -2,7 +2,6 @@ package com.elementtimes.tutorial.common;
 
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.AnnotationInitializer;
-import com.elementtimes.tutorial.common.init.ElementTimesRender;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
@@ -30,8 +29,6 @@ public class CommonProxy {
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
-
-        ElementTimesRender.init();
     }
 
     public void init(FMLInitializationEvent event) {

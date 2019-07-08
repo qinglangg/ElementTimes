@@ -57,7 +57,7 @@ public class MachineRecipeCapture implements INBTSerializable<NBTTagCompound> {
     }
 
     /**
-     * 仅用于 fromNBT 方法
+     * 仅用于 fromNbt 方法
      */
     private MachineRecipeCapture() {}
 

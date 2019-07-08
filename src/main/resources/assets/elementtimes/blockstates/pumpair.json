@@ -1,32 +1,21 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube"
+    "model": "cube",
+    "textures": {
+      "particle": "elementtimes:blocks/pumpair/top",
+      "down": "elementtimes:blocks/pumpair/bottom",
+      "up": "elementtimes:blocks/pumpair/top",
+      "north": "elementtimes:blocks/pumpair/north",
+      "south": "elementtimes:blocks/pumpair/south",
+      "west": "elementtimes:blocks/pumpair/west",
+      "east": "elementtimes:blocks/pumpair/east"
+    }
   },
   "variants": {
     "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/pumpair/top",
-          "down": "elementtimes:blocks/pumpair/bottom",
-          "up": "elementtimes:blocks/pumpair/top",
-          "north": "elementtimes:blocks/pumpair/north",
-          "south": "elementtimes:blocks/pumpair/south",
-          "west": "elementtimes:blocks/pumpair/west",
-          "east": "elementtimes:blocks/pumpair/east"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/pumpair/top",
-          "down": "elementtimes:blocks/pumpair/bottom",
-          "up": "elementtimes:blocks/pumpair/top",
-          "north": "elementtimes:blocks/pumpair/side",
-          "south": "elementtimes:blocks/pumpair/side",
-          "west": "elementtimes:blocks/pumpair/side",
-          "east": "elementtimes:blocks/pumpair/on"
-        }
-      }
+      "false": {},
+      "true": {}
     },
     "facing": {
       "north": {

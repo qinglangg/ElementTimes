@@ -15,6 +15,7 @@ import java.util.function.ToIntFunction;
  * 用于辅助构建合成配方
  * @author luqin2007
  */
+@SuppressWarnings("WeakerAccess")
 public class MachineRecipeBuilder {
     private ToIntFunction<MachineRecipeCapture> cost = (a) -> 0;
     private List<IngredientPart<ItemStack>> inputItems = new LinkedList<>();

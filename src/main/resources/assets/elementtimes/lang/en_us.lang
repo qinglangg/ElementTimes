@@ -154,7 +154,6 @@ tile.elementtimes.electrolyticcell.name=Electrolytic Cell
 tile.elementtimes.pumpair.name=Air Pump
 tile.elementtimes.pumpfluid.name=Fluid Pump
 tile.elementtimes.fr.name=Block for Replace Fluid
-
 # fluid
 fluid.elementtimes.naoh=naoh
 tile.elementtimes.naoh.name=naoh
@@ -198,12 +197,15 @@ fluid.elementtimes.oxygen=Oxygen
 tile.elementtimes.oxygen.name=Oxygen
 fluid.elementtimes.butter=Butter
 tile.elementtimes.butter.name=Butter
+# enchantment
+enchantment.elementtimes.hammerdebugger=Debugger
 # jei
 jei.elementtimes.pulverize=Pulverize
 jei.elementtimes.rebuild=Rebuilder
 jei.elementtimes.compressor=Compressor
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
+tooltip.elementtimes.enchantment.debug=Enchantment: Enable
 # chat
 chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
 chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity

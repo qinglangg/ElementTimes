@@ -13,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.animation.TimeValues;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.model.animation.AnimationStateMachine;
@@ -108,7 +107,7 @@ public class TileCompressor extends BaseOneToOne {
     @SideOnly(Side.CLIENT)
     public AnimationStateMachine getASM() {
         if (mAnimationStateMachine == null) {
-            mAnimationStateMachine = (AnimationStateMachine) ModelLoaderRegistry.loadASM(
+            mAnimationStateMachine = (AnimationStateMachine) net.minecraftforge.client.model.ModelLoaderRegistry.loadASM(
                     new ResourceLocation(ElementTimes.MODID, "asms/block/compressor.json"),
                     ImmutableMap.of("cycle_length", new TimeValues.ConstValue(5)));
         }

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.block.tree;
 
-import com.elementtimes.tutorial.world.gen.ElementTreeGenerator;
+import com.elementtimes.tutorial.common.generator.ElementTreeGenerator;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;

@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "elementtimes:pipeline_item_io"
+  },
+  "variants": {
+    "inventory": [{}],
+    "connected_up": {
+      "false": {},
+      "true": {}
+    },
+    "connected_down": {
+      "false": {},
+      "true": {}
+    },
+    "connected_east": {
+      "false": {},
+      "true": {}
+    },
+    "connected_west": {
+      "false": {},
+      "true": {}
+    },
+    "connected_north": {
+      "false": {},
+      "true": {}
+    },
+    "connected_south": {
+      "false": {},
+      "true": {}
+    }
+  }
+}

@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
  * 通常，应当忽略 name/stillResource/flowingResource/overlayResource/color 参数
  * 以上参数用于当对应注解成员不存在时，用于新建 Fluid 对象。这种用法是不推荐的。
  * 因此 实际有用的 仅为 bucket，creativeTab 参数
+ * @author luqin2007
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
@@ -68,6 +69,13 @@ public @interface ModFluid {
     ModCreativeTabs creativeTab() default ModCreativeTabs.Main;
 
     /**
+     * 不使用 FluidBlock 时，默认不会再加载 Fluid 的材质。当此参数为 true 时，仍会加载对应材质
+     * 此时 加载的材质通常用于绘制其他 gui 界面
+     * @return 是否仍要加载流体材质
+     */
+    boolean loadTexture() default true;
+
+    /**
      * 流体方块
      */
     @Retention(RetentionPolicy.RUNTIME)
@@ -118,12 +126,5 @@ public @interface ModFluid {
          * @return blockstate 资源名
          */
         String resource() default "fluids";
-
-        /**
-         * 使用 FluidBlock 时，默认不会再加载 Fluid 的材质。当此参数为 true 时，仍会加载对应材质
-         * 此时 加载的材质通常用于绘制其他 gui 界面
-         * @return 是否仍要加载流体材质
-         */
-        boolean loadTexture() default true;
     }
 }

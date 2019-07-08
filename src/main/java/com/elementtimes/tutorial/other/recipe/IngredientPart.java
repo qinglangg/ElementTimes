@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * 合成表匹配
  * @author luqin2007
  */
+@SuppressWarnings({"unused", "FieldCanBeLocal", "WeakerAccess", "unchecked"})
 public class IngredientPart<T> {
 
     private static String SYMBOL_ITEM_ALL = "[all]";

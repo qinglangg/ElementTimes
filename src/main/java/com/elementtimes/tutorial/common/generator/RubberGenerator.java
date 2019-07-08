@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.world.gen;
+package com.elementtimes.tutorial.common.generator;
 
 import com.elementtimes.tutorial.common.block.tree.RubberLog;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;

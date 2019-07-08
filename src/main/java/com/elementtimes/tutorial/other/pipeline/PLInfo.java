@@ -1,27 +1,27 @@
 package com.elementtimes.tutorial.other.pipeline;
 
-import com.elementtimes.tutorial.common.block.Pipeline;
-import com.elementtimes.tutorial.common.tileentity.TilePipeline;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.server.FMLServerHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * 记录管道信息
  * INBTSerializable：预计可能使用 NBT 数据区分不同等级的管道
  * @author luqin2007
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class PLInfo implements INBTSerializable<NBTTagCompound> {
-    private PLNetwork mNetwork;
+
+    private static final String NBT_BIND_PIPELINE = "_pipeline_";
+    private static final String NBT_BIND_PIPELINE_TYPE = "_pl_type_";
+    private static final String NBT_BIND_PIPELINE_TICK = "_pl_tick_";
+    private static final String NBT_BIND_PIPELINE_POS = "_pl_pos_";
+
+    private PLNetwork mNetwork = null;
     private PLType mType;
     private int mKeepTick;
     private BlockPos mPos;
@@ -30,22 +30,37 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      * 创建管道信息
      * @param pos 管道位置
      * @param keepTick 速度指标
-     * @param type
+     * @param type 管道类型
      */
-    public PLInfo(World world, BlockPos pos, int keepTick, PLType type) {
+    public PLInfo(BlockPos pos, int keepTick, PLType type) {
         mType = type;
         mKeepTick = keepTick;
         mPos = pos;
-        mNetwork = PLNetworkManager.join(world,this);
+    }
+
+    public PLInfo() {
+        this(new BlockPos(0, 0, 0), 20, PLType.Item);
     }
 
     /**
      * 获取管道所在网路
      * @return 网络
      */
-    @Nonnull
     public PLNetwork getNetwork() {
+        if (mNetwork == null) {
+            throw new RuntimeException("Network is null.");
+        }
+
         return mNetwork;
+    }
+
+    /**
+     * 设置管道所在网络
+     * 用于网络发生变化时
+     * @param network 管道所在网络
+     */
+    public void setNetwork(PLNetwork network) {
+        mNetwork = network;
     }
 
     /**
@@ -72,7 +87,6 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      */
     public void setPos(BlockPos pos) {
         mPos = pos;
-
     }
 
     /**
@@ -100,55 +114,44 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
     }
 
     /**
-     * 更新管道信息
-     * @return 对应位置管道是否被移除
+     * 标记管道已经从网络中移除
      */
-    public boolean update() {
-        int dim = mNetwork.getDim();
-        FMLCommonHandler handler = FMLCommonHandler.instance();
-        if (handler.getSide() == Side.SERVER) {
-            // server
-            WorldServer world = FMLServerHandler.instance().getServer().getWorld(dim);
-            IBlockState state = world.getBlockState(mPos);
-            TileEntity te = world.getTileEntity(mPos);
-            if (state.getBlock() instanceof Pipeline && te instanceof TilePipeline) {
-                mType = ((TilePipeline) te).getType();
-                return true;
-            }
-            mNetwork.remove(this);
-            return false;
-        }
-        return true;
+    public void remove(World world) {
+        mNetwork.remove(world, this);
+        mNetwork = null;
+        mPos = null;
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        nbt.setTag("_pipeline_", serializeNBT());
+        NBTTagCompound pl = new NBTTagCompound();
+        pl.setInteger(NBT_BIND_PIPELINE_TYPE, mType.toInt());
+        pl.setInteger(NBT_BIND_PIPELINE_TICK, mKeepTick);
+        pl.setIntArray(NBT_BIND_PIPELINE_POS, new int[] {mPos.getX(), mPos.getY(), mPos.getZ()});
+        nbt.setTag(NBT_BIND_PIPELINE, pl);
         return nbt;
     }
 
     @Override
     public NBTTagCompound serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("_type_", mType.toInt());
-        nbt.setInteger("_keep_", mKeepTick);
-        return nbt;
+        return writeToNBT(new NBTTagCompound());
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        NBTTagCompound nbtPipeline;
-        if (nbt.hasKey("_pipeline_")) {
-            nbtPipeline = nbt.getCompoundTag("_pipeline_");
-        } else {
-            nbtPipeline = nbt;
-        }
+        NBTTagCompound nbtPipeline = nbt.getCompoundTag(NBT_BIND_PIPELINE);
+        mType = PLType.get(nbtPipeline.getInteger(NBT_BIND_PIPELINE_TYPE));
+        mKeepTick = nbtPipeline.getInteger(NBT_BIND_PIPELINE_TICK);
+        int[] pos = nbtPipeline.getIntArray(NBT_BIND_PIPELINE_POS);
+        mPos = new BlockPos(pos[0], pos[1], pos[2]);
+    }
 
-        if (nbtPipeline.hasKey("_type_")) {
-            mType = PLType.get(nbtPipeline.getInteger("_type_"));
-        }
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof PLInfo && this.getPos().equals(((PLInfo) obj).getPos());
+    }
 
-        if (nbtPipeline.hasKey("_keep_")) {
-            mKeepTick = nbtPipeline.getInteger("_keep_");
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(mKeepTick, mNetwork.getKey(), mPos, mType.toInt());
     }
 }

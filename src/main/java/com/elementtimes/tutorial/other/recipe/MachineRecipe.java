@@ -11,6 +11,7 @@ import java.util.function.ToIntFunction;
  * 考虑到某些原料可被替代，该配方是不准确的
  * @author luqin2007
  */
+@SuppressWarnings("WeakerAccess")
 public class MachineRecipe {
     public String name;
     public List<IngredientPart<ItemStack>> inputs;
