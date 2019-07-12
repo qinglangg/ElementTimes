@@ -29,24 +29,24 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     private int[][] items;
     private int[][] fluids;
 
-    public MachineRecipeCategory(IGuiHelper helper, String id, String machine) {
-        this(helper, "5", id, machine, 43, 15, 90, 44,
-                new int[][]{new int[] {56,30}, new int[]{110,30}}, new int[][]{});
+    public static MachineRecipeCategory createOneToOne(IGuiHelper helper, String id, String machine) {
+        return new MachineRecipeCategory(helper, "5", id, machine, 44, 16, 90, 44,
+                new int[][]{new int[] {55,29}, new int[]{109,29}}, new int[0][]);
     }
 
-    public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine, int u, int v, int width, int height, int[][] itemXYs, int[][] fluidXYs) {
+    public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine,
+                                 int u, int v, int width, int height,
+                                 int[][] itemXYs, int[][] fluidXYs) {
         mBackground = helper.createDrawable(new ResourceLocation(ElementTimes.MODID, "textures/gui/" + texture + ".png"), u, v, width, height);
         this.machine = machine;
         this.id = id;
-        for (int i = 0; i < itemXYs.length; i++) {
-            int[] xy = itemXYs[i];
-            xy[0] = xy[0] - u;
-            xy[1] = xy[1] - v;
+        for (int[] xy : itemXYs) {
+            xy[0] -= u;
+            xy[1] -= v;
         }
-        for (int i = 0; i < fluidXYs.length; i++) {
-            int[] xy = fluidXYs[i];
-            xy[0] = xy[0] - u;
-            xy[1] = xy[1] - v;
+        for (int[] xy : fluidXYs) {
+            xy[0] -= u;
+            xy[1] -= v;
         }
         items = itemXYs;
         fluids = fluidXYs;
@@ -80,22 +80,15 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     public void setRecipe(IRecipeLayout recipeLayout, MachineRecipeWrapper recipeWrapper, @Nonnull IIngredients ingredients) {
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();
-        for (int i = 0; i < recipeWrapper.inputItems.size(); i++) {
-            itemStacks.init(i, true, items[i][0], items[i][1]);
+        int inputItemCount = recipeWrapper.inputItems.size();
+        int inputFluidCount = recipeWrapper.inputFluids.size();
+        for (int i = 0; i < items.length; i++) {
+            itemStacks.init(i, i < inputItemCount, items[i][0], items[i][1]);
         }
-        for (int i = 0; i < recipeWrapper.outputItems.size(); i++) {
-            itemStacks.init(i, false,
-                    fluids[i + recipeWrapper.inputItems.size()][0],
-                    fluids[i + recipeWrapper.inputItems.size()][1]);
-        }
-        for (int i = 0; i < recipeWrapper.inputFluids.size(); i++) {
-            fluidStacks.init(i, true, items[i][0], items[i][1]);
-        }
-        for (int i = 0; i < recipeWrapper.outputFluids.size(); i++) {
-            fluidStacks.init(i, false,
-                    fluids[i + recipeWrapper.outputFluids.size()][0],
-                    fluids[i + recipeWrapper.outputFluids.size()][1]);
+        for (int i = 0; i < fluids.length; i++) {
+            fluidStacks.init(i, i < inputFluidCount, fluids[i][0], fluids[i][1], 16, 46, 16000, true, null);
         }
         itemStacks.set(ingredients);
+        fluidStacks.set(ingredients);
     }
 }

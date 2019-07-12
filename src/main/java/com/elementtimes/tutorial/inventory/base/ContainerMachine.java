@@ -29,7 +29,6 @@ public class ContainerMachine extends Container {
     private int width, height;
 
     public static Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> FLUIDS = new HashMap<>();
-    public static ElementtimesGUI.Machines MACHINE = null;
 
     public static ContainerMachine cm176_156_74(BaseMachine tileEntity, EntityPlayer player) {
         return new ContainerMachine(tileEntity, player, 176, 156, 74);

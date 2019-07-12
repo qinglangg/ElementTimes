@@ -151,6 +151,11 @@ public class PLNetwork implements INBTSerializable<NBTTagCompound> {
      * @param pipeline 管道
      */
     public void remove(World world, PLInfo pipeline) {
+        removeNotRebuild(world, pipeline);
+        rebuild(world);
+    }
+
+    public void removeNotRebuild(World world, PLInfo pipeline) {
         Set<PLInfo> nodes = mGraph.nodes();
         if (nodes.contains(pipeline)) {
             if (nodes.size() == 1) {
@@ -159,15 +164,12 @@ public class PLNetwork implements INBTSerializable<NBTTagCompound> {
             } else {
                 Set<PLInfo> adjacentNodes = mGraph.adjacentNodes(pipeline.getPos());
                 for (PLInfo node : adjacentNodes) {
-                    mGraph.removeEdge(pipeline.getPos(), node);
+                    mGraph.removeEdge(pipeline, node);
                 }
-                mGraph.removeNode(pipeline.getPos());
+                mGraph.removeNode(pipeline);
             }
             pipeline.remove(world);
         }
-        List<PLNetwork> networks = rebuild();
-        PLNetworkManager.removeNetwork(world, this);
-        PLNetworkManager.addNetworks(world, networks);
     }
 
     /**
@@ -268,18 +270,21 @@ public class PLNetwork implements INBTSerializable<NBTTagCompound> {
      * TODO: 可优化：当删除管道时，判断是否真正需要分裂网络，不需要的话可以继续使用原网络
      * @return 新网络
      */
-    public List<PLNetwork> rebuild() {
+    public List<PLNetwork> rebuild(World world) {
         Set<PLInfo> nodes = mGraph.nodes();
         List<PLInfo> nodeCheck = new ArrayList<>(nodes);
-        List<PLNetwork> networks = new ArrayList<>(1);
+        List<PLNetwork> networks;
         if (nodeCheck.isEmpty()) {
-            return Collections.emptyList();
+            networks = Collections.emptyList();
         } else {
+            networks = new ArrayList<>(1);
             while (!nodeCheck.isEmpty()) {
                 networks.add(getSubNetwork(nodeCheck.get(0), nodeCheck));
             }
-            return networks;
         }
+        PLNetworkManager.removeNetwork(world, this);
+        PLNetworkManager.addNetworks(world, networks);
+        return networks;
     }
 
     private PLNetwork getSubNetwork(PLInfo node, List<PLInfo> check) {

@@ -47,10 +47,6 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      * @return 网络
      */
     public PLNetwork getNetwork() {
-        if (mNetwork == null) {
-            throw new RuntimeException("Network is null.");
-        }
-
         return mNetwork;
     }
 

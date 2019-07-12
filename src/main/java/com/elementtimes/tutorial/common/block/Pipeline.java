@@ -12,6 +12,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -94,12 +97,12 @@ public class Pipeline extends Block implements ITileEntityProvider {
         super.getSubBlocks(itemIn, items);
         boolean removed = items.removeIf(is -> Block.getBlockFromItem(is.getItem()) == this);
         if (removed) {
-            items.add(create(PLType.Item, 20));
-            items.add(create(PLType.ItemIn, 20));
-            items.add(create(PLType.ItemOut, 20));
-            items.add(create(PLType.Fluid, 20));
-            items.add(create(PLType.FluidIn, 20));
-            items.add(create(PLType.FluidOut, 20));
+            items.add(create(PLType.Item, 20, "item.elementtimes.pipeline.item.link.normal"));
+            items.add(create(PLType.ItemIn, 20, "item.elementtimes.pipeline.item.input.normal"));
+            items.add(create(PLType.ItemOut, 20, "item.elementtimes.pipeline.item.output.normal"));
+            items.add(create(PLType.Fluid, 20, "item.elementtimes.pipeline.fluid.link.normal"));
+            items.add(create(PLType.FluidIn, 20, "item.elementtimes.pipeline.fluid.input.normal"));
+            items.add(create(PLType.FluidOut, 20, "item.elementtimes.pipeline.fluid.output.normal"));
         }
     }
 
@@ -130,10 +133,10 @@ public class Pipeline extends Block implements ITileEntityProvider {
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TilePipeline tp = (TilePipeline) worldIn.getTileEntity(pos);
+        super.breakBlock(worldIn, pos, state);
         assert tp != null;
         PLInfo info = tp.getInfo();
         info.getNetwork().remove(worldIn, info);
-        super.breakBlock(worldIn, pos, state);
     }
 
     @Nonnull
@@ -147,8 +150,13 @@ public class Pipeline extends Block implements ITileEntityProvider {
         return actualState;
     }
 
-    public static ItemStack create(PLType type, int keepTick) {
+    public static ItemStack create(PLType type, int keepTick, String translateKey) {
         ItemStack itemStack = new ItemStack(ElementtimesBlocks.pipeline, 1, type.toInt());
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            itemStack.setStackDisplayName(I18n.format(translateKey));
+        } else {
+            itemStack.setStackDisplayName(translateKey);
+        }
         itemStack.setTagInfo("_pipeline_tick_", new NBTTagInt(keepTick));
         return itemStack;
     }

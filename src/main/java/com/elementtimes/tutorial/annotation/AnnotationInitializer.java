@@ -56,10 +56,10 @@ public class AnnotationInitializer {
     }
 
     public static void onInit(FMLInitializationEvent event) {
+        invokeMethods();
     }
 
     public static void onPostInit(FMLPostInitializationEvent event) {
-        invokeMethods();
         registerNetwork();
     }
 

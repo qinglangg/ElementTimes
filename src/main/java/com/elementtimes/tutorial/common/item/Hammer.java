@@ -4,8 +4,13 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
+import com.elementtimes.tutorial.common.storage.PLNetworkStorage;
+import com.elementtimes.tutorial.other.pipeline.PLInfo;
+import com.elementtimes.tutorial.other.pipeline.PLNetwork;
 import com.elementtimes.tutorial.other.pipeline.PLNetworkManager;
+import com.google.common.graph.MutableGraph;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -24,8 +29,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 大小锤子
@@ -75,17 +82,27 @@ public class Hammer extends Item {
         return EnumActionResult.PASS;
     }
 
+    /**
+     * 调试
+     *  下蹲右键方块，或直接右键一般方块，会读取其中 TileEntity 转化的 NBT 数据
+     *  直接右键管道，检查当前管道所在网络信息
+     *  直接右键煤矿石，清除所有网络（危险）
+     *  直接右键铁矿石，移除所有网络中的无效节点
+     * @param worldIn 世界
+     * @param pos 方块位置
+     * @param player 使用玩家
+     */
     private void debug(World worldIn, BlockPos pos, EntityPlayer player) {
         Block block = worldIn.getBlockState(pos).getBlock();
         TileEntity te = worldIn.getTileEntity(pos);
         if (block == Blocks.AIR) {
             // 空气
             player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
-        } else if (block instanceof Pipeline) {
+        } else if (block instanceof Pipeline || block == Blocks.COAL_ORE || block == Blocks.IRON_ORE) {
             if (player.isSneaking()) {
                 debugTe(te, block, player);
             } else {
-                debugPl(block, player);
+                debugPl(worldIn, block, player);
             }
         } else {
             debugTe(te, block, player);
@@ -108,8 +125,37 @@ public class Hammer extends Item {
         }
     }
 
-    private void debugPl(Block block, EntityPlayer player) {
-        sendDebugChat(player, block, "", PLNetworkManager.serializeNbt(), 0);
+    private void debugPl(World world, Block block, EntityPlayer player) {
+        if (block == Blocks.COAL_ORE) {
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_network_count", PLNetworkManager.getNetworks().size()));
+            PLNetworkManager.getNetworks().clear();
+            PLNetworkStorage.load(world).markDirty();
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_clear"));
+        } else if (block == Blocks.IRON_ORE) {
+            Set<PLNetwork> ns = PLNetworkManager.getNetworks();
+            List<PLNetwork> networks = new ArrayList<>(ns.size());
+            networks.addAll(ns);
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_network_count", networks.size()));
+            // 检查网络无效节点
+            networks.forEach(network -> {
+                int invalidCount = 0;
+                for (PLInfo node : network.getGraph().nodes()) {
+                    BlockPos pos = node.getPos();
+                    IBlockState blockState = world.getBlockState(pos);
+                    TileEntity tileEntity = world.getTileEntity(pos);
+                    if (!(node.getNetwork() != null && tileEntity != null && blockState.getBlock() instanceof Pipeline)) {
+                        invalidCount++;
+                        network.removeNotRebuild(world, node);
+                    }
+                }
+                if (invalidCount > 0) {
+                    player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_invalid_node_count", network.getKey(), invalidCount));
+                    network.rebuild(world);
+                }
+            });
+        } else {
+            sendDebugChat(player, block, "", PLNetworkManager.serializeNbt(), 0);
+        }
         player.sendMessage(new TextComponentString("============================================================"));
     }
 

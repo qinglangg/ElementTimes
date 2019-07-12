@@ -28,6 +28,10 @@ public class PLNetworkManager {
 
     private static Set<PLNetwork> sNetworks = new HashSet<>();
 
+    public static Set<PLNetwork> getNetworks() {
+        return sNetworks;
+    }
+
     /**
      * 向世界添加一个管道
      * @param world 所在世界

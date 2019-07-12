@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import net.minecraft.entity.player.EntityPlayer;
@@ -91,7 +90,7 @@ public class ElementtimesGUI implements IGuiHandler {
                 switch (machine.getGuiType()) {
                     case ElementGenerator:
                     case FuelGenerator:
-                        return new GuiContainerGenerator(ContainerMachine.cm176_156_74(machine, player));
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerGenerator(ContainerMachine.cm176_156_74(machine, player));
                     case Pulverize:
                     case Compressor:
                     case Furnace:
