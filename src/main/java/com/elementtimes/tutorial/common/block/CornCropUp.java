@@ -70,10 +70,6 @@ extends Block{
         return state.getValue(this.getAgeProperty()).intValue() >= this.getMaxAge();
     }
     
-    
-    
-    
-    
     public IBlockState getAgeBlockState(int age) {
     	return this.blockState.getBaseState().withProperty(AGE,age);
     }
@@ -108,10 +104,5 @@ extends Block{
 	public int quantityDropped(Random random) {
 		// TODO 自动生成的方法存根
 		return 0;//返回0个物品
-	}
-
-	
-
-	
-    
+	} 
 }

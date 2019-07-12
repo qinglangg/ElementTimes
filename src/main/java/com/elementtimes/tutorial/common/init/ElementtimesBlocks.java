@@ -47,12 +47,21 @@ public class ElementtimesBlocks {
     public static Block leafesSence = new EssenceLeaf();
 
     // ore
-
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("oreTin")
+    @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
+    public static Block tinOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("oreLead")
+    @ModBlock.HarvestLevel
+    @ModBlock.WorldGen
+    public static Block leadOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreCopper")
     @ModBlock.HarvestLevel
     @ModBlock.WorldGen
-    public static Block copperOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
+    public static Block copperOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("orePlatinum")
     @ModBlock.HarvestLevel(level = 3)
@@ -62,7 +71,7 @@ public class ElementtimesBlocks {
     @ModOreDict("oreSilver")
     @ModBlock.HarvestLevel
     @ModBlock.WorldGen
-    public static Block SilverOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
+    public static Block SilverOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreSalt")
     @ModBlock.WorldGenClass("com.elementtimes.tutorial.common.generator.SaltGenerator")
@@ -74,29 +83,37 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModBlock.HarvestLevel
     @ModBlock.WorldGen
-    public static Block calciumFluoride = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
+    public static Block calciumFluoride = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
 
     // Block
-
+    
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("blockTin")
+    @ModBlock.HarvestLevel
+    public static Block blockTin = new Block(Material.ROCK).setHardness(50f).setResistance(20f);
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("blockLead")
+    @ModBlock.HarvestLevel
+    public static Block blockLead = new Block(Material.ROCK).setHardness(50f).setResistance(20f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockCopper")
     @ModBlock.HarvestLevel
-    public static Block copperBillet = new Block(Material.ROCK).setHardness(50f).setResistance(15f);
+    public static Block copperBillet = new Block(Material.ROCK).setHardness(50f).setResistance(20f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockPlatinum")
     @ModBlock.HarvestLevel(level = 3)
-    public static Block platinumBlock = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
+    public static Block platinumBlock = new Block(Material.ROCK).setHardness(50f).setResistance(20f).setLightLevel(50f);
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("blockSilver")
     @ModBlock.HarvestLevel
-    public static Block blockSilver = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
+    public static Block blockSilver = new Block(Material.ROCK).setHardness(50f).setResistance(20f).setLightLevel(50f);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("blockSteel")
     @ModBlock.HarvestLevel
-    public static Block steelBlock = new Block(Material.ROCK).setHardness(50f).setResistance(15f).setLightLevel(50f);
+    public static Block steelBlock = new Block(Material.ROCK).setHardness(50f).setResistance(20f).setLightLevel(50f);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel(level = 3)
-    public static Block diamondBlock = new Block(Material.ROCK).setHardness(100f).setResistance(30f).setLightLevel(100f);
+    public static Block diamondBlock = new Block(Material.ROCK).setHardness(100f).setResistance(35f).setLightLevel(100f);
 
     // Machine
 

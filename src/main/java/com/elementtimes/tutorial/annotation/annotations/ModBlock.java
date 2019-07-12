@@ -168,12 +168,12 @@ public @interface ModBlock {
         /**
          * @return 尝试生成次数
          */
-        int times() default 4;
+        int times() default 6;
 
         /**
          * @return 每次尝试生成的成功率，范围 (0, 1)
          */
-        float probability() default 0.5f;
+        float probability() default 0.6f;
 
         /**
          * @return 不生成的维度

@@ -83,8 +83,6 @@ public class ElementtimesItems {
     public static Item diamondPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item copperPowder = new Item();
-    @ModItem(creativeTab = ModCreativeTabs.Industry)
-    public static Item spanner = new Spanner();
     @ModItem
     public static Item twiningSunCompound = new Item();
     @ModItem
@@ -136,7 +134,10 @@ public class ElementtimesItems {
     public static Item starchball = new Starchball();
 
     // tools
-
+    
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModItem.Damageable(20)
+    public static Item spanner = new Spanner();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(100)
     @ModItem.RetainInCrafting
@@ -220,6 +221,15 @@ public class ElementtimesItems {
     @ModOreDict("gearCopper")
     public static Item gearCopper = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("gearObsidian")
+    public static Item gearObsidian = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("gearLead")
+    public static Item gearLead = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("gearTin")
+    public static Item gearTin = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSilver")
     public static Item gearSilver = new Item();
 
@@ -255,6 +265,15 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateCarbon")
     public static Item plateCarbon = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateObsidian")
+    public static Item plateObsidian = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateLead")
+    public static Item plateLead = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("plateTin")
+    public static Item plateTin = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateSilver")
     public static Item plateSilver = new Item();
