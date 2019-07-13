@@ -33,7 +33,9 @@ public class TileForming extends BaseOneToOne {
                 .add("7", 10000, "gemDiamond", 9, ElementtimesItems.gearDiamond, 3)
                 .add("8", 10000, "ingotIron", 9, ElementtimesItems.gearIron, 3)
                 .add("9", 10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
-                .add("0", 10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3);
+                .add("0", 10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3)
+                .add("10", 10000, "ingotlead", 9, ElementtimesItems.gearLead, 3)
+                .add("10", 10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
     }
 
     @Nonnull

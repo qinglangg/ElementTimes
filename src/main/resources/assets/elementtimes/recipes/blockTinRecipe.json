@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "type":"forge:ore_dict",
+      "ore":"ingotTin"
+    }
+  },
+  "result": {
+    "item": "elementtimes:blockTin",
+    "count": 1
+    }
+}

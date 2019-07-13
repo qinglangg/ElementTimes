@@ -35,6 +35,8 @@ public class ElementtimesItems {
     @ModItem
     @ModOreDict("bamboo")
     public static Item bamboo = new Item();
+    @ModItem
+    public static Item bambooCharcoal = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
@@ -62,6 +64,12 @@ public class ElementtimesItems {
     public static Item ingotColumn = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item concrete = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("ingotTin")
+    public static Item tin = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("ingotLead")
+    public static Item lead = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("ingotCopper")
     public static Item copper = new Item();

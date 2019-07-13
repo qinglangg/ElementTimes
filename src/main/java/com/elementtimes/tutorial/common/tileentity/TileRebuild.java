@@ -32,7 +32,9 @@ public class TileRebuild extends BaseOneToOne {
                 .add("6", 100000, Blocks.DIRT, 1, Blocks.FARMLAND, 1)
                 .add("7", 100000, Blocks.GRASS, 1, Blocks.GRASS_PATH, 1)
                 .add("8", 20000, Blocks.SAND, 1, Blocks.SOUL_SAND, 1)
-                .add("9", 20000, Blocks.GLASS, 1, Items.QUARTZ, 1);
+                .add("9", 20000, Blocks.GLASS, 1, Items.QUARTZ, 1)
+                .add("10", 2000, ElementtimesItems.sucroseCharCoal,1, ElementtimesItems.bambooCharcoal, 1)
+                .add("11", 2000, ElementtimesItems.bambooCharcoal,1, ElementtimesItems.sucroseCharCoal, 1);
     }
 
     public TileRebuild() {

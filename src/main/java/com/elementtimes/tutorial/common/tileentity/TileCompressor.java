@@ -58,8 +58,9 @@ public class TileCompressor extends BaseOneToOne {
                 .add("7", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSteel", 1, ElementtimesItems.plateSteel, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("8", ElementtimesConfig.COMPRESSOR.powderEnergy, "stone", 1, ElementtimesItems.plateStone, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("9", ElementtimesConfig.COMPRESSOR.powderEnergy, Items.COAL, 1, ElementtimesItems.plateCarbon, ElementtimesConfig.COMPRESSOR.powderCount)
-                .add("10", ElementtimesConfig.COMPRESSOR.powderEnergy, Items.BLAZE_ROD, 1, Items.BLAZE_POWDER, 8)
-                .add("11", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount);
+                .add("10", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotLead", 1, ElementtimesItems.plateLead, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("11", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotTin", 1, ElementtimesItems.plateTin, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("12", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount);
     }
 
     private AnimationStateMachine mAnimationStateMachine;

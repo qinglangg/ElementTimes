@@ -12,11 +12,14 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.items.SlotItemHandler;
-
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 固液反应器
+ * @author luqin2007
+ */
 @ModElement
 @ModElement.ModInvokeStatic("init")
 public class TileSolidFluidReactor extends BaseMachine {

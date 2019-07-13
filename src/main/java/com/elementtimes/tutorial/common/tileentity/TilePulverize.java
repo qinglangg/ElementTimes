@@ -6,6 +6,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 
+import net.minecraft.init.Items;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,9 +35,12 @@ public class TilePulverize extends BaseOneToOne {
                 .add("6", ElementtimesConfig.PUL.pulPowderEnergy, "oreCopper", 1, ElementtimesItems.copperPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("7", ElementtimesConfig.PUL.pulPowderEnergy, "oreCoal", 1, ElementtimesItems.coalPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("8", ElementtimesConfig.PUL.pulPowderEnergy, "orePlatinum", 1, ElementtimesItems.platinumOrePowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("9", ElementtimesConfig.PUL.pulPowderEnergy, "oreSilver", 1, ElementtimesItems.silverPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("10", ElementtimesConfig.PUL.pulPowderEnergy, "oreQuartz", 1, ElementtimesItems.quartzPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("11", ElementtimesConfig.PUL.pulPowderEnergy, "oreSulfur", 1, ElementtimesItems.sulfurOrePowder, ElementtimesConfig.PUL.pulPowderCount)
-                .add("9", ElementtimesConfig.PUL.pulPowderEnergy, "oreSilver", 1, ElementtimesItems.silverPowder, ElementtimesConfig.PUL.pulPowderCount);
+                .add("12", ElementtimesConfig.PUL.pulPowderEnergy, "oreLead", 1, ElementtimesItems.leadPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("13", ElementtimesConfig.PUL.pulPowderEnergy, "oreTin", 1, ElementtimesItems.tinPowder, ElementtimesConfig.PUL.pulPowderCount)
+                .add("100",ElementtimesConfig.PUL.pulPowderEnergy, Items.BLAZE_ROD, 1, Items.BLAZE_POWDER, 8);
     }
 
     @Nonnull

@@ -23,6 +23,8 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.coalPowder),new ItemStack(Items.COAL));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.copperPowder),new ItemStack(ElementtimesItems.copper));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.silverPowder),new ItemStack(ElementtimesItems.silver));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.tinPowder),new ItemStack(ElementtimesItems.tin));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.leadPowder),new ItemStack(ElementtimesItems.lead));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.goldPowder),new ItemStack(Items.GOLD_INGOT));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.diamondPowder),new ItemStack(Items.DIAMOND));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.greenstonePowder),new ItemStack(Items.EMERALD));
@@ -53,6 +55,8 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.coalPowder, new ItemStack(Items.COAL, 1,0), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.quartzPowder, new ItemStack(Items.QUARTZ, 2), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.silverPowder, new ItemStack(ElementtimesItems.silver, 1), 4.0f);
+		GameRegistry.addSmelting(ElementtimesItems.leadPowder, new ItemStack(ElementtimesItems.lead, 1), 4.0f);
+		GameRegistry.addSmelting(ElementtimesItems.tinPowder, new ItemStack(ElementtimesItems.tin, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.corn, new ItemStack(ElementtimesItems.bakedCorn, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.platinumOre, new ItemStack(ElementtimesItems.platinumIngot, 1), 5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.platinumOrePowder, new ItemStack(ElementtimesItems.platinumIngot, 1), 4.0f);
