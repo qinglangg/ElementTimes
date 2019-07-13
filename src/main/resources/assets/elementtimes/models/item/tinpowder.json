@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "elementtimes:items/gear/iron"
+    "layer0": "elementtimes:items/tinpowder"
   }
 }

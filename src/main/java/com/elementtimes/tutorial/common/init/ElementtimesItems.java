@@ -32,6 +32,9 @@ public class ElementtimesItems {
     public static Item goldElement = new Item();
     @ModItem
     public static Item cropesSence = new Item();
+    @ModItem
+    @ModOreDict("bamboo")
+    public static Item bamboo = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
@@ -69,6 +72,10 @@ public class ElementtimesItems {
     public static Item greenstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item silverPowder = new Item();
+	@ModItem(creativeTab = ModCreativeTabs.Ore)
+    public static Item tinPowder = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    public static Item leadPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item redstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)

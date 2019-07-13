@@ -22,7 +22,7 @@ import java.util.List;
  * @author luqin
  */
 @JEIPlugin
-public class JeiSupport implements IModPlugin {
+public class JEISupport implements IModPlugin {
 
     private static final String ID_COMPRESSOR = ElementTimes.MODID + ".compressor.jei.category";
     private static final String ID_PULVERIZE = ElementTimes.MODID + ".pulverize.jei.category";
