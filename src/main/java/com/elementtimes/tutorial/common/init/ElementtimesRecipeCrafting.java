@@ -30,7 +30,15 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {
     @ModRecipe
-    @ModRecipe.Ore(value = "ironpower", output = "elementtimes:ironpower")
+    @ModRecipe.Ore(value = "leadpowder", output = "elementtimes:leadpowder")
+    public static String oreLead = "oreLead";
+	
+    @ModRecipe
+    @ModRecipe.Ore(value = "tinpowder", output = "elementtimes:tinpowder")
+    public static String oreTin = "oreTin";
+	
+    @ModRecipe
+    @ModRecipe.Ore(value = "ironpowder", output = "elementtimes:ironpowder")
     public static String oreIron = "oreIron";
 
     @ModRecipe
@@ -282,6 +290,16 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe
     @ModRecipe.Crafting
     public static Object gearSilver = RecipeUtil.gearRecipe("blockSilver", "ingotSilver", ElementtimesItems.gearSilver);
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object gearTin = RecipeUtil.gearRecipe("blockTin", "ingotTin", ElementtimesItems.gearTin);
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object gearLead = RecipeUtil.gearRecipe("blockLead", "ingotLead", ElementtimesItems.gearLead);
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object gearObsidian = RecipeUtil.gearRecipe("blockObsidian", "ingotObsidian", ElementtimesItems.gearObsidian);
+
 
     @ModRecipe
     @ModRecipe.Crafting

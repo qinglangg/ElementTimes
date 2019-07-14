@@ -19,7 +19,7 @@ public class ElementtimesRecipe {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder), new ItemStack(ElementtimesItems.sulfiteSolution));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT), ItemBottleFuel.createByFluid(ElementtimesFluids.H));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper", ItemBottleFuel.createByFluid(ElementtimesFluids.H));
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.ironPower),new ItemStack(Items.IRON_INGOT));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.ironPowder),new ItemStack(Items.IRON_INGOT));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.coalPowder),new ItemStack(Items.COAL));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.copperPowder),new ItemStack(ElementtimesItems.copper));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.silverPowder),new ItemStack(ElementtimesItems.silver));
@@ -48,7 +48,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.greenstonePowder, new ItemStack(Items.EMERALD, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.redstonePowder, new ItemStack(Items.REDSTONE, 2), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.bluestonePowder, new ItemStack(Items.DYE, 2, 4), 4.0f);
-		GameRegistry.addSmelting(ElementtimesItems.ironPower, new ItemStack(Items.IRON_INGOT, 1), 4.0f);
+		GameRegistry.addSmelting(ElementtimesItems.ironPowder, new ItemStack(Items.IRON_INGOT, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.goldPowder, new ItemStack(Items.GOLD_INGOT, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.diamondPowder, new ItemStack(Items.DIAMOND, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesItems.copperPowder, new ItemStack(ElementtimesItems.copper, 1), 4.0f);

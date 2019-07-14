@@ -36,7 +36,7 @@ public class ElementtimesItems {
     @ModOreDict("bamboo")
     public static Item bamboo = new Item();
     @ModItem
-    public static Item bambooCharcoal = new Item();
+    public static Item bambooCharcoal = new ItemFuel(800);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
@@ -89,7 +89,7 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item bluestonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
-    public static Item ironPower = new Item();
+    public static Item ironPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item goldPowder;
     @ModItem(creativeTab = ModCreativeTabs.Ore)
@@ -151,7 +151,6 @@ public class ElementtimesItems {
     // tools
     
     @ModItem(creativeTab = ModCreativeTabs.Industry)
-    @ModItem.Damageable(20)
     public static Item spanner = new Spanner();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     @ModItem.Damageable(100)

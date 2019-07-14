@@ -26,7 +26,7 @@ public class TilePulverize extends BaseOneToOne {
 
     public static void init() {
         sRecipeHandler = new MachineRecipeHandler()
-                .add("0", ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironPower, ElementtimesConfig.PUL.pulPowderCount)
+                .add("0", ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("1", ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("2", ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
                 .add("3", ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)
