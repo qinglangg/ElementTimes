@@ -32,7 +32,7 @@ public class ElementtimesGUI implements IGuiHandler {
         Furnace, Rebuild, Extractor, Forming, SolidMelter,
         FluidReactor, SolidReactor, Condenser,
         FluidHeater, ElectrolyticCell, SolidFluidReactor,
-        PumpAir, PumpFluid, ItemReducer;
+        PumpAir, PumpFluid, ItemReducer, SupportStand;
 
         public int id() {
             return ordinal();
@@ -74,6 +74,8 @@ public class ElementtimesGUI implements IGuiHandler {
                 case PumpAir:
                 case PumpFluid:
                     return ContainerMachine.cm176_204_122(machine, player);
+                case SupportStand:
+                    return ContainerMachine.cm176_201_119(machine, player);
                 default:
                     return null;
             }
@@ -131,6 +133,9 @@ public class ElementtimesGUI implements IGuiHandler {
                     case PumpFluid:
                         return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "pump", 85,
                                 new int[0][], 43, 108, 24, 204, 90, 4);
+                    case SupportStand:
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_201_119(machine, player), "supportstand", 105,
+                                80, 26, 0, 201, 14, 14, new int[0][]);
                     default:
                         return null;
                 }

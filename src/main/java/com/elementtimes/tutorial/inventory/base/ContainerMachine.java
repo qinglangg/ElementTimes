@@ -43,6 +43,10 @@ public class ContainerMachine extends Container {
         return new ContainerMachine(tileEntity, player, 176, 204, 122);
     }
 
+    public static ContainerMachine cm176_201_119(BaseMachine tileEntity, EntityPlayer player) {
+        return new ContainerMachine(tileEntity, player, 176, 201, 119);
+    }
+
     public ContainerMachine(BaseMachine tileEntity, EntityPlayer player, int width, int height, int offsetY) {
         this(tileEntity, player, width, height, 8, offsetY);
     }
@@ -157,6 +161,10 @@ public class ContainerMachine extends Container {
 
     public Map<SideHandlerType, Int2ObjectMap<int[]>> getFluidPositions() {
         return machine.getFluids();
+    }
+
+    public boolean isHorizontalFluidSlot(SideHandlerType type, int index) {
+        return machine.isHorizontalFluidSlot(type, index);
     }
 
     @Override

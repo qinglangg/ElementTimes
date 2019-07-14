@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.interfaces.tileentity;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
 
@@ -34,7 +35,7 @@ public interface IGuiProvider {
      * @return 物品槽位
      */
     @Nonnull
-    default Slot[] createSlots() { return new Slot[0]; };
+    default Slot[] createSlots() { return new Slot[0]; }
 
     /**
      * 创建流体槽位
@@ -44,6 +45,10 @@ public interface IGuiProvider {
     @Nonnull
     default Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
         return new HashMap<>(0);
+    }
+
+    default boolean isHorizontalFluidSlot(SideHandlerType type, int index) {
+        return false;
     }
 
     /**

@@ -81,9 +81,14 @@ public class GuiMachineContainer extends GuiContainer {
                         ResourceLocation stillTexture = fluidStack.getFluid().getStill();
                         ResourceLocation stillTexture2 = new ResourceLocation(stillTexture.getResourceDomain(), "textures/" + stillTexture.getResourcePath() + ".png");
                         mc.getTextureManager().bindTexture(stillTexture2);
-                        int h = (int) (p[3] * fluidStack.amount / total);
-                        int y = p[1] + p[3] - h;
-                        this.drawTexturedModalRect(p[0], y, 0, 0, p[2], h);
+                        if (machine.isHorizontalFluidSlot(type, slot)) {
+                            int h = (int) (p[3] * fluidStack.amount / total);
+                            int y = p[1] + p[3] - h;
+                            this.drawTexturedModalRect(p[0], y, 0, 0, p[2], h);
+                        } else {
+                            int w = (int) (p[2] * fluidStack.amount / total);
+                            this.drawTexturedModalRect(p[0], p[1], 0, 0, w, p[3]);
+                        }
                     }
                 });
             }

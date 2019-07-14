@@ -61,7 +61,12 @@ public class GuiContainerElectrical extends GuiMachineContainer {
 
         // 能量条
         for (int[] energy : energyPos) {
-            int textureWidth = (int) (((float) energy[4]) * ContainerMachine.ENERGY_ENERGY / ContainerMachine.ENERGY_CAPACITY);
+            int textureWidth;
+            if (ContainerMachine.ENERGY_CAPACITY == 0) {
+                textureWidth = 0;
+            } else {
+                textureWidth = (int) (((float) energy[4]) * ContainerMachine.ENERGY_ENERGY / ContainerMachine.ENERGY_CAPACITY);
+            }
             this.drawTexturedModalRect(offsetX + energy[0], offsetY + energy[1], energy[2], energy[3], textureWidth, energy[5]);
         }
         // 箭头
