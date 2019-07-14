@@ -11,6 +11,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +47,7 @@ public class GuiMachineContainer extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
+        renderHoveredFluid(mouseX, mouseY);
     }
 
     @Override
@@ -85,5 +88,35 @@ public class GuiMachineContainer extends GuiContainer {
                 });
             }
         });
+    }
+
+    private void renderHoveredFluid(int mouseX, int mouseY) {
+        Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> fluids = ContainerMachine.FLUIDS;
+        for (Map.Entry<SideHandlerType, Int2ObjectMap<int[]>> entry : machine.getFluidPositions().entrySet()) {
+            for (Int2ObjectMap.Entry<int[]> entryPos : entry.getValue().int2ObjectEntrySet()) {
+                int[] posValue = entryPos.getValue();
+                if (mouseIn(mouseX, mouseY, posValue[0], posValue[1], posValue[2], posValue[3])) {
+                    int i = entryPos.getIntKey();
+                    ImmutablePair<FluidStack, Integer> pair = fluids.get(entry.getKey()).get(i);
+                    if (pair != null && pair.right > 0) {
+                        FluidStack fluidStack = pair.left;
+                        int total = pair.right;
+                        List<String> texts = new ArrayList<>(2);
+                        texts.add(fluidStack.getLocalizedName());
+                        texts.add(fluidStack.amount + "/" + total);
+                        drawHoveringText(texts, mouseX, mouseY);
+                    }
+                }
+            }
+        }
+    }
+
+    protected boolean mouseIn(int mouseX, int mouseY, int x, int y, int w, int h) {
+        int mx = mouseX - getGuiLeft();
+        int my = mouseY - getGuiTop();
+        return mx >= x
+                && mx <= (x + w)
+                && my >= y
+                && my <= (y + h);
     }
 }

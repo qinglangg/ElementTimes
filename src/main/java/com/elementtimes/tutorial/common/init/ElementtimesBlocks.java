@@ -47,6 +47,7 @@ public class ElementtimesBlocks {
     public static Block leafesSence = new EssenceLeaf();
 
     // ore
+
     @ModBlock(creativeTab = ModCreativeTabs.Ore)
     @ModOreDict("oreTin")
     @ModBlock.HarvestLevel
@@ -207,6 +208,11 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
     @ModBlock.StateMap
     public static Block pipeline = new Pipeline();
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "itemreducer", clazz = "com.elementtimes.tutorial.common.tileentity.TileItemReducer")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block itemReducer = new BaseClosableMachine<>(TileItemReducer.class);
 
     // 其他
 

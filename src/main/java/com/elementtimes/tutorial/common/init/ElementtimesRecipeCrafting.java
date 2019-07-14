@@ -250,6 +250,13 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
+    @ModRecipe.Crafting(shaped = false)
+    public static Object[] itemReducer = new Object[] {
+            ElementtimesBlocks.itemReducer,
+            ElementtimesItems.woodElement, Blocks.CRAFTING_TABLE, ElementtimesBlocks.fuelGenerator
+    };
+
+    @ModRecipe
     @ModRecipe.Crafting
     public static Object gearCarbon = RecipeUtil.gearRecipe(Blocks.COAL_BLOCK, new ItemStack(Items.COAL, 1, 0), ElementtimesItems.gearCarbon);
     @ModRecipe

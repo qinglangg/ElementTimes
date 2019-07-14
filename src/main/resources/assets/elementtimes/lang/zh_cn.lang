@@ -159,6 +159,7 @@ tile.elementtimes.fluidheater.name=流体加热器
 tile.elementtimes.electrolyticcell.name=电解器
 tile.elementtimes.pumpair.name=气泵
 tile.elementtimes.pumpfluid.name=液泵
+tile.elementtimes.itemreducer.name=物品还原机
 tile.elementtimes.fr.name=流体替换方块
 # fluid
 fluid.elementtimes.naoh=氢氧化钠
@@ -209,6 +210,18 @@ enchantment.elementtimes.hammerdebugger=调试
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机
 jei.elementtimes.compressor=压缩机
+jei.elementtimes.elementgenerator=元素发电机
+jei.elementtimes.extractor=提取机
+jei.elementtimes.forming=成型机
+jei.elementtimes.solidmelter=固体融化机
+jei.elementtimes.fluidreactor=流体反应器
+jei.elementtimes.solidreactor=固体反应器
+jei.elementtimes.condenser=冷凝器
+jei.elementtimes.fluidheater=流体加热器
+jei.elementtimes.electrolyticcell=电解器
+jei.elementtimes.solidfluidreactor=固液反应器
+jei.elementtimes.pumpair=气泵
+jei.elementtimes.itemreducer=物体还原机
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
 tooltip.elementtimes.enchantment.debug=开发者专用调试工具

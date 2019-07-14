@@ -159,6 +159,7 @@ tile.elementtimes.fluidheater.name=Fluid Heater
 tile.elementtimes.electrolyticcell.name=Electrolytic Cell
 tile.elementtimes.pumpair.name=Air Pump
 tile.elementtimes.pumpfluid.name=Fluid Pump
+tile.elementtimes.itemreducer.name=Item Reducer
 tile.elementtimes.fr.name=Block for Replace Fluid
 # fluid
 fluid.elementtimes.naoh=naoh
@@ -209,6 +210,18 @@ enchantment.elementtimes.hammerdebugger=Debugger
 jei.elementtimes.pulverize=Pulverize
 jei.elementtimes.rebuild=Rebuilder
 jei.elementtimes.compressor=Compressor
+jei.elementtimes.elementgenerator=Element Generator
+jei.elementtimes.extractor=Extractor
+jei.elementtimes.forming=Forming
+jei.elementtimes.solidmelter=Solid Melter
+jei.elementtimes.fluidreactor=Fluid Reactor
+jei.elementtimes.solidreactor=Solid Reactor
+jei.elementtimes.condenser=Condenser
+jei.elementtimes.fluidheater=Fluid Heater
+jei.elementtimes.electrolyticcell=Electrolytic Cell
+jei.elementtimes.solidfluidreactor=Solid Fluid Reactor
+jei.elementtimes.pumpair=Air Pump
+jei.elementtimes.itemreducer=Item Reducer
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
 tooltip.elementtimes.enchantment.debug=Enchantment: Enable

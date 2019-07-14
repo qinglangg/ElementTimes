@@ -21,6 +21,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * 需要带有 TileEntity 的方块时继承此类
@@ -59,11 +63,19 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
     @Override
     public TileEntity createNewTileEntity(@SuppressWarnings("NullableProblems") World worldIn, int meta) {
         try {
-            return mEntityClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            if (mEntityClass != null) {
+                for (Constructor<?> constructor : mEntityClass.getDeclaredConstructors()) {
+                    constructor.setAccessible(true);
+                    if (constructor.getParameterCount() == 0) {
+                        return (TileEntity) constructor.newInstance();
+                    }
+                }
+            }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
 
     @Override

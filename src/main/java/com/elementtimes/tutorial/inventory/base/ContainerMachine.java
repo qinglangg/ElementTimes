@@ -1,7 +1,5 @@
 package com.elementtimes.tutorial.inventory.base;
 
-import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -28,7 +26,10 @@ public class ContainerMachine extends Container {
     private BaseMachine machine;
     private int width, height;
 
+    // 从服务器传递的数据
+
     public static Map<SideHandlerType, Int2ObjectMap<ImmutablePair<FluidStack, Integer>>> FLUIDS = new HashMap<>();
+    public static int ENERGY_CAPACITY, ENERGY_ENERGY;
 
     public static ContainerMachine cm176_156_74(BaseMachine tileEntity, EntityPlayer player) {
         return new ContainerMachine(tileEntity, player, 176, 156, 74);
@@ -116,19 +117,13 @@ public class ContainerMachine extends Container {
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
 
-        RfEnergy.EnergyProxy energyProxy = machine.getReadonlyEnergyProxy();
-        float totalEnergy = Math.abs(energyProxy.getMaxEnergyStored());
-        int stored = totalEnergy == 0 ? 0 : (int) (Short.MAX_VALUE * (energyProxy.getEnergyStored() / totalEnergy));
         float totalProcessed = Math.abs(machine.getEnergyUnprocessed() + machine.getEnergyProcessed());
         int processed = totalProcessed == 0 ? 0 : (int) (Short.MAX_VALUE * (machine.getEnergyProcessed() / totalProcessed));
 
         listeners.forEach(listener -> {
-            listener.sendWindowProperty(this, 0, stored);
-            listener.sendWindowProperty(this, 1, processed);
+            listener.sendWindowProperty(this, 0, processed);
         });
     }
-
-    private short mEnergyStored = 0;
     private short mEnergyProcessed = 0;
 
     @SideOnly(Side.CLIENT)
@@ -136,8 +131,6 @@ public class ContainerMachine extends Container {
     public void updateProgressBar(int id, int data) {
         super.updateProgressBar(id, data);
         if (id == 0) {
-            mEnergyStored = (short) data;
-        } else if (id == 1) {
             mEnergyProcessed = (short) data;
         }
     }
@@ -148,14 +141,6 @@ public class ContainerMachine extends Container {
      */
     public short getEnergyProcessed() {
         return mEnergyProcessed;
-    }
-
-    /**
-     * 获取能量缓存（比例缩放），范围为 0-Short.MAX_VALUE，仅用于缓存充满程度
-     * @return 能量缓存（按比例缩放）
-     */
-    public short getEnergyStored() {
-        return mEnergyStored;
     }
 
     /**

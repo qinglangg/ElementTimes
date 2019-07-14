@@ -10,9 +10,14 @@ import net.minecraftforge.common.config.Config;
  */
 @Config(modid = ElementTimes.MODID)
 public class ElementtimesConfig {
+
     @Config.Name("General")
     @Config.LangKey("elementtimes.config.general")
     public static final General GENERAL = new General();
+
+    @Config.Name("ItemReducer")
+    @Config.LangKey("elementtimes.config.general.item_reducer")
+    public static final ItemReducer ITEM_REDUCER = new ItemReducer();
 
     @Config.Name("GeneralFuel")
     @Config.LangKey("elementtimes.config.general.fuel")
@@ -119,6 +124,24 @@ public class ElementtimesConfig {
         @Config.Comment("设置打粉机每个矿物产粉量")
         @Config.Name("pulPowderCount")
         public int pulPowderCount = 4;
+    }
+
+    public static final class ItemReducer {
+        @Config.Comment("设置还原机最大电容量")
+        @Config.Name("maxEnergy")
+        public int maxEnergy = 320000;
+
+        @Config.Comment("设置还原机每Tick消耗电量(速度)")
+        @Config.Name("maxExtract")
+        public int maxExtract = 40;
+
+        @Config.Comment("设置还原机最大输入")
+        @Config.Name("maxReceive")
+        public int maxReceive = 40;
+
+        @Config.Comment("设置还原机每个矿物耗电量")
+        @Config.Name("powderEnergy")
+        public int powderEnergy = 8000;
     }
 
     public static final class Compressor {

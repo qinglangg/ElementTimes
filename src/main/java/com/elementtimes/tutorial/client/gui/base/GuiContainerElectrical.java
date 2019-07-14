@@ -2,6 +2,8 @@ package com.elementtimes.tutorial.client.gui.base;
 
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 
+import java.util.Collections;
+
 /**
  * 对所有只有一个输入和一个输出的机器的 GUI 抽象
  *
@@ -46,15 +48,20 @@ public class GuiContainerElectrical extends GuiMachineContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredEnergy(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-        short energyStored = machine.getEnergyStored();
         int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 
         // 能量条
         for (int[] energy : energyPos) {
-            int textureWidth = energy[4] * energyStored / Short.MAX_VALUE;
+            int textureWidth = (int) (((float) energy[4]) * ContainerMachine.ENERGY_ENERGY / ContainerMachine.ENERGY_CAPACITY);
             this.drawTexturedModalRect(offsetX + energy[0], offsetY + energy[1], energy[2], energy[3], textureWidth, energy[5]);
         }
         // 箭头
@@ -62,6 +69,14 @@ public class GuiContainerElectrical extends GuiMachineContainer {
         for (int[] process : processPos) {
             int arrowWidth = process[4] * processValue / Short.MAX_VALUE;
             this.drawTexturedModalRect(offsetX + process[0], offsetY + process[1], process[2], process[3], arrowWidth, process[5]);
+        }
+    }
+
+    private void renderHoveredEnergy(int mouseX, int mouseY) {
+        for (int[] energyPosition : energyPos) {
+            if (mouseIn(mouseX, mouseY, energyPosition[0], energyPosition[1], energyPosition[4], energyPosition[5])) {
+                drawHoveringText(Collections.singletonList(ContainerMachine.ENERGY_ENERGY + "/" + ContainerMachine.ENERGY_CAPACITY), mouseX, mouseY);
+            }
         }
     }
 }

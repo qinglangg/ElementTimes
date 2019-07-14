@@ -120,6 +120,12 @@
       "custom": {
         "fluid": "elementtimes.oxygen"
       }
+    },
+    "elementtimes.ethanol": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.ethanol"
+      }
     }
   }
 }
