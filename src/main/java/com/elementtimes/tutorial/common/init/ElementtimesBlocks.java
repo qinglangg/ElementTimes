@@ -203,16 +203,21 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block pumpFluid = new BaseClosableMachine<>(TilePumpFluid.class);
-    @ModBlock(creativeTab = ModCreativeTabs.Industry)
-    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
-    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
-    @ModBlock.StateMap
-    public static Block pipeline = new Pipeline();
+//    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+//    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
+//    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
+//    @ModBlock.StateMap
+//    public static Block pipeline = new Pipeline();
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "itemreducer", clazz = "com.elementtimes.tutorial.common.tileentity.TileItemReducer")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block itemReducer = new BaseClosableMachine<>(TileItemReducer.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "centrifuge", clazz = "com.elementtimes.tutorial.common.tileentity.TileCentrifuge")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block centrifuge = new BaseClosableMachine<>(TileCentrifuge.class);
 
     // 其他
 
@@ -237,6 +242,15 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.HarvestLevel
     public static Block blockMultiCarbonSteel = new Block(Material.IRON);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.HarvestLevel
+    public static Block blockMultiTinLead = new Block(Material.IRON);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.HarvestLevel
+    public static Block blockMultiIronQuartz = new Block(Material.IRON);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.HarvestLevel
+    public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
     @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Chemical)
     public static Block alcoholLamp = new BlockAlcoholLamp();
     @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Chemical)

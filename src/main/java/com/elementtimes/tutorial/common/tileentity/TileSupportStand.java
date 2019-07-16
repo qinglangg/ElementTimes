@@ -45,7 +45,6 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
 
     public TileSupportStand() {
         super(0, 3, 3, 2, 16000, 1, 16000);
-        removeLifecycle(mDefaultMachineLifecycle);
         markBucketInput(0, 1, 2);
         addLifeCycle(new CustomMachineLifecycle(this));
         addLifeCycle(new FluidMachineLifecycle(this, 3, 3));

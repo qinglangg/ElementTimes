@@ -2,7 +2,6 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.other.pipeline.PLType;
 import com.elementtimes.tutorial.util.BlockUtil;
 import com.elementtimes.tutorial.util.MathUtil;
 import net.minecraft.block.state.IBlockState;
@@ -24,16 +23,12 @@ public class TilePipeline extends TileEntity {
 
     private int mConnected = 0b000000;
     private int mDisconnected = 0b000000;
-    private PLInfo mInfo = new PLInfo(pos, 20, PLType.Item);
+    private PLInfo mInfo;
 
-    public void init(int keepTick) {
-        mInfo.setPos(pos);
-        mInfo.setKeepTick(keepTick);
-        mInfo.setType(getType());
-    }
+    public TilePipeline() { }
 
-    public PLType getType() {
-        return world.getBlockState(pos).getValue(Pipeline.PL_TYPE);
+    public void setInfo(PLInfo info) {
+        mInfo = info;
     }
 
     public PLInfo getInfo() {
@@ -58,12 +53,6 @@ public class TilePipeline extends TileEntity {
 
     public boolean isDisconnected(EnumFacing facing) {
         return MathUtil.fromByte(mDisconnected, facing.getIndex());
-    }
-
-    public boolean canConnect(EnumFacing facing, PLInfo pipeline) {
-        PLType type1 = getType();
-        PLType type2 = pipeline.getType();
-        return !isDisconnected(facing) && type1.type() == type2.type() && !(type1.in() && type2.in());
     }
 
     public void setConnected(int connected) {
@@ -93,20 +82,19 @@ public class TilePipeline extends TileEntity {
     }
 
     public void tryConnect(EnumFacing facing) {
-        PLInfo info = getInfo();
         TileEntity te = world.getTileEntity(pos.offset(facing));
         if (te != null) {
             EnumFacing opposite = facing.getOpposite();
             if (te instanceof TilePipeline) {
                 TilePipeline tp = (TilePipeline) te;
-                if (canConnect(facing, tp.getInfo()) && tp.canConnect(opposite, info)) {
+                if (getInfo().selector.canConnectPipeline(world, tp.getInfo(), facing)) {
                     setConnected(facing, true);
                     tp.setConnected(opposite, true);
                 } else {
                     setConnected(facing, false);
-                    tp.setConnected(facing, false);
+                    tp.setConnected(opposite, false);
                 }
-            } else if (info.getType().canConnect(te, opposite)) {
+            } else if (getInfo().selector.canConnectBlock(world, pos, facing)) {
                 setConnected(facing, true);
             } else {
                 setConnected(facing, false);

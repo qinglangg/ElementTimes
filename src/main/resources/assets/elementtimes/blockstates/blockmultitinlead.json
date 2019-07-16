@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_bottom_top",
+    "textures": {
+      "bottom": "elementtimes:blocks/blockmultitinlead/bottom",
+      "top": "elementtimes:blocks/blockmultitinlead/top",
+      "side": "elementtimes:blocks/blockmultitinlead/side"
+    }
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "normal": [
+      {}
+    ]
+  }
+}

@@ -136,4 +136,16 @@ public class ElementtimesFluids {
     public static Fluid oxygen = new Fluid("elementtimes.oxygen",
             new ResourceLocation(ElementTimes.MODID, "fluid/oxygen_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/oxygen_fluid"), 0xFF427676);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid air = new Fluid("elementtimes.air",
+            new ResourceLocation(ElementTimes.MODID, "fluid/air_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/air_fluid"), 0xFF949494);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid rareGases = new Fluid("elementtimes.raregases",
+            new ResourceLocation(ElementTimes.MODID, "fluid/air_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/air_fluid"), 0xFF949494);
 }

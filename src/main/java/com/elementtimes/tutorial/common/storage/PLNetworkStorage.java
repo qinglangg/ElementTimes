@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.common.storage;
 
-import com.elementtimes.tutorial.other.pipeline.PLNetworkManager;
+import com.elementtimes.tutorial.other.pipeline.PLNetwork;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nonnull;
 
@@ -36,11 +36,12 @@ public class PLNetworkStorage extends WorldSavedData {
 
     @Override
     public void readFromNBT(@Nonnull NBTTagCompound nbt) {
-        PLNetworkManager.deserializeNbt(nbt);
+        PLNetwork.read((NBTTagList) nbt.getTag(WS_PIPELINE));
     }
 
     @Override
     public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
-        return PLNetworkManager.writeToNbt(compound);
+        compound.setTag(WS_PIPELINE, PLNetwork.write());
+        return compound;
     }
 }

@@ -246,6 +246,8 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("gearSilver")
     public static Item gearSilver = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item gearAdamas = new Item();
 
     // plate
 
@@ -291,4 +293,6 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("plateSilver")
     public static Item plateSilver = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item plateAdamas = new Item();
 }

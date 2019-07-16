@@ -126,6 +126,18 @@
       "custom": {
         "fluid": "elementtimes.ethanol"
       }
+    },
+    "elementtimes.air": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.air"
+      }
+    },
+    "elementtimes.raregases": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.raregases"
+      }
     }
   }
 }

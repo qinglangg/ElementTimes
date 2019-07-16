@@ -1,0 +1,46 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube"
+  },
+  "variants": {
+    "running": {
+      "false": {
+        "textures": {
+          "particle": "elementtimes:blocks/centrifuge/topoff",
+          "down": "elementtimes:blocks/centrifuge/bottom",
+          "up": "elementtimes:blocks/centrifuge/topoff",
+          "north": "elementtimes:blocks/centrifuge/side",
+          "south": "elementtimes:blocks/centrifuge/side",
+          "west": "elementtimes:blocks/centrifuge/side",
+          "east": "elementtimes:blocks/centrifuge/off"
+        }
+      },
+      "true": {
+        "textures": {
+          "particle": "elementtimes:blocks/centrifuge/topon",
+          "down": "elementtimes:blocks/centrifuge/bottom",
+          "up": "elementtimes:blocks/centrifuge/topon",
+          "north": "elementtimes:blocks/centrifuge/side",
+          "south": "elementtimes:blocks/centrifuge/side",
+          "west": "elementtimes:blocks/centrifuge/side",
+          "east": "elementtimes:blocks/centrifuge/on"
+        }
+      }
+    },
+    "facing": {
+      "north": {
+        "y": 90
+      },
+      "east": {
+        "y": 180
+      },
+      "south": {
+        "y": 270
+      },
+      "west": {
+        "y": 0
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ public class ElementtimesGUI implements IGuiHandler {
         Furnace, Rebuild, Extractor, Forming, SolidMelter,
         FluidReactor, SolidReactor, Condenser,
         FluidHeater, ElectrolyticCell, SolidFluidReactor,
-        PumpAir, PumpFluid, ItemReducer, SupportStand;
+        PumpAir, PumpFluid, ItemReducer, SupportStand, Centrifuge;
 
         public int id() {
             return ordinal();

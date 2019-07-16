@@ -31,7 +31,7 @@ public class TilePumpAir extends BaseMachine {
             RECIPE = new MachineRecipeHandler()
                     .newRecipe("air")
                     .addCost(1)
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.air, 1))
                     .endAdd();
         }
     }
