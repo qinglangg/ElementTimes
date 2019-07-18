@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.storage;
 
-import com.elementtimes.tutorial.other.pipeline.PLNetwork;
+import com.elementtimes.tutorial.common.event.PipelineEvent;
+import com.elementtimes.tutorial.other.pipeline.PLElement;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
@@ -30,18 +31,19 @@ public class PLNetworkStorage extends WorldSavedData {
         return sStorage;
     }
 
-    PLNetworkStorage(String name) {
+    public PLNetworkStorage(String name) {
         super(name);
     }
 
     @Override
     public void readFromNBT(@Nonnull NBTTagCompound nbt) {
-        PLNetwork.read((NBTTagList) nbt.getTag(WS_PIPELINE));
+        NBTTagList list = (NBTTagList) nbt.getTag(WS_PIPELINE);
+        PipelineEvent.getInstance().fromNbt(list);
     }
 
     @Override
     public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
-        compound.setTag(WS_PIPELINE, PLNetwork.write());
+        compound.setTag(WS_PIPELINE, PipelineEvent.getInstance().toNbt());
         return compound;
     }
 }

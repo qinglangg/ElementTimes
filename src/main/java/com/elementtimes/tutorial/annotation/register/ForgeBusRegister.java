@@ -42,9 +42,7 @@ public class ForgeBusRegister {
     public static void registerBlock(RegistryEvent.Register<Block> event) {
         IForgeRegistry<Block> registry = event.getRegistry();
         AnnotationInitializer.BLOCKS.forEach(registry::register);
-        ModFluidLoader.FLUID_BLOCK.keySet().forEach(fluid -> {
-            registry.register(fluid.getBlock());
-        });
+        ModFluidLoader.FLUID_BLOCK.keySet().forEach(fluid -> registry.register(fluid.getBlock()));
     }
 
     @SubscribeEvent

@@ -8,6 +8,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+
+import static com.elementtimes.tutorial.common.block.Pipeline.TYPE_ITEM;
 
 /**
  * 管道 TileEntity 类
@@ -25,14 +28,33 @@ public class TilePipeline extends TileEntity {
     private int mDisconnected = 0b000000;
     private PLInfo mInfo;
 
-    public TilePipeline() { }
+    public TilePipeline() {
+        this(TYPE_ITEM, 20, PLInfo.PathActionItem.instance().name(), "");
+    }
+
+    public TilePipeline(String type, int tick, String actionName, String actionClass) {
+        mInfo = new PLInfo.PLInfoBuilder()
+                .setKeepTick(tick)
+                .setAction(actionName, actionClass)
+                .setType(type)
+                .build();
+    }
 
     public void setInfo(PLInfo info) {
         mInfo = info;
+        info.pos = pos;
+        for (EnumFacing facing : EnumFacing.values()) {
+            tryConnect(facing);
+        }
+        markDirty();
     }
 
     public PLInfo getInfo() {
         return mInfo;
+    }
+
+    public String getType() {
+        return getInfo().type;
     }
 
     public void setDisconnected(int disconnected) {
@@ -43,7 +65,7 @@ public class TilePipeline extends TileEntity {
             update = true;
         }
         if (update) {
-            update();
+            markDirty();
         }
     }
 
@@ -58,7 +80,7 @@ public class TilePipeline extends TileEntity {
     public void setConnected(int connected) {
         if (mConnected != connected) {
             mConnected = connected;
-            update();
+            markDirty();
         }
     }
 
@@ -82,30 +104,27 @@ public class TilePipeline extends TileEntity {
     }
 
     public void tryConnect(EnumFacing facing) {
-        TileEntity te = world.getTileEntity(pos.offset(facing));
+        BlockPos pos = this.pos.offset(facing);
+        TileEntity te = world.getTileEntity(pos);
         if (te != null) {
             EnumFacing opposite = facing.getOpposite();
             if (te instanceof TilePipeline) {
                 TilePipeline tp = (TilePipeline) te;
-                if (getInfo().selector.canConnectPipeline(world, tp.getInfo(), facing)) {
+                if (getInfo().action.canSend(world, tp.getInfo(), null)) {
                     setConnected(facing, true);
                     tp.setConnected(opposite, true);
                 } else {
                     setConnected(facing, false);
                     tp.setConnected(opposite, false);
                 }
-            } else if (getInfo().selector.canConnectBlock(world, pos, facing)) {
+            } else if (getInfo().action.canOutput(world, getInfo(), this.pos, null)) {
                 setConnected(facing, true);
+                mInfo.listOut.add(pos);
             } else {
                 setConnected(facing, false);
+                mInfo.listOut.remove(pos);
             }
         }
-    }
-
-    public void update() {
-        markDirty();
-        IBlockState newState = bindActualState(world.getBlockState(pos));
-        BlockUtil.setBlockState(world, pos, newState, this);
     }
 
     @Override

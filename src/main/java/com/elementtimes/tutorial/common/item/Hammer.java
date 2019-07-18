@@ -4,12 +4,10 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
-import com.elementtimes.tutorial.common.storage.PLNetworkStorage;
+import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.other.pipeline.PLNetwork;
-import com.google.common.graph.MutableGraph;
+import com.elementtimes.tutorial.other.pipeline.PLPath;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -28,10 +26,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * 大小锤子
@@ -97,11 +94,11 @@ public class Hammer extends Item {
         if (block == Blocks.AIR) {
             // 空气
             player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
-        } else if (block instanceof Pipeline || block == Blocks.COAL_ORE || block == Blocks.IRON_ORE) {
+        } else if (block instanceof Pipeline) {
             if (player.isSneaking()) {
                 debugTe(te, block, player);
             } else {
-                debugPl(worldIn, block, player);
+                debugPl(worldIn, (TilePipeline) worldIn.getTileEntity(pos), block, player);
             }
         } else {
             debugTe(te, block, player);
@@ -124,39 +121,21 @@ public class Hammer extends Item {
         }
     }
 
-    private void debugPl(World world, Block block, EntityPlayer player) {
-        // TODO: 管道调试
-//        if (block == Blocks.COAL_ORE) {
-//            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_network_count", PLNetworkManager.getNetworks().size()));
-//            PLNetworkManager.getNetworks().clear();
-//            PLNetworkStorage.load(world).markDirty();
-//            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_clear"));
-//        } else if (block == Blocks.IRON_ORE) {
-//            Set<PLNetwork> ns = PLNetworkManager.getNetworks();
-//            List<PLNetwork> networks = new ArrayList<>(ns.size());
-//            networks.addAll(ns);
-//            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_network_count", networks.size()));
-//            // 检查网络无效节点
-//            networks.forEach(network -> {
-//                int invalidCount = 0;
-//                for (PLInfo node : network.getGraph().nodes()) {
-//                    BlockPos pos = node.getPos();
-//                    IBlockState blockState = world.getBlockState(pos);
-//                    TileEntity tileEntity = world.getTileEntity(pos);
-//                    if (!(node.getNetwork() != null && tileEntity != null && blockState.getBlock() instanceof Pipeline)) {
-//                        invalidCount++;
-//                        network.removeNotRebuild(world, node);
-//                    }
-//                }
-//                if (invalidCount > 0) {
-//                    player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_invalid_node_count", network.getKey(), invalidCount));
-//                    network.rebuild(world);
-//                }
-//            });
-//        } else {
-//            sendDebugChat(player, block, "", PLNetworkManager.serializeNbt(), 0);
-//        }
-//        player.sendMessage(new TextComponentString("============================================================"));
+    private void debugPl(World world, TilePipeline tp, Block block, EntityPlayer player) {
+        if (tp != null) {
+            PLInfo info = tp.getInfo();
+            BlockPos pos = tp.getPos();
+            Map<BlockPos, PLPath> pathMap = info.allValidOutput(world, pos, null);
+            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_pipeline", pos.getX(), pos.getY(), pos.getZ(), info.type));
+            for (PLPath value : pathMap.values()) {
+                long sum = value.path.stream().mapToLong(p -> p.keepTick).sum();
+                player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_path",
+                        value.from.getX(), value.from.getY(), value.from.getZ(),
+                        value.to.getX(), value.to.getY(), value.to.getZ(), sum));
+            }
+        } else {
+            player.sendMessage(new TextComponentString("chat.elementtimes.hammer.pipeline_none"));
+        }
     }
 
     private void sendDebugChat(EntityPlayer player, Block block, String lastKey, NBTBase nbt, int level) {
