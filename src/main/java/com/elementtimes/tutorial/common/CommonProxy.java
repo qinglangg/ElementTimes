@@ -4,11 +4,13 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.AnnotationInitializer;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.event.PipelineEvent;
+import com.elementtimes.tutorial.common.event.RecipeRemove;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.test.ComponentHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -51,5 +53,6 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent event) {
         AnnotationInitializer.onPostInit(event);
+         new RecipeRemove();
     }
 }

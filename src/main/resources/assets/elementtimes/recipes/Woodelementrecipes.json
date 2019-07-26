@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "LLL",
-    " W ",
+    "TWT",
     "CSC"
   ],
   "key": {
@@ -17,6 +17,9 @@
     },
     "S": {
       "item": "elementtimes:saplingessence"
+    },
+    "T": {
+      "item": "minecraft:totem_of_undying"
     }
   },
   "result": {

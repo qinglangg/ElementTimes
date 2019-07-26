@@ -5,29 +5,20 @@
     "item": "elementtimes:furnace"
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "EBE"
+    "AAA",
+    "BCB",
+    "AAA"
   ],
   "key": {
     "A": {
       "type": "forge:ore_dict",
-      "ore": "gearGold"
-    },
-    "B": {
-      "type": "forge:ore_dict",
-      "ore": "blockCopper"
-    },
-    "C": {
-      "type": "forge:ore_dict",
       "ore": "blockSteel"
     },
-    "D": {
-      "item": "elementtimes:fuelGenerator"
+    "B": {
+      "item": "elementtimes:fireelement"
     },
-    "E": {
-      "type": "forge:ore_dict",
-      "ore": "gearDiamond"
+    "C": {
+      "item": "elementtimes:fuelGenerator"
     }
   }
 }

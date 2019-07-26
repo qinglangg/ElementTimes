@@ -10,13 +10,15 @@
       "ore": "blockSteel"
     },
     {
-      "item": "minecraft:redstone_block"
+      "type": "forge:ore_dict",
+      "ore": "blockTin"
     },
     {
       "item": "minecraft:gold_block"
     },
     {
-      "item": "minecraft:lapis_block"
+      "type": "forge:ore_dict",
+      "ore": "blockLead"
     },
     {
       "item": "elementtimes:diamondblock"

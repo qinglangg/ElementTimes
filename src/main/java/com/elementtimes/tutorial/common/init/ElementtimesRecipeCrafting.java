@@ -215,9 +215,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting
     public static Object[] fluidreactor = new Object[]{
             ElementtimesBlocks.fluidReactor,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel,
             ElementtimesBlocks.fluidHeater, ElementtimesBlocks.pumpFluid, ElementtimesBlocks.condenser,
-            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiSilverCopper
     };
 
     @ModRecipe
@@ -250,27 +250,27 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting(ore = false)
     public static Object[] rebuild = new Object[]{
             ElementtimesBlocks.rebuild,
-            ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiGoldPlatinum,
+            ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiGoldPlatinum,
             ElementtimesBlocks.forming, ElementtimesBlocks.electrolyticCell, ElementtimesBlocks.extractor,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel
+            ElementtimesBlocks.blockMultiObsidianDiamond, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel
     };
 
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] forming = new Object[]{
             ElementtimesBlocks.forming,
-            null, "blockSteel", null,
+            null, ElementtimesBlocks.blockMultiIronQuartz, null,
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiCarbonSteel,
-            null, "blockCopper", null
+            null, ElementtimesBlocks.blockMultiTinLead, null
     };
 
     @ModRecipe
     @ModRecipe.Crafting
     public static Object[] extractor = new Object[]{
             ElementtimesBlocks.extractor,
-            null, "blockSteel", null,
+            null, ElementtimesBlocks.blockMultiTinLead, null,
             ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.blockMultiGoldPlatinum,
-            null, "blockCopper", null
+            null, ElementtimesBlocks.blockMultiIronQuartz, null
     };
 
     @ModRecipe

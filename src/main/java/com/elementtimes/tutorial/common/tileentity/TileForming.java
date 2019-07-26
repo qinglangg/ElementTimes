@@ -6,6 +6,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 
+import net.minecraft.init.Blocks;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -35,7 +37,9 @@ public class TileForming extends BaseOneToOne {
                 .add("9", 10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
                 .add("0", 10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3)
                 .add("10", 10000, "ingotlead", 9, ElementtimesItems.gearLead, 3)
-                .add("10", 10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
+                .add("11", 10000, ElementtimesItems.diamondIngot, 9, ElementtimesItems.gearAdamas, 3)
+                .add("12", 10000,Blocks.OBSIDIAN, 9, ElementtimesItems.gearObsidian, 3)
+                .add("13", 10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
     }
 
     @Nonnull

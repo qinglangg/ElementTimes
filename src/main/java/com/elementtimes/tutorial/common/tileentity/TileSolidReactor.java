@@ -48,6 +48,12 @@ public class TileSolidReactor extends BaseMachine {
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
+                    .endAdd()
+                    .newRecipe("3")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
                     .endAdd();
 
         }
