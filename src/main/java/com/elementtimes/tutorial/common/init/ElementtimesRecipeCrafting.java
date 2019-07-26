@@ -5,6 +5,7 @@ import com.elementtimes.tutorial.annotation.annotations.ModRecipe;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.other.FluidIngredient;
 import com.elementtimes.tutorial.util.RecipeUtil;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -205,9 +206,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting
     public static Object[] solidreactor = new Object[]{
             ElementtimesBlocks.solidReactor,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            "blockCopper", ElementtimesBlocks.diamondBlock, "blockSteel",
-            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+            Items.FLINT,Blocks.COAL_BLOCK,Items.FLINT,
+            Blocks.COAL_BLOCK,ElementtimesBlocks.fuelGenerator,Blocks.COAL_BLOCK,
+            Items.FLINT,Blocks.COAL_BLOCK,Items.FLINT,
     };
 
     @ModRecipe

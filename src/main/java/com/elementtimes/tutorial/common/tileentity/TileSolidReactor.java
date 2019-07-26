@@ -10,6 +10,7 @@ import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.fluids.Fluid;
@@ -34,7 +35,21 @@ public class TileSolidReactor extends BaseMachine {
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe("1")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe("2")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
                     .endAdd();
+
         }
     }
 
