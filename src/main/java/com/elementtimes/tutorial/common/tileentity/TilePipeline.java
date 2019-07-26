@@ -1,10 +1,12 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
 import com.elementtimes.tutorial.util.BlockUtil;
 import com.elementtimes.tutorial.util.MathUtil;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -42,11 +44,8 @@ public class TilePipeline extends TileEntity {
 
     public void setInfo(PLInfo info) {
         mInfo = info;
-        info.pos = pos;
-        for (EnumFacing facing : EnumFacing.values()) {
-            tryConnect(facing);
-        }
-        markDirty();
+        mInfo.pos = pos;
+        tryConnect(EnumFacing.values());
     }
 
     public PLInfo getInfo() {
@@ -58,14 +57,11 @@ public class TilePipeline extends TileEntity {
     }
 
     public void setDisconnected(int disconnected) {
-        mDisconnected = disconnected;
-        boolean update = false;
-        for (EnumFacing facing : EnumFacing.values()) {
-            tryConnect(facing);
-            update = true;
-        }
-        if (update) {
-            markDirty();
+        if (mDisconnected != disconnected) {
+            mDisconnected = disconnected;
+            if (!tryConnect(EnumFacing.values())) {
+                markDirty();
+            };
         }
     }
 
@@ -80,7 +76,6 @@ public class TilePipeline extends TileEntity {
     public void setConnected(int connected) {
         if (mConnected != connected) {
             mConnected = connected;
-            markDirty();
         }
     }
 
@@ -103,28 +98,33 @@ public class TilePipeline extends TileEntity {
         return newState;
     }
 
-    public void tryConnect(EnumFacing facing) {
-        BlockPos pos = this.pos.offset(facing);
-        TileEntity te = world.getTileEntity(pos);
-        if (te != null) {
-            EnumFacing opposite = facing.getOpposite();
-            if (te instanceof TilePipeline) {
-                TilePipeline tp = (TilePipeline) te;
-                if (getInfo().action.canSend(world, tp.getInfo(), null)) {
-                    setConnected(facing, true);
-                    tp.setConnected(opposite, true);
-                } else {
-                    setConnected(facing, false);
-                    tp.setConnected(opposite, false);
+    public boolean tryConnect(EnumFacing... facings) {
+        boolean changed = false;
+        for (EnumFacing facing : facings) {
+            if (facing != null) {
+                BlockPos pos = this.pos.offset(facing);
+                TileEntity te = world.getTileEntity(pos);
+                if (te != null) {
+                    if (getInfo().action.canConnect(world, pos, null) && !isConnected(facing)) {
+                        setConnected(facing, true);
+                        if (!(te instanceof TilePipeline)) {
+                            getInfo().listOut.add(pos);
+                        }
+                        changed = true;
+                    } else if (isConnected(facing)) {
+                        setConnected(facing, false);
+                        getInfo().listOut.remove(pos);
+                        changed = true;
+                    }
                 }
-            } else if (getInfo().action.canOutput(world, getInfo(), this.pos, null)) {
-                setConnected(facing, true);
-                mInfo.listOut.add(pos);
-            } else {
-                setConnected(facing, false);
-                mInfo.listOut.remove(pos);
             }
         }
+        if (changed) {
+            world.setBlockState(pos, bindActualState(world.getBlockState(pos)));
+            world.markBlockRangeForRenderUpdate(pos, pos);
+            markDirty();
+        }
+        return changed;
     }
 
     @Override
@@ -141,9 +141,18 @@ public class TilePipeline extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        NBTTagCompound pipeline = compound.getCompoundTag(NBT_BIND_TP);
-        mInfo.deserializeNBT(pipeline.getCompoundTag(NBT_BIND_TP_INFO));
-        mDisconnected = pipeline.getInteger(NBT_BIND_TP_DISCONNECTED);
-        setConnected(pipeline.getInteger(NBT_BIND_TP_CONNECTED));
+        if (compound.hasKey(NBT_BIND_TP)) {
+            NBTTagCompound pipeline = compound.getCompoundTag(NBT_BIND_TP);
+            if (pipeline.hasKey(NBT_BIND_TP_INFO)) {
+                mInfo.deserializeNBT(pipeline.getCompoundTag(NBT_BIND_TP_INFO));
+            }
+            if (pipeline.hasKey(NBT_BIND_TP_DISCONNECTED)) {
+                mDisconnected = pipeline.getInteger(NBT_BIND_TP_DISCONNECTED);
+            }
+            if (pipeline.hasKey(NBT_BIND_TP_CONNECTED)) {
+                setConnected(pipeline.getInteger(NBT_BIND_TP_CONNECTED));
+            }
+            markDirty();
+        }
     }
 }

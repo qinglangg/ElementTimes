@@ -1,7 +1,10 @@
 package com.elementtimes.tutorial.other.pipeline;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
+import com.elementtimes.tutorial.util.BlockUtil;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,11 +17,11 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -141,14 +144,9 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
 
     private void findOutput(World world, Map<BlockPos, PLPath> pathMap, BlockPos from,
                             LinkedList<PLInfo> before, PLInfo next, PLElement element) {
+        PLElement e = element.copy();
         for (BlockPos blockPos : next.listOut) {
-            if (next.action.canOutput(world, next, blockPos, element)) {
-                PLPath path = new PLPath(from, blockPos, before, next);
-                PLPath pathExist = pathMap.get(blockPos);
-                if (pathExist != null && pathExist.calcTick() > path.calcTick()) {
-                    pathMap.put(blockPos, path);
-                }
-            }
+            e.element = next.action.output(world, blockPos, e, false);
         }
     }
 
@@ -180,8 +178,10 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
     }
 
     @Override
+    @SuppressWarnings("Duplicates")
     public void deserializeNBT(NBTTagCompound nbt) {
         NBTTagCompound pipelineTypeInfo = nbt.getCompoundTag(BIND_NBT_PIPELINE_TYPE_INFO);
+
         keepTick = pipelineTypeInfo.getInteger(BIND_NBT_PIPELINE_TYPE_INFO_TICK);
         type = pipelineTypeInfo.getString(BIND_NBT_PIPELINE_TYPE_INFO_TYPE);
         selectorClass = pipelineTypeInfo.getString(BIND_NBT_PIPELINE_TYPE_INFO_SELECTOR_CLASS);
@@ -189,15 +189,21 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         String nameSelector = pipelineTypeInfo.getString(BIND_NBT_PIPELINE_TYPE_INFO_SELECTOR);
 
         NBTTagList inList = (NBTTagList) pipelineTypeInfo.getTag(BIND_NBT_PIPELINE_TYPE_INFO_IN);
-        listIn = new LinkedList<>();
-        for (int i = 0; i < inList.tagCount(); i++) {
-            listIn.add(i, NBTUtil.getPosFromTag(inList.getCompoundTagAt(i)));
+        listIn.clear();
+        if (inList.tagCount() > 0) {
+            for (int i = 0; i < inList.tagCount(); i++) {
+                System.out.println(inList.getCompoundTagAt(i));
+                listIn.add(i, NBTUtil.getPosFromTag(inList.getCompoundTagAt(i)));
+            }
         }
 
         NBTTagList outList = (NBTTagList) pipelineTypeInfo.getTag(BIND_NBT_PIPELINE_TYPE_INFO_OUT);
-        listOut = new LinkedList<>();
-        for (int i = 0; i < inList.tagCount(); i++) {
-            listOut.add(i, NBTUtil.getPosFromTag(outList.getCompoundTagAt(i)));
+        listOut.clear();
+        if (outList.tagCount() > 0) {
+            for (int i = 0; i < outList.tagCount(); i++) {
+                System.out.println(outList.getCompoundTagAt(i));
+                listOut.add(i, NBTUtil.getPosFromTag(outList.getCompoundTagAt(i)));
+            }
         }
 
         action = ACTIONS.get(nameSelector);
@@ -249,7 +255,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
          * @param element 传输内容
          * @return 所有可选方向
          */
-        default PLInfo[] select(World world, PLInfo pipeline, @Nullable PLElement element) {
+        default PLInfo[] select(World world, PLInfo pipeline, PLElement element) {
             TileEntity tileEntity = world.getTileEntity(pipeline.pos);
             if (tileEntity instanceof TilePipeline) {
                 TilePipeline tp = (TilePipeline) tileEntity;
@@ -270,32 +276,14 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         /**
-         * 检查当前位置管道是否有效
-         * @param world 所在世界
-         * @param pipeline 管道
-         * @param element 传输内容
-         * @return 是否有效
-         */
-        boolean isValid(World world, PLInfo pipeline, @Nullable PLElement element);
-
-        /**
-         * 某位置是否可以输出
-         * 用于检查输出
-         * @param world 所在世界
-         * @param pos 待连接位置
-         * @param element 传输内容
-         * @return 是否可以连接
-         */
-        boolean canOutput(World world, PLInfo path, BlockPos pos, @Nullable PLElement element);
-
-        /**
-         * 某位置是否可以传输
+         * 向某个位置尝试传输
          * @param world 所在世界
          * @param pl 下一节管道
          * @param element 传输内容
-         * @return 是否可以传输
+         * @param similar 是否模拟传输
+         * @return 尝试传输后的结果
          */
-        boolean canSend(World world, PLInfo pl, @Nullable PLElement element);
+        Object send(World world, PLInfo pl, PLElement element, boolean similar);
 
         /**
          * 管道输出
@@ -304,7 +292,18 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
          * @param element 输出内容
          * @return 剩余物品
          */
-        PLElement output(World world, BlockPos pos, @Nullable PLElement element);
+        Object output(World world, BlockPos pos, PLElement element, boolean similar);
+
+        /**
+         * 检查是否可以连接
+         * @param world 所在世界
+         * @param pos 连接位置
+         * @param element 传输内容
+         * @return 是否可连接
+         */
+        default boolean canConnect(World world, BlockPos pos, PLElement element) {
+            return world.getBlockState(pos).getBlock() != Blocks.AIR;
+        }
     }
 
     public static PLInfo fromNBT(NBTTagCompound nbt) {
@@ -401,7 +400,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
 
     public static class PathActionItem implements PathAction {
 
-        public static String NAME = "_ITEM_LINK_";
+        public static String NAME = "_ITEM_";
         public static PathAction instance() {
             PathAction pathAction = ACTIONS.get(NAME);
             if (pathAction == null) {
@@ -417,29 +416,32 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_ITEM);
+        public Object send(World world, PLInfo pl, PLElement element, boolean similar) {
+            boolean canSend = world.isBlockLoaded(pl.pos)
+                    && world.getTileEntity(pl.pos) instanceof TilePipeline
+                    && (pl.type.equals(Pipeline.TYPE_ITEM)
+                        || pl.type.equals(Pipeline.TYPE_ITEM_OUT));
+            if (canSend) {
+                if (similar && element != null) {
+                    element.path.moveTo(world, pl);
+                }
+                return null;
+            }
+            return element.element;
         }
 
         @Override
-        public boolean canOutput(World world, PLInfo path, BlockPos pos, @Nullable PLElement element) {
-            return false;
+        public Object output(World world, BlockPos pos, PLElement element, boolean similar) {
+            return element.element;
         }
 
         @Override
-        public boolean canSend(World world, PLInfo pl, @Nullable PLElement element) {
-            return pl.action.isValid(world, pl, element)
-                    && pl.type.equals(Pipeline.TYPE_ITEM)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_IN)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_OUT);
-        }
-
-        @Override
-        public PLElement output(World world, BlockPos pos, @Nullable PLElement element) {
-            return element;
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return te instanceof TilePipeline
+                    && (((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM)
+                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_IN)
+                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_OUT));
         }
     }
 
@@ -461,11 +463,10 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_ITEM_IN);
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
+                    || super.canConnect(world, pos, element);
         }
     }
 
@@ -487,82 +488,33 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_ITEM_OUT);
-        }
-
-        @Override
-        public boolean canOutput(World world, PLInfo path, BlockPos pos, PLElement element) {
+        public Object output(World world, BlockPos pos, PLElement element, boolean similar) {
             if (element.element instanceof ItemStack) {
                 TileEntity te = world.getTileEntity(pos);
                 if (te != null) {
-                    BlockPos before = path.pos;
-                    // face
-                    EnumFacing facing;
-                    int zeroCount = 0;
-                    int dx = pos.getX() - before.getX();
-                    if (dx == 0) {
-                        zeroCount++;
-                    }
-                    int dy = pos.getY() - before.getY();
-                    if (dy == 0) {
-                        zeroCount++;
-                    }
-                    int dz = pos.getZ() - before.getZ();
-                    if (dz == 0) {
-                        zeroCount++;
-                    }
-                    if (zeroCount == 2) {
-                        if (dx == 1) {
-                            facing = EnumFacing.EAST;
-                        } else if (dx == -1) {
-                            facing = EnumFacing.WEST;
-                        } if (dy == 1) {
-                            facing = EnumFacing.UP;
-                        } else if (dy == -1) {
-                            facing = EnumFacing.DOWN;
-                        } if (dz == 1) {
-                            facing = EnumFacing.SOUTH;
-                        } else if (dz == -1) {
-                            facing = EnumFacing.NORTH;
-                        } else {
-                            facing = null;
-                        }
-                    } else {
-                        facing = null;
-                    }
+                    EnumFacing facing = BlockUtil.getPosFacing(element.path.plPos.pos, pos);
                     if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
                         IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                         ItemStack items = (ItemStack) element.element;
                         ItemStack itemsCopy = items.copy();
-                        ItemStack itemStack = ItemHandlerHelper.insertItem(capability, itemsCopy, true);
-                        return !itemStack.isItemEqual(items) || itemStack.getCount() != items.getCount();
+                        return ItemHandlerHelper.insertItem(capability, itemsCopy, similar);
                     }
                 }
             }
-            return false;
+            return element.element;
         }
 
         @Override
-        public boolean canSend(World world, PLInfo pl, PLElement element) {
-            return pl.action.isValid(world, pl, element)
-                    && pl.type.equals(Pipeline.TYPE_ITEM)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_IN)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_OUT);
-        }
-
-        @Override
-        public PLElement output(World world, BlockPos pos, PLElement element) {
-            return element;
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
+                    || super.canConnect(world, pos, element);
         }
     }
 
     public static class PathActionFluid implements PathAction {
 
-        public static String NAME = "_FLUID_LINK_";
+        public static String NAME = "_FLUID_";
         public static PathAction instance() {
             PathAction pathAction = ACTIONS.get(NAME);
             if (pathAction == null) {
@@ -578,29 +530,32 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_FLUID);
+        public Object send(World world, PLInfo pl, PLElement element, boolean similar) {
+            boolean canSend = world.isBlockLoaded(pl.pos)
+                    && world.getTileEntity(pl.pos) instanceof TilePipeline
+                    && (pl.type.equals(Pipeline.TYPE_FLUID)
+                    || pl.type.equals(Pipeline.TYPE_FLUID_OUT));
+            if (canSend) {
+                if (similar && element != null) {
+                    element.path.moveTo(world, pl);
+                }
+                return null;
+            }
+            return element.element;
         }
 
         @Override
-        public boolean canOutput(World world, PLInfo path, BlockPos pos, @Nullable PLElement element) {
-            return false;
+        public Object output(World world, BlockPos pos, PLElement element, boolean similar) {
+            return element.element;
         }
 
         @Override
-        public boolean canSend(World world, PLInfo pl, @Nullable PLElement element) {
-            return pl.action.isValid(world, pl, element)
-                    && pl.type.equals(Pipeline.TYPE_FLUID)
-                    && pl.type.equals(Pipeline.TYPE_FLUID_IN)
-                    && pl.type.equals(Pipeline.TYPE_FLUID_OUT);
-        }
-
-        @Override
-        public PLElement output(World world, BlockPos pos, @Nullable PLElement element) {
-            return element;
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return te instanceof TilePipeline
+                    && (((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID)
+                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_IN)
+                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_OUT));
         }
     }
 
@@ -608,12 +563,12 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
 
         public static String NAME = "_FLUID_IN_";
         public static PathAction instance() {
-            PathAction action = ACTIONS.get(NAME);
-            if (action == null) {
-                action = new PathActionFluidIn();
-                ACTIONS.put(NAME, action);
+            PathAction pathAction = ACTIONS.get(NAME);
+            if (pathAction == null) {
+                pathAction = new PathActionFluidIn();
+                ACTIONS.put(NAME, pathAction);
             }
-            return action;
+            return pathAction;
         }
 
         @Override
@@ -622,11 +577,10 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_FLUID_IN);
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
+                    || super.canConnect(world, pos, element);
         }
     }
 
@@ -648,76 +602,28 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean isValid(World world, PLInfo pipeline, PLElement element) {
-            TileEntity te = world.getTileEntity(pipeline.pos);
-            return world.getBlockState(pipeline.pos) instanceof Pipeline
-                    && te instanceof TilePipeline
-                    && ((TilePipeline) te).getInfo().type.equals(Pipeline.TYPE_ITEM_OUT);
-        }
-
-        @Override
-        public boolean canOutput(World world, PLInfo path, BlockPos pos, PLElement element) {
+        public Object output(World world, BlockPos pos, PLElement element, boolean similar) {
             if (element.element instanceof FluidStack) {
                 TileEntity te = world.getTileEntity(pos);
                 if (te != null) {
-                    BlockPos before = path.pos;
-                    // face
-                    EnumFacing facing;
-                    int zeroCount = 0;
-                    int dx = pos.getX() - before.getX();
-                    if (dx == 0) {
-                        zeroCount++;
-                    }
-                    int dy = pos.getY() - before.getY();
-                    if (dy == 0) {
-                        zeroCount++;
-                    }
-                    int dz = pos.getZ() - before.getZ();
-                    if (dz == 0) {
-                        zeroCount++;
-                    }
-                    if (zeroCount == 2) {
-                        if (dx == 1) {
-                            facing = EnumFacing.EAST;
-                        } else if (dx == -1) {
-                            facing = EnumFacing.WEST;
-                        } if (dy == 1) {
-                            facing = EnumFacing.UP;
-                        } else if (dy == -1) {
-                            facing = EnumFacing.DOWN;
-                        } if (dz == 1) {
-                            facing = EnumFacing.SOUTH;
-                        } else if (dz == -1) {
-                            facing = EnumFacing.NORTH;
-                        } else {
-                            facing = null;
-                        }
-                    } else {
-                        facing = null;
-                    }
+                    EnumFacing facing = BlockUtil.getPosFacing(element.path.plPos.pos, pos);
                     if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
                         IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                        FluidStack fluids = (FluidStack) element.element;
-                        FluidStack fluidsCopy = new FluidStack(fluids, fluids.amount);
-                        int fluidCount = capability.fill(fluidsCopy, false);
-                        return fluidCount != 0;
+                        FluidStack fluid = (FluidStack) element.element;
+                        FluidStack fluidCopy = new FluidStack(fluid, fluid.amount);
+                        int amount = capability.fill(fluidCopy, !similar);
+                        return new FluidStack(fluidCopy, fluidCopy.amount - amount);
                     }
                 }
             }
-            return false;
+            return element.element;
         }
 
         @Override
-        public boolean canSend(World world, PLInfo pl, PLElement element) {
-            return pl.action.isValid(world, pl, element)
-                    && pl.type.equals(Pipeline.TYPE_ITEM)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_IN)
-                    && pl.type.equals(Pipeline.TYPE_ITEM_OUT);
-        }
-
-        @Override
-        public PLElement output(World world, BlockPos pos, PLElement element) {
-            return element;
+        public boolean canConnect(World world, BlockPos pos, PLElement element) {
+            TileEntity te = world.getTileEntity(pos);
+            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
+                    || super.canConnect(world, pos, element);
         }
     }
 }

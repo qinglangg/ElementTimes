@@ -1,0 +1,63 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "elementtimes:pipeline_item"
+  },
+  "variants": {
+    "inventory": [{}],
+    "connected_up": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "z": 90
+        }
+      }
+    },
+    "connected_down": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "z": 270
+        }
+      }
+    },
+    "connected_east": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "y": 0
+        }
+      }
+    },
+    "connected_west": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "y": 90
+        }
+      }
+    },
+    "connected_north": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "y": 180
+        }
+      }
+    },
+    "connected_south": {
+      "false": {},
+      "true": {
+        "submodel": {
+          "model": "elementtimes:pipeline_item_sub",
+          "y": 270
+        }
+      }
+    }
+  }
+}

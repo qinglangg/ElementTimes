@@ -64,4 +64,17 @@ public class RubberSapling extends BlockBush implements IGrowable, IConfigApply 
     public void applyConfig() {
         rubberProbability = ElementtimesConfig.GENERAL.rubberTreeGenRubberProbability;
     }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (!worldIn.isRemote) {
+            super.updateTick(worldIn, pos, state, rand);
+
+            if (worldIn.isAreaLoaded(pos, 1)) {
+                if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
+                    grow(worldIn, rand, pos, state);
+                }
+            }
+        }
+    }
 }

@@ -8,61 +8,37 @@
     "connected_up": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     },
     "connected_down": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     },
     "connected_east": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     },
     "connected_west": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     },
     "connected_north": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     },
     "connected_south": {
       "false": {},
       "true": {
-        "submodel": {
-          "part1": {
-            "model": "elementtimes:pipeline_fluid_sub"
-          }
-        }
+        "submodel": "elementtimes:pipeline_fluid_sub"
       }
     }
   }

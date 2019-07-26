@@ -1,8 +1,10 @@
 package com.elementtimes.tutorial.other.pipeline;
 
+import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -19,15 +21,14 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
     private static final String BIND_NBT_PATH = "_nbt_pipeline_path_";
     private static final String BIND_NBT_PATH_FROM = "_nbt_pipeline_path_from_";
     private static final String BIND_NBT_PATH_TO = "_nbt_pipeline_path_to_";
-    private static final String BIND_NBT_PATH_POS = "_nbt_pipeline_path_to_";
     private static final String BIND_NBT_PATH_IN = "_nbt_pipeline_path_from_ori_";
     private static final String BIND_NBT_PATH_OUT = "_nbt_pipeline_path_to_ori_";
-    private static final String BIND_NBT_PATH_PL_POS = "_nbt_pipeline_path_pos_";
+    private static final String BIND_NBT_PATH_POS = "_nbt_pipeline_path_pos_";
     private static final String BIND_NBT_PATH_TICK = "_nbt_pipeline_path_tick_";
     private static final String BIND_NBT_PATH_TICK_TOTAL = "_nbt_pipeline_path_tick_total_";
     private static final String BIND_NBT_PATH_POS_STACK = "_nbt_pipeline_path_pos_stack_";
 
-    public BlockPos from, to, pos;
+    public BlockPos from, to;
     public PLInfo plIn, plOut, plPos;
     public long totalTick;
     public int tick;
@@ -36,7 +37,6 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
 
     public PLPath(BlockPos from, PLInfo in, BlockPos to, PLInfo out) {
         this.from = from;
-        pos = from;
         this.to = to;
         plIn = in;
         plPos = in;
@@ -50,7 +50,6 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
     public PLPath(BlockPos from, BlockPos to, LinkedList<PLInfo> before, PLInfo next) {
         this.from = from;
         this.to = to;
-        this.pos = from;
         if (before.isEmpty()) {
             plIn = next;
             plOut = next;
@@ -69,86 +68,94 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
     }
 
     public void tickStart(World world, PLElement element) {
-        if (!tickAdd) {
-            totalTick++;
-            if (tick < plPos.keepTick) {
-                tick++;
-            } else {
-                tick = 0;
-                PLElement retElement = null;
-                if (plPos.equals(plOut)) {
-                    // 输出 返回剩余内容
-                    retElement = plPos.action.output(world, pos, element);
-                    BlockPos swap = from;
-                    from = to;
-                    to = swap;
+        if (world.isBlockLoaded(plPos.pos) && !tickAdd) {
+            TileEntity te = world.getTileEntity(plPos.pos);
+            if (te instanceof TilePipeline) {
+                if (tick < plPos.keepTick) {
+                    // 下一 tick
+                    totalTick++;
+                    tick++;
                 } else {
-                    PLInfo back = null;
-                    int i = path.indexOf(plPos);
-                    if (i > 0) {
-                        if (plPos.action.isValid(world, plPos, element)) {
-                            back = plPos;
-                            int nextIndex = i + 1;
-                            if (nextIndex < path.size()) {
-                                PLInfo next = path.get(i + 1);
-                                if (plPos.action.canSend(world, next, element)) {
-                                    moveTo(next);
-                                    retElement = null;
-                                } else {
-                                    // 不可向前传输 返回
-                                    retElement = element;
-                                }
-                            } else {
-                                // 前方无路 返回
-                                retElement = element;
-                            }
+                    if (plPos.equals(plOut) && plPos.listOut.contains(to)) {
+                        tick = 0;
+                        Object back = plPos.action.output(world, plPos.pos, element, false);
+                        if (element.serializer.isObjectEmpty(back)) {
+                            element.remove();
                         } else {
-                            // 当前方块被破坏 返回
-                            while (i > 0) {
-                                i--;
-                                back = path.get(i);
-                                if (back.action.isValid(world, back, element)) {
-                                    break;
-                                }
-                                back = null;
-                            }
-                            retElement = element;
+                            // 输出 返回剩余内容
+                            backToStart(world, element, back);
                         }
                     } else {
-                        back = null;
-                    }
-                    if (back == null) {
-                        element.remove();
-                    } else {
-                        moveTo(back);
+                        int i = path.indexOf(plPos);
+                        if (i < 0) {
+                            // 无效路段 移除
+                            element.remove();
+                        } else {
+                            // 传输到下一段
+                            PLInfo next = path.get(i + 1);
+                            Object send = plPos.action.send(world, next, element, false);
+                            if (!element.serializer.isObjectEmpty(send)) {
+                                PLElement back = element.copy(send);
+                                back.path.backToStart(world, back, send);
+                                back.send();
+                            }
+                        }
                     }
                 }
-
-                if (retElement != null) {
-                    Map<BlockPos, PLPath> pathMap = plPos.allValidOutput(world, from, element);
-                    PLPath p = pathMap.get(to);
-                    if (p == null) {
-                        p = pathMap.get(from);
-                        BlockPos swap = from;
-                        from = to;
-                        to = swap;
-                        tick = 0;
-                        if (p == null) {
-                            Optional<PLPath> first = pathMap.values().stream().findFirst();
-                            p = first.orElseGet(() -> new PLPath(from, plPos, to, plPos));
-                        }
-                    }
-                    element.remove();
-                    PLElement newElement = new PLElement();
-                    newElement.path = p;
-                    newElement.element = element.element;
-                    newElement.serializer = element.serializer;
-                    newElement.serializerClass = element.serializerClass;
-                    newElement.send();
+            } else {
+                // 当前路段无效 返回并查找新路径
+                boolean next = backAndContinue(world, element);
+                if (!next) {
+                    backToStart(world, element, element.element);
                 }
             }
             tickAdd = true;
         }
+    }
+
+    /**
+     * 当遇到异常路段时，返回到有效路段并重新规划路径
+     * @param world 所在世界
+     * @param element 传输内容
+     * @return 可以正常规划到下一个路径
+     */
+    public boolean backAndContinue(World world, PLElement element) {
+        int i = path.indexOf(plPos);
+        if (i > 0) {
+            while (i > 0) {
+                i--;
+                PLInfo back = path.get(i);
+                TileEntity te = world.getTileEntity(back.pos);
+                if (te instanceof TilePipeline) {
+                    moveTo(world, back);
+                    Map<BlockPos, PLPath> pathMap = back.allValidOutput(world, from, element);
+                    PLPath path = pathMap.get(to);
+                    if (path != null) {
+                        for (PLInfo info : this.path.subList(i, this.path.size())) {
+                            this.path.remove(info);
+                        }
+                        this.path.addAll(path.path);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 返回到起点
+     * @param world 所在世界
+     * @param element 传输内容
+     * @param back 返回内容
+     */
+    public void backToStart(World world, PLElement element, Object back) {
+        element.element = back;
+        tick = 0;
+        BlockPos swap = from;
+        from = to;
+        to = swap;
+        Collections.reverse(path);
     }
 
     public void tickEnd() {
@@ -157,7 +164,6 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
 
     public PLPath copy() {
         PLPath p = new PLPath(from, plIn, to, plOut);
-        p.pos = new BlockPos(pos);
         p.plPos = plPos;
         p.totalTick = totalTick;
         p.tick = tick;
@@ -172,10 +178,13 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         plOut = next;
     }
 
-    public void moveTo(PLInfo pos) {
-        this.plPos = pos;
-        this.pos = pos.pos;
-        this.tick = 0;
+    public boolean moveTo(World world, PLInfo pos) {
+        if (world.isBlockLoaded(pos.pos)) {
+            this.plPos = pos;
+            this.tick = 0;
+            return true;
+        }
+        return false;
     }
 
     public void test(LinkedList<PLInfo> subPath, long subTick) {
@@ -206,10 +215,9 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         NBTTagCompound nbtPath = new NBTTagCompound();
         nbtPath.setTag(BIND_NBT_PATH_FROM, NBTUtil.createPosTag(from));
         nbtPath.setTag(BIND_NBT_PATH_TO, NBTUtil.createPosTag(to));
-        nbtPath.setTag(BIND_NBT_PATH_POS, NBTUtil.createPosTag(pos));
         nbtPath.setTag(BIND_NBT_PATH_IN, plIn.serializeNBT());
         nbtPath.setTag(BIND_NBT_PATH_OUT, plOut.serializeNBT());
-        nbtPath.setTag(BIND_NBT_PATH_PL_POS, plPos.serializeNBT());
+        nbtPath.setTag(BIND_NBT_PATH_POS, plPos.serializeNBT());
         nbtPath.setInteger(BIND_NBT_PATH_TICK, tick);
         nbtPath.setLong(BIND_NBT_PATH_TICK_TOTAL, totalTick);
 
@@ -233,10 +241,9 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         NBTTagCompound nbtPath = nbt.getCompoundTag(BIND_NBT_PATH);
         from = NBTUtil.getPosFromTag(nbtPath.getCompoundTag(BIND_NBT_PATH_FROM));
         to = NBTUtil.getPosFromTag(nbtPath.getCompoundTag(BIND_NBT_PATH_TO));
-        pos = NBTUtil.getPosFromTag(nbtPath.getCompoundTag(BIND_NBT_PATH_POS));
         plIn = PLInfo.fromNBT(nbtPath.getCompoundTag(BIND_NBT_PATH_IN));
         plOut = PLInfo.fromNBT(nbtPath.getCompoundTag(BIND_NBT_PATH_OUT));
-        plPos = PLInfo.fromNBT(nbtPath.getCompoundTag(BIND_NBT_PATH_PL_POS));
+        plPos = PLInfo.fromNBT(nbtPath.getCompoundTag(BIND_NBT_PATH_POS));
         totalTick = nbtPath.getLong(BIND_NBT_PATH_TICK_TOTAL);
         tick = nbtPath.getInteger(BIND_NBT_PATH_TICK);
 

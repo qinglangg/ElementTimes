@@ -73,6 +73,7 @@ public class ElementtimesGUI implements IGuiHandler {
                 case ElectrolyticCell:
                 case PumpAir:
                 case PumpFluid:
+                case Centrifuge:
                     return ContainerMachine.cm176_204_122(machine, player);
                 case SupportStand:
                     return ContainerMachine.cm176_201_119(machine, player);
@@ -105,6 +106,9 @@ public class ElementtimesGUI implements IGuiHandler {
                         return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), "5", 60,
                                 80, 30, 0, 156, 24, 17,
                                 43, 55, 24, 156, 90, 4);
+                    case Centrifuge:
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "centrifuge", 112,
+                                40, 30, 43, 107);
                     case SolidMelter:
                         return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), "solidmelter", 4,
                                 65, 31, 43, 72);

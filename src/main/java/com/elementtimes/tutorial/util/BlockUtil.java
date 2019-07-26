@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.util;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,5 +28,33 @@ public class BlockUtil {
             }
             world.markBlockRangeForRenderUpdate(pos, pos);
         }
+    }
+
+    public static EnumFacing getPosFacing(BlockPos before, BlockPos pos) {
+        // face
+        EnumFacing facing = null;
+        int dx = pos.getX() - before.getX();
+        if (dx > 0) {
+            facing = EnumFacing.EAST;
+        } else if (dx < 0) {
+            facing = EnumFacing.WEST;
+        }
+        int dy = pos.getY() - before.getY();
+        if (dy > 0 && facing == null) {
+            facing = EnumFacing.UP;
+        } else if (dy < 0 && facing == null) {
+            facing = EnumFacing.DOWN;
+        } else if (dy != 0) {
+            return null;
+        }
+        int dz = pos.getZ() - before.getZ();
+        if (dz > 0 && facing != null) {
+            facing = EnumFacing.SOUTH;
+        } else if (dz < 0 && facing != null) {
+            facing = EnumFacing.NORTH;
+        } else if (dz != 0) {
+            return null;
+        }
+        return facing;
     }
 }

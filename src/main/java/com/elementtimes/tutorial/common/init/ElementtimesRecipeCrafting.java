@@ -98,6 +98,12 @@ public class ElementtimesRecipeCrafting {
     public static String logWood = "logWood";
 
     @ModRecipe
+    @ModRecipe.Crafting(shaped = false)
+    public static Object[] sodiumsulfitesolution = new Object[] {
+            ElementtimesItems.sodiumSulfiteSolution, ElementtimesItems.sodiumBisulfite, "salt"
+    };
+
+    @ModRecipe
     @ModRecipe.Crafting
     public static Object[] blockMultiSliverCopper = new Object[]{
             ElementtimesBlocks.blockMultiSilverCopper,
@@ -131,6 +137,33 @@ public class ElementtimesRecipeCrafting {
             "plateWood", "rubber", "plateStone",
             "gearWood", "rubber", "gearStone",
             "plateWood", "rubber", "plateStone"
+    };
+
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] blockMultiTinLead = new Object[]{
+            ElementtimesBlocks.blockMultiTinLead,
+            "plateTin", "rubber", "plateLead",
+            "gearTin", "rubber", "gearLead",
+            "plateTin", "rubber", "plateLead"
+    };
+
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] blockMultiIronQuartz = new Object[]{
+            ElementtimesBlocks.blockMultiIronQuartz,
+            "plateIron", "rubber", "plateQuartz",
+            "gearIron", "rubber", "gearQuartz",
+            "plateIron", "rubber", "plateQuartz"
+    };
+
+    @ModRecipe
+    @ModRecipe.Crafting
+    public static Object[] blockMultiObsidianDiamond = new Object[]{
+            ElementtimesBlocks.blockMultiObsidianDiamond,
+            "plateObsidian", "rubber", ElementtimesItems.plateAdamas,
+            "gearObsidian", "rubber", ElementtimesItems.gearAdamas,
+            "plateObsidian", "rubber", ElementtimesItems.plateAdamas
     };
 
     @ModRecipe
@@ -315,8 +348,6 @@ public class ElementtimesRecipeCrafting {
             List<IRecipe> recipeList = new LinkedList<>();
             FluidRegistry.getBucketFluids()
                     .forEach(fluid -> {
-//                        ItemStack bottle = ItemBottleFuel.createByFluid(fluid);
-//                        ItemStack bucket = FluidUtil.getFilledBucket(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
                         NonNullList<Ingredient> input0 = NonNullList.create();
                         input0.add(Ingredient.fromItem(Items.GLASS_BOTTLE));
                         input0.add(FluidIngredient.bucket(fluid));

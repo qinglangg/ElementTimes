@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.item;
 
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
 import com.elementtimes.tutorial.other.pipeline.PLPath;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,9 +22,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +55,7 @@ public class Hammer extends Item {
         return repair.getItem() == ElementtimesItems.diamondIngot;
     }
 
+    @Nonnull
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         NBTTagCompound bind = itemStack.getOrCreateSubCompound(ElementTimes.MODID + "_bind");
@@ -67,6 +70,7 @@ public class Hammer extends Item {
         return container;
     }
 
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
@@ -78,30 +82,16 @@ public class Hammer extends Item {
         return EnumActionResult.PASS;
     }
 
-    /**
-     * 调试
-     *  下蹲右键方块，或直接右键一般方块，会读取其中 TileEntity 转化的 NBT 数据
-     *  直接右键管道，检查当前管道所在网络信息
-     *  直接右键煤矿石，清除所有网络（危险）
-     *  直接右键铁矿石，移除所有网络中的无效节点
-     * @param worldIn 世界
-     * @param pos 方块位置
-     * @param player 使用玩家
-     */
     private void debug(World worldIn, BlockPos pos, EntityPlayer player) {
         Block block = worldIn.getBlockState(pos).getBlock();
+        IBlockState bs = worldIn.getBlockState(pos);
         TileEntity te = worldIn.getTileEntity(pos);
         if (block == Blocks.AIR) {
             // 空气
             player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
-        } else if (block instanceof Pipeline) {
-            if (player.isSneaking()) {
-                debugTe(te, block, player);
-            } else {
-                debugPl(worldIn, (TilePipeline) worldIn.getTileEntity(pos), block, player);
-            }
         } else {
             debugTe(te, block, player);
+            debugBs(bs, player);
         }
     }
 
@@ -115,13 +105,29 @@ public class Hammer extends Item {
                 // 无 nbt
                 player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.nonbt", new ItemStack(block).getDisplayName()));
             } else {
-                sendDebugChat(player, block, "", nbt, 0);
+                player.sendMessage(new TextComponentString(block.getLocalizedName()));
+                sendDebugChat(player, "", nbt, 0);
                 player.sendMessage(new TextComponentString("============================================================"));
             }
         }
     }
 
-    private void debugPl(World world, TilePipeline tp, Block block, EntityPlayer player) {
+    private void debugBs(IBlockState bs, EntityPlayer player) {
+        if (bs != null) {
+            bs.getProperties().forEach((iProperty, comparable) ->
+                    player.sendMessage(new TextComponentString(iProperty.getName() + " = " + comparable)));
+            player.sendMessage(new TextComponentString("IBlockState================================================="));
+            if (bs instanceof IExtendedBlockState) {
+                player.sendMessage(new TextComponentString("IExtendedBlockState========================================="));
+                IExtendedBlockState ebs = (IExtendedBlockState) bs;
+                ebs.getUnlistedProperties().forEach((iProperty, comparable) ->
+                        player.sendMessage(new TextComponentString(iProperty.getName() + " = " + comparable)));
+                player.sendMessage(new TextComponentString("============================================================"));
+            }
+        }
+    }
+
+    private void debugPl(World world, TilePipeline tp, EntityPlayer player) {
         if (tp != null) {
             PLInfo info = tp.getInfo();
             BlockPos pos = tp.getPos();
@@ -138,21 +144,20 @@ public class Hammer extends Item {
         }
     }
 
-    private void sendDebugChat(EntityPlayer player, Block block, String lastKey, NBTBase nbt, int level) {
-        String name = new ItemStack(block).getDisplayName();
-        StringBuilder space = new StringBuilder(name).append(": ");
-        for (int i = 0; i < level; i++) {
+    private void sendDebugChat(EntityPlayer player, String lastKey, NBTBase nbt, int level) {
+        StringBuilder space = new StringBuilder();
+        for (int i = 1; i < level; i++) {
             space.append("    ");
         }
         if (nbt instanceof NBTTagCompound) {
             player.sendMessage(new TextComponentString(space.toString() + lastKey));
             ((NBTTagCompound) nbt).getKeySet().forEach(key -> {
-                sendDebugChat(player, block, key, ((NBTTagCompound) nbt).getTag(key), level + 1);
+                sendDebugChat(player, key, ((NBTTagCompound) nbt).getTag(key), level + 1);
             });
         } else {
             if (nbt instanceof NBTTagList) {
                 for (int i = 0; i < ((NBTTagList) nbt).tagCount(); i++) {
-                    sendDebugChat(player, block, lastKey + "[" + i + "]", ((NBTTagList) nbt).get(i), level);
+                    sendDebugChat(player, lastKey + "[" + i + "]", ((NBTTagList) nbt).get(i), level);
                 }
             } else if (nbt instanceof NBTTagByte) {
                 player.sendMessage(new TextComponentString(space.toString() + lastKey + " = " + ((NBTTagByte) nbt).getByte()));

@@ -204,11 +204,6 @@ public class ElementtimesBlocks {
     @ModBlock.StateMap
     public static Block pumpFluid = new BaseClosableMachine<>(TilePumpFluid.class);
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
-    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
-    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
-    @ModBlock.StateMap
-    public static Block pipeline = new Pipeline();
-    @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "itemreducer", clazz = "com.elementtimes.tutorial.common.tileentity.TileItemReducer")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
@@ -218,6 +213,14 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block centrifuge = new BaseClosableMachine<>(TileCentrifuge.class);
+
+    // pipeline
+
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
+    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
+    @ModBlock.StateMap
+    public static Block pipeline = new Pipeline();
 
     // 其他
 

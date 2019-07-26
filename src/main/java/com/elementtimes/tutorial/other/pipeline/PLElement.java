@@ -2,6 +2,9 @@ package com.elementtimes.tutorial.other.pipeline;
 
 import com.elementtimes.tutorial.common.event.PipelineEvent;
 import com.elementtimes.tutorial.util.FluidUtil;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,12 +30,6 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
 
     private static final Map<String, Serializer> SERIALIZER = new HashMap<>();
 
-    private static final String NBT_BIND_PIPELINE_ELEMENT = "_pipeline_element_";
-    private static final String NBT_BIND_PIPELINE_ELEMENT_ELEMENT = "_pipeline_element_element_";
-    private static final String NBT_BIND_PIPELINE_ELEMENT_PATH = "_pipeline_element_tick_path_";
-    private static final String BIND_NBT_PIPELINE_ELEMENT_SERIALIZER = "_pipeline_element_serializer_";
-    private static final String BIND_NBT_PIPELINE_ELEMENT_SERIALIZER_CLASS = "_pipeline_element_serializer_class_";
-
     public static final Serializer SERIALIZER_ITEM = new Serializer() {
         @Override
         public String name() {
@@ -53,6 +50,15 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
         @Override
         public Object deserialize(@Nonnull NBTBase nbt) {
             return new ItemStack((NBTTagCompound) nbt);
+        }
+
+        @Override
+        public boolean isObjectEmpty(Object object) {
+            return object == null
+                    || object == ItemStack.EMPTY
+                    || object == Items.AIR
+                    || object == Blocks.AIR
+                    || ((object instanceof ItemStack) && ((ItemStack) object).getCount() == 0);
         }
     };
     public static final Serializer SERIALIZER_FLUID = new Serializer() {
@@ -81,11 +87,29 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
             }
             return stack;
         }
+
+        @Override
+        public boolean isObjectEmpty(Object object) {
+            return object == null
+                    || object == FluidUtil.EMPTY
+                    || ((object instanceof FluidStack) && ((FluidStack) object).amount == 0);
+        }
     };
+
+    static {
+        SERIALIZER.put(SERIALIZER_ITEM.name(), SERIALIZER_ITEM);
+        SERIALIZER.put(SERIALIZER_FLUID.name(), SERIALIZER_FLUID);
+    }
+
+    private static final String NBT_BIND_PIPELINE_ELEMENT = "_pipeline_element_";
+    private static final String NBT_BIND_PIPELINE_ELEMENT_ELEMENT = "_pipeline_element_element_";
+    private static final String NBT_BIND_PIPELINE_ELEMENT_PATH = "_pipeline_element_tick_path_";
+    private static final String BIND_NBT_PIPELINE_ELEMENT_SERIALIZER = "_pipeline_element_serializer_";
+    private static final String BIND_NBT_PIPELINE_ELEMENT_SERIALIZER_CLASS = "_pipeline_element_serializer_class_";
 
     public Object element;
     public PLPath path;
-    public Serializer serializer = emptySerializer();
+    public Serializer serializer = SERIALIZER_ITEM;
     public String serializerClass = "";
 
     public void tickStart(World world) {
@@ -106,6 +130,19 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
     public void remove() {
         LinkedList<PLElement> elements = PipelineEvent.getInstance().elements;
         elements.remove(this);
+    }
+
+    public PLElement copy() {
+        return copy(element);
+    }
+
+    public PLElement copy(Object element) {
+        PLElement e = new PLElement();
+        e.element = element;
+        e.path = path.copy();
+        e.serializer = serializer;
+        e.serializerClass = serializerClass;
+        return e;
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -150,7 +187,7 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-                serializer = emptySerializer();
+                serializer = SERIALIZER_ITEM;
             }
         }
         element = serializer.deserialize(elementNbt);
@@ -164,31 +201,7 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
         NBTBase serialize(@Nonnull Object object);
         @Nonnull
         Object deserialize(@Nonnull NBTBase nbt);
-    }
 
-    public static Serializer emptySerializer() {
-        Serializer serializer = SERIALIZER.get("_EMPTY_");
-        if (serializer == null) {
-            serializer = new Serializer() {
-                @Override
-                public String name() {
-                    return "_EMPTY_";
-                }
-
-                @Nonnull
-                @Override
-                public NBTBase serialize(@Nonnull Object object) {
-                    return new NBTTagCompound();
-                }
-
-                @Nonnull
-                @Override
-                public Object deserialize(@Nonnull NBTBase nbt) {
-                    return nbt;
-                }
-            };
-            SERIALIZER.put(serializer.name(), serializer);
-        }
-        return serializer;
+        boolean isObjectEmpty(Object object);
     }
 }

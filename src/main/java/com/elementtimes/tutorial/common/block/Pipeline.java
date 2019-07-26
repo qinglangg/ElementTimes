@@ -2,8 +2,8 @@ package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
-import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
+import com.elementtimes.tutorial.util.BlockUtil;
 import com.google.common.base.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,12 +16,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -32,7 +34,6 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 管道类
@@ -154,15 +155,14 @@ public class Pipeline extends Block implements ITileEntityProvider {
     @Nonnull
     @Override
     public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntity te = worldIn.getTileEntity(pos);
         IBlockState actualState = super.getActualState(state, worldIn, pos);
+        TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TilePipeline) {
             return ((TilePipeline) te).bindActualState(actualState);
         }
         return actualState;
     }
 
-    // TODO: 新建管道
     public static ItemStack create(PLInfo type, String translateKey) {
         ItemStack itemStack = new ItemStack(ElementtimesBlocks.pipeline);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
@@ -172,6 +172,24 @@ public class Pipeline extends Block implements ITileEntityProvider {
         }
         itemStack.setTagInfo(BIND_NBT_PIPELINE, type.serializeNBT());
         return itemStack;
+    }
+
+    @Override
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+        super.onNeighborChange(world, pos, neighbor);
+        if (world instanceof World && !((World) world).isRemote) {
+            World w = (World) world;
+            String format = String.format("neighbor changed: this=%s, neighbor=%s", pos.toString(), neighbor.toString());
+            for (EntityPlayer player : w.playerEntities) {
+                player.sendMessage(new TextComponentString(format));
+            }
+
+            TileEntity te = world.getTileEntity(pos);
+            EnumFacing facing = BlockUtil.getPosFacing(pos, neighbor);
+            if (te instanceof TilePipeline && facing != null) {
+                ((TilePipeline) te).tryConnect(facing);
+            }
+        }
     }
 
     @Override

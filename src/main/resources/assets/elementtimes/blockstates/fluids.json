@@ -138,6 +138,12 @@
       "custom": {
         "fluid": "elementtimes.raregases"
       }
+    },
+    "elementtimes.co2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.co2"
+      }
     }
   }
 }

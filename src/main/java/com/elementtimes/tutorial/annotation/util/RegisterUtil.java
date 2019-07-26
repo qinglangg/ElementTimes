@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public class RegisterUtil {
 
+    private static final int ZERO = 0b0000;
+
     public static void applyResourceByStateMap(Block block, ModBlock.StateMap map, IStateMapper mapper) {
         Item item = Item.getItemFromBlock(block);
         Map<IBlockState, ModelResourceLocation> locationMap = null;
@@ -28,13 +30,13 @@ public class RegisterUtil {
         if (map.metadatas().length == 0) {
             // metadata from DefaultState
             int defMeta = block.getMetaFromState(block.getDefaultState());
-            if (defMeta != 0b0000) {
-                ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, block.getDefaultState()));
+            ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, block.getDefaultState()));
+            if (defMeta != ZERO) {
+                // metadata from 0b0000
+                //noinspection deprecation
+                IBlockState stateZero = block.getStateFromMeta(ZERO);
+                ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, stateZero));
             }
-            // metadata from 0b0000
-            //noinspection deprecation
-            IBlockState stateZero = block.getStateFromMeta(0b0000);
-            ModelLoader.setCustomModelResourceLocation(item, defMeta, getLocationFromState(locationMap, defLocation, stateZero));
             return;
         }
         for (int i = 0; i < map.metadatas().length; i++) {

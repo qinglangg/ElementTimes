@@ -4,6 +4,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.annotations.ModFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * 流体注册
@@ -148,4 +149,10 @@ public class ElementtimesFluids {
     public static Fluid rareGases = new Fluid("elementtimes.raregases",
             new ResourceLocation(ElementTimes.MODID, "fluid/air_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/air_fluid"), 0xFF949494);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid co2 = new Fluid("elementtimes.co2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
 }
