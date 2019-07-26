@@ -42,11 +42,11 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item amylum = new Amylum();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
-    public static Item puremeat = new ItemFood(4, 0f, false);
+    public static Item puremeat = new ItemFood(4, 0.5f, false);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item corn = new Corn();
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
-    public static Item bakedCorn = new ItemFood(5, 2.0F, false);
+    public static Item bakedCorn = new ItemFood(5, 0.2F, false);
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)

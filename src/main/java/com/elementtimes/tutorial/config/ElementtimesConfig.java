@@ -123,7 +123,7 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置打粉机每个矿物产粉量")
         @Config.Name("pulPowderCount")
-        public int pulPowderCount = 4;
+        public int pulPowderCount = 5;
     }
 
     public static final class ItemReducer {

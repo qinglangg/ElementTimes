@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class Starchball extends ItemFood {
 
     public Starchball() {
-        super(20, 20.0F, false);
+        super(20, 0.5F, false);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class TileRebuild extends BaseOneToOne {
                 .add("2", 4000, ElementtimesItems.sucroseCharCoal, 2, new ItemStack(Items.COAL, 1, 1))
                 .add("3", 4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))
                 .add("4", 50000, new ItemStack(Items.COAL, 1, 0), Items.DIAMOND, 1)
-                .add("5", 50000, Blocks.DIAMOND_BLOCK, 1, ElementtimesItems.diamondIngot, 1)
+                .add("5", 50000, Blocks.DIAMOND_BLOCK, 1, ElementtimesItems.diamondIngot, 3)
                 .add("6", 100000, Blocks.DIRT, 1, Blocks.FARMLAND, 1)
                 .add("7", 100000, Blocks.GRASS, 1, Blocks.GRASS_PATH, 1)
                 .add("8", 20000, Blocks.SAND, 1, Blocks.SOUL_SAND, 1)

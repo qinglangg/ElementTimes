@@ -289,6 +289,15 @@ public class ElementtimesRecipeCrafting {
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.pumpAir, ElementtimesBlocks.blockMultiCarbonSteel,
             null, ElementtimesBlocks.blockMultiWoodStone, null
     };
+    
+    @ModRecipe
+    @ModRecipe.Crafting()
+    public static Object[] cement = new Object[] {
+            ElementtimesBlocks.cement,
+            null, null, null,
+            ElementtimesItems.concrete,Items.POTIONITEM,ElementtimesItems.concrete,
+            null, null, null
+    };
 
     @ModRecipe
     @ModRecipe.Crafting(shaped = false)

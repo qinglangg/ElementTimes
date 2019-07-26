@@ -5,36 +5,16 @@
     "item": "elementtimes:fuelGenerator"
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "CDC",
-    "EFG"
+    "AAA"
   ],
   "key": {
     "A": {
-      "type": "forge:ore_dict",
-      "ore": "gearCopper"
+     "item": "elementtimes:cement"
     },
     "B": {
-      "item": "elementtimes:goldelement"
-    },
-    "C": {
-      "type": "forge:ore_dict",
-      "ore": "blockSteel"
-    },
-    "D": {
       "item": "minecraft:furnace"
-    },
-    "E": {
-      "type": "forge:ore_dict",
-      "ore": "gearWood"
-    },
-    "F": {
-      "type": "forge:ore_dict",
-      "ore": "gearStone"
-    },
-    "G": {
-      "type": "forge:ore_dict",
-      "ore": "gearIron"
     }
   }
 }
