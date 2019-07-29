@@ -30,12 +30,12 @@ public class ElementtimesItems {
     public static Item fireElement = new Item();
     @ModItem
     public static Item goldElement = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item cropesSence = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     @ModOreDict("bamboo")
     public static Item bamboo = new Item();
-    @ModItem
+    @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item bambooCharcoal = new ItemFuel(800);
     @ModItem(creativeTab = ModCreativeTabs.Agriculture)
     public static Item starchPowder = new ItemFood(1, 0.0F, false);
