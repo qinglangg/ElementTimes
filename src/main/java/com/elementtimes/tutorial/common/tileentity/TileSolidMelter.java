@@ -32,7 +32,7 @@ public class TileSolidMelter extends BaseMachine {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE = new MachineRecipeHandler()
                     .newRecipe("0")
-                    .addCost(1000)
+                    .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
                     .endAdd();

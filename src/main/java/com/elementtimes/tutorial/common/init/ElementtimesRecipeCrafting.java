@@ -8,10 +8,12 @@ import com.elementtimes.tutorial.util.RecipeUtil;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -204,15 +206,6 @@ public class ElementtimesRecipeCrafting {
     };
     @ModRecipe
     @ModRecipe.Crafting
-    public static Object[] solidreactor = new Object[]{
-            ElementtimesBlocks.solidReactor,
-            Items.FLINT,Blocks.COAL_BLOCK,Items.FLINT,
-            Blocks.COAL_BLOCK,ElementtimesBlocks.fuelGenerator,Blocks.COAL_BLOCK,
-            Items.FLINT,Blocks.COAL_BLOCK,Items.FLINT,
-    };
-
-    @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] fluidreactor = new Object[]{
             ElementtimesBlocks.fluidReactor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel,
@@ -295,9 +288,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Crafting()
     public static Object[] cement = new Object[] {
             ElementtimesBlocks.cement,
-            null, null, null,
-            ElementtimesItems.concrete,Items.POTIONITEM,ElementtimesItems.concrete,
-            null, null, null
+            null,Items.FLINT, null,
+            ElementtimesItems.concrete,PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER),ElementtimesItems.concrete,
+            null,Items.FLINT, null
     };
 
     @ModRecipe

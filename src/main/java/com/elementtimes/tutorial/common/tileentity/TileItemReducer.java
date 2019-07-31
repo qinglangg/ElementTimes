@@ -11,6 +11,7 @@ import net.minecraft.init.Items;
 import javax.annotation.Nonnull;
 
 /**
+ * 物质还原机
  * @author luqin2007
  */
 @ModElement

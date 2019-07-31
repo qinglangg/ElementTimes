@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public class ElementtimesRecipe {
     public static void init(FMLInitializationEvent event) {
-    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.sulfurPowder), new ItemStack(ElementtimesItems.sulfiteSolution));
+    	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), new ItemStack(ElementtimesItems.sulfurPowder), new ItemStack(ElementtimesItems.sulfiteSolution));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT), ItemBottleFuel.createByFluid(ElementtimesFluids.H));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(new ItemStack(ElementtimesItems.sulphuricAcid), PotionTypes.EMPTY),"ingotCopper", ItemBottleFuel.createByFluid(ElementtimesFluids.H));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.ironPowder),new ItemStack(Items.IRON_INGOT));
@@ -39,7 +39,7 @@ public class ElementtimesRecipe {
     	
 		GameRegistry.addSmelting(Blocks.STONE, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.stoneBlock, new ItemStack(ElementtimesItems.calciumCarbonate, 1), 3.0f);
-		GameRegistry.addSmelting(ElementtimesItems.calciumCarbonate, new ItemStack(ElementtimesItems.calciumOxide, 2), 4.0f);
+		GameRegistry.addSmelting(ElementtimesItems.calciumCarbonate, new ItemStack(ElementtimesItems.calciumOxide, 1), 4.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.copperOre, new ItemStack(ElementtimesItems.copper, 1), 5.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.SilverOre, new ItemStack(ElementtimesItems.silver, 1), 5.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.sulfurOre, new ItemStack(ElementtimesItems.sulfurPowder, 3), 5.0f);
@@ -59,7 +59,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.corn, new ItemStack(ElementtimesItems.bakedCorn, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.platinumOre, new ItemStack(ElementtimesItems.platinumIngot, 1), 5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.platinumOrePowder, new ItemStack(ElementtimesItems.platinumIngot, 1), 4.0f);
-		GameRegistry.addSmelting(Items.POTIONITEM, ItemBottleFuel.createByFluid(ElementtimesFluids.steam), 2.0f);
+		GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), ItemBottleFuel.createByFluid(ElementtimesFluids.steam), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sulfiteSolution, new ItemStack(ElementtimesItems.sulphuricAcid), 3.0f);
 		GameRegistry.addSmelting(ElementtimesItems.rubberRaw, new ItemStack(ElementtimesItems.rubber), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sodiumBisulfite, new ItemStack(ElementtimesItems.sodiumMetabisulfite), 2.0f);

@@ -1,13 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ABA"
+    " B ",
+    "ACA",
+    " B "
   ],
   "key": {
     "A": {
       "item": "elementtimes:concrete"
     },
     "B": {
+      "item": "minecraft:flint"
+    },
+    "C": {
       "item": "minecraft:water_bucket"
     }
   },

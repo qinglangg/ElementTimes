@@ -5,16 +5,22 @@
     "item": "elementtimes:fuelGenerator"
   },
   "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
+    "ACA",
+    "DBD",
+    "ACA"
   ],
   "key": {
     "A": {
      "item": "elementtimes:cement"
     },
     "B": {
-      "item": "minecraft:furnace"
+     "item": "minecraft:furnace"
+    },
+    "C": {
+      "item": "minecraft:coal_block"
+    },
+    "D": {
+     "item": "minecraft:brick_block"
     }
   }
 }

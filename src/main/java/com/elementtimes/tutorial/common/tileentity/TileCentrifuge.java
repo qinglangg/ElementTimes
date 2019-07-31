@@ -10,6 +10,7 @@ import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -30,9 +31,9 @@ public class TileCentrifuge extends BaseMachine {
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 210))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, 10))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.rareGases, 80))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 10))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.rareGases, 8))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1))
                     .endAdd();
         }
     }

@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ABA",
+    "ABD",
     "BCB",
-    "ABA"
+    "DBA"
   ],
   "key": {
     "A": {
@@ -15,10 +15,13 @@
     },
     "C": {
       "item": "elementtimes:calciumoxide"
+    },
+    "D": {
+      "item": "minecraft:gravel"
     }
   },
   "result": {
     "item": "elementtimes:concrete",
-    "count": 2
+    "count": 1
     }
 }

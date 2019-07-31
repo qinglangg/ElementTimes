@@ -27,7 +27,6 @@ import java.util.Map;
 public class TileFluidHeater extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
-
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()

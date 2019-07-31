@@ -28,10 +28,10 @@ public class TileGeneratorElement extends BaseGenerator {
                 .add("1", r -> -ElementtimesConfig.GENERAL.generaterEnd, ElementtimesItems.endElement)
                 .add("2", r -> -ElementtimesConfig.GENERAL.generaterSoilGen, ElementtimesItems.soilElement)
                 .add("3", r -> -ElementtimesConfig.GENERAL.generaterWoodGen, ElementtimesItems.woodElement)
-                .add("3", r -> -ElementtimesConfig.GENERAL.generaterWaterGen, ElementtimesItems.waterElement)
-                .add("3", r -> -ElementtimesConfig.GENERAL.generaterFireGen, ElementtimesItems.fireElement)
-                .add("3", r -> -ElementtimesConfig.GENERAL.generaterSun, ElementtimesItems.photoElement)
-                .add("4", r -> -ElementtimesConfig.GENERAL.generaterGoldGen, ElementtimesItems.goldElement);
+                .add("4", r -> -ElementtimesConfig.GENERAL.generaterWaterGen, ElementtimesItems.waterElement)
+                .add("5", r -> -ElementtimesConfig.GENERAL.generaterFireGen, ElementtimesItems.fireElement)
+                .add("6", r -> -ElementtimesConfig.GENERAL.generaterSun, ElementtimesItems.photoElement)
+                .add("7", r -> -ElementtimesConfig.GENERAL.generaterGoldGen, ElementtimesItems.goldElement);
     }
 
     @Nonnull
