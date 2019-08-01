@@ -61,6 +61,13 @@ public class TileSolidReactor extends BaseMachine {
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumOxide, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe("5")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.UO2,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 1))
                     .endAdd();
 
         }

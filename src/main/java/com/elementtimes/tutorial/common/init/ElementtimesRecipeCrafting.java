@@ -62,7 +62,7 @@ public class ElementtimesRecipeCrafting {
 
     @ModRecipe
     @ModRecipe.Ore(value = "uraniumpowder", output = "elementtimes:uraniumpowder", dustCount = 1)
-    public static String uraniumore = "uraniumore";
+    public static String oreUranium = "oreUranium";
 
     @ModRecipe
     @ModRecipe.Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)

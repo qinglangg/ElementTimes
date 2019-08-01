@@ -85,6 +85,8 @@ public class ElementtimesItems {
 	@ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item UO2 = new Item();
 	@ModItem(creativeTab = ModCreativeTabs.Ore)
+    public static Item uranium = new Item();
+	@ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item tinPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item leadPowder = new Item();

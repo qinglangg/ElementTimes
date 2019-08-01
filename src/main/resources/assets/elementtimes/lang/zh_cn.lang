@@ -124,6 +124,7 @@ item.elementtimes.bamboo.name=竹子
 item.elementtimes.bamboocharcoal.name=竹炭
 item.elementtimes.uo2.name=二氧化铀(UO2 U^235/238)
 item.elementtimes.uraniumpowder.name=铀矿粉(U3O8 U^235/238)
+item.elementtimes.uranium.name=铀锭(U U^235/238)
 item.elementtimes.pipeline.item.link.normal=普通物品管道
 item.elementtimes.pipeline.item.input.normal=普通物品输入管道
 item.elementtimes.pipeline.item.output.normal=普通物品输出管道

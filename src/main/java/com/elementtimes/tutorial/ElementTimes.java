@@ -1,4 +1,4 @@
- package com.elementtimes.tutorial;
+package com.elementtimes.tutorial;
 
 import com.elementtimes.tutorial.common.CommonProxy;
 import net.minecraftforge.fluids.FluidRegistry;
