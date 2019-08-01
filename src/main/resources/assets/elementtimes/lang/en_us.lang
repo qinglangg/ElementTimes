@@ -122,6 +122,8 @@ item.elementtimes.gearobsidian.name=gearobsidian
 item.elementtimes.plateobsidian.name=plateobsidian
 item.elementtimes.bamboo.name=bamboo
 item.elementtimes.bamboocharcoal.name=bamboo charcoal
+item.elementtimes.uo2.name=uo2(UO2 U^235/238)
+item.elementtimes.uraniumpowder.name=uraniumpowder(U3O8 U^235/238)
 item.elementtimes.pipeline.item.link.normal=Normal Item Pipeline
 item.elementtimes.pipeline.item.input.normal=Normal Item Pipeline In
 item.elementtimes.pipeline.item.output.normal=Normal Item Pipeline Out
@@ -183,6 +185,7 @@ tile.elementtimes.blocklead.name=blocklead
 tile.elementtimes.blocktin.name=blocktin
 tile.elementtimes.leadore.name=leadore
 tile.elementtimes.tinore.name=tinore
+tile.elementtimes.uraniumore.name=uraniumore(U3O8 U^235/238)
 # fluid
 fluid.elementtimes.naoh=naoh
 tile.elementtimes.naoh.name=naoh

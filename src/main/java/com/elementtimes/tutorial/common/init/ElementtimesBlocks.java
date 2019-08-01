@@ -85,6 +85,12 @@ public class ElementtimesBlocks {
     @ModBlock.HarvestLevel
     @ModBlock.WorldGen
     public static Block calciumFluoride = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
+    @ModBlock(creativeTab = ModCreativeTabs.Ore)
+    @ModOreDict("oreUranium")
+    @ModBlock.HarvestLevel(level = 3)
+    @ModBlock.WorldGen(YMin = 5, YRange = 10, probability = 0.3f)
+    public static Block uraniumOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
+
 
     // Block
     

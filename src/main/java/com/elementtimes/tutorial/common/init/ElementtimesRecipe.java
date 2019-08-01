@@ -65,5 +65,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.sodiumBisulfite, new ItemStack(ElementtimesItems.sodiumMetabisulfite), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.oreSalt, new ItemStack(ElementtimesItems.salt, 6), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.rubberLog, new ItemStack(Items.COAL, 1, 1), 2.0f);
+		GameRegistry.addSmelting(ElementtimesItems.uraniumPowder, new ItemStack(ElementtimesItems.UO2), 2.0f);
+
     }
 }

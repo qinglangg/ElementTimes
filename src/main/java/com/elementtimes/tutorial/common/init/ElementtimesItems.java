@@ -80,6 +80,10 @@ public class ElementtimesItems {
     public static Item greenstonePowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item silverPowder = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Ore)
+    public static Item uraniumPowder = new Item();
+	@ModItem(creativeTab = ModCreativeTabs.Ore)
+    public static Item UO2 = new Item();
 	@ModItem(creativeTab = ModCreativeTabs.Ore)
     public static Item tinPowder = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Ore)
