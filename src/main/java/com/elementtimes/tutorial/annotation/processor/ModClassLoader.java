@@ -37,6 +37,7 @@ public class ModClassLoader {
         try {
             Set<Class<?>> clazzes = getClasses(ModInfo.PKG_NAME);
             for (Class<?> aClass : clazzes) {
+                System.out.println(aClass.getName());
                 for (Class annotation : support) {
                     if (aClass.getAnnotation(annotation) != null) {
                         elements.get(annotation).add(aClass);

@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.annotation.AnnotationElements;
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.client.util.RenderObject;

@@ -1,14 +1,11 @@
 package com.elementtimes.tutorial.network;
 
 import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
-import com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -54,11 +51,10 @@ public class SupportStandRenderNetwork implements IMessage {
 
         @Override
         public IMessage onMessage(SupportStandRenderNetwork message, MessageContext ctx) {
-            World world = Minecraft.getMinecraft().world;
-            if (world.provider.getDimension() == message.dim) {
-                TileEntity te = world.getTileEntity(message.pos);
-                if (te instanceof ITESRSupport) {
-                    ((ITESRSupport) te).receiveRenderMessage(message.nbt);
+            if (net.minecraftforge.fml.client.FMLClientHandler.instance().getWorldClient().provider.getDimension() == message.dim) {
+                TileEntity te = net.minecraftforge.fml.client.FMLClientHandler.instance().getWorldClient().getTileEntity(message.pos);
+                if (te instanceof com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport) {
+                    ((com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport) te).receiveRenderMessage(message.nbt);
                 }
             }
             return null;

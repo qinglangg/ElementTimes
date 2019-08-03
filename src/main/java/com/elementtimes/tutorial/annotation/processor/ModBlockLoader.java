@@ -39,7 +39,7 @@ public class ModBlockLoader {
     public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
     public static Object2IntMap<Block> BURNING_TIMES = new Object2IntArrayMap<>();
-    public static Map<Class, net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer> TESR = new HashMap<>();
+    public static Map<Class, Object> TESR = new HashMap<>();
     public static boolean B3D = false, OBJ = false;
 
     /**
@@ -193,7 +193,7 @@ public class ModBlockLoader {
     }
 
     private static void initTESR(Block block, AnnotatedElement blockHolder) {
-        net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer tesr = null;
+        Object tesr = null;
         ImmutablePair<String, Class<? extends TileEntity>> stringClassImmutablePair = TILE_ENTITIES.get(block);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             ModBlock.TESR tInfo = blockHolder.getAnnotation(ModBlock.TESR.class);
@@ -205,7 +205,7 @@ public class ModBlockLoader {
                 String tesrClass = tInfo.value();
                 Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer);
                 if (o.isPresent()) {
-                    tesr = (net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer) o.get();
+                    tesr = o.get();
                 } else {
                     warn("Can't create TileEntitySpecialRenderer object");
                 }
@@ -222,7 +222,7 @@ public class ModBlockLoader {
                 } else {
                     Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
                     if (o.isPresent()) {
-                        tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
+                        tesr = o.get();
                     } else {
                         warn("Can't create AnimationTESR object");
                     }
