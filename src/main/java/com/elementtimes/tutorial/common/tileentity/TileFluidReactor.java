@@ -31,7 +31,7 @@ public class TileFluidReactor extends BaseMachine {
     public static void init() {
         if (RECIPES == null) {
             RECIPES = new MachineRecipeHandler()
-					.newRecipe("1")
+					.newRecipe("0")
                     .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
