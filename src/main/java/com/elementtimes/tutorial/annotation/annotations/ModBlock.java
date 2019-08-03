@@ -209,6 +209,21 @@ public @interface ModBlock {
     }
 
     /**
+     * 为该 Block 注册一个 TileEntitySpecialRenderer
+     * 会覆盖 AnimTESR 注解
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE, ElementType.FIELD})
+    @interface TESR {
+
+        /**
+         * TileEntitySpecialRenderer 类
+         * @return TileEntitySpecialRenderer 类
+         */
+        String value();
+    }
+
+    /**
      * 为该 Block 注册一个 ASM
      */
     @Retention(RetentionPolicy.RUNTIME)

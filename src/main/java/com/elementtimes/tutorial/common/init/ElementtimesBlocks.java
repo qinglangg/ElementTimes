@@ -163,6 +163,7 @@ public class ElementtimesBlocks {
     public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, true);
     @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
+    @ModBlock.TESR("com.elementtimes.tutorial.client.tesr.TileSupportStandRender")
     public static Block supportStand = new BlockSupportStand();
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "solidmelter", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidMelter")
@@ -219,6 +220,16 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block centrifuge = new BaseClosableMachine<>(TileCentrifuge.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "coagulator", clazz = "com.elementtimes.tutorial.common.tileentity.TileCoagulator")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block coagulator = new BaseClosableMachine<>(TileCoagulator.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "solidCentrifuge", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidCentrifuge")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solidCentrifuge = new BaseClosableMachine<>(TileSolidCentrifuge.class);
 
     // pipeline
 

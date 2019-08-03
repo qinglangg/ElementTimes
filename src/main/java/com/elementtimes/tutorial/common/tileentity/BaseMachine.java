@@ -38,7 +38,6 @@ import java.util.*;
 public abstract class BaseMachine extends TileEntity implements
         IMachineTickable, IMachineRecipe, ITileHandler, IGuiProvider, IConfigApply {
     public static ItemStackHandler EMPTY = new ItemStackHandler(0);
-    protected DefaultMachineLifecycle mDefaultMachineLifecycle;
     private RfEnergy mEnergyHandler;
     private Map<EnumFacing, SideHandlerType> mEnergyHandlerTypes = new HashMap<>();
     private Map<SideHandlerType, ItemHandler> mItemHandlers = new HashMap<>();
@@ -63,18 +62,8 @@ public abstract class BaseMachine extends TileEntity implements
 
     BaseMachine(int energyCapacity, int inputCount, int outputCount, int fluidInput, int inputCapacity, int fluidOutput, int outputCapacity) {
         mEnergyHandler = new RfEnergy(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE);
-        mItemHandlers.put(SideHandlerType.INPUT, new ItemHandler(inputCount, this::isInputValid));
-        mItemHandlers.put(SideHandlerType.OUTPUT, new ItemHandler(outputCount, (integer, itemStack) -> false));
-        // 空闲
-        mItemHandlers.put(SideHandlerType.NONE, ItemHandler.EMPTY);
-        mItemHandlers.put(SideHandlerType.READONLY, ItemHandler.EMPTY);
-        mItemHandlers.put(SideHandlerType.IN_OUT, ItemHandler.EMPTY);
-        mTanks.put(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, fluidInput, inputCapacity));
-        mTanks.put(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, fluidOutput, outputCapacity));
-        // 空闲
-        mTanks.put(SideHandlerType.NONE, TankHandler.EMPTY);
-        mTanks.put(SideHandlerType.READONLY, TankHandler.EMPTY);
-        mTanks.put(SideHandlerType.IN_OUT, TankHandler.EMPTY);
+        setItemSlot(inputCount, outputCount);
+        setFluidSlot(fluidInput, inputCapacity, fluidOutput, outputCapacity);
         for (EnumFacing facing : EnumFacing.values()) {
             if (facing == EnumFacing.DOWN) {
                 mItemHandlerTypes.put(facing, SideHandlerType.OUTPUT);
@@ -84,8 +73,8 @@ public abstract class BaseMachine extends TileEntity implements
             mEnergyHandlerTypes.put(facing, SideHandlerType.INPUT);
         }
         mRecipe = updateRecipe(mRecipe);
-        mDefaultMachineLifecycle = new DefaultMachineLifecycle(this);
-        addLifeCycle(mDefaultMachineLifecycle);
+        DefaultMachineLifecycle defaultMachineLifecycle = new DefaultMachineLifecycle(this);
+        addLifeCycle(defaultMachineLifecycle);
         applyConfig();
     }
 
@@ -208,6 +197,14 @@ public abstract class BaseMachine extends TileEntity implements
     public Set<EntityPlayerMP> getOpenedPlayers() {
         return mPlayers;
     }
+    @Override
+    public void markRebuildSlots() {
+        mGuiSlots = null;
+    }
+    @Override
+    public void markRebuildFluids() {
+        mFluids = null;
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
@@ -244,9 +241,14 @@ public abstract class BaseMachine extends TileEntity implements
 
     public void markBucketInput(int... slots) {
         ItemHandler handler = getItemHandler(SideHandlerType.INPUT);
+        IntSet slotIgnore = getRecipeSlotIgnore();
+        for (Integer i : slotIgnore) {
+            handler.setSize(i, 64);
+        }
+        slotIgnore.clear();
         for (int slot : slots) {
             handler.setSize(slot, 1);
-            getRecipeSlotIgnore().add(slot);
+            slotIgnore.add(slot);
         }
     }
 }

@@ -5,20 +5,24 @@ import com.elementtimes.tutorial.other.pipeline.PLElement;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.LinkedList;
+import java.util.function.Predicate;
 
-public class PipelineEvent {
+/**
+ * 每 tick 运算的事件
+ * @author luqin2007
+ */
+public class TickEvent {
 
-    private static PipelineEvent sPipelineEvent = null;
+    private static TickEvent sPipelineEvent = null;
+    public static LinkedList<Predicate<net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent>> tickTasks = new LinkedList<>();
 
-    public static PipelineEvent getInstance() {
+    public static TickEvent getInstance() {
         if (sPipelineEvent == null) {
-            sPipelineEvent = new PipelineEvent();
+            sPipelineEvent = new TickEvent();
         }
         return sPipelineEvent;
     }
@@ -26,13 +30,18 @@ public class PipelineEvent {
     public LinkedList<PLElement> elements = new LinkedList<>();
 
     @SubscribeEvent
-    public void onTick(TickEvent.WorldTickEvent event) {
+    public void onTick(net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent event) {
         if (event.side == Side.SERVER) {
-            if (event.phase == TickEvent.Phase.START) {
+            if (event.phase == net.minecraftforge.fml.common.gameevent.TickEvent.Phase.START) {
                 for (PLElement element : elements) {
                     element.tickStart(event.world);
                 }
-            } else if (event.phase == TickEvent.Phase.END) {
+                for (Predicate<net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent> task : tickTasks) {
+                    if (task.test(event)) {
+                        tickTasks.remove(task);
+                    }
+                }
+            } else if (event.phase == net.minecraftforge.fml.common.gameevent.TickEvent.Phase.END) {
                 for (PLElement element : elements) {
                     element.tickEnd();
                 }

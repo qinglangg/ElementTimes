@@ -7,27 +7,45 @@
     "inventory": [{}],
     "connected_up": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "x": 270
+      }
     },
     "connected_down": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "x": 90
+      }
     },
     "connected_east": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 90
+      }
     },
     "connected_west": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 270
+      }
     },
     "connected_north": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 0
+      }
     },
     "connected_south": {
       "false": {},
-      "true": {}
+      "true": {
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 180
+      }
     }
   }
 }

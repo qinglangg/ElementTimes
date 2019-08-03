@@ -1,10 +1,8 @@
 package com.elementtimes.tutorial.other.pipeline;
 
-import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.util.BlockUtil;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,7 +15,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -27,6 +24,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * 记录管道信息和功能
+ * @author luqin2007
+ */
+@SuppressWarnings("WeakerAccess")
 public class PLInfo implements INBTSerializable<NBTTagCompound> {
 
     private static final Map<String, PathAction> ACTIONS;
@@ -89,7 +91,11 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      */
     public BlockPos pos = BlockPos.ORIGIN;
     private String selectorClass = "";
-    private long signal; // 遍历标记
+
+    /**
+     * 遍历标记
+     */
+    private long signal;
 
     private PLInfo() {}
 
@@ -113,26 +119,25 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      * 获取所有可能的出口，用于确定起始点和路径
      * 每次调用都会遍历整个网络，因此若确定网络没有变化，尽量不要重复调用
      * @param world 所在世界
-     * @param from 路径起点
      * @param element 传输内容
      * @return 所有可能的路径
      */
-    public Map<BlockPos, PLPath> allValidOutput(World world, BlockPos from, PLElement element) {
+    public Map<BlockPos, PLPath> allValidOutput(World world, PLElement element, BlockPos from) {
         Map<BlockPos, PLPath> pathMap = new HashMap<>(16);
-        findWay(world, element, pathMap, System.currentTimeMillis(), from, new LinkedList<>(), this);
+        findWay(world, element, pathMap, System.currentTimeMillis(), new LinkedList<>(), this, from);
         return pathMap;
     }
 
     private void findWay(World world, PLElement element, Map<BlockPos, PLPath> paths, long signal,
-                         BlockPos from, LinkedList<PLInfo> before, PLInfo pos) {
+                         LinkedList<PLInfo> before, PLInfo pos, BlockPos from) {
         if (pos.signal != signal) {
             pos.signal = signal;
-            findOutput(world, paths, from, before, pos, element);
+            findOutput(world, pos, before, paths, element, from);
             PLInfo[] plInfos = pos.action.select(world, pos, element);
             for (PLInfo pl : plInfos) {
                 LinkedList<PLInfo> next = new LinkedList<>(before);
                 next.add(pos);
-                findWay(world, element, paths, signal, from, next, pl);
+                findWay(world, element, paths, signal, next, pl, from);
             }
         } else {
             LinkedList<PLInfo> l = new LinkedList<>(before);
@@ -142,11 +147,12 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
     }
 
-    private void findOutput(World world, Map<BlockPos, PLPath> pathMap, BlockPos from,
-                            LinkedList<PLInfo> before, PLInfo next, PLElement element) {
-        PLElement e = element.copy();
+    private void findOutput(World world, PLInfo next, LinkedList<PLInfo> before, Map<BlockPos, PLPath> paths, PLElement element, BlockPos from) {
         for (BlockPos blockPos : next.listOut) {
-            e.element = next.action.output(world, blockPos, e, false);
+            Object e = next.action.output(world, blockPos, element, true);
+            if (!e.equals(element.element)) {
+                paths.put(blockPos, new PLPath(from, blockPos, before, next));
+            }
         }
     }
 
@@ -255,21 +261,22 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
          * @param element 传输内容
          * @return 所有可选方向
          */
-        default PLInfo[] select(World world, PLInfo pipeline, PLElement element) {
+        default PLInfo[] select(World world, PLInfo pipeline, @SuppressWarnings("unused") PLElement element) {
             TileEntity tileEntity = world.getTileEntity(pipeline.pos);
             if (tileEntity instanceof TilePipeline) {
                 TilePipeline tp = (TilePipeline) tileEntity;
-                ArrayList<PLInfo> faces = new ArrayList<>(6);
-                for (EnumFacing facing : EnumFacing.values()) {
-                    if (tp.isConnected(facing)) {
-                        BlockPos pos = tileEntity.getPos().offset(facing);
-                        TileEntity te = world.getTileEntity(pos);
-                        if (te instanceof TilePipeline && ((TilePipeline) te).isConnected(facing.getOpposite())) {
-                            faces.add(((TilePipeline) te).getInfo());
-                        }
-                    }
-                }
-                return faces.toArray(new PLInfo[0]);
+                return Arrays.stream(EnumFacing.values())
+                        .filter(tp::isConnected)
+                        .map(f -> {
+                            BlockPos pos = tileEntity.getPos().offset(f);
+                            TileEntity te = world.getTileEntity(pos);
+                            if ((te instanceof TilePipeline) && ((TilePipeline) te).isConnected(f.getOpposite())) {
+                                return ((TilePipeline) te).getInfo();
+                            }
+                            return null;
+                        })
+                        .filter(Objects::nonNull)
+                        .toArray(PLInfo[]::new);
             } else {
                 return new PLInfo[0];
             }
@@ -290,6 +297,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
          * @param world 所在世界
          * @param pos 输出位置
          * @param element 输出内容
+         * @param similar 是否模拟操作
          * @return 剩余物品
          */
         Object output(World world, BlockPos pos, PLElement element, boolean similar);
@@ -297,13 +305,12 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         /**
          * 检查是否可以连接
          * @param world 所在世界
-         * @param pos 连接位置
+         * @param thisPos 当前位置
+         * @param facing 连接方向
          * @param element 传输内容
          * @return 是否可连接
          */
-        default boolean canConnect(World world, BlockPos pos, PLElement element) {
-            return world.getBlockState(pos).getBlock() != Blocks.AIR;
-        }
+        PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element);
     }
 
     public static PLInfo fromNBT(NBTTagCompound nbt) {
@@ -312,6 +319,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         return info;
     }
 
+    @SuppressWarnings("unused")
     public static class PLInfoBuilder {
         private PLInfo pl = new PLInfo();
 
@@ -340,6 +348,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
             return this;
         }
 
+        @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
         public PLInfoBuilder setAction(String clazz) {
             try {
                 Class c = Class.forName(clazz);
@@ -400,7 +409,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
 
     public static class PathActionItem implements PathAction {
 
-        public static String NAME = "_ITEM_";
+        static String NAME = "_ITEM_";
         public static PathAction instance() {
             PathAction pathAction = ACTIONS.get(NAME);
             if (pathAction == null) {
@@ -422,7 +431,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
                     && (pl.type.equals(Pipeline.TYPE_ITEM)
                         || pl.type.equals(Pipeline.TYPE_ITEM_OUT));
             if (canSend) {
-                if (similar && element != null) {
+                if (similar && element != null && world.isBlockLoaded(pl.pos)) {
                     element.path.moveTo(world, pl);
                 }
                 return null;
@@ -436,18 +445,22 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return te instanceof TilePipeline
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            boolean canLinkPipeline = te instanceof TilePipeline
                     && (((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM)
-                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_IN)
-                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_OUT));
+                    || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_IN)
+                    || ((TilePipeline) te).getType().equals(Pipeline.TYPE_ITEM_OUT));
+            if (canLinkPipeline) {
+                return PLConnType.PIPELINE;
+            }
+            return PLConnType.NULL;
         }
     }
 
     public static class PathActionItemIn extends PathActionItem {
 
-        public static String NAME = "_ITEM_IN_";
+        static String NAME = "_ITEM_IN_";
         public static PathAction instance() {
             PathAction action = ACTIONS.get(NAME);
             if (action == null) {
@@ -463,16 +476,18 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
-                    || super.canConnect(world, pos, element);
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            if ((te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))) {
+                return PLConnType.IN;
+            }
+            return super.connectType(world, thisPos, facing, element);
         }
     }
 
     public static class PathActionItemOut extends PathActionItem {
 
-        public static String NAME = "_ITEM_OUT_";
+        static String NAME = "_ITEM_OUT_";
         public static PathAction instance() {
             PathAction action = ACTIONS.get(NAME);
             if (action == null) {
@@ -505,16 +520,18 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
-                    || super.canConnect(world, pos, element);
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            if ((te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))) {
+                return PLConnType.OUT;
+            }
+            return super.connectType(world, thisPos, facing, element);
         }
     }
 
     public static class PathActionFluid implements PathAction {
 
-        public static String NAME = "_FLUID_";
+        static String NAME = "_FLUID_";
         public static PathAction instance() {
             PathAction pathAction = ACTIONS.get(NAME);
             if (pathAction == null) {
@@ -536,7 +553,7 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
                     && (pl.type.equals(Pipeline.TYPE_FLUID)
                     || pl.type.equals(Pipeline.TYPE_FLUID_OUT));
             if (canSend) {
-                if (similar && element != null) {
+                if (similar && element != null && world.isBlockLoaded(pl.pos)) {
                     element.path.moveTo(world, pl);
                 }
                 return null;
@@ -550,18 +567,22 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return te instanceof TilePipeline
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            boolean canLinkPipeline = te instanceof TilePipeline
                     && (((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID)
-                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_IN)
-                        || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_OUT));
+                    || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_IN)
+                    || ((TilePipeline) te).getType().equals(Pipeline.TYPE_FLUID_OUT));
+            if (canLinkPipeline) {
+                return PLConnType.PIPELINE;
+            }
+            return PLConnType.NULL;
         }
     }
 
     public static class PathActionFluidIn extends PathActionFluid {
 
-        public static String NAME = "_FLUID_IN_";
+        static String NAME = "_FLUID_IN_";
         public static PathAction instance() {
             PathAction pathAction = ACTIONS.get(NAME);
             if (pathAction == null) {
@@ -577,16 +598,18 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
-                    || super.canConnect(world, pos, element);
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            if ((te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))) {
+                return PLConnType.IN;
+            }
+            return super.connectType(world, thisPos, facing, element);
         }
     }
 
     public static class PathActionFluidOut extends PathActionFluid {
 
-        public static String NAME = "_FLUID_OUT_";
+        static String NAME = "_FLUID_OUT_";
         public static PathAction instance() {
             PathAction action = ACTIONS.get(NAME);
             if (action == null) {
@@ -609,10 +632,12 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
                     EnumFacing facing = BlockUtil.getPosFacing(element.path.plPos.pos, pos);
                     if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
                         IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                        FluidStack fluid = (FluidStack) element.element;
-                        FluidStack fluidCopy = new FluidStack(fluid, fluid.amount);
-                        int amount = capability.fill(fluidCopy, !similar);
-                        return new FluidStack(fluidCopy, fluidCopy.amount - amount);
+                        if (capability != null) {
+                            FluidStack fluid = (FluidStack) element.element;
+                            FluidStack fluidCopy = new FluidStack(fluid, fluid.amount);
+                            int amount = capability.fill(fluidCopy, !similar);
+                            return new FluidStack(fluidCopy, fluidCopy.amount - amount);
+                        }
                     }
                 }
             }
@@ -620,10 +645,12 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
         }
 
         @Override
-        public boolean canConnect(World world, BlockPos pos, PLElement element) {
-            TileEntity te = world.getTileEntity(pos);
-            return (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, BlockUtil.getPosFacing(element.path.plPos.pos, pos)))
-                    || super.canConnect(world, pos, element);
+        public PLConnType connectType(World world, BlockPos thisPos, EnumFacing facing, PLElement element) {
+            TileEntity te = world.getTileEntity(thisPos.offset(facing));
+            if ((te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))) {
+                return PLConnType.OUT;
+            }
+            return super.connectType(world, thisPos, facing, element);
         }
     }
 }

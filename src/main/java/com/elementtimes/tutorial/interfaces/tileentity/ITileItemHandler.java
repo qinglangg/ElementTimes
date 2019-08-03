@@ -90,7 +90,16 @@ public interface ITileItemHandler extends ICapabilityProvider, INBTSerializable<
     default ItemStack getItemStack(EnumFacing facing, int slot) {
         return getItemStack(getItemType(facing), slot);
     }
-    
+
+    default void setItemSlot(int inputCount, int outputCount) {
+        getItemHandlerMap().put(SideHandlerType.INPUT, new ItemHandler(inputCount, this::isInputValid));
+        getItemHandlerMap().put(SideHandlerType.OUTPUT, new ItemHandler(outputCount, (integer, itemStack) -> false));
+        // 空闲
+        getItemHandlerMap().put(SideHandlerType.NONE, ItemHandler.EMPTY);
+        getItemHandlerMap().put(SideHandlerType.READONLY, ItemHandler.EMPTY);
+        getItemHandlerMap().put(SideHandlerType.IN_OUT, ItemHandler.EMPTY);
+    }
+
     @Override
     default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY

@@ -94,8 +94,8 @@ public class ForgeBusRegisterClient {
                 return new ModelResourceLocation(location, fluid.getName());
             }
         }));
-        // 注册动画
-        ModBlockLoader.ANIMATION_HANDLER.forEach(ClientRegistry::bindTileEntitySpecialRenderer);
+        // 注册 TESR
+        ModBlockLoader.TESR.forEach(ClientRegistry::bindTileEntitySpecialRenderer);
     }
 
     @SubscribeEvent

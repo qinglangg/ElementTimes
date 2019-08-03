@@ -39,6 +39,8 @@ public class JeiSupport implements IModPlugin {
     private static final String ID_PUMP_AIR = ElementTimes.MODID + ".pumpair.jei.category";
     private static final String ID_ITEM_REDUCER = ElementTimes.MODID + ".itemreducer.jei.category";
     private static final String ID_CENTRIFUGE = ElementTimes.MODID + ".centrifuge.jei.category";
+    private static final String ID_COAGULATOR = ElementTimes.MODID + ".coagulator.jei.category";
+    private static final String ID_SOLID_CENTRIFUGE = ElementTimes.MODID + ".solidcentrifuge.jei.category";
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
@@ -68,6 +70,8 @@ public class JeiSupport implements IModPlugin {
         registerJeiRecipes(registry, ElementtimesBlocks.solidReactor, TileSolidReactor.RECIPE, ID_SOLID_REACTOR);
         registerJeiRecipes(registry, ElementtimesBlocks.itemReducer, TileItemReducer.RECIPE, ID_ITEM_REDUCER);
         registerJeiRecipes(registry, ElementtimesBlocks.centrifuge, TileCentrifuge.RECIPE, ID_CENTRIFUGE);
+        registerJeiRecipes(registry, ElementtimesBlocks.coagulator, TileCoagulator.RECIPE, ID_COAGULATOR);
+        registerJeiRecipes(registry, ElementtimesBlocks.solidCentrifuge, TileSolidCentrifuge.RECIPE, ID_SOLID_CENTRIFUGE);
         // 电炉
         registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.furnace), VanillaRecipeCategoryUid.SMELTING);
     }
@@ -101,6 +105,10 @@ public class JeiSupport implements IModPlugin {
                 17, 10, 141, 55, new int[][]{{22,30}, {43,66}, {116,66}}, new int[][]{{42,15}, {116,15}, {137,15}}));
         registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "centrifuge", ID_CENTRIFUGE, "centrifuge",
                 16, 13, 146, 52, new int[0][], new int[][]{{18, 15}, {70, 15}, {88,15}, {106,15}, {124, 15}, {142, 15}}));
+        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "coagulator", ID_COAGULATOR, "coagulator",
+                44, 7, 83, 73, new int[][]{{108,30}}, new int[][]{{56,10}}));
+        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "solidcentrifuge", ID_SOLID_CENTRIFUGE, "solidcentrifuge",
+                52, 12, 76, 58, new int[][] {{55, 31}, {109, 15}, {109, 33}, {109, 51}}, new int[0][]));
     }
 
     private void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {

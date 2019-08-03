@@ -10,8 +10,6 @@ import com.elementtimes.tutorial.other.recipe.IngredientPart;
 import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -33,28 +31,27 @@ public class TileFluidReactor extends BaseMachine {
     public static void init() {
         if (RECIPES == null) {
             RECIPES = new MachineRecipeHandler()
-            		/*
 					.newRecipe("1")
                     .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethylene, 2000))
                     .endAdd()
 					.newRecipe("1")
                     .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethylene, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethane, 2000))
                     .endAdd()
 					.newRecipe("2")
                     .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled,1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethylene, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 2000))
                     .endAdd()
                     .newRecipe("3")
                     .addCost(10000)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,3000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,3000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 1000))
                     .endAdd()
@@ -64,8 +61,7 @@ public class TileFluidReactor extends BaseMachine {
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calciumHydroxide, Fluid.BUCKET_VOLUME))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate , 1))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, Fluid.BUCKET_VOLUME))
-                    .endAdd()*/;
-                   
+                    .endAdd();
         }
     }
 

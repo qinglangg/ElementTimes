@@ -7,7 +7,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,10 +17,10 @@ import java.util.Random;
  * @author 金竹
  */
 @Mod.EventBusSubscriber
-public class ElementTimesEventListener {
+public class BlockEvent {
 
 	@SubscribeEvent
-	public static void onBreakGrass(BlockEvent.BreakEvent e) {
+	public static void onBreakGrass(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {
 		IBlockState state = e.getState();
 		World world = e.getWorld();
 		Random rand = world.rand;

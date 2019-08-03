@@ -21,4 +21,20 @@ public class MathUtil {
         }
 		return code & (~(0b1 << position));
     }
+
+    public static String toBinaryString(int i, int bitCount) {
+        String b = Integer.toBinaryString(i);
+        int db = bitCount - b.length();
+        if (db < 0) {
+            return b.substring(-db);
+        }
+        if (db > 0) {
+            StringBuffer sb = new StringBuffer(b);
+            for (int j = 0; j < db; j++) {
+                sb.insert(0, "0");
+            }
+            return sb.toString();
+        }
+        return b;
+    }
 }

@@ -47,6 +47,10 @@ public class ContainerMachine extends Container {
         return new ContainerMachine(tileEntity, player, 176, 201, 119);
     }
 
+    public static ContainerMachine cm176_179_97(BaseMachine tileEntity, EntityPlayer player) {
+        return new ContainerMachine(tileEntity, player, 176, 179, 97);
+    }
+
     public ContainerMachine(BaseMachine tileEntity, EntityPlayer player, int width, int height, int offsetY) {
         this(tileEntity, player, width, height, 8, offsetY);
     }

@@ -1,14 +1,12 @@
 package com.elementtimes.tutorial.other.pipeline;
 
-import com.elementtimes.tutorial.common.event.PipelineEvent;
+import com.elementtimes.tutorial.common.event.TickEvent;
 import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
@@ -18,14 +16,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
  * 管道传输内容信息
  * @author luqin2007
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class PLElement implements INBTSerializable<NBTTagCompound> {
 
     private static final Map<String, Serializer> SERIALIZER = new HashMap<>();
@@ -121,14 +118,14 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
     }
 
     public void send() {
-        LinkedList<PLElement> elements = PipelineEvent.getInstance().elements;
+        LinkedList<PLElement> elements = TickEvent.getInstance().elements;
         if (!elements.contains(this)) {
             elements.add(this);
         }
     }
 
     public void remove() {
-        LinkedList<PLElement> elements = PipelineEvent.getInstance().elements;
+        LinkedList<PLElement> elements = TickEvent.getInstance().elements;
         elements.remove(this);
     }
 
@@ -195,13 +192,49 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
     }
 
     public interface Serializer {
+        /**
+         * 转化器名称
+         * @return 名称
+         */
         String name();
 
+        /**
+         * 将传输内容转化为 NBT 数据
+         * @param object 传输数据
+         * @return NBT 数据
+         */
         @Nonnull
         NBTBase serialize(@Nonnull Object object);
+
+        /**
+         * 将 NBT 数据转化为传输内容
+         * @param nbt NBT 数据
+         * @return 传输数据
+         */
         @Nonnull
         Object deserialize(@Nonnull NBTBase nbt);
 
+        /**
+         * 检查传输内容是否为空
+         * @param object 传输内容
+         * @return 是否为空
+         */
         boolean isObjectEmpty(Object object);
+    }
+
+    public static PLElement item(ItemStack itemStack) {
+        PLElement element = new PLElement();
+        element.serializer = SERIALIZER_ITEM;
+        element.serializerClass = "";
+        element.element = itemStack;
+        return element;
+    }
+
+    public static PLElement fluid(FluidStack fluidStack) {
+        PLElement element = new PLElement();
+        element.serializer = SERIALIZER_FLUID;
+        element.serializerClass = "";
+        element.element = fluidStack;
+        return element;
     }
 }

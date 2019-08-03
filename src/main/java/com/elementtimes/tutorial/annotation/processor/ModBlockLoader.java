@@ -39,7 +39,7 @@ public class ModBlockLoader {
     public static Map<Block, String> ORE_DICTIONARY = new HashMap<>();
     public static Map<GenType, List<WorldGenerator>> WORLD_GENERATORS = new HashMap<>();
     public static Object2IntMap<Block> BURNING_TIMES = new Object2IntArrayMap<>();
-    public static Map<Class, net.minecraftforge.client.model.animation.AnimationTESR> ANIMATION_HANDLER = new HashMap<>();
+    public static Map<Class, net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer> TESR = new HashMap<>();
     public static boolean B3D = false, OBJ = false;
 
     /**
@@ -74,8 +74,8 @@ public class ModBlockLoader {
         initBlockState(block, blockHolder);
         // 世界生成
         initWorldGenerator(block, blockHolder);
-        // 动画
-        initAnimation(block, blockHolder);
+        // TileEntitySpecialRenderer
+        initTESR(block, blockHolder);
         into.add(block);
     }
 
@@ -192,31 +192,45 @@ public class ModBlockLoader {
         }
     }
 
-    private static void initAnimation(Block block, AnnotatedElement blockHolder) {
+    private static void initTESR(Block block, AnnotatedElement blockHolder) {
+        net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer tesr = null;
+        ImmutablePair<String, Class<? extends TileEntity>> stringClassImmutablePair = TILE_ENTITIES.get(block);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            ModBlock.AnimTESR aInfo = blockHolder.getAnnotation(ModBlock.AnimTESR.class);
-            if (aInfo != null) {
-                Class<? extends TileEntity> teClass = TILE_ENTITIES.get(block).getRight();
-                if (teClass == null) {
-                    warn("Animation must have a tileEntity");
+            ModBlock.TESR tInfo = blockHolder.getAnnotation(ModBlock.TESR.class);
+            if (tInfo != null) {
+                if (stringClassImmutablePair == null) {
+                    warn("Block {}: TESR must have a tileEntity.", block.getRegistryName());
+                    return;
+                }
+                String tesrClass = tInfo.value();
+                Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer);
+                if (o.isPresent()) {
+                    tesr = (net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer) o.get();
                 } else {
-                    String tesrClass = aInfo.animationTESR();
-                    net.minecraftforge.client.model.animation.AnimationTESR tesr = null;
-                    if (tesrClass.isEmpty()) {
-                        tesr = new net.minecraftforge.client.model.animation.AnimationTESR();
+                    warn("Can't create TileEntitySpecialRenderer object");
+                }
+            }
+            ModBlock.AnimTESR aInfo = blockHolder.getAnnotation(ModBlock.AnimTESR.class);
+            if (tesr == null && aInfo != null) {
+                if (stringClassImmutablePair == null) {
+                    warn("Block {}: Animation must have a tileEntity.", block.getRegistryName());
+                    return;
+                }
+                String tesrClass = aInfo.animationTESR();
+                if (tesrClass.isEmpty()) {
+                    tesr = new net.minecraftforge.client.model.animation.AnimationTESR();
+                } else {
+                    Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
+                    if (o.isPresent()) {
+                        tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
                     } else {
-                        Optional<Object> o = ReflectUtil.create(tesrClass).filter(obj -> obj instanceof net.minecraftforge.client.model.animation.AnimationTESR);
-                        if (o.isPresent()) {
-                            tesr = (net.minecraftforge.client.model.animation.AnimationTESR) o.get();
-                        } else {
-                            warn("Can't create AnimationTESR object");
-                        }
-                    }
-                    if (tesr != null) {
-                        ANIMATION_HANDLER.put(teClass, tesr);
+                        warn("Can't create AnimationTESR object");
                     }
                 }
             }
+        }
+        if (tesr != null) {
+            TESR.put(stringClassImmutablePair.right, tesr);
         }
     }
 }

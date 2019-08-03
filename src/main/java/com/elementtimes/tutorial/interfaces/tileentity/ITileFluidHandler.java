@@ -37,6 +37,15 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
         return getTankTypeMap().getOrDefault(facing, SideHandlerType.NONE);
     }
 
+    default void setFluidSlot(int fluidInput, int inputCapacity, int fluidOutput, int outputCapacity) {
+        getTanksMap().put(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, fluidInput, inputCapacity));
+        getTanksMap().put(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, fluidOutput, outputCapacity));
+        // 空闲
+        getTanksMap().put(SideHandlerType.NONE, TankHandler.EMPTY);
+        getTanksMap().put(SideHandlerType.READONLY, TankHandler.EMPTY);
+        getTanksMap().put(SideHandlerType.IN_OUT, TankHandler.EMPTY);
+    }
+
     @Override
     default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY

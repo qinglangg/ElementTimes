@@ -81,7 +81,7 @@ public class AnnotationInitializer {
                 warn("\tBlockState: {}", ModBlockLoader.BLOCK_STATES.size());
                 warn("\tStateMap: {}", ModBlockLoader.STATE_MAPS.size());
             }
-            warn("\tAnimationTESR: {}", ModBlockLoader.ANIMATION_HANDLER.size());
+            warn("\tTileEntitySpecialRenderer: {}", ModBlockLoader.TESR.size());
             warn("\tB3D: {}, OBJ: {}", ModBlockLoader.B3D ? "on" : "off", ModBlockLoader.OBJ ? "on" : "off");
             ModItemLoader.getItems(elements, ITEMS);
             warn("---> Find {} Item", ITEMS.size());

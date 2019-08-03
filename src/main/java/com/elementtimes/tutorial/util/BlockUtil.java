@@ -48,9 +48,9 @@ public class BlockUtil {
             return null;
         }
         int dz = pos.getZ() - before.getZ();
-        if (dz > 0 && facing != null) {
+        if (dz > 0 && facing == null) {
             facing = EnumFacing.SOUTH;
-        } else if (dz < 0 && facing != null) {
+        } else if (dz < 0 && facing == null) {
             facing = EnumFacing.NORTH;
         } else if (dz != 0) {
             return null;

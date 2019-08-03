@@ -15,7 +15,7 @@ import java.util.*;
  * 代表一条路线
  * @author luqin2007
  */
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class PLPath implements INBTSerializable<NBTTagCompound> {
 
     private static final String BIND_NBT_PATH = "_nbt_pipeline_path_";
@@ -126,9 +126,9 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
                 i--;
                 PLInfo back = path.get(i);
                 TileEntity te = world.getTileEntity(back.pos);
-                if (te instanceof TilePipeline) {
+                if (te instanceof TilePipeline && world.isBlockLoaded(back.pos)) {
                     moveTo(world, back);
-                    Map<BlockPos, PLPath> pathMap = back.allValidOutput(world, from, element);
+                    Map<BlockPos, PLPath> pathMap = back.allValidOutput(world, element, from);
                     PLPath path = pathMap.get(to);
                     if (path != null) {
                         for (PLInfo info : this.path.subList(i, this.path.size())) {
@@ -178,13 +178,9 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         plOut = next;
     }
 
-    public boolean moveTo(World world, PLInfo pos) {
-        if (world.isBlockLoaded(pos.pos)) {
-            this.plPos = pos;
-            this.tick = 0;
-            return true;
-        }
-        return false;
+    public void moveTo(World world, PLInfo pos) {
+        plPos = pos;
+        tick = 0;
     }
 
     public void test(LinkedList<PLInfo> subPath, long subTick) {

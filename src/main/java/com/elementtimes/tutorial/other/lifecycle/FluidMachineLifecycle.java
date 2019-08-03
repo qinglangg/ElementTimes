@@ -31,12 +31,12 @@ import java.util.List;
  */
 public class FluidMachineLifecycle implements IMachineLifecycle {
 
-    private BaseMachine mMachine;
-    private Int2ObjectMap<int[]> mInputs;
-    private Int2ObjectMap<int[]> mOutputs;
+    private final BaseMachine mMachine;
+    private final Int2ObjectMap<int[]> mInputs;
+    private final Int2ObjectMap<int[]> mOutputs;
 
-    private ItemHandler inputItems, outputItems;
-    private TankHandler inputFluids, outputFluids;
+    private final ItemHandler inputItems, outputItems;
+    private final TankHandler inputFluids, outputFluids;
 
     /**
      * 用于带有流体的机器，流体转移和同步部分生命周期创建
