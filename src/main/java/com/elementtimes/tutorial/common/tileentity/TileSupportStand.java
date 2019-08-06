@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.tutorial.annotation.AnnotationElements;
 import com.elementtimes.tutorial.annotation.annotations.ModElement;
-import com.elementtimes.tutorial.client.util.RenderObject;
+import com.elementtimes.tutorial.other.RenderObject;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
@@ -37,12 +37,15 @@ import java.util.Map;
 @ModElement
 @ModElement.ModInvokeStatic("init")
 public class TileSupportStand extends BaseMachine implements ITESRSupport {
-    public static MachineRecipeHandler mRecipe = null;
+    public static MachineRecipeHandler RECIPE_EMPTY = new MachineRecipeHandler();
+    public static MachineRecipeHandler RECIPE_EVAPORATING_DISH = null;
+    public static MachineRecipeHandler RECIPE_CRUCIBLE = null;
 
     private NonNullList<RenderObject> tesr = NonNullList.create();
     private NBTTagCompound properties = new NBTTagCompound();
 
     public int alcoholLamp = registerRender(RenderObject.create(ElementtimesBlocks.alcoholLamp, .5, -.13, .5));
+    public int crucible = registerRender(RenderObject.create(ElementtimesBlocks.crucible, .5, .375, .5));
     public int evaporatingDish = registerRender(RenderObject.create(ElementtimesBlocks.evaporatingDish, .5, .375, .5));
 
     public TileSupportStand() {
@@ -53,13 +56,18 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     }
 
     public static void init() {
-        if (mRecipe == null) {
-            mRecipe = new MachineRecipeHandler();
-            mRecipe.newRecipe("0")
+        if (RECIPE_EVAPORATING_DISH == null) {
+            // 蒸发皿
+            RECIPE_EVAPORATING_DISH = new MachineRecipeHandler().newRecipe("0")
                     .addCost(0)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaCl, 1000))
+                    .addFluidInput(IngredientPart.forFluid(null /* 酒精 */))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 100))
                     .endAdd();
+        }
+        if (RECIPE_CRUCIBLE == null) {
+            // 坩埚
+            RECIPE_CRUCIBLE = new MachineRecipeHandler();
         }
     }
 
@@ -93,27 +101,42 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
         }
     }
 
+    @Override
+    public void setRender(int index, boolean isRender) {
+        ITESRSupport.super.setRender(index, isRender);
+        markRebuildFluids();
+        markRebuildSlots();
+        createRecipe();
+    }
+
     // gui
 
     @Override
     public ElementtimesGUI.Machines getGuiType() {
         if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
-            return ElementtimesGUI.Machines.SupportStand;
-        } else {
-            return null;
+            return ElementtimesGUI.Machines.SupportStandAL;
+        } else if (isRender(alcoholLamp) && isRender(crucible)) {
+            return ElementtimesGUI.Machines.SupportStandC;
         }
+        return null;
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
-        return mRecipe;
+    public MachineRecipeHandler createRecipe() {
+        if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
+            return RECIPE_EVAPORATING_DISH;
+        } else if (isRender(alcoholLamp) && isRender(crucible)) {
+            return RECIPE_CRUCIBLE;
+        }
+        return RECIPE_EMPTY;
     }
 
     @Nonnull
     @Override
     public Slot[] createSlots() {
-        if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
+        if ((isRender(alcoholLamp) && isRender(evaporatingDish))
+                || (isRender(alcoholLamp) && isRender(crucible))) {
             return new Slot[] {
                     new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 37, 16),
                     new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 101, 16),
@@ -129,7 +152,8 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     @Nonnull
     @Override
     public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
+        if ((isRender(alcoholLamp) && isRender(evaporatingDish))
+                || (isRender(alcoholLamp) && isRender(crucible))) {
             Map<SideHandlerType, Int2ObjectMap<int[]>> fluids = new HashMap<>(3);
             fluids.put(SideHandlerType.INPUT, new Int2ObjectArrayMap<>(new int[] {0, 1}, new int[][] {
                     new int[] {58, 10, 16, 46}, new int[] {65, 64, 46, 16}
@@ -149,8 +173,8 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
         NBTTagCompound renderProperties = getRenderProperties();
         if (renderProperties != null) {
             renderProperties.setBoolean("fire", fire);
+            markRenderClient();
         }
-        markRenderClient();
     }
 
     public boolean isFire() {

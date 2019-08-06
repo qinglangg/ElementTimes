@@ -44,7 +44,7 @@ public class TileForming extends BaseOneToOne {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return sGearRecipeHandler;
     }
 

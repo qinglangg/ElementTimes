@@ -53,7 +53,7 @@ public class TileSolidFluidReactor extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 

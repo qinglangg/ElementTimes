@@ -80,7 +80,7 @@ public class TileFluidReactor extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         if (RECIPES == null) {
             init();
         }

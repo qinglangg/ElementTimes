@@ -57,7 +57,7 @@ public class TileElectrolyticCell extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         init();
         return RECIPE;
     }

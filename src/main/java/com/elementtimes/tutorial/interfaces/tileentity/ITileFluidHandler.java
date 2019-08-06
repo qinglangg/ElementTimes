@@ -25,8 +25,16 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
     String NBT_FLUID_INPUT = "_inputs_";
     String NBT_FLUID_OUTPUT = "_outputs_";
 
+    /**
+     * 获取某一方向的流体类型（是否可抽取）
+     * @return 流体类型
+     */
     Map<EnumFacing, SideHandlerType> getTankTypeMap();
 
+    /**
+     * 获取某种流体抽取类型对应的流体 Tank
+     * @return TankMap
+     */
     Map<SideHandlerType, TankHandler> getTanksMap();
 
     default TankHandler getTanks(SideHandlerType type) {

@@ -15,35 +15,6 @@ import java.lang.annotation.Target;
 public @interface ModRecipe {
 
     /**
-     * 锤子合成
-     * 可标记 Item，Block，String(默认认为是 矿辞，id以 [id] 开头加以区分)
-     * json 注册 我注册个锤子啊 头疼
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    @interface Ore {
-        /**
-         * name 用于注册
-         */
-        String value();
-
-        /**
-         * 消耗锤子的耐久
-         */
-        int damage() default 1;
-
-        /**
-         * 产物数量
-         */
-        int dustCount() default 3;
-
-        /**
-         * 产物 id
-         */
-        String output();
-    }
-
-    /**
      * 工作台合成
      * 注解 IRecipe 类/对象上
      * 类型为 IRecipe/Supplier<IRecipe> 或 Object[]，或生成他们的方法。

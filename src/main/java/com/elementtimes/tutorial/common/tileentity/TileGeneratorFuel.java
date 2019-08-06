@@ -42,7 +42,7 @@ public class TileGeneratorFuel extends BaseGenerator {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return sRecipeHandler;
     }
 

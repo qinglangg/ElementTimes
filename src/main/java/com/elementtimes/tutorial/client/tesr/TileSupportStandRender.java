@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.client.tesr;
 
-import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.client.util.RenderObject;
+import com.elementtimes.tutorial.other.RenderObject;
 import com.elementtimes.tutorial.common.tileentity.TileSupportStand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

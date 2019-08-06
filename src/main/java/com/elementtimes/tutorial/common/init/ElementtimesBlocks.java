@@ -12,6 +12,7 @@ import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -272,9 +273,12 @@ public class ElementtimesBlocks {
     @ModBlock.HarvestLevel
     public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
     @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Chemical)
-    public static Block alcoholLamp = new BlockAlcoholLamp();
+    @ModBlock.TileEntity(name = "alcohol_lamp", clazz = "com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp")
+    public static Block alcoholLamp = new AlcoholLamp();
     @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Chemical)
-    public static Block evaporatingDish = new BlockEvaporatingDish();
+    public static Block evaporatingDish = new BlockAABB(new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.25D, 0.75D));
+    @ModBlock(creativeTab = ModCreativeTabs.Chemical)
+    public static Block crucible = new Crucible();
     @ModBlock(creativeTab = ModCreativeTabs.None)
     public static Block fr = new FluidReplace();
 }

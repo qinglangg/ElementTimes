@@ -35,7 +35,7 @@ public class TileSolidCentrifuge extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 

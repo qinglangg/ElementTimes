@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.client.util;
+package com.elementtimes.tutorial.other;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;

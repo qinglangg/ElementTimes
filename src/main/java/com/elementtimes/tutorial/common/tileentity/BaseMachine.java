@@ -44,7 +44,7 @@ public abstract class BaseMachine extends TileEntity implements
     private Map<EnumFacing, SideHandlerType> mTankTypes = new HashMap<>();
     private Map<SideHandlerType, TankHandler> mTanks = new HashMap<>();
     private Map<EnumFacing, SideHandlerType> mItemHandlerTypes = new HashMap<>();
-    private MachineRecipeHandler mRecipe = new MachineRecipeHandler();
+    private MachineRecipeHandler mRecipe;
     private Set<IMachineLifecycle> mMachineLifeCycles = new LinkedHashSet<>();
     private MachineRecipeCapture mWorkingRecipe = null;
     private boolean isWorking = false;
@@ -72,7 +72,7 @@ public abstract class BaseMachine extends TileEntity implements
             }
             mEnergyHandlerTypes.put(facing, SideHandlerType.INPUT);
         }
-        mRecipe = updateRecipe(mRecipe);
+        mRecipe = createRecipe();
         DefaultMachineLifecycle defaultMachineLifecycle = new DefaultMachineLifecycle(this);
         addLifeCycle(defaultMachineLifecycle);
         applyConfig();
@@ -135,6 +135,10 @@ public abstract class BaseMachine extends TileEntity implements
     @Override
     public MachineRecipeHandler getRecipes() {
         return mRecipe;
+    }
+    @Override
+    public void updateRecipes() {
+        mRecipe = createRecipe();
     }
     @Nonnull
     @Override

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
-import com.elementtimes.tutorial.client.util.RenderObject;
+import com.elementtimes.tutorial.other.RenderObject;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
