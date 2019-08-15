@@ -7,10 +7,16 @@ import com.elementtimes.tutorial.common.event.RecipeRemove;
 import com.elementtimes.tutorial.common.event.TickEvent;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
+import com.elementtimes.tutorial.other.MiscTabWrapper;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import com.elementtimes.tutorial.test.ComponentHandler;
+import com.elementtimes.tutorial.util.FluidUtil;
 import mods.flammpfeil.slashblade.SlashBlade;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -41,6 +47,15 @@ public class CommonProxy {
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
+        // 创造
+        MiscTabWrapper.apply().addPredicate(itemStack -> {
+            Item item = itemStack.getItem();
+            if (item == ForgeModContainer.getInstance().universalBucket) {
+                FluidStack f = FluidUtil.getFluid(itemStack);
+                return !f.getFluid().getName().startsWith("elementtimes.");
+            }
+            return true;
+        });
     }
 
     public void init(FMLInitializationEvent event) {

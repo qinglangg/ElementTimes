@@ -5,6 +5,13 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * 所有的 CreateTabs 都被我集中到这里了 便于管理
@@ -43,6 +50,17 @@ public class ElementTimesTabs {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(ElementtimesItems.sodiumSulfiteSolution);
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void displayAllRelevantItems(NonNullList<ItemStack> itemStacks) {
+            super.displayAllRelevantItems(itemStacks);
+            for (Fluid fluid : FluidRegistry.getBucketFluids()) {
+                if (fluid.getName().startsWith("elementtimes.")) {
+                    itemStacks.add(FluidUtil.getFilledBucket(new FluidStack(fluid, Fluid.BUCKET_VOLUME)));
+                }
+            }
         }
     }
 
