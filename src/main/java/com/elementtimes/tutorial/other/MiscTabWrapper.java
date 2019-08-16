@@ -9,13 +9,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * @author 用于对原版创造模式物品栏的替换
+ * 用于对原版创造模式物品栏的替换
+ * @author luqin2007
  */
 public class MiscTabWrapper extends CreativeTabs {
 
@@ -30,6 +32,15 @@ public class MiscTabWrapper extends CreativeTabs {
         return false;
     };
 
+    private static void setStaticFinalField(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
+        final Field modifiersField = field.getClass().getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        final int modifiers = field.getModifiers();
+        modifiersField.setInt(field, modifiers & ~Modifier.FINAL);
+        field.set(null, newValue);
+        modifiersField.setInt(field, modifiers);
+    }
+
     public static MiscTabWrapper apply() {
         CreativeTabs misc = CreativeTabs.MISC;
         MiscTabWrapper newTab = new MiscTabWrapper(misc.getTabIndex(), "misc", misc);
@@ -39,10 +50,10 @@ public class MiscTabWrapper extends CreativeTabs {
                 Object o = field.get(null);
                 if (o == misc) {
                     field.setAccessible(true);
-                    field.set(null, newTab);
+                    setStaticFinalField(field, newTab);
                     break;
                 }
-            } catch (IllegalAccessException e) {
+            } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
         }
@@ -52,10 +63,6 @@ public class MiscTabWrapper extends CreativeTabs {
     public MiscTabWrapper(int index, String label, CreativeTabs misc) {
         super(index, label);
         this.misc = misc;
-    }
-
-    public void addPredicates(Predicate<ItemStack>... predicates) {
-        Collections.addAll(itemPredicates, predicates);
     }
 
     public void addPredicate(Predicate<ItemStack> predicate) {

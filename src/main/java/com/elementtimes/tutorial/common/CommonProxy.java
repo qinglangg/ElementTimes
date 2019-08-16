@@ -47,15 +47,6 @@ public class CommonProxy {
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
         }
-        // 创造
-        MiscTabWrapper.apply().addPredicate(itemStack -> {
-            Item item = itemStack.getItem();
-            if (item == ForgeModContainer.getInstance().universalBucket) {
-                FluidStack f = FluidUtil.getFluid(itemStack);
-                return !f.getFluid().getName().startsWith("elementtimes.");
-            }
-            return true;
-        });
     }
 
     public void init(FMLInitializationEvent event) {
