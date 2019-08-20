@@ -36,7 +36,7 @@ public class BlockSupportStand extends BlockTileBase<TileSupportStand> {
     private AxisAlignedBB aabb = new AxisAlignedBB(0.1D, 0D, 0.1D, 0.9D, 0.88D, 0.9D);
 
     public BlockSupportStand() {
-        super(TileSupportStand.class, false);
+        super(TileSupportStand.class);
     }
 
     @Override

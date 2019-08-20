@@ -23,14 +23,6 @@ public class MiscTabWrapper extends CreativeTabs {
 
     private final CreativeTabs misc;
     private final List<Predicate<ItemStack>> itemPredicates = new LinkedList<>();
-    private final Predicate<ItemStack> removeItem = itemStack -> {
-        for (Predicate<ItemStack> predicate : itemPredicates) {
-            if (!predicate.test(itemStack)) {
-                return true;
-            }
-        }
-        return false;
-    };
 
     private static void setStaticFinalField(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
         final Field modifiersField = field.getClass().getDeclaredField("modifiers");
@@ -75,7 +67,14 @@ public class MiscTabWrapper extends CreativeTabs {
     @Override
     public void displayAllRelevantItems(NonNullList<ItemStack> items) {
         misc.displayAllRelevantItems(items);
-        items.removeIf(removeItem);
+        items.removeIf(itemStack -> {
+            for (Predicate<ItemStack> predicate : itemPredicates) {
+                if (!predicate.test(itemStack)) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     // MC 原版方法 ===============================================================

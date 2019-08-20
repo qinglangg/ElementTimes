@@ -134,7 +134,7 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "fuel_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFuel")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class, true);
+    public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class);
     @ModBlock(registerName = "rebuild", unlocalizedName = "rebuild", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
     @ModBlock.StateMapperCustom
@@ -161,7 +161,7 @@ public class ElementtimesBlocks {
     public static Block pulverizer = new BlockTileBase<>(TilePulverize.class);
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
-    public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, true);
+    public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class);
     @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
     @ModBlock.TESR("com.elementtimes.tutorial.client.tesr.TileSupportStandRender")

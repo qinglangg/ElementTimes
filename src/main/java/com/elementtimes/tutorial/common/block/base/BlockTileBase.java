@@ -6,17 +6,14 @@ import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,30 +28,24 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class BlockTileBase<T extends TileEntity> extends BlockContainer implements IDismantleBlock {
 
-    private boolean addFullEnergyBlock;
     private Class<T> mEntityClass;
     private int mGui;
 
-    private BlockTileBase(Material materialIn, int gui, boolean addFullEnergyBlock) {
+    private BlockTileBase(Material materialIn, int gui) {
         super(materialIn);
         setHardness(15.0F);
         setResistance(25.0F);
         mGui = gui;
-        this.addFullEnergyBlock = addFullEnergyBlock;
     }
 
-    public BlockTileBase(int gui, Class<T> entityClass, boolean addFullEnergyBlock) {
-        this(Material.IRON, gui, addFullEnergyBlock);
+    public BlockTileBase(int gui, Class<T> entityClass) {
+        this(Material.IRON, gui);
         this.mEntityClass = entityClass;
     }
 
-    public <T2 extends BaseMachine> BlockTileBase(Class<T2> entityClass, boolean addFullEnergyBlock) {
-        this(Material.IRON, 0, addFullEnergyBlock);
+    public <T2 extends BaseMachine> BlockTileBase(Class<T2> entityClass) {
+        this(Material.IRON, 0);
         this.mEntityClass = (Class<T>) entityClass;
-    }
-
-    public <T2 extends BaseMachine> BlockTileBase(Class<T2> entityClas) {
-        this(Material.IRON, 0, false);
     }
 
     @Nullable
@@ -122,22 +113,6 @@ public class BlockTileBase<T extends TileEntity> extends BlockContainer implemen
 
                 dyn.readFromNBT(tagCompound);
             }
-        }
-    }
-
-    @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        super.getSubBlocks(itemIn, items);
-        if (addFullEnergyBlock && !items.isEmpty()) {
-            items.stream().filter(itemStack -> itemStack.getItem() == Item.getItemFromBlock(this)).findFirst().ifPresent(itemStack -> {
-                ItemStack fullEnergyGenerator = itemStack.copy();
-                NBTTagCompound nbt = new NBTTagCompound();
-                NBTTagCompound eNBT = new NBTTagCompound();
-                eNBT.setBoolean("full", true);
-                nbt.setTag("energy", eNBT);
-                fullEnergyGenerator.setTagCompound(nbt);
-                items.add(fullEnergyGenerator);
-            });
         }
     }
 

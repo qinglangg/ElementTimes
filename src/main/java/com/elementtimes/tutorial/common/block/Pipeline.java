@@ -2,9 +2,7 @@ package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
-import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.other.pipeline.PLPath;
 import com.elementtimes.tutorial.util.BlockUtil;
 import com.google.common.base.Optional;
 import net.minecraft.block.Block;
@@ -27,18 +25,14 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 管道类
@@ -48,6 +42,22 @@ import java.util.*;
 public class Pipeline extends Block implements ITileEntityProvider {
 
     public static List<String> PIPELINE_TYPES = new LinkedList<>();
+
+    public static String TYPE_ITEM = "pipeline_item";
+    public static String TYPE_ITEM_IN = "pipeline_item_in";
+    public static String TYPE_ITEM_OUT = "pipeline_item_out";
+    public static String TYPE_FLUID = "pipeline_fluid";
+    public static String TYPE_FLUID_IN = "pipeline_fluid_in";
+    public static String TYPE_FLUID_OUT = "pipeline_fluid_out";
+
+    static {
+        PIPELINE_TYPES.add(TYPE_ITEM);
+        PIPELINE_TYPES.add(TYPE_ITEM_IN);
+        PIPELINE_TYPES.add(TYPE_ITEM_OUT);
+        PIPELINE_TYPES.add(TYPE_FLUID);
+        PIPELINE_TYPES.add(TYPE_FLUID_IN);
+        PIPELINE_TYPES.add(TYPE_FLUID_OUT);
+    }
 
     /**
      * 管道连接方向
@@ -82,13 +92,6 @@ public class Pipeline extends Block implements ITileEntityProvider {
     };
 
     private static String BIND_NBT_PIPELINE = "_pipeline_";
-
-    public static String TYPE_ITEM = "pipeline_item";
-    public static String TYPE_ITEM_IN = "pipeline_item_in";
-    public static String TYPE_ITEM_OUT = "pipeline_item_out";
-    public static String TYPE_FLUID = "pipeline_fluid";
-    public static String TYPE_FLUID_IN = "pipeline_fluid_in";
-    public static String TYPE_FLUID_OUT = "pipeline_fluid_out";
 
     public Pipeline() {
         super(Material.CIRCUITS);
@@ -161,69 +164,7 @@ public class Pipeline extends Block implements ITileEntityProvider {
             tp.setInfo(info);
 
             // 切换 te
-            if (info.type.equals(TYPE_ITEM_IN)) {
-                TilePipeline tpt = new TilePipeline.Tickable(tp, (t) -> {
-                    PLInfo tInfo = t.getInfo();
-                    for (BlockPos blockPos : tInfo.listIn) {
-                        TileEntity te = t.getWorld().getTileEntity(pos);
-                        if (te != null) {
-                            EnumFacing facing = BlockUtil.getPosFacing(t.getPos(), blockPos);
-                            if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
-                                IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-                                if (capability != null) {
-                                    for (int i = 0; i < capability.getSlots(); i++) {
-                                        ItemStack stackInSlot = capability.getStackInSlot(i);
-                                        ItemStack extractItem = capability.extractItem(i, stackInSlot.getCount(), true);
-                                        if (!extractItem.isEmpty()) {
-                                            PLElement element = PLElement.item(extractItem);
-                                            Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
-                                            if (pathMap.size() > 0) {
-                                                element.path = pathMap.values().iterator().next();
-                                                capability.extractItem(i, stackInSlot.getCount(), false);
-                                                element.send();
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-                tpt.validate();
-                worldIn.setTileEntity(pos, tpt);
-            } else if (info.type.equals(TYPE_FLUID_IN)) {
-                TilePipeline tpt = new TilePipeline.Tickable(tp, (t) -> {
-                    PLInfo tInfo = t.getInfo();
-                    for (BlockPos blockPos : tInfo.listIn) {
-                        TileEntity te = t.getWorld().getTileEntity(pos);
-                        if (te != null) {
-                            EnumFacing facing = BlockUtil.getPosFacing(t.getPos(), blockPos);
-                            if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
-                                IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                                if (capability != null) {
-                                    for (IFluidTankProperties property : capability.getTankProperties()) {
-                                        FluidStack fluidStack = property.getContents();
-                                        FluidStack drain = capability.drain(fluidStack, false);
-                                        if (drain != null && drain.amount > 0) {
-                                            PLElement element = PLElement.fluid(drain);
-                                            Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
-                                            if (pathMap.size() > 0) {
-                                                element.path = pathMap.values().iterator().next();
-                                                capability.drain(fluidStack, true);
-                                                element.send();
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-                tpt.validate();
-                worldIn.setTileEntity(pos, tpt);
-            }
+            tp.setTickable();
         }
     }
 
@@ -273,5 +214,4 @@ public class Pipeline extends Block implements ITileEntityProvider {
     public boolean isFullCube(IBlockState state) {
         return false;
     }
-
 }

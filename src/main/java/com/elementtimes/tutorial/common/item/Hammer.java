@@ -3,6 +3,9 @@ package com.elementtimes.tutorial.common.item;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
+import com.elementtimes.tutorial.common.tileentity.TilePipeline;
+import com.elementtimes.tutorial.other.pipeline.PLElement;
+import com.elementtimes.tutorial.other.pipeline.PLStorage;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -95,7 +98,22 @@ public class Hammer extends Item {
             // 空气
             player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
         } else {
-            debugTe(te, block, player);
+            if (te instanceof TilePipeline) {
+                debugPl(player);
+            } else {
+                debugTe(te, block, player);
+            }
+        }
+    }
+
+    private void debugPl(EntityPlayer player) {
+        String message = "%s: \n\tfrom %s to %s, at %s(%d)\n\ttick=%d, total=%d, pause=%d\n\tpath: %s";
+        for (PLElement element : PLStorage.ELEMENTS) {
+            player.sendMessage(new TextComponentString(String.format(message,
+                    element.element,
+                    element.path.from, element.path.to, element.path.path.get(element.path.position), element.path.position,
+                    element.path.tick, element.path.totalTick, element.path.path,
+                    element.path.path)));
         }
     }
 
