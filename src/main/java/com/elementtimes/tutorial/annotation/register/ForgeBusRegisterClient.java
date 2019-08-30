@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 /**
  * 注解注册
@@ -95,7 +97,11 @@ public class ForgeBusRegisterClient {
             }
         }));
         // 注册动画
-        ModBlockLoader.ANIMATION_HANDLER.forEach(ClientRegistry::bindTileEntitySpecialRenderer);
+        for (Map.Entry<Class, Object> entry : ModBlockLoader.TESR.entrySet()) {
+            Class key = entry.getKey();
+            TileEntitySpecialRenderer value = (TileEntitySpecialRenderer) entry.getValue();
+            ClientRegistry.bindTileEntitySpecialRenderer(key, value);
+        }
     }
 
     @SubscribeEvent

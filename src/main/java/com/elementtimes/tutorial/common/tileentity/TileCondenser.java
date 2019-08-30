@@ -29,7 +29,7 @@ public class TileCondenser extends BaseMachine {
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE = new MachineRecipeHandler()
-                    .add("0", 1000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
+                    .add("0", 2000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
         }
     }
 
@@ -43,7 +43,7 @@ public class TileCondenser extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 

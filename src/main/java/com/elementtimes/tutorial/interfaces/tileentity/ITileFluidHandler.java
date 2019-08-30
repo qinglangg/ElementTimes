@@ -25,8 +25,16 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
     String NBT_FLUID_INPUT = "_inputs_";
     String NBT_FLUID_OUTPUT = "_outputs_";
 
+    /**
+     * 获取某一方向的流体类型（是否可抽取）
+     * @return 流体类型
+     */
     Map<EnumFacing, SideHandlerType> getTankTypeMap();
 
+    /**
+     * 获取某种流体抽取类型对应的流体 Tank
+     * @return TankMap
+     */
     Map<SideHandlerType, TankHandler> getTanksMap();
 
     default TankHandler getTanks(SideHandlerType type) {
@@ -35,6 +43,15 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
 
     default SideHandlerType getTankType(EnumFacing facing) {
         return getTankTypeMap().getOrDefault(facing, SideHandlerType.NONE);
+    }
+
+    default void setFluidSlot(int fluidInput, int inputCapacity, int fluidOutput, int outputCapacity) {
+        getTanksMap().put(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, fluidInput, inputCapacity));
+        getTanksMap().put(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, fluidOutput, outputCapacity));
+        // 空闲
+        getTanksMap().put(SideHandlerType.NONE, TankHandler.EMPTY);
+        getTanksMap().put(SideHandlerType.READONLY, TankHandler.EMPTY);
+        getTanksMap().put(SideHandlerType.IN_OUT, TankHandler.EMPTY);
     }
 
     @Override

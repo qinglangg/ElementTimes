@@ -23,15 +23,15 @@ import java.util.Map;
  */
 public class DefaultMachineLifecycle implements IMachineLifecycle {
 
-    private BaseMachine machine;
+    private final BaseMachine machine;
     private boolean needBind = true;
 
     private MachineRecipeCapture recipe;
-    private ItemHandler inputItems;
-    private TankHandler inputTanks;
-    private ItemHandler outputItems;
-    private TankHandler outputTanks;
-    private Int2IntMap mBindInputToOutputMap = new Int2IntOpenHashMap();
+    private final ItemHandler inputItems;
+    private final TankHandler inputTanks;
+    private final ItemHandler outputItems;
+    private final TankHandler outputTanks;
+    private final Int2IntMap mBindInputToOutputMap = new Int2IntOpenHashMap();
 
     public DefaultMachineLifecycle(final BaseMachine machine) {
         this.machine = machine;

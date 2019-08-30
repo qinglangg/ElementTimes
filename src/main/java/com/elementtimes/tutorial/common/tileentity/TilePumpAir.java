@@ -30,7 +30,7 @@ public class TilePumpAir extends BaseMachine {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
                     .newRecipe("air")
-                    .addCost(100)
+                    .addCost(1)
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.air, 1))
                     .endAdd();
         }
@@ -49,7 +49,7 @@ public class TilePumpAir extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 

@@ -139,6 +139,24 @@
         "fluid": "elementtimes.raregases"
       }
     },
+    "elementtimes.na": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.na"
+      }
+    },
+     "elementtimes.sicl4": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.sicl4"
+      }
+    },
+     "elementtimes.hcl": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hcl"
+      }
+    },
     "elementtimes.co2": {
       "model": "forge:fluid",
       "custom": {

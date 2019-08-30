@@ -27,7 +27,7 @@ public class TileCentrifuge extends BaseMachine {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
                     .newRecipe("air")
-                    .addCost(1000)
+                    .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 210))
@@ -51,7 +51,7 @@ public class TileCentrifuge extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 

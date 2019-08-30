@@ -12,6 +12,7 @@ import com.elementtimes.tutorial.common.creativetabs.ModCreativeTabs;
 import com.elementtimes.tutorial.common.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -133,7 +134,7 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(name = "fuel_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFuel")
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
-    public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class, true);
+    public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class);
     @ModBlock(registerName = "rebuild", unlocalizedName = "rebuild", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
     @ModBlock.StateMapperCustom
@@ -160,9 +161,10 @@ public class ElementtimesBlocks {
     public static Block pulverizer = new BlockTileBase<>(TilePulverize.class);
     @ModBlock(registerName = "elementGenerater", unlocalizedName = "elementGenerater", creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "element_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorElement")
-    public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, true);
+    public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class);
     @ModBlock(registerName = "support_stand", unlocalizedName = "support_stand", creativeTab = ModCreativeTabs.Chemical)
     @ModBlock.TileEntity(name = "support_stand", clazz = "com.elementtimes.tutorial.common.tileentity.TileSupportStand")
+    @ModBlock.TESR("com.elementtimes.tutorial.client.tesr.TileSupportStandRender")
     public static Block supportStand = new BlockSupportStand();
     @ModBlock(creativeTab = ModCreativeTabs.Industry)
     @ModBlock.TileEntity(name = "solidmelter", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidMelter")
@@ -219,6 +221,16 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block centrifuge = new BaseClosableMachine<>(TileCentrifuge.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "coagulator", clazz = "com.elementtimes.tutorial.common.tileentity.TileCoagulator")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block coagulator = new BaseClosableMachine<>(TileCoagulator.class);
+    @ModBlock(creativeTab = ModCreativeTabs.Industry)
+    @ModBlock.TileEntity(name = "solidCentrifuge", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidCentrifuge")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solidCentrifuge = new BaseClosableMachine<>(TileSolidCentrifuge.class);
 
     // pipeline
 
@@ -261,9 +273,12 @@ public class ElementtimesBlocks {
     @ModBlock.HarvestLevel
     public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
     @ModBlock(registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp", creativeTab = ModCreativeTabs.Chemical)
-    public static Block alcoholLamp = new BlockAlcoholLamp();
+    @ModBlock.TileEntity(name = "alcohol_lamp", clazz = "com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp")
+    public static Block alcoholLamp = new AlcoholLamp();
     @ModBlock(registerName = "evaporating_dish", unlocalizedName = "evaporating_dish", creativeTab = ModCreativeTabs.Chemical)
-    public static Block evaporatingDish = new BlockEvaporatingDish();
+    public static Block evaporatingDish = new BlockAABB(new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.25D, 0.75D));
+    @ModBlock(creativeTab = ModCreativeTabs.Chemical)
+    public static Block crucible = new Crucible();
     @ModBlock(creativeTab = ModCreativeTabs.None)
     public static Block fr = new FluidReplace();
 }

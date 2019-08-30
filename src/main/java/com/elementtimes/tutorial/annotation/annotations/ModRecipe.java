@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
  * 这里有个合成表(＠_＠;)
  * 标记合成表产物或者原料 具体看具体类型的合成
  * 该系列注解只能用于成员变量，不能用于类
+ * @author luqin2007
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})

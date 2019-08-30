@@ -12,11 +12,12 @@ import net.minecraft.world.IBlockAccess;
  *
  * @author KSGFK create in 2019/6/12
  */
-public class BlockEvaporatingDish extends Block {
-    private AxisAlignedBB aabb = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.25D, 0.75D);
+public class BlockAABB extends Block {
+    private AxisAlignedBB aabb;
 
-    public BlockEvaporatingDish() {
+    public BlockAABB(AxisAlignedBB aabb) {
         super(Material.GLASS);
+        this.aabb = aabb;
     }
 
     @Override

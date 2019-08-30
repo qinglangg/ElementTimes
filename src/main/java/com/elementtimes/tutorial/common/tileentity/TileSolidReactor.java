@@ -29,40 +29,80 @@ public class TileSolidReactor extends BaseMachine {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
-                    .newRecipe("0")
+            		//CaO+3C=CaC2+CO
+                    .newRecipe("CaC2")
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 3))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    .newRecipe("1")
+                    
+                    
+                    //铁矿石获得铁
+                    .newRecipe("IRON_INGOT1")
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .endAdd()   
+                    
+                    .newRecipe("IRON_INGOT2")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd()
+                    
+                  //铜矿石获得铜
+                    .newRecipe("oreCopper1")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem("oreCopper",1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .endAdd()   
+
+                    .newRecipe("oreCopper2")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .endAdd() 
+                    
+                    
+                    //钢锭
                     .newRecipe("2")
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
                     .endAdd()
-                    .newRecipe("3")
-                    .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
-                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
-                    .endAdd()
-                    .newRecipe("4")
-                    .addCost(1000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumOxide, 1))
+
+                    
+                    .newRecipe("coarseSilicon")
+                    .addCost(100000)
+                    .addItemInput(IngredientPart.forItem(Items.COAL,1))
+                    .addItemInput(IngredientPart.forItem(Blocks.SAND,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.coarseSilicon,1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    .newRecipe("5")
+                    
+                    .newRecipe("SiC")
+                    .addCost(100000)
+                    .addItemInput(IngredientPart.forItem("elementtimesSilicon",1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.diamondIngot,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.SiC,1))
+                    .endAdd()
+                    //铀锭的获得
+                    .newRecipe("U")
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.UO2,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
@@ -110,7 +150,7 @@ public class TileSolidReactor extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         return RECIPE;
     }
 }

@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * 定义机器工作的生命周期
@@ -45,7 +46,7 @@ public interface IMachineLifecycle {
 
     /**
      * 每 tick 合成操作，比如更新进度，能量消耗等.
-     * @return 合成状态是否出错。返回 true 则会进入 resume 循环
+     * @return 合成状态是否出错。返回 false 则会进入 resume 循环
      */
     default boolean onLoop() {return true;}
 
@@ -97,6 +98,14 @@ public interface IMachineLifecycle {
 
         default void removeLifecycle(IMachineLifecycle lifeCycle) {
             getAllLifecycles().remove(lifeCycle);
+        }
+
+        default void removeLifecycle(Class<? extends IMachineLifecycle> clazz) {
+            getAllLifecycles().removeIf(lc -> lc == null || clazz.isAssignableFrom(lc.getClass()));
+        }
+
+        default void removeLifecycle(Predicate<? super IMachineLifecycle> filter) {
+            getAllLifecycles().removeIf(filter);
         }
 
         @Override

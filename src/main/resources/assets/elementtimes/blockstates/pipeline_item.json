@@ -9,42 +9,42 @@
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "z": 90
+        "x": 270
       }
     },
     "connected_down": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "z": 270
+        "x": 90
       }
     },
     "connected_east": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "y": 0
+        "y": 90
       }
     },
     "connected_west": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "y": 90
+        "y": 270
       }
     },
     "connected_north": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "y": 180
+        "y": 0
       }
     },
     "connected_south": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_item_sub",
-        "y": 270
+        "y": 180
       }
     }
   }

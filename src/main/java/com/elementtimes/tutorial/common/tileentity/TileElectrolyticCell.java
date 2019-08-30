@@ -28,7 +28,7 @@ public class TileElectrolyticCell extends BaseMachine {
     public static void init() {
         RECIPE = new MachineRecipeHandler()
                 .newRecipe("0")
-                .addCost(20000)
+                .addCost(40000)
                 .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.steam, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
@@ -39,6 +39,12 @@ public class TileElectrolyticCell extends BaseMachine {
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
+                .endAdd()
+                .newRecipe("2")
+                .addCost(40000)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaCl,2000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Na, 2000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
                 .endAdd();
     }
 
@@ -57,7 +63,7 @@ public class TileElectrolyticCell extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe) {
+    public MachineRecipeHandler createRecipe() {
         init();
         return RECIPE;
     }

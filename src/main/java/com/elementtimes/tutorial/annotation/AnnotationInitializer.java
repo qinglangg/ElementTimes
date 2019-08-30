@@ -15,6 +15,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,9 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static com.elementtimes.tutorial.annotation.util.MessageUtil.warn;
@@ -50,7 +49,7 @@ public class AnnotationInitializer {
     public static void onPreInit(FMLPreInitializationEvent event, String modId, String packageName) {
         ModInfo.MODID = modId;
         ModInfo.PKG_NAME = packageName;
-        init();
+        init(event);
         registerCapabilities();
         registerFluids();
     }
@@ -63,10 +62,12 @@ public class AnnotationInitializer {
         registerNetwork();
     }
 
-    private static void init() {
+    private static void init(FMLPreInitializationEvent event) {
         if (!sInInit) {
+            ASMDataTable asmData = event.getAsmData();
             warn("Annotation init start...");
             HashMap<Class, ArrayList<AnnotatedElement>> elements = new HashMap<>();
+
             ModClassLoader.getClasses(elements,
                     ModBlock.class, ModItem.class, ModRecipe.class, ModElement.class, ModFluid.class,
                     ModCapability.class, ModNetwork.class, ModEnchantment.class);
@@ -81,7 +82,7 @@ public class AnnotationInitializer {
                 warn("\tBlockState: {}", ModBlockLoader.BLOCK_STATES.size());
                 warn("\tStateMap: {}", ModBlockLoader.STATE_MAPS.size());
             }
-            warn("\tAnimationTESR: {}", ModBlockLoader.ANIMATION_HANDLER.size());
+            warn("\tTileEntitySpecialRenderer: {}", ModBlockLoader.TESR.size());
             warn("\tB3D: {}, OBJ: {}", ModBlockLoader.B3D ? "on" : "off", ModBlockLoader.OBJ ? "on" : "off");
             ModItemLoader.getItems(elements, ITEMS);
             warn("---> Find {} Item", ITEMS.size());

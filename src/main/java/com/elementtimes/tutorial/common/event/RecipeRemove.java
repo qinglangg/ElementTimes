@@ -3,6 +3,8 @@ package com.elementtimes.tutorial.common.event;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.elementtimes.tutorial.other.recipe.IngredientPart;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

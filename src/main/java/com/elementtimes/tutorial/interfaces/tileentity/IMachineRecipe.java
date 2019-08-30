@@ -30,10 +30,14 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
 
     /**
      * 更新合成表
-     * @param recipe 原始合成表
+     */
+    void updateRecipes();
+
+    /**
+     * 提供合成表
      */
     @Nonnull
-    MachineRecipeHandler updateRecipe(@Nonnull MachineRecipeHandler recipe);
+    MachineRecipeHandler createRecipe();
 
     /**
      * 根据所在上下文获取可行的下一个合成表

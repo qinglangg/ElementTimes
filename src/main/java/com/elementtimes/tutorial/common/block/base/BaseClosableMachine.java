@@ -18,14 +18,10 @@ import net.minecraft.world.World;
  */
 public class BaseClosableMachine<T extends BaseMachine> extends BlockTileBase<T> {
 
-    public BaseClosableMachine(Class<T> entityClass, boolean addFullEnergyBlock) {
-        super(entityClass, addFullEnergyBlock);
+    public BaseClosableMachine(Class<T> entityClass) {
+        super(entityClass);
 
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(IS_RUNNING, false));
-    }
-
-    public BaseClosableMachine(Class<T> entityClass) {
-        this(entityClass, false);
     }
 
     public static IProperty<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);

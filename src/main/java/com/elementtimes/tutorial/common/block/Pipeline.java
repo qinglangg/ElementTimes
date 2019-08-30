@@ -16,14 +16,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -42,7 +41,23 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class Pipeline extends Block implements ITileEntityProvider {
 
-    public static List<String> ALL_TYPES = new LinkedList<>();
+    public static List<String> PIPELINE_TYPES = new LinkedList<>();
+
+    public static String TYPE_ITEM = "pipeline_item";
+    public static String TYPE_ITEM_IN = "pipeline_item_in";
+    public static String TYPE_ITEM_OUT = "pipeline_item_out";
+    public static String TYPE_FLUID = "pipeline_fluid";
+    public static String TYPE_FLUID_IN = "pipeline_fluid_in";
+    public static String TYPE_FLUID_OUT = "pipeline_fluid_out";
+
+    static {
+        PIPELINE_TYPES.add(TYPE_ITEM);
+        PIPELINE_TYPES.add(TYPE_ITEM_IN);
+        PIPELINE_TYPES.add(TYPE_ITEM_OUT);
+        PIPELINE_TYPES.add(TYPE_FLUID);
+        PIPELINE_TYPES.add(TYPE_FLUID_IN);
+        PIPELINE_TYPES.add(TYPE_FLUID_OUT);
+    }
 
     /**
      * 管道连接方向
@@ -54,32 +69,29 @@ public class Pipeline extends Block implements ITileEntityProvider {
     public static PropertyBool PL_CONNECTED_NORTH = PropertyBool.create("connected_north");
     public static PropertyBool PL_CONNECTED_SOUTH = PropertyBool.create("connected_south");
 
+    @SuppressWarnings("WeakerAccess")
     public static IProperty<String> PL_TYPE = new PropertyHelper<String>("type", String.class) {
+        @Nonnull
         @Override
         public Collection<String> getAllowedValues() {
-            return ALL_TYPES;
+            return PIPELINE_TYPES;
         }
 
+        @Nonnull
         @Override
-        public Optional<String> parseValue(String value) {
-            return Optional.fromJavaUtil(ALL_TYPES.stream().filter(s -> s.equals(value)).findFirst());
+        @SuppressWarnings({"Guava", "ConstantConditions"})
+        public Optional<String> parseValue(@Nonnull String value) {
+            return Optional.fromJavaUtil(PIPELINE_TYPES.stream().filter(s -> s.equals(value)).findFirst());
         }
 
+        @Nonnull
         @Override
-        public String getName(String value) {
+        public String getName(@Nonnull String value) {
             return value;
         }
     };
 
-    public static String BIND_NBT_PIPELINE = "_pipeline_";
-
-    public static String TYPE_ITEM = "pipeline_item";
-    public static String TYPE_ITEM_IN = "pipeline_item_in";
-    public static String TYPE_ITEM_OUT = "pipeline_item_out";
-    public static String TYPE_FLUID = "pipeline_fluid";
-    public static String TYPE_FLUID_IN = "pipeline_fluid_in";
-    public static String TYPE_FLUID_OUT = "pipeline_fluid_out";
-    public static String TYPE_ENERGY = "pipeline_energy";
+    private static String BIND_NBT_PIPELINE = "_pipeline_";
 
     public Pipeline() {
         super(Material.CIRCUITS);
@@ -106,6 +118,7 @@ public class Pipeline extends Block implements ITileEntityProvider {
         return new TilePipeline();
     }
 
+    @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState();
@@ -149,6 +162,9 @@ public class Pipeline extends Block implements ITileEntityProvider {
             TilePipeline tp = (TilePipeline) worldIn.getTileEntity(pos);
             assert tp != null;
             tp.setInfo(info);
+
+            // 切换 te
+            tp.setTickable();
         }
     }
 
@@ -178,16 +194,13 @@ public class Pipeline extends Block implements ITileEntityProvider {
     public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(world, pos, neighbor);
         if (world instanceof World && !((World) world).isRemote) {
-            World w = (World) world;
-            String format = String.format("neighbor changed: this=%s, neighbor=%s", pos.toString(), neighbor.toString());
-            for (EntityPlayer player : w.playerEntities) {
-                player.sendMessage(new TextComponentString(format));
-            }
-
-            TileEntity te = world.getTileEntity(pos);
-            EnumFacing facing = BlockUtil.getPosFacing(pos, neighbor);
-            if (te instanceof TilePipeline && facing != null) {
-                ((TilePipeline) te).tryConnect(facing);
+            TileEntity teNeighbor = world.getTileEntity(neighbor);
+            if (world.getBlockState(pos).getBlock() != Blocks.AIR && !(teNeighbor instanceof TilePipeline)) {
+                TileEntity te = world.getTileEntity(pos);
+                EnumFacing facing = BlockUtil.getPosFacing(pos, neighbor);
+                if (te instanceof TilePipeline) {
+                    ((TilePipeline) te).tryConnect(facing);
+                }
             }
         }
     }

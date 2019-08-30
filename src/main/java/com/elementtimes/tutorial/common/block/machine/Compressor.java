@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 public class Compressor extends BaseClosableMachine<TileCompressor> {
 
     public Compressor() {
-        super(TileCompressor.class, false);
+        super(TileCompressor.class);
         setDefaultState(getDefaultState().withProperty(Properties.StaticProperty, false));
     }
 

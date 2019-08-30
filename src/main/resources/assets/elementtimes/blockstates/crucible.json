@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "elementtimes:crucible"
+  },
+  "variants": {
+    "inventory": [{
+      "textures": {
+        "particle": "elementtimes:blocks/crucible/on"
+      }
+    }],
+    "running": {
+      "true": {
+        "textures": {
+          "particle": "elementtimes:blocks/crucible/on"
+        }
+      },
+      "false": {
+        "textures": {
+          "particle": "elementtimes:blocks/crucible/off"
+        }
+      }
+    }
+  }
+}

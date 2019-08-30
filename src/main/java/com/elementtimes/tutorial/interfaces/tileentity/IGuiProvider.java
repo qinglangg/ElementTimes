@@ -61,4 +61,8 @@ public interface IGuiProvider {
      * @return 流体位置。type -> slot -> [x, y, w, h]
      */
     Map<SideHandlerType, Int2ObjectMap<int[]>> getFluids();
+
+    void markRebuildSlots();
+
+    void markRebuildFluids();
 }

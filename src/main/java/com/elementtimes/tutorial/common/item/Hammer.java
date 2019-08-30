@@ -4,10 +4,9 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
-import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.other.pipeline.PLPath;
+import com.elementtimes.tutorial.other.pipeline.PLElement;
+import com.elementtimes.tutorial.other.pipeline.PLStorage;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,7 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 大小锤子
@@ -73,25 +70,50 @@ public class Hammer extends Item {
     @Nonnull
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote) {
-            ItemStack stack = player.getHeldItem(hand);
-            if (EnchantmentHelper.getEnchantments(stack).containsKey(ElementtimesMagic.hammerDebugger)) {
-                debug(worldIn, pos, player);
+        if (this == ElementtimesItems.bigHammer) {
+            if (!worldIn.isRemote) {
+                // 大锤子：服务端
+                ItemStack stack = player.getHeldItem(hand);
+                if (EnchantmentHelper.getEnchantments(stack).containsKey(ElementtimesMagic.hammerDebugger)) {
+                    debug(worldIn, pos, player);
+                }
+            }
+        } else if (this == ElementtimesItems.smallHammer) {
+            if (worldIn.isRemote) {
+                // 小锤子：客户端
+                ItemStack stack = player.getHeldItem(hand);
+                if (EnchantmentHelper.getEnchantments(stack).containsKey(ElementtimesMagic.hammerDebugger)) {
+                    debug(worldIn, pos, player);
+                }
             }
         }
+
         return EnumActionResult.PASS;
     }
 
     private void debug(World worldIn, BlockPos pos, EntityPlayer player) {
         Block block = worldIn.getBlockState(pos).getBlock();
-        IBlockState bs = worldIn.getBlockState(pos);
         TileEntity te = worldIn.getTileEntity(pos);
         if (block == Blocks.AIR) {
             // 空气
             player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.noblock", pos.getX(), pos.getY(), pos.getZ()));
         } else {
-            debugTe(te, block, player);
-            debugBs(bs, player);
+            if (te instanceof TilePipeline) {
+                debugPl(player);
+            } else {
+                debugTe(te, block, player);
+            }
+        }
+    }
+
+    private void debugPl(EntityPlayer player) {
+        String message = "%s: \n\tfrom %s to %s, at %s(%d)\n\ttick=%d, total=%d, pause=%d\n\tpath: %s";
+        for (PLElement element : PLStorage.ELEMENTS) {
+            player.sendMessage(new TextComponentString(String.format(message,
+                    element.element,
+                    element.path.from, element.path.to, element.path.path.get(element.path.position), element.path.position,
+                    element.path.tick, element.path.totalTick, element.path.path,
+                    element.path.path)));
         }
     }
 
@@ -112,38 +134,6 @@ public class Hammer extends Item {
         }
     }
 
-    private void debugBs(IBlockState bs, EntityPlayer player) {
-        if (bs != null) {
-            bs.getProperties().forEach((iProperty, comparable) ->
-                    player.sendMessage(new TextComponentString(iProperty.getName() + " = " + comparable)));
-            player.sendMessage(new TextComponentString("IBlockState================================================="));
-            if (bs instanceof IExtendedBlockState) {
-                player.sendMessage(new TextComponentString("IExtendedBlockState========================================="));
-                IExtendedBlockState ebs = (IExtendedBlockState) bs;
-                ebs.getUnlistedProperties().forEach((iProperty, comparable) ->
-                        player.sendMessage(new TextComponentString(iProperty.getName() + " = " + comparable)));
-                player.sendMessage(new TextComponentString("============================================================"));
-            }
-        }
-    }
-
-    private void debugPl(World world, TilePipeline tp, EntityPlayer player) {
-        if (tp != null) {
-            PLInfo info = tp.getInfo();
-            BlockPos pos = tp.getPos();
-            Map<BlockPos, PLPath> pathMap = info.allValidOutput(world, pos, null);
-            player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_pipeline", pos.getX(), pos.getY(), pos.getZ(), info.type));
-            for (PLPath value : pathMap.values()) {
-                long sum = value.path.stream().mapToLong(p -> p.keepTick).sum();
-                player.sendMessage(new TextComponentTranslation("chat.elementtimes.hammer.pipeline_path",
-                        value.from.getX(), value.from.getY(), value.from.getZ(),
-                        value.to.getX(), value.to.getY(), value.to.getZ(), sum));
-            }
-        } else {
-            player.sendMessage(new TextComponentString("chat.elementtimes.hammer.pipeline_none"));
-        }
-    }
-
     private void sendDebugChat(EntityPlayer player, String lastKey, NBTBase nbt, int level) {
         StringBuilder space = new StringBuilder();
         for (int i = 1; i < level; i++) {
@@ -151,9 +141,7 @@ public class Hammer extends Item {
         }
         if (nbt instanceof NBTTagCompound) {
             player.sendMessage(new TextComponentString(space.toString() + lastKey));
-            ((NBTTagCompound) nbt).getKeySet().forEach(key -> {
-                sendDebugChat(player, key, ((NBTTagCompound) nbt).getTag(key), level + 1);
-            });
+            ((NBTTagCompound) nbt).getKeySet().forEach(key -> sendDebugChat(player, key, ((NBTTagCompound) nbt).getTag(key), level + 1));
         } else {
             if (nbt instanceof NBTTagList) {
                 for (int i = 0; i < ((NBTTagList) nbt).tagCount(); i++) {

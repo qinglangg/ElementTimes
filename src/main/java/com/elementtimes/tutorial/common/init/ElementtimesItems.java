@@ -50,6 +50,21 @@ public class ElementtimesItems {
     @ModItem(creativeTab = ModCreativeTabs.Chemical)
     public static Item stoneIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item na = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    @ModOreDict("itemSilicon")
+    public static Item coarseSilicon = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item SiC = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item slag = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item sandpowder = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item stonepowder = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
+    public static Item Silicon = new Item();
+    @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("ingotSteel")
     public static Item steelIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Industry)

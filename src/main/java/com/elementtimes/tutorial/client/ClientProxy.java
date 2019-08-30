@@ -1,9 +1,11 @@
 package com.elementtimes.tutorial.client;
 
-import com.elementtimes.tutorial.client.tesr.TileSupportStandRender;
 import com.elementtimes.tutorial.common.CommonProxy;
-import com.elementtimes.tutorial.common.tileentity.TileSupportStand;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import com.elementtimes.tutorial.other.MiscTabWrapper;
+import com.elementtimes.tutorial.util.FluidUtil;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
@@ -14,7 +16,14 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileSupportStand.class, new TileSupportStandRender());
+        // 创造
+        MiscTabWrapper.apply().addPredicate(itemStack -> {
+            Item item = itemStack.getItem();
+            if (item == ForgeModContainer.getInstance().universalBucket) {
+                FluidStack f = FluidUtil.getFluid(itemStack);
+                return !f.getFluid().getName().startsWith("elementtimes.");
+            }
+            return true;
+        });
     }
 }

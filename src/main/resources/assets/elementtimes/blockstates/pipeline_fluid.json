@@ -8,37 +8,43 @@
     "connected_up": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "x": 270
       }
     },
     "connected_down": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "x": 90
       }
     },
     "connected_east": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 90
       }
     },
     "connected_west": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 270
       }
     },
     "connected_north": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 0
       }
     },
     "connected_south": {
       "false": {},
       "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub"
+        "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 180
       }
     }
   }
