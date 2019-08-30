@@ -33,6 +33,18 @@ public class Test {
             lines.add("CaCO3");
         }
     
+        else if (itemStack.getItem() == Item.getItemFromBlock(ElementtimesBlocks.uraniumOre)) {
+            lines.add(new TextComponentString("U3O8 U^235/238").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+        }
+        else if (itemStack.getItem() == ElementtimesItems.uraniumPowder) {
+            lines.add(new TextComponentString("U3O8 U^235/238").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+        }
+        else if (itemStack.getItem() == ElementtimesItems.UO2) {
+            lines.add(new TextComponentString("UO2 U^235/238").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+        }
+        else if (itemStack.getItem() == ElementtimesItems.uranium) {
+            lines.add(new TextComponentString("U U^235/238").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+        }
         else if (itemStack.getItem() == ElementtimesItems.steelIngot) {
             lines.add(new TextComponentString("Fe").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("C");

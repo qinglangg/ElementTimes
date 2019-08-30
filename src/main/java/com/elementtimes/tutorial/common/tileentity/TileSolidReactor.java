@@ -97,7 +97,7 @@ public class TileSolidReactor extends BaseMachine {
                     
                     .newRecipe("SiC")
                     .addCost(100000)
-                    .addItemInput(IngredientPart.forItem("elementtimesSilicon",1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Silicon,1))
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.diamondIngot,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.SiC,1))
                     .endAdd()

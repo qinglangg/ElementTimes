@@ -1,3 +1,6 @@
 {
-    "parent": "elementtimes:block/na"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "elementtimes:items/na"
+    }
 }
