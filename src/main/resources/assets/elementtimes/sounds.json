@@ -1,0 +1,22 @@
+{
+"sounds": {
+        "category": "record",
+        "sounds": [
+            {
+                "name":"elementtimes:sounds",
+                "stream": true
+            }
+        ],
+        "subtitle": "subtitle.elementtimes.sounds"
+    },
+        "record.partner": {
+        "category": "record",
+        "sounds": [
+            {
+                "name":"elementtimes:sounds",
+                "stream": true
+            }
+        ],
+        "subtitle": "subtitle.elementtimes.sounds"
+    }
+}

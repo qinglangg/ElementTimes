@@ -181,7 +181,6 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
             World world = tileEntity.getWorld();
             BlockPos pos = tileEntity.getPos();
             if (!world.isRemote) {
-
                 // 生命周期
                 onTickStart();
                 if (!isWorking()) {

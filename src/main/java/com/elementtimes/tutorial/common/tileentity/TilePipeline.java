@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static com.elementtimes.tutorial.common.block.Pipeline.TYPE_ITEM;
-
 /**
  * 管道 TileEntity 类
  * @author luqin2007
@@ -126,6 +124,10 @@ public class TilePipeline extends TileEntity implements ITickable {
     static {
         TICKABLES.put(Pipeline.TYPE_ITEM_IN, ITEM_IN_20);
         TICKABLES.put(Pipeline.TYPE_FLUID_IN, FLUID_IN_20);
+        TICKABLES.put(Pipeline.TYPE_ITEM, LINK);
+        TICKABLES.put(Pipeline.TYPE_ITEM_OUT, LINK);
+        TICKABLES.put(Pipeline.TYPE_FLUID, LINK);
+        TICKABLES.put(Pipeline.TYPE_FLUID_OUT, LINK);
     }
 
     private int mConnected = 0b000000;
@@ -141,7 +143,7 @@ public class TilePipeline extends TileEntity implements ITickable {
         mInfo = new PLInfo.PLInfoBuilder()
                 .setKeepTick(20)
                 .setAction(PathAction.ItemLink.instance())
-                .setType(TYPE_ITEM)
+                .setType(Pipeline.TYPE_ITEM)
                 .build();
     }
 

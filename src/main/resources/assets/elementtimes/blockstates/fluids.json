@@ -193,7 +193,7 @@
         "fluid": "elementtimes.h2so4"
       }
     },
-             "elementtimes.fluoroaluminicacid": {
+      "elementtimes.fluoroaluminicacid": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.fluoroaluminicacid"
@@ -211,10 +211,10 @@
         "fluid": "elementtimes.nh4cl"
       }
     },
-                       "elementtimes.naclo2": {
+                       "elementtimes.naalo2": {
       "model": "forge:fluid",
       "custom": {
-        "fluid": "elementtimes.naclo2"
+        "fluid": "elementtimes.naalo2"
       }
     },
                            "elementtimes.al2o3_na3alf6": {
