@@ -104,11 +104,6 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe.Ore(value = "wood", dustCount = 16, output = "")
     public static String logWood = "logWood";
 
-    @ModRecipe
-    @ModRecipe.Crafting(shaped = false)
-    public static Object[] sodiumsulfitesolution = new Object[] {
-            ElementtimesItems.sodiumSulfiteSolution, ElementtimesItems.sodiumBisulfite, "salt"
-    };
 
     @ModRecipe
     @ModRecipe.Crafting

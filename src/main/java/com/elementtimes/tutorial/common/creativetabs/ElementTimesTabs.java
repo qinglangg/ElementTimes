@@ -49,7 +49,7 @@ public class ElementTimesTabs {
         public Chemical() { super(ElementTimes.MODID + ".Elementtimeschemicalindustry"); }
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesItems.sodiumSulfiteSolution);
+            return new ItemStack(ElementtimesItems.bottle);
         }
 
         @Override

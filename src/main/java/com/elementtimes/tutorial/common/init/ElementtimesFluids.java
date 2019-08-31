@@ -11,7 +11,36 @@ import net.minecraftforge.fluids.FluidStack;
  * @author luqin2007
  */
 public class ElementtimesFluids {
-	
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid h2so4 = new Fluid("elementtimes.h2so4",
+            new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_fluid"), 0xFF969642);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid h2so3 = new Fluid("elementtimes.h2so3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/h2so3_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/h2so3_fluid"), 0xFFAEAE53);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid so3 = new Fluid("elementtimes.so3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/so3_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/so3_fluid"), 0xFF969642);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid so2 = new Fluid("elementtimes.so2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/so2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/so2_fluid"), 0xFF969642);
+    
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid hf = new Fluid("elementtimes.hf",
+            new ResourceLocation(ElementTimes.MODID, "fluid/hf_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/hf_fluid"), 0xFF969642);
+    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Na = new Fluid("elementtimes.na",
@@ -108,6 +137,12 @@ public class ElementtimesFluids {
     public static Fluid calciumHydroxide = new Fluid("elementtimes.calciumhydroxide",
             new ResourceLocation(ElementTimes.MODID, "fluid/calciumhydroxide_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/calciumhydroxide_fluid"), 0xFF3B9884);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid calmogastrin = new Fluid("elementtimes.calmogastrin",
+            new ResourceLocation(ElementTimes.MODID, "fluid/calmogastrin_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/calmogastrin_fluid"), 0xFF3B9884);
 
     @ModFluid(density = -10, burningTime = 6000)
     @ModFluid.FluidBlock

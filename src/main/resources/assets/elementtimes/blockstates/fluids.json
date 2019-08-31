@@ -157,6 +157,42 @@
         "fluid": "elementtimes.hcl"
       }
     },
+         "elementtimes.calmogastrin": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.calmogastrin"
+      }
+    },
+     "elementtimes.hf": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hf"
+      }
+    },
+         "elementtimes.so3": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.so3"
+      }
+    },
+         "elementtimes.so2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.so2"
+      }
+    },
+         "elementtimes.h2so3": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.h2so3"
+      }
+    },
+         "elementtimes.h2so4": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.h2so4"
+      }
+    },
     "elementtimes.co2": {
       "model": "forge:fluid",
       "custom": {

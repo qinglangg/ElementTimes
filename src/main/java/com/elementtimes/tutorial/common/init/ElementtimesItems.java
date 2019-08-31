@@ -148,16 +148,6 @@ public class ElementtimesItems {
     public static Item diamondIngot = new Item();
     @ModItem(creativeTab = ModCreativeTabs.Chemical, itemColorClass = "com.elementtimes.tutorial.client.BottleItemStackColor")
     public static Item bottle = new ItemBottleFuel();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumBisulfite = new ItemGlassBottle();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumMetabisulfite = new ItemGlassBottle();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sulfiteSolution = new ItemGlassBottle();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sulphuricAcid = new ItemGlassBottle();
-    @ModItem(creativeTab = ModCreativeTabs.Chemical)
-    public static ItemGlassBottle sodiumSulfiteSolution = new ItemGlassBottle();
     @ModItem(creativeTab = ModCreativeTabs.Industry)
     @ModOreDict("rubber")
     public static Item rubber = new Item();
