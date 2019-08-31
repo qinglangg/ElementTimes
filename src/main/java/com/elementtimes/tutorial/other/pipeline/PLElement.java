@@ -1,9 +1,11 @@
 package com.elementtimes.tutorial.other.pipeline;
 
+import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.other.pipeline.interfaces.Serializer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
@@ -35,26 +37,39 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
     public PLPath path;
     public Serializer serializer = SItem.instance();
     public String serializerClass = "";
+    public TilePipeline tp;
 
-    public void tickStart(World world) {
-        path.onTickStart(world, this);
+    public void onTick(World world) {
+        path.onTick(world, this);
     }
 
-    public void tickEnd() {
-        path.tickEnd();
-    }
-
-    public void send() {
-        if (!(PLStorage.ELEMENTS_ADD.contains(this) || PLStorage.ELEMENTS.contains(this))) {
-            if (PLEvent.onElementSend(this)) {
-                PLStorage.ELEMENTS_ADD.add(this);
-            }
+    public void send(TilePipeline pipeline) {
+        if (!(pipeline.elementsAdd.contains(this) || pipeline.elements.contains(this))) {
+//            if (PLEvent.onElementSend(this)) {
+                pipeline.elementsAdd.add(this);
+//            }
         }
     }
 
+    public void send() {
+        send(tp);
+    }
+
     public void remove() {
-        if (PLEvent.onElementRemove(this)) {
-            PLStorage.ELEMENTS_REMOVE.add(this);
+//        if (PLEvent.onElementRemove(this)) {
+            if (tp != null) {
+                tp.elementsRemove.add(this);
+                tp = null;
+            }
+//        }
+    }
+
+    public void moveTo(World world, int position) {
+        path.position = position;
+        path.tick = 0;
+        final TileEntity tileEntity = world.getTileEntity(path.path.get(position).pos);
+        if (tileEntity instanceof TilePipeline && element != null) {
+            tp = (TilePipeline) tileEntity;
         }
     }
 
@@ -68,6 +83,7 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
         e.path = path.copy();
         e.serializer = serializer;
         e.serializerClass = serializerClass;
+        e.tp = tp;
         return e;
     }
 

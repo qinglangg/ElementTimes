@@ -118,6 +118,13 @@ item.elementtimes.bamboocharcoal.name=bamboo charcoal
 item.elementtimes.uo2.name=uo2(UO2 U^235/238)
 item.elementtimes.uraniumpowder.name=uraniumpowder(U3O8 U^235/238)
 item.elementtimes.uranium.name=uranium ingot(U U^235/238)
+item.elementtimes.na.name=na
+item.elementtimes.coarsesilicon.name=coarsesilicon
+item.elementtimes.sic.name=sic
+item.elementtimes.slag.name=slag
+item.elementtimes.sandpowder.name=sandpowder
+item.elementtimes.stonepowder.name=stonepowder
+item.elementtimes.silicon.name=silicon
 item.elementtimes.pipeline.item.link.normal=Normal Item Pipeline
 item.elementtimes.pipeline.item.input.normal=Normal Item Pipeline In
 item.elementtimes.pipeline.item.output.normal=Normal Item Pipeline Out
@@ -183,6 +190,8 @@ tile.elementtimes.leadore.name=leadore
 tile.elementtimes.tinore.name=tinore
 tile.elementtimes.uraniumore.name=uraniumore(U3O8 U^235/238)
 # fluid
+fluid.elementtimes.fluoroaluminicacid=fluoroaluminicAcid(H3AlF6)
+tile.elementtimes.fluoroaluminicacid.name=fluoroaluminicAcid(H3AlF6)
 fluid.elementtimes.naoh=naoh
 tile.elementtimes.naoh.name=naoh
 fluid.elementtimes.co=co
@@ -231,8 +240,6 @@ fluid.elementtimes.raregases=Rare Gases
 tile.elementtimes.raregases.name=Rare Gases
 fluid.elementtimes.air=Air
 tile.elementtimes.air.name=Air
-# enchantment
-enchantment.elementtimes.hammerdebugger=Debugger
 # jei
 jei.elementtimes.pulverize=Pulverize
 jei.elementtimes.rebuild=Rebuilder
@@ -254,11 +261,3 @@ jei.elementtimes.coagulator=Coagulator
 jei.elementtimes.solidcentrifuge=Solid Centrifuge
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
-tooltip.elementtimes.enchantment.debug=Enchantment: Enable
-# chat
-chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
-chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity
-chat.elementtimes.hammer.nonbt=The block[%s] can't serialize to NBT
-chat.elementtimes.hammer.pipeline_pipeline=pos: [%s, %s, %s], type: %s
-chat.elementtimes.hammer.pipeline_none=Pipeline not found
-chat.elementtimes.hammer.pipeline_path=from [%s, %s, %s] to [%s, %s, %s], time: %s

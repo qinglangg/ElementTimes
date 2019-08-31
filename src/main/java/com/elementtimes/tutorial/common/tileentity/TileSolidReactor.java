@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.init.Blocks;
@@ -20,8 +20,7 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileSolidReactor extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;

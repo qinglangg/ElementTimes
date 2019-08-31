@@ -103,10 +103,10 @@ public class PLInfo implements INBTSerializable<NBTTagCompound> {
      */
     public Map<BlockPos, PLPath> allValidOutput(World world, PLElement element, BlockPos from) {
         Map<BlockPos, PLPath> pathMap = new LinkedHashMap<>();
-        if (PLEvent.onPathFindPre(element, pathMap, from, world)) {
+//        if (PLEvent.onPathFindPre(element, pathMap, from, world)) {
             findWay(world, element, pathMap, System.currentTimeMillis(), new LinkedList<>(), this, from);
-        }
-        PLEvent.onPathFindPost(element, pathMap, from, world);
+//        }
+//        PLEvent.onPathFindPost(element, pathMap, from, world);
         return pathMap;
     }
 

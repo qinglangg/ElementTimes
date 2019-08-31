@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-@ModNetwork(id = 1, handlerClass = "com.elementtimes.tutorial.network.EnergyMachineNetwork$Handler", side = Side.CLIENT)
+@ModNetwork(handlerClass = "com.elementtimes.tutorial.network.EnergyMachineNetwork$Handler", side = Side.CLIENT)
 public class EnergyMachineNetwork implements IMessage {
 
     int capacity;

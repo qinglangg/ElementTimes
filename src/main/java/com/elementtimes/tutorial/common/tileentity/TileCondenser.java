@@ -1,15 +1,14 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -20,8 +19,7 @@ import java.util.Map;
  * 冷凝机
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileCondenser extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler();
@@ -29,7 +27,7 @@ public class TileCondenser extends BaseMachine {
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE = new MachineRecipeHandler()
-                    .add("0", 2000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
+                    .add("0", 1000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
         }
     }
 

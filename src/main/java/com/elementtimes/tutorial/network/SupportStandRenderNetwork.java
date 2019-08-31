@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -18,7 +18,7 @@ import java.util.Objects;
  * 用于 SupportStand 的 TESR 传递
  * @author luqin2007
  */
-@ModNetwork(id = 2, handlerClass = "com.elementtimes.tutorial.network.SupportStandRenderNetwork$Handler", side = Side.CLIENT)
+@ModNetwork(handlerClass = "com.elementtimes.tutorial.network.SupportStandRenderNetwork$Handler", side = Side.CLIENT)
 public class SupportStandRenderNetwork implements IMessage {
 
     public NBTTagCompound nbt;

@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.other.recipe;
+package com.elementtimes.tutorial.other.machineRecipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

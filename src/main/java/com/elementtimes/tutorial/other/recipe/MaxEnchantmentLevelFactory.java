@@ -1,7 +1,6 @@
-package com.elementtimes.tutorial.util.recipe;
+package com.elementtimes.tutorial.other.recipe;
 
-import com.elementtimes.tutorial.util.ItemUtil;
-import com.elementtimes.tutorial.util.RecipeUtil;
+import com.elementtimes.elementcore.api.ECUtils;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -19,7 +18,7 @@ public class MaxEnchantmentLevelFactory implements IRecipeFactory {
     public IRecipe parse(JsonContext context, JsonObject json) {
         ShapedRecipes recipes = (ShapedRecipes) RecipeUtil.shapedRecipesParser().parse(context, json);
         ItemStack result = recipes.getRecipeOutput();
-        ItemUtil.addMaxEnchantments(result);
+        ECUtils.item.addMaxEnchantments(result);
         return recipes;
     }
 }

@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.other.recipe;
+package com.elementtimes.tutorial.other.machineRecipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

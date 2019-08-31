@@ -1,12 +1,12 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
@@ -20,15 +20,14 @@ import java.util.Map;
  * 电解池
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileElectrolyticCell extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
     public static void init() {
         RECIPE = new MachineRecipeHandler()
                 .newRecipe("0")
-                .addCost(40000)
+                .addCost(20000)
                 .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.steam, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
@@ -45,6 +44,13 @@ public class TileElectrolyticCell extends BaseMachine {
                 .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaCl,2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Na, 2000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
+                .endAdd()
+                .newRecipe("3")
+                .addCost(50000)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Al2O3_Na3AlF6,2000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Al, 4000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 3000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Na3AlF6, 2000))
                 .endAdd();
     }
 

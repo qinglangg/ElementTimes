@@ -1,16 +1,17 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.other.pipeline.PLConnType;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
 import com.elementtimes.tutorial.other.pipeline.PLPath;
 import com.elementtimes.tutorial.other.pipeline.interfaces.PathAction;
-import com.elementtimes.tutorial.util.BlockUtil;
-import com.elementtimes.tutorial.util.MathUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -27,6 +28,8 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -43,9 +46,16 @@ public class TilePipeline extends TileEntity implements ITickable {
     private static final String NBT_BIND_TP_CONNECTED = "_pipeline_te_conn";
     private static final String NBT_BIND_TP_DISCONNECTED = "_pipeline_te_disconn";
     private static final String NBT_BIND_TP_INFO = "_pipeline_te_info";
+    private static final String NBT_BIND_TP_ELEMENTS = "_pipeline_te_elements";
 
-    public static final Consumer<TilePipeline> EMPTY = tilePipeline -> { };
-    public static final Consumer<TilePipeline> ITEM_IN_20 = (t) -> {
+    public static final Consumer<TilePipeline> LINK = t -> {
+        t.elements.forEach(e -> e.onTick(t.world));
+        t.elements.addAll(t.elementsAdd);
+        t.elementsAdd.clear();
+        t.elements.removeAll(t.elementsRemove);
+        t.elementsRemove.clear();
+    };
+    public static final Consumer<TilePipeline> ITEM_IN_20 = t -> {
         t.tick++;
         if (t.tick % 20 != 0) {
             return;
@@ -55,7 +65,7 @@ public class TilePipeline extends TileEntity implements ITickable {
         for (BlockPos blockPos : tInfo.listIn) {
             TileEntity te = t.getWorld().getTileEntity(blockPos);
             if (te != null) {
-                EnumFacing facing = BlockUtil.getPosFacing(t.getPos(), blockPos);
+                EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
                 if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                     if (capability != null) {
@@ -68,7 +78,7 @@ public class TilePipeline extends TileEntity implements ITickable {
                                 if (pathMap.size() > 0) {
                                     element.path = pathMap.values().iterator().next();
                                     capability.extractItem(i, extractItem.getCount(), false);
-                                    element.send();
+                                    element.send(t);
                                     return;
                                 }
                             }
@@ -78,7 +88,7 @@ public class TilePipeline extends TileEntity implements ITickable {
             }
         }
     };
-    public static final Consumer<TilePipeline> FLUID_IN_20 = (t) -> {
+    public static final Consumer<TilePipeline> FLUID_IN_20 = t -> {
         t.tick++;
         if (t.tick % 20 != 0) {
             return;
@@ -88,7 +98,7 @@ public class TilePipeline extends TileEntity implements ITickable {
         for (BlockPos blockPos : tInfo.listIn) {
             TileEntity te = t.getWorld().getTileEntity(blockPos);
             if (te != null) {
-                EnumFacing facing = BlockUtil.getPosFacing(t.getPos(), blockPos);
+                EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
                 if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
                     IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
                     if (capability != null) {
@@ -101,7 +111,7 @@ public class TilePipeline extends TileEntity implements ITickable {
                                 if (pathMap.size() > 0) {
                                     element.path = pathMap.values().iterator().next();
                                     capability.drain(fluidStack, true);
-                                    element.send();
+                                    element.send(t);
                                     return;
                                 }
                             }
@@ -122,6 +132,10 @@ public class TilePipeline extends TileEntity implements ITickable {
     private int mDisconnected = 0b000000;
     private int tick = 0;
     private PLInfo mInfo;
+
+    public final List<PLElement> elements = new LinkedList<>();
+    public final List<PLElement> elementsAdd = new LinkedList<>();
+    public final List<PLElement> elementsRemove = new LinkedList<>();
 
     public TilePipeline() {
         mInfo = new PLInfo.PLInfoBuilder()
@@ -159,12 +173,12 @@ public class TilePipeline extends TileEntity implements ITickable {
     }
 
     public void setDisconnected(EnumFacing facing, boolean disconnect) {
-        setDisconnected(MathUtil.setByte(mDisconnected, facing.getIndex(), disconnect));
+        setDisconnected(ECUtils.math.setByte(mDisconnected, facing.getIndex(), disconnect));
     }
 
     @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "WeakerAccess"})
     public boolean isDisconnected(EnumFacing facing) {
-        return MathUtil.fromByte(mDisconnected, facing.getIndex());
+        return ECUtils.math.fromByte(mDisconnected, facing.getIndex());
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -178,11 +192,11 @@ public class TilePipeline extends TileEntity implements ITickable {
 
     @SuppressWarnings("WeakerAccess")
     public boolean setConnected(EnumFacing facing, boolean connected) {
-        return setConnected(MathUtil.setByte(mConnected, facing.getIndex(), connected));
+        return setConnected(ECUtils.math.setByte(mConnected, facing.getIndex(), connected));
     }
 
     public boolean isConnected(EnumFacing facing) {
-        return MathUtil.fromByte(mConnected, facing.getIndex());
+        return ECUtils.math.fromByte(mConnected, facing.getIndex());
     }
 
     public IBlockState bindActualState(IBlockState state) {
@@ -190,27 +204,27 @@ public class TilePipeline extends TileEntity implements ITickable {
         PLInfo info = getInfo();
         boolean connectedUp = isConnected(EnumFacing.UP);
         if (newState.getValue(Pipeline.PL_CONNECTED_UP) != connectedUp) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_UP, connectedUp);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_UP, connectedUp);
         }
         boolean connectedDown = isConnected(EnumFacing.DOWN);
         if (newState.getValue(Pipeline.PL_CONNECTED_DOWN) != connectedDown) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_DOWN, connectedDown);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_DOWN, connectedDown);
         }
         boolean connectedEast = isConnected(EnumFacing.EAST);
         if (newState.getValue(Pipeline.PL_CONNECTED_EAST) != connectedEast) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_EAST, connectedEast);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_EAST, connectedEast);
         }
         boolean connectedWest = isConnected(EnumFacing.WEST);
         if (newState.getValue(Pipeline.PL_CONNECTED_WEST) != connectedWest) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_WEST, connectedWest);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_WEST, connectedWest);
         }
         boolean connectedNorth = isConnected(EnumFacing.NORTH);
         if (newState.getValue(Pipeline.PL_CONNECTED_NORTH) != connectedNorth) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_NORTH, connectedNorth);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_NORTH, connectedNorth);
         }
         boolean connectedSouth = isConnected(EnumFacing.SOUTH);
         if (newState.getValue(Pipeline.PL_CONNECTED_SOUTH) != connectedSouth) {
-            newState = BlockUtil.checkAndSetState(newState, Pipeline.PL_CONNECTED_SOUTH, connectedSouth);
+            newState = ECUtils.block.checkAndSetState(newState, Pipeline.PL_CONNECTED_SOUTH, connectedSouth);
         }
         return newState;
     }
@@ -346,7 +360,7 @@ public class TilePipeline extends TileEntity implements ITickable {
             IBlockState state = bindActualState(bs);
             if (bs != state) {
                 world.notifyBlockUpdate(pos, bs, state, 3);
-                BlockUtil.setBlockState(world, pos, state, this);
+                ECUtils.block.setBlockState(world, pos, state, this);
             }
         }
         super.markDirty();
@@ -378,6 +392,13 @@ public class TilePipeline extends TileEntity implements ITickable {
         pipeline.setInteger(NBT_BIND_TP_CONNECTED, mConnected);
         pipeline.setInteger(NBT_BIND_TP_DISCONNECTED, mDisconnected);
         pipeline.setTag(NBT_BIND_TP_INFO, mInfo.serializeNBT());
+        NBTTagList listElements = new NBTTagList();
+        elements.addAll(elementsAdd);
+        elements.removeAll(elementsRemove);
+        for (PLElement plElement : elements) {
+            listElements.appendTag(plElement.serializeNBT());
+        }
+        pipeline.setTag(NBT_BIND_TP_ELEMENTS, listElements);
         compound.setTag(NBT_BIND_TP, pipeline);
         return compound;
     }
@@ -397,12 +418,23 @@ public class TilePipeline extends TileEntity implements ITickable {
             if (pipeline.hasKey(NBT_BIND_TP_CONNECTED)) {
                 mConnected = pipeline.getInteger(NBT_BIND_TP_CONNECTED);
             }
+            if (pipeline.hasKey(NBT_BIND_TP_ELEMENTS)) {
+                elements.clear();
+                NBTTagList list = (NBTTagList) pipeline.getTag(NBT_BIND_TP_ELEMENTS);
+                for (NBTBase nbtBase : list) {
+                    NBTTagCompound plElement = (NBTTagCompound) nbtBase;
+                    PLElement e = new PLElement();
+                    e.deserializeNBT(plElement);
+                    e.tp = this;
+                    elements.add(e);
+                }
+            }
         }
     }
 
     // Tickable
 
-    private Consumer<TilePipeline> mTickable = EMPTY;
+    private Consumer<TilePipeline> mTickable = LINK;
 
     @Override
     public void update() {
@@ -413,7 +445,7 @@ public class TilePipeline extends TileEntity implements ITickable {
 
     public void setTickable() {
         if (mInfo != null) {
-            mTickable = TICKABLES.getOrDefault(mInfo.type, EMPTY);
+            mTickable = TICKABLES.getOrDefault(mInfo.type, LINK);
         }
     }
 }

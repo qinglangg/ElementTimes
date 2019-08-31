@@ -18,7 +18,8 @@
     "parent": "",
     "screenshots": [],
     "dependencies": [
-      "mod_MinecraftForge"
+      "mod_MinecraftForge",
+      "elementcore"
     ]
   }
 ]

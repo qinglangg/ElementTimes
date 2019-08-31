@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.util.ItemUtil;
+import com.elementtimes.elementcore.api.ECUtils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -20,6 +20,6 @@ public class ElementSleeveBody extends ItemArmor {
 	@Override
 	public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
 		super.getSubItems(tab, items);
-		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(ItemUtil::addMaxEnchantments);
+		items.stream().filter(itemStack -> itemStack.getItem() == this).forEach(ECUtils.item::addMaxEnchantments);
 	}
 }

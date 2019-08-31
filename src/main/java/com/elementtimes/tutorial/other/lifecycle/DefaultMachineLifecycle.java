@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.other.lifecycle;
 
-import com.elementtimes.tutorial.annotation.AnnotationElements;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
@@ -8,7 +8,7 @@ import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.network.EnergyMachineNetwork;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -183,7 +183,7 @@ public class DefaultMachineLifecycle implements IMachineLifecycle {
         EnergyMachineNetwork message = new EnergyMachineNetwork(handler.getMaxEnergyStored(), handler.getEnergyStored());
 
         for (EntityPlayerMP player : machine.getOpenedPlayers()) {
-            AnnotationElements.CHANNEL.sendTo(message, player);
+            ElementTimes.CONTAINER.elements.channel.sendTo(message, player);
         }
     }
 

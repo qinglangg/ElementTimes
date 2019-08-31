@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.interfaces.function;
 
-import com.elementtimes.tutorial.other.recipe.MachineRecipe;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 

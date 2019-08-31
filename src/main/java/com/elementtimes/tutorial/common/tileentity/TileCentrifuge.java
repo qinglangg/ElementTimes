@@ -1,12 +1,12 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
@@ -17,8 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileCentrifuge extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
@@ -27,7 +26,7 @@ public class TileCentrifuge extends BaseMachine {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
                     .newRecipe("air")
-                    .addCost(10000)
+                    .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 210))

@@ -1,10 +1,9 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
-import com.elementtimes.tutorial.util.FluidUtil;
-import com.elementtimes.tutorial.util.ItemUtil;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,8 +44,8 @@ public interface IMachineRecipe extends INBTSerializable<NBTTagCompound> {
      */
     @Nullable
     default MachineRecipeCapture getNextRecipe(IItemHandler input, TankHandler tankHandler) {
-        List<ItemStack> items = ItemUtil.toList(input, getRecipeSlotIgnore());
-        List<FluidStack> fluids = FluidUtil.toListNotNull(tankHandler.getTankProperties());
+        List<ItemStack> items = ECUtils.item.toList(input, getRecipeSlotIgnore());
+        List<FluidStack> fluids = ECUtils.fluid.toListNotNull(tankHandler.getTankProperties());
         MachineRecipeCapture[] captures = getRecipes().matchInput(items, fluids);
         if (captures.length == 0) {
             return null;

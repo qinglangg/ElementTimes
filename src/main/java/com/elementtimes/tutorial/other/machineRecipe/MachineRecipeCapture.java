@@ -1,7 +1,6 @@
-package com.elementtimes.tutorial.other.recipe;
+package com.elementtimes.tutorial.other.machineRecipe;
 
-import com.elementtimes.tutorial.util.FluidUtil;
-import com.elementtimes.tutorial.util.ItemUtil;
+import com.elementtimes.elementcore.api.ECUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -97,10 +96,10 @@ public class MachineRecipeCapture implements INBTSerializable<NBTTagCompound> {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbtRecipe = new NBTTagCompound();
         nbtRecipe.setString(NBT_RECIPE_NAME, name);
-        nbtRecipe.setTag(NBT_RECIPE_ITEM_INPUT, ItemUtil.toNBTList(inputs));
-        nbtRecipe.setTag(NBT_RECIPE_FLUID_INPUT, FluidUtil.toNBTList(fluidInputs));
-        nbtRecipe.setTag(NBT_RECIPE_ITEM_OUTPUT, ItemUtil.toNBTList(outputs));
-        nbtRecipe.setTag(NBT_RECIPE_FLUID_OUTPUT, FluidUtil.toNBTList(fluidOutputs));
+        nbtRecipe.setTag(NBT_RECIPE_ITEM_INPUT, ECUtils.item.toNBTList(inputs));
+        nbtRecipe.setTag(NBT_RECIPE_FLUID_INPUT, ECUtils.fluid.toNbtList(fluidInputs));
+        nbtRecipe.setTag(NBT_RECIPE_ITEM_OUTPUT, ECUtils.item.toNBTList(outputs));
+        nbtRecipe.setTag(NBT_RECIPE_FLUID_OUTPUT, ECUtils.fluid.toNbtList(fluidOutputs));
         return nbtRecipe;
     }
 
@@ -110,13 +109,13 @@ public class MachineRecipeCapture implements INBTSerializable<NBTTagCompound> {
             this.name = nbt.getString(NBT_RECIPE_NAME);
 
             this.inputs = !nbt.hasKey(NBT_RECIPE_ITEM_INPUT) ? Collections.emptyList()
-                    : ItemUtil.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_ITEM_INPUT));
+                    : ECUtils.item.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_ITEM_INPUT));
             this.outputs = !nbt.hasKey(NBT_RECIPE_ITEM_OUTPUT) ? Collections.emptyList()
-                    : ItemUtil.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_ITEM_OUTPUT));
+                    : ECUtils.item.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_ITEM_OUTPUT));
             this.fluidInputs = !nbt.hasKey(NBT_RECIPE_FLUID_INPUT) ? Collections.emptyList()
-                    : FluidUtil.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_FLUID_INPUT));
+                    : ECUtils.fluid.fromNbtList((NBTTagList) nbt.getTag(NBT_RECIPE_FLUID_INPUT));
             this.fluidOutputs = !nbt.hasKey(NBT_RECIPE_FLUID_OUTPUT) ? Collections.emptyList()
-                    : FluidUtil.fromNBTList((NBTTagList) nbt.getTag(NBT_RECIPE_FLUID_OUTPUT));
+                    : ECUtils.fluid.fromNbtList((NBTTagList) nbt.getTag(NBT_RECIPE_FLUID_OUTPUT));
         }
     }
 }

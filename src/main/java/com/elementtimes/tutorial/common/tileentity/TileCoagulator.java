@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
@@ -21,22 +21,28 @@ import java.util.Map;
  * 凝固器
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileCoagulator extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
-            		   .newRecipe("na")
-                       .addCost(2000)
-                       .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Na, 1000))
-                       .addItemOutput(IngredientPart.forItem(ElementtimesItems.na,1))
-                       .endAdd()
-               ;
-            		
-            		
+            		.newRecipe("na")
+                    .addCost(20000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Na, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.na,1))
+                    .endAdd()
+                    .newRecipe("al")
+                    .addCost(20000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Al, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.Al,1))
+                    .endAdd()
+            		.newRecipe("Na3AlF6")
+            		.addCost(20000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Na3AlF6, 1000))
+            		.addItemOutput(IngredientPart.forItem(ElementtimesItems.Na3AlF6,1))
+            		.endAdd();
         }
     }
 

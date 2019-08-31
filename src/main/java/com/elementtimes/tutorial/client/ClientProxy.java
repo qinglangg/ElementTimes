@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.client;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.other.MiscTabWrapper;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy {
         MiscTabWrapper.apply().addPredicate(itemStack -> {
             Item item = itemStack.getItem();
             if (item == ForgeModContainer.getInstance().universalBucket) {
-                FluidStack f = FluidUtil.getFluid(itemStack);
+                FluidStack f = ECUtils.fluid.getFluid(itemStack);
                 return !f.getFluid().getName().startsWith("elementtimes.");
             }
             return true;

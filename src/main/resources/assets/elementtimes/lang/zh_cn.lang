@@ -118,6 +118,13 @@ item.elementtimes.bamboocharcoal.name=竹炭
 item.elementtimes.uo2.name=二氧化铀
 item.elementtimes.uraniumpowder.name=铀矿粉
 item.elementtimes.uranium.name=铀锭
+item.elementtimes.na.name=钠
+item.elementtimes.coarsesilicon.name=粗制硅
+item.elementtimes.sic.name=金刚砂
+item.elementtimes.slag.name=矿渣
+item.elementtimes.sandpowder.name=沙粉
+item.elementtimes.stonepowder.name=石头粉
+item.elementtimes.silicon.name=硅单质
 item.elementtimes.pipeline.item.link.normal=普通物品管道
 item.elementtimes.pipeline.item.input.normal=普通物品输入管道
 item.elementtimes.pipeline.item.output.normal=普通物品输出管道
@@ -183,6 +190,8 @@ tile.elementtimes.leadore.name=铅矿
 tile.elementtimes.tinore.name=锡矿
 tile.elementtimes.uraniumore.name=铀矿
 # fluid
+fluid.elementtimes.fluoroaluminicacid=氟铝酸(H3AlF6)
+tile.elementtimes.fluoroaluminicacid.name=氟铝酸(H3AlF6)
 fluid.elementtimes.naoh=氢氧化钠
 tile.elementtimes.naoh.name=氢氧化钠
 fluid.elementtimes.co=一氧化碳
@@ -231,8 +240,6 @@ fluid.elementtimes.raregases=稀有气体
 tile.elementtimes.raregases.name=稀有气体
 fluid.elementtimes.air=空气
 tile.elementtimes.air.name=空气
-# enchantment
-enchantment.elementtimes.hammerdebugger=调试
 # jei
 jei.elementtimes.pulverize=打粉机
 jei.elementtimes.rebuild=物质重构机
@@ -254,11 +261,3 @@ jei.elementtimes.coagulator=凝固器
 jei.elementtimes.solidcentrifuge=固体离心机
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
-tooltip.elementtimes.enchantment.debug=开发者专用调试工具
-# chat
-chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
-chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity
-chat.elementtimes.hammer.nonbt=方块 [%s] 无法序列化为 NBT
-chat.elementtimes.hammer.pipeline_pipeline=位置：[%s, %s, %s]，类别：%s
-chat.elementtimes.hammer.pipeline_none=无管道
-chat.elementtimes.hammer.pipeline_path=[%s, %s, %s]-[%s, %s, %s], %s

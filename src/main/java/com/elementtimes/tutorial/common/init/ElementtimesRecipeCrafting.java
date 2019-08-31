@@ -1,10 +1,11 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.elementcore.api.annotation.annotations.ModRecipe;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.annotation.annotations.ModRecipe;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.other.FluidIngredient;
-import com.elementtimes.tutorial.util.RecipeUtil;
+import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
+import com.elementtimes.tutorial.other.recipe.RecipeUtil;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -32,81 +33,69 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {
-    @ModRecipe
-    @ModRecipe.Ore(value = "leadpowder", output = "elementtimes:leadpowder")
+
+    @HammerOreRecipe.Ore(value = "leadpowder", output = "elementtimes:leadpowder")
     public static String oreLead = "oreLead";
 	
-    @ModRecipe
-    @ModRecipe.Ore(value = "tinpowder", output = "elementtimes:tinpowder")
+    @HammerOreRecipe.Ore(value = "tinpowder", output = "elementtimes:tinpowder")
     public static String oreTin = "oreTin";
 	
-    @ModRecipe
-    @ModRecipe.Ore(value = "ironpowder", output = "elementtimes:ironpowder")
+    @HammerOreRecipe.Ore(value = "ironpowder", output = "elementtimes:ironpowder")
     public static String oreIron = "oreIron";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
+    @HammerOreRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
     public static String oreEmerald = "oreEmerald";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurorepowder")
+    @HammerOreRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurorepowder")
     public static String oreSulfur = "oreSulfur";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "coalpodwer", output = "elementtimes:coalpowder")
+    @HammerOreRecipe.Ore(value = "coalpodwer", output = "elementtimes:coalpowder")
     public static String oreCoal = "oreCoal";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "silverpowder", output = "elementtimes:silverpowder")
+    @HammerOreRecipe.Ore(value = "silverpowder", output = "elementtimes:silverpowder")
     public static String oreSilver = "oreSilver";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "uraniumpowder", output = "elementtimes:uraniumpowder", dustCount = 1)
+    @HammerOreRecipe.Ore(value = "uraniumpowder", output = "elementtimes:uraniumpowder", dustCount = 1)
     public static String oreUranium = "oreUranium";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)
+    @HammerOreRecipe.Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)
     public static String oreSalt = "oreSalt";
     
-    @ModRecipe
-    @ModRecipe.Ore(value = "goldpowder", output = "elementtimes:goldpowder")
+    @HammerOreRecipe.Ore(value = "goldpowder", output = "elementtimes:goldpowder")
     public static String oreGold = "oreGold";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "copperpowder", output = "elementtimes:copperpowder")
+    @HammerOreRecipe.Ore(value = "copperpowder", output = "elementtimes:copperpowder")
     public static String oreCopper = "oreCopper";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
+    @HammerOreRecipe.Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
     public static String orePlatinum = "orePlatinum";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "quartz", output = "elementtimes:quartzpowder")
+    @HammerOreRecipe.Ore(value = "quartz", output = "elementtimes:quartzpowder")
     public static String oreQuartz = "oreQuartz";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "lapis", output = "elementtimes:bluestonepowder")
+    @HammerOreRecipe.Ore(value = "lapis", output = "elementtimes:bluestonepowder")
     public static String oreLapis = "oreLapis";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
+    @HammerOreRecipe.Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
     public static String oreRedstone = "oreRedstone";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
+    @HammerOreRecipe.Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
     public static String oreDiamond = "oreDiamond";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
+    @HammerOreRecipe.Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
     public static String blazeRod = "minecraft:blaze_rod";
 
-    @ModRecipe
-    @ModRecipe.Ore(value = "wood", dustCount = 16, output = "")
+    @HammerOreRecipe.Ore(value = "wood", dustCount = 16, output = "")
     public static String logWood = "logWood";
 
 
+    @ModRecipe(shaped = false)
+    public static Object[] Al2O3_Na3AlF6 = new Object[] {
+    		ElementtimesItems.Al2O3_Na3AlF6,
+    		ElementtimesItems.Na3AlF6, Items.REDSTONE
+    };
+
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiSliverCopper = new Object[]{
             ElementtimesBlocks.blockMultiSilverCopper,
             "plateSilver", "rubber", "plateCopper",
@@ -115,7 +104,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiCarbonSteel = new Object[]{
             ElementtimesBlocks.blockMultiCarbonSteel,
             "plateCarbon", "rubber", "plateSteel",
@@ -124,7 +112,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiGoldPlatinum = new Object[]{
             ElementtimesBlocks.blockMultiGoldPlatinum,
             "platePlatinum", "rubber", "plateGold",
@@ -133,7 +120,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiWoodStone = new Object[]{
             ElementtimesBlocks.blockMultiWoodStone,
             "plateWood", "rubber", "plateStone",
@@ -142,7 +128,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiTinLead = new Object[]{
             ElementtimesBlocks.blockMultiTinLead,
             "plateTin", "rubber", "plateLead",
@@ -151,7 +136,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiIronQuartz = new Object[]{
             ElementtimesBlocks.blockMultiIronQuartz,
             "plateIron", "rubber", "plateQuartz",
@@ -160,7 +144,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] blockMultiObsidianDiamond = new Object[]{
             ElementtimesBlocks.blockMultiObsidianDiamond,
             "plateObsidian", "rubber", ElementtimesItems.plateAdamas,
@@ -169,7 +152,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] spanner = new Object[]{
             ElementtimesItems.spanner,
             null, null, "ingotSteel",
@@ -178,7 +160,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] condenser = new Object[]{
             ElementtimesBlocks.condenser,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
@@ -187,7 +168,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] fluidheater = new Object[]{
             ElementtimesBlocks.fluidHeater,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
@@ -196,15 +176,14 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] solidmelter = new Object[]{
             ElementtimesBlocks.solidMelter,
             "gearGold", "blockSteel", "gearGold",
             ElementtimesBlocks.furnace, ElementtimesBlocks.furnace, ElementtimesBlocks.furnace,
             "gearDiamond", "blockCopper", "gearDiamond"
     };
+
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] fluidreactor = new Object[]{
             ElementtimesBlocks.fluidReactor,
             ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel,
@@ -213,7 +192,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] compressor = new Object[]{
             ElementtimesBlocks.compressor,
             "gearDiamond", "blockCopper", "gearDiamond",
@@ -222,15 +200,14 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] electrolyticCell = new Object[]{
             ElementtimesBlocks.electrolyticCell,
             ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
             ElementtimesBlocks.fluidHeater, ElementtimesBlocks.fluidReactor, ElementtimesBlocks.condenser,
             ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
     };
+
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] woodenHalter = new Object[]{
             ElementtimesItems.woodenHalter,
             null, "logWood", null,
@@ -238,8 +215,7 @@ public class ElementtimesRecipeCrafting {
             "logWood"
     };
 
-    @ModRecipe
-    @ModRecipe.Crafting(ore = false)
+    @ModRecipe(ore = false)
     public static Object[] rebuild = new Object[]{
             ElementtimesBlocks.rebuild,
             ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiGoldPlatinum,
@@ -248,7 +224,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] forming = new Object[]{
             ElementtimesBlocks.forming,
             null, ElementtimesBlocks.blockMultiIronQuartz, null,
@@ -257,7 +232,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] extractor = new Object[]{
             ElementtimesBlocks.extractor,
             null, ElementtimesBlocks.blockMultiTinLead, null,
@@ -266,7 +240,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object[] pumpAir = new Object[] {
             ElementtimesBlocks.pumpAir,
             Blocks.REDSTONE_BLOCK, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_BLOCK,
@@ -275,7 +248,6 @@ public class ElementtimesRecipeCrafting {
     };
 
     @ModRecipe
-    @ModRecipe.Crafting()
     public static Object[] pumpFluid = new Object[] {
             ElementtimesBlocks.pumpFluid,
             null, ElementtimesBlocks.blockMultiSilverCopper, null,
@@ -284,7 +256,6 @@ public class ElementtimesRecipeCrafting {
     };
     
     @ModRecipe
-    @ModRecipe.Crafting()
     public static Object[] cement = new Object[] {
             ElementtimesBlocks.cement,
             null,Items.FLINT, null,
@@ -292,59 +263,42 @@ public class ElementtimesRecipeCrafting {
             null,Items.FLINT, null
     };
 
-    @ModRecipe
-    @ModRecipe.Crafting(shaped = false)
+    @ModRecipe(shaped = false)
     public static Object[] itemReducer = new Object[] {
             ElementtimesBlocks.itemReducer,
             ElementtimesItems.woodElement, Blocks.CRAFTING_TABLE, ElementtimesBlocks.fuelGenerator
     };
 
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearCarbon = RecipeUtil.gearRecipe(Blocks.COAL_BLOCK, new ItemStack(Items.COAL, 1, 0), ElementtimesItems.gearCarbon);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearCopper = RecipeUtil.gearRecipe("blockCopper", "ingotCopper", ElementtimesItems.gearCopper);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearDiamond = RecipeUtil.gearRecipe("blockDiamond", "gemDiamond", ElementtimesItems.gearDiamond);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearGold = RecipeUtil.gearRecipe("blockGold", "ingotGold", ElementtimesItems.gearGold);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearIron = RecipeUtil.gearRecipe("blockIron", "ingotIron", ElementtimesItems.gearIron);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearPlatinum = RecipeUtil.gearRecipe("blockPlatinum", "ingotPlatinum", ElementtimesItems.gearPlatinum);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearQuartz = RecipeUtil.gearRecipe("blockQuartz", "gemQuartz", ElementtimesItems.gearQuartz);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearSteel = RecipeUtil.gearRecipe("blockSteel", "ingotSteel", ElementtimesItems.gearSteel);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearStone = RecipeUtil.gearRecipe(ElementtimesBlocks.stoneBlock, "stone", ElementtimesItems.gearStone);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearWood = RecipeUtil.gearRecipe("logWood", "plankWood", ElementtimesItems.gearWood);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearSilver = RecipeUtil.gearRecipe("blockSilver", "ingotSilver", ElementtimesItems.gearSilver);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearTin = RecipeUtil.gearRecipe("blockTin", "ingotTin", ElementtimesItems.gearTin);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearLead = RecipeUtil.gearRecipe("blockLead", "ingotLead", ElementtimesItems.gearLead);
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object gearObsidian = RecipeUtil.gearRecipe("blockObsidian", "ingotObsidian", ElementtimesItems.gearObsidian);
 
-
     @ModRecipe
-    @ModRecipe.Crafting
     public static Object createFluidRecipes() {
         return (Supplier) () -> {
             List<IRecipe> recipeList = new LinkedList<>();

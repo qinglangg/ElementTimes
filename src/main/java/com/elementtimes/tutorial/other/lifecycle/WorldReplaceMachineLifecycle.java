@@ -1,9 +1,9 @@
 package com.elementtimes.tutorial.other.lifecycle;
 
+import com.elementtimes.elementcore.api.utils.FluidUtils;
 import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
-import com.elementtimes.tutorial.util.FluidUtil;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -132,7 +132,7 @@ public class WorldReplaceMachineLifecycle implements IMachineLifecycle {
         int size = capture.fluidOutputs.size();
         if (size <= slot) {
             for (; size <= slot; size++) {
-                capture.fluidOutputs.add(size, FluidUtil.EMPTY);
+                capture.fluidOutputs.add(size, FluidUtils.EMPTY);
             }
         }
         capture.fluidOutputs.set(slot, fluid);

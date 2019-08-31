@@ -1,12 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
-
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import net.minecraft.init.Items;
 
 import javax.annotation.Nonnull;
@@ -15,8 +14,7 @@ import javax.annotation.Nonnull;
  * 提取机
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileExtractor extends BaseOneToOne {
 
     public TileExtractor() {

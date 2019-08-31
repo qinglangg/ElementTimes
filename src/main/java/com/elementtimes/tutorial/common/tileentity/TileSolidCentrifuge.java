@@ -1,12 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import net.minecraft.inventory.Slot;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -16,22 +15,22 @@ import javax.annotation.Nonnull;
  * 固体离心机
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileSolidCentrifuge extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = null;
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler()
-        	.newRecipe("slag")
-            .addCost(100)
-            .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
-            .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
-            .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
-            .endAdd();
-            }
-    }
+                    .newRecipe("slag")
+                    .addCost(100)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
+                    .endAdd();
+                    }
+        }
+
 
     TileSolidCentrifuge() {
         super(100000, 1, 3);

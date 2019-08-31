@@ -1,13 +1,11 @@
 package com.elementtimes.tutorial.common.block;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp;
 import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.util.BlockUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,11 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -77,10 +73,10 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, IDism
         }
         if (fire) {
             setLightLevel(1);
-            BlockUtil.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, true), te);
+            ECUtils.block.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, true), te);
         } else {
             setLightLevel(0);
-            BlockUtil.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, false), te);
+            ECUtils.block.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, false), te);
         }
         NBTTagCompound fluidNbt = stack.getOrCreateSubCompound("fluid");
         if (!fluidNbt.hasNoTags()) {
@@ -113,13 +109,13 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, IDism
             TileAlcoholLamp tileEntity = (TileAlcoholLamp) worldIn.getTileEntity(pos);
             if (heldItem == Items.FLINT_AND_STEEL) {
                 setLightLevel(1);
-                BlockUtil.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, Boolean.TRUE), tileEntity);
+                ECUtils.block.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, Boolean.TRUE), tileEntity);
             } else {
                 if (playerIn.isSneaking()) {
                     playerIn.sendMessage(new TextComponentString(tileEntity.getTanks(SideHandlerType.IN_OUT).drainIgnoreCheck(0, Integer.MAX_VALUE, false).amount + ""));
                 } else {
                     setLightLevel(0);
-                    BlockUtil.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, Boolean.FALSE), tileEntity);
+                    ECUtils.block.setBlockState(worldIn, pos, state.withProperty(IS_BURNING, Boolean.FALSE), tileEntity);
                 }
             }
         }

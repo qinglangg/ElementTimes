@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.other.pipeline.interfaces;
 
+import com.elementtimes.elementcore.api.utils.FluidUtils;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,7 +18,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -151,7 +150,7 @@ public interface Serializer {
             if (object instanceof FluidStack) {
                 return ((FluidStack) object).writeToNBT(nbt);
             } else {
-                return FluidUtil.EMPTY.writeToNBT(nbt);
+                return FluidUtils.EMPTY.writeToNBT(nbt);
             }
         }
 
@@ -160,7 +159,7 @@ public interface Serializer {
         public Object deserialize(@Nonnull NBTBase nbt) {
             FluidStack stack = FluidStack.loadFluidStackFromNBT((NBTTagCompound) nbt);
             if (stack == null) {
-                stack = FluidUtil.EMPTY;
+                stack = FluidUtils.EMPTY;
             }
             return stack;
         }
@@ -168,7 +167,7 @@ public interface Serializer {
         @Override
         public boolean isObjectEmpty(Object object) {
             return object == null
-                    || object == FluidUtil.EMPTY
+                    || object == FluidUtils.EMPTY
                     || ((object instanceof FluidStack) && ((FluidStack) object).amount == 0);
         }
 

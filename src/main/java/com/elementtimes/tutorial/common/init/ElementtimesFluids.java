@@ -1,16 +1,16 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.elementcore.api.annotation.annotations.ModFluid;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.annotation.annotations.ModFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 
 /**
  * 流体注册
  * @author luqin2007
  */
 public class ElementtimesFluids {
+
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid h2so4 = new Fluid("elementtimes.h2so4",
@@ -35,6 +35,12 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/so2_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/so2_fluid"), 0xFF969642);
     
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid FluoroaluminicAcid = new Fluid("elementtimes.fluoroaluminicacid",
+            new ResourceLocation(ElementTimes.MODID, "fluid/fluoroaluminicacid_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/fluoroaluminicacid_fluid"), 0xFF969642);
+
     @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid hf = new Fluid("elementtimes.hf",
@@ -65,6 +71,11 @@ public class ElementtimesFluids {
     public static Fluid NaCl = new Fluid("elementtimes.nacl",
             new ResourceLocation(ElementTimes.MODID, "fluid/nacl_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/nacl_fluid"), 0xFF1D5B5B);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid AlCl3 = new Fluid("elementtimes.alcl3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/alcl3_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/alcl3_fluid"), 0xFF1D5B5B);
 
     @ModFluid
     @ModFluid.FluidBlock
@@ -74,9 +85,21 @@ public class ElementtimesFluids {
 
     @ModFluid
     @ModFluid.FluidBlock
+    public static Fluid NaAlO2 = new Fluid("elementtimes.naclo2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclo2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclo2_fluid"), 0xFF3B9595);
+
+    @ModFluid
+    @ModFluid.FluidBlock
     public static Fluid NaClSolutionDilute = new Fluid("elementtimes.naclsolutiondilute",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
+
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid NH4Cl = new Fluid("elementtimes.nh4cl",
+            new ResourceLocation(ElementTimes.MODID, "fluid/nh4cl_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/nh4cl_fluid"), 0xFF4E9696);
 
     @ModFluid
     @ModFluid.FluidBlock
@@ -161,7 +184,6 @@ public class ElementtimesFluids {
     public static Fluid chlorine = new Fluid("elementtimes.chlorine",
             new ResourceLocation(ElementTimes.MODID, "fluid/chlorine_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/chlorine_fluid"), 0xFF96963B);
-    
 
     @ModFluid
     @ModFluid.FluidBlock
@@ -181,6 +203,16 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/nitrogen_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/nitrogen_fluid"), 0xFF959595);
 
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Al = new Fluid("elementtimes.al",
+            new ResourceLocation(ElementTimes.MODID, "fluid/al_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/al_fluid"), 0xFF959595);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Na3AlF6 = new Fluid("elementtimes.na3alf6",
+            new ResourceLocation(ElementTimes.MODID, "fluid/na3alf6_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/na3alf6_fluid"), 0xFF868686);
     @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid ammonia = new Fluid("elementtimes.ammonia",
@@ -198,6 +230,12 @@ public class ElementtimesFluids {
     public static Fluid air = new Fluid("elementtimes.air",
             new ResourceLocation(ElementTimes.MODID, "fluid/air_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/air_fluid"), 0xFF949494);
+
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Al2O3_Na3AlF6 = new Fluid("elementtimes.al2o3_na3alf6",
+            new ResourceLocation(ElementTimes.MODID, "fluid/al2o3_na3alf6_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/al2o3_na3alf6_fluid"), 0xFF949494);
 
     @ModFluid(density = -10)
     @ModFluid.FluidBlock

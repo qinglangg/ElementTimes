@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 
 import javax.annotation.Nonnull;
 
@@ -12,8 +12,7 @@ import javax.annotation.Nonnull;
  * 元素发电机的 TileEntity
  * @author KSGFK create in 2019/2/17
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileGeneratorElement extends BaseGenerator {
 
     public TileGeneratorElement() {

@@ -1,15 +1,14 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.interfaces.tileentity.*;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.DefaultMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
-import com.elementtimes.tutorial.util.FluidUtil;
-import com.elementtimes.tutorial.util.ItemUtil;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -162,10 +161,10 @@ public abstract class BaseMachine extends TileEntity implements
             IFluidHandlerItem capability = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
             return capability != null || stack.getItem() == Items.GLASS_BOTTLE;
         }
-        List<ItemStack> list = ItemUtil.toList(itemHandler, getRecipeSlotIgnore());
+        List<ItemStack> list = ECUtils.item.toList(itemHandler, getRecipeSlotIgnore());
         ItemStack backup = list.get(slot);
         list.set(slot, stack);
-        boolean valid = getRecipes().acceptInput(list, FluidUtil.toListNotNull(getTanks(SideHandlerType.INPUT).getTankProperties()));
+        boolean valid = getRecipes().acceptInput(list, ECUtils.fluid.toListNotNull(getTanks(SideHandlerType.INPUT).getTankProperties()));
         list.set(slot, backup);
         return valid;
     }
@@ -176,9 +175,9 @@ public abstract class BaseMachine extends TileEntity implements
     public Map<SideHandlerType, TankHandler> getTanksMap() { return mTanks; }
     @Override
     public boolean isFillValid(int slot, FluidStack fluidStack) {
-        List<FluidStack> fluids = FluidUtil.toListNotNull(getTanks(SideHandlerType.OUTPUT).getTankProperties());
+        List<FluidStack> fluids = ECUtils.fluid.toListNotNull(getTanks(SideHandlerType.OUTPUT).getTankProperties());
         fluids.set(slot, fluidStack);
-        return getRecipes().acceptInput(ItemUtil.toList(getItemHandler(SideHandlerType.INPUT), getRecipeSlotIgnore()), fluids);
+        return getRecipes().acceptInput(ECUtils.item.toList(getItemHandler(SideHandlerType.INPUT), getRecipeSlotIgnore()), fluids);
     }
 
     // gui

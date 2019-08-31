@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
@@ -23,15 +23,79 @@ import java.util.Map;
  * 流体反应器
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileFluidReactor extends BaseMachine {
 
     public static MachineRecipeHandler RECIPES = null;
     public static void init() {
         if (RECIPES == null) {
             RECIPES = new MachineRecipeHandler()
-            		
+            		//AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
+            		.newRecipe("Al(OH)3  1")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.AlCl3,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 3000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NH4Cl, 3000))
+                    .endAdd()
+
+                   //Al(OH)₃+NaOH=NaAlO₂+2H₂O
+            		.newRecipe("NaAlO2")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2, 1))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
+                    .endAdd()
+
+                    //NaAlO2+HCl+H2O=Al(OH)3+NaCl
+                    .newRecipe("Al(OH)3 2")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 1000))
+                    .endAdd()
+
+                  //Al(OH)3 + 3HCl = AlCl3 + 3H20
+                    .newRecipe("alcl3 2")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 3000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 1))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
+                    .endAdd()
+
+
+            		//HCl + NH3 =NH4Cl
+            		.newRecipe("NH4Cl")
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NH4Cl, 1000))
+                    .endAdd()
+
+
+
+            		//H3(AlF6)+3naoh=Na3AlF6+3H2O
+            		.newRecipe("Na3AlF6")
+                    .addCost(20000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.FluoroaluminicAcid,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 3000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.Na3AlF6, 1))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
+                    .endAdd()
+
+            		//6HF+Al(OH)3 = H3(AlF6) + 3H2O
+            		.newRecipe("FluoroaluminicAcid")
+                    .addCost(2000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hf, 6000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin,1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.FluoroaluminicAcid , 1000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
+                    .endAdd()
+
+
               		//CO+H2O(g)=co2+H2
             		.newRecipe("co2 h2")
                     .addCost(5000)

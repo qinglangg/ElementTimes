@@ -1,8 +1,8 @@
-package com.elementtimes.tutorial.other.recipe;
+package com.elementtimes.tutorial.other.machineRecipe;
 
+import com.elementtimes.elementcore.api.utils.FluidUtils;
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import com.elementtimes.tutorial.interfaces.function.Function5;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -184,6 +184,6 @@ public class IngredientPart<T> {
 
     public static IngredientPart<FluidStack> EMPTY_FLUID = new IngredientPart<>(
             (recipe, slot, inputItems, inputFluids, input) -> true,
-            (recipe, items, fluids, slot) -> FluidUtil.EMPTY,
-            () -> Collections.singletonList(FluidUtil.EMPTY));
+            (recipe, items, fluids, slot) -> FluidUtils.EMPTY,
+            () -> Collections.singletonList(FluidUtils.EMPTY));
 }

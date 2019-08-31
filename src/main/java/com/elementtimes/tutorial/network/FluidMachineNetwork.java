@@ -1,9 +1,9 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.tutorial.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.utils.FluidUtils;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.util.FluidUtil;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -27,7 +27,7 @@ import java.util.Map;
  * 用于流体参与的机器的通信
  * @author luqin2007
  */
-@ModNetwork(id = 0, handlerClass = "com.elementtimes.tutorial.network.FluidMachineNetwork$Handler", side = Side.CLIENT)
+@ModNetwork(handlerClass = "com.elementtimes.tutorial.network.FluidMachineNetwork$Handler", side = Side.CLIENT)
 public class FluidMachineNetwork implements IMessage {
 
     Map<SideHandlerType, Int2ObjectMap<FluidStack>> fluids = new HashMap<>();
@@ -90,7 +90,7 @@ public class FluidMachineNetwork implements IMessage {
                 buf.writeInt(slot);
                 FluidStack fluid = rFluids.get(slot);
                 if (fluid == null) {
-                    fluid = FluidUtil.EMPTY;
+                    fluid = FluidUtils.EMPTY;
                 }
                 ByteBufUtils.writeTag(buf, fluid.writeToNBT(new NBTTagCompound()));
                 buf.writeInt(rCapabilities.get(slot));

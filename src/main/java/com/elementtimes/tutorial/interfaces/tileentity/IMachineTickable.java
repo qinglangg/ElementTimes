@@ -1,9 +1,9 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeCapture;
-import com.elementtimes.tutorial.util.BlockUtil;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -212,7 +212,7 @@ public interface IMachineTickable extends ITickable, INBTSerializable<NBTTagComp
                 onTickFinish();
 
                 IBlockState newState = updateState(world.getBlockState(pos));
-                BlockUtil.setBlockState(world, pos, newState, tileEntity);
+                ECUtils.block.setBlockState(world, pos, newState, tileEntity);
                 tileEntity.markDirty();
             } else {
                 updateClient();

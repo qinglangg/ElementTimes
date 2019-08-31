@@ -1,11 +1,11 @@
 package com.elementtimes.tutorial.other.pipeline.interfaces;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.other.pipeline.PLConnType;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.util.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -150,7 +150,7 @@ public interface PathAction {
             Object e = element.element;
             if (e instanceof ItemStack || e instanceof Item || e instanceof Block) {
                 if (!similar) {
-                    element.path.moveTo(world, pl);
+                    element.moveTo(world, pl);
                 }
                 return null;
             }
@@ -220,7 +220,7 @@ public interface PathAction {
             if (element.element instanceof ItemStack) {
                 TileEntity te = world.getTileEntity(nextPos);
                 if (te != null) {
-                    EnumFacing facing = BlockUtil.getPosFacing(thisPos, nextPos);
+                    EnumFacing facing = ECUtils.block.getPosFacing(thisPos, nextPos);
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                     if (capability != null) {
                         ItemStack items = (ItemStack) element.element;
@@ -269,7 +269,7 @@ public interface PathAction {
             Object e = element.element;
             if (e instanceof FluidStack || e instanceof Fluid) {
                 if (!similar) {
-                    element.path.moveTo(world, pl);
+                    element.moveTo(world, pl);
                 }
                 return null;
             }
@@ -339,7 +339,7 @@ public interface PathAction {
             if (element.element instanceof FluidStack) {
                 TileEntity te = world.getTileEntity(nextPos);
                 if (te != null) {
-                    EnumFacing facing = BlockUtil.getPosFacing(thisPos, nextPos);
+                    EnumFacing facing = ECUtils.block.getPosFacing(thisPos, nextPos);
                     if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
                         IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
                         if (capability != null) {

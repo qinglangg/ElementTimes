@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.IngredientPart;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
@@ -22,8 +22,7 @@ import java.util.Map;
  * 固体熔化机
  * @author luqin2007
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileSolidMelter extends BaseMachine {
 
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler();
@@ -35,6 +34,11 @@ public class TileSolidMelter extends BaseMachine {
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe("1")
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Al2O3_Na3AlF6, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Al2O3_Na3AlF6, Fluid.BUCKET_VOLUME))
                     .endAdd();
         }
     }

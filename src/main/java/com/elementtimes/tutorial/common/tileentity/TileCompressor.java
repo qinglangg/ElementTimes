@@ -1,13 +1,13 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.annotation.annotations.ModElement;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
-import com.elementtimes.tutorial.other.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -29,8 +29,7 @@ import javax.annotation.Nullable;
  * 压缩机
  * @author lq2007 create in 2019/5/19
  */
-@ModElement
-@ModElement.ModInvokeStatic("init")
+@ModInvokeStatic("init")
 public class TileCompressor extends BaseOneToOne {
     private final static String ANIMATION_STATE_PLAY = "play";
     private final static String ANIMATION_STATE_STOP = "stop";
@@ -63,7 +62,7 @@ public class TileCompressor extends BaseOneToOne {
                 .add("10", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotLead", 1, ElementtimesItems.plateLead, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("11", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotTin", 1, ElementtimesItems.plateTin, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("12", ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount)
-                .add("13", ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.plateAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
+                .add("13", ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.gearAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
                 .add("13", ElementtimesConfig.COMPRESSOR.powderEnergy, Blocks.OBSIDIAN, 1, ElementtimesItems.plateObsidian, ElementtimesConfig.COMPRESSOR.powderCount);
     }
 

@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.common.item;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -60,7 +60,7 @@ public class ItemBottleFuel extends Item {
             TileEntity te = worldIn.getTileEntity(pos);
             Capability capability = CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
             ItemStack bottle = player.getHeldItem(hand);
-            FluidStack fluidStack = FluidUtil.getFluid(bottle);
+            FluidStack fluidStack = ECUtils.fluid.getFluid(bottle);
             if (te != null && te.hasCapability(capability, facing.getOpposite())) {
                 IFluidHandler handler;
                 if (te instanceof ITileFluidHandler) {
@@ -83,7 +83,7 @@ public class ItemBottleFuel extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            Fluid fluid = FluidUtil.getFluidNotNull(stack).getFluid();
+            Fluid fluid = ECUtils.fluid.getFluidNotNull(stack).getFluid();
             if (fluid != null) {
                 String name = fluid.getLocalizedName(new FluidStack(fluid, 1000));
                 if (name == null) {

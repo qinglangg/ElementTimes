@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.other;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
@@ -38,10 +38,10 @@ public class FluidIngredient extends Ingredient {
     }
 
     @Override
-    public boolean apply(@Nullable ItemStack p_apply_1_) {
-        if (mItemStack.isItemEqual(p_apply_1_)) {
-            FluidStack fluidStackIn = FluidUtil.getFluid(p_apply_1_);
-            FluidStack fluidStack = FluidUtil.getFluid(mItemStack);
+    public boolean apply(@Nullable ItemStack itemStack) {
+        if (mItemStack.isItemEqual(itemStack)) {
+            FluidStack fluidStackIn = ECUtils.fluid.getFluid(itemStack);
+            FluidStack fluidStack = ECUtils.fluid.getFluid(mItemStack);
             if (fluidStack != null && fluidStackIn != null) {
                 return fluidStack.containsFluid(fluidStackIn);
             }

@@ -1,9 +1,9 @@
 package com.elementtimes.tutorial.common.block;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
-import com.elementtimes.tutorial.util.BlockUtil;
 import com.google.common.base.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -197,7 +197,7 @@ public class Pipeline extends Block implements ITileEntityProvider {
             TileEntity teNeighbor = world.getTileEntity(neighbor);
             if (world.getBlockState(pos).getBlock() != Blocks.AIR && !(teNeighbor instanceof TilePipeline)) {
                 TileEntity te = world.getTileEntity(pos);
-                EnumFacing facing = BlockUtil.getPosFacing(pos, neighbor);
+                EnumFacing facing = ECUtils.block.getPosFacing(pos, neighbor);
                 if (te instanceof TilePipeline) {
                     ((TilePipeline) te).tryConnect(facing);
                 }

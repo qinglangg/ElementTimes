@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.other.recipe;
+package com.elementtimes.tutorial.other.machineRecipe;
 
 import com.elementtimes.tutorial.interfaces.function.Function4;
 import net.minecraft.item.ItemStack;

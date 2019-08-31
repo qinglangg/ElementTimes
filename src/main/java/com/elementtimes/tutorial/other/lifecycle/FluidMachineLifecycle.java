@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.other.lifecycle;
 
-import com.elementtimes.tutorial.annotation.AnnotationElements;
+import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
@@ -8,7 +9,6 @@ import com.elementtimes.tutorial.common.tileentity.BaseMachine;
 import com.elementtimes.tutorial.interfaces.tileentity.IMachineLifecycle;
 import com.elementtimes.tutorial.network.FluidMachineNetwork;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.util.FluidUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -93,12 +93,12 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
     @Override
     public void onTickStart() {
         IFluidTankProperties[] propertiesInput = inputFluids.getTankProperties();
-        List<FluidStack> inputFluidList = FluidUtil.toListNotNull(propertiesInput);
+        List<FluidStack> inputFluidList = ECUtils.fluid.toListNotNull(propertiesInput);
         mInputs.int2ObjectEntrySet().forEach(entry -> {
             int slot = entry.getIntKey();
             int bucketInput = entry.getValue()[0];
             int bucketOutput = entry.getValue()[1];
-            if (!FluidUtil.isFull(propertiesInput, slot)) {
+            if (!ECUtils.fluid.isFull(propertiesInput, slot)) {
                 ItemStack containerIn = inputItems.getStackInSlot(bucketInput);
                 IFluidHandlerItem fluidHandler = containerIn.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
                 if (fluidHandler != null) {
@@ -125,7 +125,7 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
                         }
                     }
 
-                    if (FluidUtil.isEmpty(fluidHandler.getTankProperties())) {
+                    if (ECUtils.fluid.isEmpty(fluidHandler.getTankProperties())) {
                         ItemStack extractItem = inputItems.extractItem(bucketInput, 1, true);
                         if (!extractItem.isEmpty()) {
                             ItemStack insertItem = outputItems.insertItemIgnoreValid(bucketOutput, fluidHandler.getContainer(), true);
@@ -143,7 +143,7 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
     @Override
     public void onTickFinish() {
         IFluidTankProperties[] properties = outputFluids.getTankProperties();
-        List<FluidStack> outputFluidList = FluidUtil.toListNotNull(properties);
+        List<FluidStack> outputFluidList = ECUtils.fluid.toListNotNull(properties);
         mOutputs.int2ObjectEntrySet().forEach(entry -> {
             int slot = entry.getIntKey();
             int bucketInput = entry.getValue()[0];
@@ -151,7 +151,7 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
             ItemStack containerIn = inputItems.getStackInSlot(bucketInput);
             IFluidHandlerItem fluidHandler = containerIn.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
             if (fluidHandler != null) {
-                if (!FluidUtil.isEmpty(properties, slot)) {
+                if (!ECUtils.fluid.isEmpty(properties, slot)) {
                     FluidStack output = outputFluidList.get(slot);
                     if (output != null && output.amount > 0) {
                         FluidStack drain = outputFluids.drain(slot, output, false);
@@ -164,7 +164,7 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
                     }
                 }
 
-                if (FluidUtil.isFull(fluidHandler.getTankProperties())) {
+                if (ECUtils.fluid.isFull(fluidHandler.getTankProperties())) {
                     ItemStack extractItem = inputItems.extractItem(bucketInput, 1, true);
                     if (!extractItem.isEmpty()) {
                         ItemStack itemStack = fluidHandler.getContainer();
@@ -195,15 +195,15 @@ public class FluidMachineLifecycle implements IMachineLifecycle {
         });
         FluidMachineNetwork message = new FluidMachineNetwork();
         TankHandler input = mMachine.getTanks(SideHandlerType.INPUT);
-        if (!FluidUtil.isNoCapability(input.getTankProperties())) {
+        if (!ECUtils.fluid.isNoCapability(input.getTankProperties())) {
             message.put(SideHandlerType.INPUT, input);
         }
         TankHandler output = mMachine.getTanks(SideHandlerType.OUTPUT);
-        if (!FluidUtil.isNoCapability(output.getTankProperties())) {
+        if (!ECUtils.fluid.isNoCapability(output.getTankProperties())) {
             message.put(SideHandlerType.OUTPUT, output);
         }
         for (EntityPlayerMP player : mMachine.getOpenedPlayers()) {
-            AnnotationElements.CHANNEL.sendTo(message, player);
+            ElementTimes.CONTAINER.elements.channel.sendTo(message, player);
         }
     }
 }

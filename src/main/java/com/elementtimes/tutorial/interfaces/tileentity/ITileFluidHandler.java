@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
+import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.util.FluidUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -84,12 +84,12 @@ public interface ITileFluidHandler extends ICapabilityProvider, INBTSerializable
         NBTTagCompound nbt = new NBTTagCompound();
         // input
         TankHandler inputs = getTanks(SideHandlerType.INPUT);
-        if (!FluidUtil.isNoCapability(inputs.getTankProperties())) {
+        if (!ECUtils.fluid.isNoCapability(inputs.getTankProperties())) {
             nbt.setTag(NBT_FLUID_INPUT, inputs.serializeNBT());
         }
         // output
         TankHandler outputs = getTanks(SideHandlerType.OUTPUT);
-        if (!FluidUtil.isNoCapability(outputs.getTankProperties())) {
+        if (!ECUtils.fluid.isNoCapability(outputs.getTankProperties())) {
             nbt.setTag(NBT_FLUID_OUTPUT, outputs.serializeNBT());
         }
         if (!nbt.hasNoTags()) {
