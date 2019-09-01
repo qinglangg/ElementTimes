@@ -1,10 +1,16 @@
 package com.elementtimes.tutorial.other.machineRecipe;
 
+import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -16,7 +22,6 @@ import java.util.function.ToIntFunction;
  * @author luqin2007
  */
 public class MachineRecipeHandler {
-    
     private List<MachineRecipe> mMachineRecipes = new LinkedList<>();
 
     /**
@@ -35,6 +40,132 @@ public class MachineRecipeHandler {
      */
     public MachineRecipeBuilder newRecipe(String name) {
         return new MachineRecipeBuilder(name, this);
+    }
+
+    /**
+     * 化学方程式解析
+     * 会解析 水 熔岩 以及 ElementTimes 流体，特殊物品请在 parseCustomItem 中添加对应物品
+     * @param name 合成配方名称，请保证仅包含
+     * @param energy 消耗能量
+     * @param ethanol 消耗酒精
+     * @param chemicalFormula 化学方程式
+     * @param baseAmount 输入流体的最小单位，即方程式配平后标记 1 的项的流体数量 mb
+     * @return MachineRecipeBuilder
+     */
+    public MachineRecipeHandler add(String name, int energy, int ethanol, String chemicalFormula, int baseAmount) {
+        final MachineRecipeBuilder builder = newRecipe(name).addCost(energy);
+        chemicalFormula = chemicalFormula.trim().toLowerCase();
+        final String[] split;
+        if (chemicalFormula.equals("=")) {
+            split = new String[] { null, null };
+        } else if (chemicalFormula.startsWith("=")) {
+            split = new String[] { null, chemicalFormula.substring(1) };
+        } else if (chemicalFormula.endsWith("=")) {
+            split = new String[] { chemicalFormula.substring(0, chemicalFormula.length() - 1), null };
+        } else {
+            split = chemicalFormula.split("=");
+        }
+        if (split.length != 2) {
+            throw new RuntimeException("Input string must has and only has one \"=\"");
+        }
+        if (split[0] != null) {
+            for (String input : split[0].split("\\+")) {
+                IngredientPart<FluidStack> fluid = parseChemicalFluid(input, baseAmount);
+                if (fluid == null) {
+                    final IngredientPart<ItemStack> item = parseChemicalItem(input);
+                    builder.addItemInput(item);
+                } else {
+                    builder.addFluidInput(fluid);
+                }
+            }
+        }
+        if (split[1] != null) {
+            for (String output : split[1].split("\\+")) {
+                IngredientPart<FluidStack> fluid = parseChemicalFluid(output, baseAmount);
+                if (fluid == null) {
+                    final IngredientPart<ItemStack> item = parseChemicalItem(output);
+                    builder.addItemOutput(item);
+                } else {
+                    builder.addFluidOutput(fluid);
+                }
+            }
+        }
+        builder.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, ethanol));
+        return builder.endAdd();
+    }
+
+    private Object[] parseCountAndName(String input) {
+        final String inputGroup = input.trim().toLowerCase();
+        final char[] chars = inputGroup.toCharArray();
+        int ptr = 0;
+        int count = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (Character.isDigit(chars[i])) {
+                count = count * 10 + i;
+            } else {
+                ptr = i;
+                break;
+            }
+        }
+        if (ptr == 0 || count == 0) {
+            count = 1;
+        }
+        String name = inputGroup.substring(ptr);
+        return new Object[] {count, name};
+    }
+    private IngredientPart<FluidStack> parseChemicalFluid(String input, int base) {
+        final Object[] cn = parseCountAndName(input);
+        final Integer count = (Integer) cn[0];
+        String fluidName = (String) cn[1];
+        if (fluidName.equals("water") || fluidName.equals("h2o") || fluidName.equals("minecraft:water")) {
+            return IngredientPart.forFluid(FluidRegistry.WATER, count * base);
+        }
+        if (fluidName.equals("lava") || fluidName.equals("minecraft:lava")) {
+            return IngredientPart.forFluid(FluidRegistry.LAVA, count * base);
+        }
+        if (!fluidName.contains(":")) {
+            fluidName = ElementTimes.MODID + ":" + fluidName;
+        }
+        final Fluid fluid = FluidRegistry.getFluid(fluidName);
+        if (fluid != null) {
+            return IngredientPart.forFluid(fluid, count * base);
+        } else {
+            return null;
+        }
+    }
+    private IngredientPart<ItemStack> parseChemicalItem(String input) {
+        final Object[] cn = parseCountAndName(input);
+        final Integer count = (Integer) cn[0];
+        final String itemName = (String) cn[1];
+        ItemStack itemStack = parseCustomItem(itemName, count);
+        if (itemStack.isEmpty()) {
+            if (OreDictionary.doesOreNameExist(itemName)) {
+                return IngredientPart.forItem(itemName, count);
+            }
+        }
+        if (itemStack.isEmpty()) {
+            itemStack = ECUtils.recipe.getFromItemName(itemName);
+        }
+        if (itemStack.isEmpty()) {
+            itemStack = ECUtils.recipe.getFromItemName(ElementTimes.MODID + ":" + itemName);
+        }
+        if (itemStack.isEmpty()) {
+            throw new RuntimeException("Can't parse fluid or item from input" + input);
+        }
+        itemStack = itemStack.copy();
+        itemStack.setCount(count);
+        return IngredientPart.forItem(itemStack);
+    }
+    private ItemStack parseCustomItem(String s, int count) {
+        // s 为全小写
+        switch (s) {
+            case "caco3":
+                return new ItemStack(ElementtimesItems.calciumCarbonate,1);
+            case "cao":
+                return new ItemStack(ElementtimesItems.calciumOxide, 1);
+            default:
+                return ItemStack.EMPTY;
+        }
     }
 
     /**

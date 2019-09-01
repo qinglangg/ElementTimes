@@ -71,22 +71,13 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
             // 坩埚
             RECIPE_CRUCIBLE = new MachineRecipeHandler()
             		//CaCO3=CaO+co2
-                    .newRecipe("CaO")
-                    .addCost(0)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate,1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 1000))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumOxide, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
-                    .endAdd()
+                    .add("CaO", 0, 1000, "CaCO3=CaO+co2", 1000)
                     .newRecipe("U")
                     .addCost(0)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.uraniumPowder,1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 3000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 3))
-                    .endAdd()
-                    
-                  
-            		;
+                    .endAdd();
         }
     }
 
@@ -220,8 +211,6 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
         NBTTagCompound nbt = pkt.getNbtCompound();
-        if (nbt.hasKey(ITESRSupport.BIND_NBT_TESR_TE)) {
-            ITESRSupport.super.deserializeNBT(nbt);
-        }
+        ITESRSupport.super.deserializeNBT(nbt);
     }
 }

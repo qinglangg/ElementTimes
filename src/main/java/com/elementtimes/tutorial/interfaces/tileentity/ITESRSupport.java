@@ -88,7 +88,9 @@ public interface ITESRSupport extends INBTSerializable<NBTTagCompound> {
     }
 
     @Override
-    default void deserializeNBT(NBTTagCompound nbt){
-        readFromNBT(nbt);
+    default void deserializeNBT(NBTTagCompound nbt) {
+        if (nbt.hasKey(ITESRSupport.BIND_NBT_TESR_TE)) {
+            readFromNBT(nbt);
+        }
     };
 }
