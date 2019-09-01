@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.plugin.jei.category;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -32,6 +34,13 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     public static MachineRecipeCategory createOneToOne(IGuiHelper helper, String id, String machine) {
         return new MachineRecipeCategory(helper, "5", id, machine, 44, 16, 90, 44,
                 new int[][]{new int[] {55,29}, new int[]{109,29}}, new int[0][]);
+    }
+
+    public static MachineRecipeCategory createFromBaseMachine(IGuiHelper helper, ElementtimesGUI.Machines guiType,
+                                                              int u, int v, int w, int h, int[][] itemXYs, int[][] fluidXYs) {
+        final String name = guiType.name().toLowerCase();
+        final String id = ElementTimes.MODID + "." + name + ".jei.category";
+        return new MachineRecipeCategory(helper, guiType.texture(), id, name, u, v, w, h, itemXYs, fluidXYs);
     }
 
     public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine,

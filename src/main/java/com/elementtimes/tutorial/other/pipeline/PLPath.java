@@ -90,30 +90,25 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         if (pause > 0) {
             pauseNext(world);
         } else {
-            final TileEntity te = world.getTileEntity(plPos.pos);
-            if (te instanceof TilePipeline) {
-                if (tick < plPos.keepTick) {
-                    tickNext(world);
-                } else {
-                    if (to == null) {
-                        if (!outputNoTarget(world, plPos, element)) {
-                            sendNoTarget(world, element);
-                        }
-                    } else if (atEnd()) {
-                        if (plPos.listOut.contains(to)) {
-                            output(world, plPos, element);
-                        } else {
-                            if (!setNewPath(world, element, plPos)) {
-                                setNoTarget(world);
-                                element.moveTo(world, 0);
-                            }
-                        }
-                    } else {
-                        send(world, plPos, element);
-                    }
-                }
+            if (tick < plPos.keepTick) {
+                tickNext(world);
             } else {
-                invalid(world, element, plPos.pos, plPos);
+                if (to == null) {
+                    if (!outputNoTarget(world, plPos, element)) {
+                        sendNoTarget(world, element);
+                    }
+                } else if (atEnd()) {
+                    if (plPos.listOut.contains(to)) {
+                        output(world, plPos, element);
+                    } else {
+                        if (!setNewPath(world, element, plPos)) {
+                            setNoTarget(world);
+                            element.moveTo(world, 0);
+                        }
+                    }
+                } else {
+                    send(world, plPos, element);
+                }
             }
         }
     }
@@ -199,21 +194,6 @@ public class PLPath implements INBTSerializable<NBTTagCompound> {
         path.clear();
         Collections.addAll(path, plPosBefore, plPos, plPosNext);
         element.moveTo(world, path.size() - 1);
-    }
-
-    private void invalid(World world, PLElement element, BlockPos drop, PLInfo info) {
-//        if (PLEvent.onPathTickInvalid(this, world, element)) {
-            // 当前路段无效 返回并查找新路径
-            if (backToValid(world, element)) {
-                if (!setNewPath(world, element, info)) {
-                    setNoTarget(world);
-                    element.moveTo(world, 0);
-                }
-            } else {
-                element.serializer.drop(world, element, drop);
-                element.remove();
-            }
-//        }
     }
 
     /**

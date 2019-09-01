@@ -85,9 +85,9 @@ public class ElementtimesFluids {
 
     @ModFluid
     @ModFluid.FluidBlock
-    public static Fluid NaAlO2 = new Fluid("elementtimes.naclo2",
-            new ResourceLocation(ElementTimes.MODID, "fluid/naclo2_still"),
-            new ResourceLocation(ElementTimes.MODID, "fluid/naclo2_fluid"), 0xFF3B9595);
+    public static Fluid NaAlO2 = new Fluid("elementtimes.naalo2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_fluid"), 0xFF3B9595);
 
     @ModFluid
     @ModFluid.FluidBlock

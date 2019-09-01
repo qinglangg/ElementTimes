@@ -2,6 +2,9 @@ package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.block.Pipeline;
+import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
+import com.elementtimes.tutorial.interfaces.tileentity.ITileItemHandler;
+import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.pipeline.PLConnType;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
@@ -47,92 +50,90 @@ public class TilePipeline extends TileEntity implements ITickable {
     private static final String NBT_BIND_TP_ELEMENTS = "_pipeline_te_elements";
 
     public static final Consumer<TilePipeline> LINK = t -> {
-        t.elements.forEach(e -> e.onTick(t.world));
-        t.elements.addAll(t.elementsAdd);
-        t.elementsAdd.clear();
-        t.elements.removeAll(t.elementsRemove);
-        t.elementsRemove.clear();
+        boolean isDirty = t.updateElement();
+        if (t.elements.size() > 0) {
+            t.elements.forEach(e -> e.onTick(t.world));
+            isDirty = true;
+        }
+        if (isDirty) {
+            t.markDirty();
+        }
     };
     public static final Consumer<TilePipeline> ITEM_IN_20 = t -> {
-        t.tick++;
-        if (t.tick % 20 != 0) {
-            return;
-        }
-
         PLInfo tInfo = t.getInfo();
         for (BlockPos blockPos : tInfo.listIn) {
             TileEntity te = t.getWorld().getTileEntity(blockPos);
             if (te != null) {
-                EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
-                if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
-                    IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-                    if (capability != null) {
-                        for (int i = 0; i < capability.getSlots(); i++) {
-                            ItemStack stackInSlot = capability.getStackInSlot(i);
-                            ItemStack extractItem = capability.extractItem(i, stackInSlot.getCount(), true);
-                            if (!extractItem.isEmpty()) {
-                                PLElement element = PLElement.item(extractItem);
-                                Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
-                                if (pathMap.size() > 0) {
-                                    element.path = pathMap.values().iterator().next();
-                                    capability.extractItem(i, extractItem.getCount(), false);
-                                    element.send(t);
-                                    return;
-                                }
+                IItemHandler capability;
+                if (te instanceof ITileItemHandler) {
+                    capability = ((ITileItemHandler) te).getItemHandler(SideHandlerType.OUTPUT);
+                } else {
+                    EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
+                    capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                }
+                if (capability != null) {
+                    for (int i = 0; i < capability.getSlots(); i++) {
+                        ItemStack stackInSlot = capability.getStackInSlot(i);
+                        ItemStack extractItem = capability.extractItem(i, stackInSlot.getCount(), true);
+                        if (!extractItem.isEmpty()) {
+                            PLElement element = PLElement.item(extractItem);
+                            Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
+                            if (pathMap.size() > 0) {
+                                element.path = pathMap.values().iterator().next();
+                                capability.extractItem(i, extractItem.getCount(), false);
+                                element.send(t);
+                                return;
                             }
                         }
                     }
                 }
             }
         }
+
+        LINK.accept(t);
     };
     public static final Consumer<TilePipeline> FLUID_IN_20 = t -> {
-        t.tick++;
-        if (t.tick % 20 != 0) {
-            return;
-        }
-
         PLInfo tInfo = t.getInfo();
         for (BlockPos blockPos : tInfo.listIn) {
             TileEntity te = t.getWorld().getTileEntity(blockPos);
             if (te != null) {
-                EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
-                if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
-                    IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                    if (capability != null) {
-                        for (IFluidTankProperties property : capability.getTankProperties()) {
-                            FluidStack fluidStack = property.getContents();
-                            FluidStack drain = capability.drain(fluidStack, false);
-                            if (drain != null && drain.amount > 0) {
-                                PLElement element = PLElement.fluid(drain);
-                                Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
-                                if (pathMap.size() > 0) {
-                                    element.path = pathMap.values().iterator().next();
-                                    capability.drain(fluidStack, true);
-                                    element.send(t);
-                                    return;
-                                }
+                IFluidHandler capability;
+                if (te instanceof ITileFluidHandler) {
+                    capability = ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT);
+                } else {
+                    EnumFacing facing = ECUtils.block.getPosFacing(t.getPos(), blockPos);
+                    capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+                }
+                if (capability != null) {
+                    for (IFluidTankProperties property : capability.getTankProperties()) {
+                        FluidStack fluidStack = property.getContents();
+                        FluidStack drain = capability.drain(fluidStack, false);
+                        if (drain != null && drain.amount > 0) {
+                            PLElement element = PLElement.fluid(drain);
+                            Map<BlockPos, PLPath> pathMap = t.getInfo().allValidOutput(t.getWorld(), element, blockPos);
+                            if (pathMap.size() > 0) {
+                                element.path = pathMap.values().iterator().next();
+                                capability.drain(fluidStack, true);
+                                element.send(t);
+                                return;
                             }
                         }
                     }
                 }
             }
         }
+
+        LINK.accept(t);
     };
     public static final Map<String, Consumer<TilePipeline>> TICKABLES = new LinkedHashMap<>();
 
     static {
         TICKABLES.put(Pipeline.TYPE_ITEM_IN, ITEM_IN_20);
         TICKABLES.put(Pipeline.TYPE_FLUID_IN, FLUID_IN_20);
-        TICKABLES.put(Pipeline.TYPE_ITEM, LINK);
-        TICKABLES.put(Pipeline.TYPE_ITEM_OUT, LINK);
-        TICKABLES.put(Pipeline.TYPE_FLUID, LINK);
-        TICKABLES.put(Pipeline.TYPE_FLUID_OUT, LINK);
     }
 
     private int mConnected = 0b000000;
     private int mDisconnected = 0b000000;
-    private int tick = 0;
     private PLInfo mInfo;
 
     public final List<PLElement> elements = new LinkedList<>();
@@ -169,7 +170,7 @@ public class TilePipeline extends TileEntity implements ITickable {
         if (mDisconnected != disconnected) {
             mDisconnected = disconnected;
             if (!tryConnect(EnumFacing.values())) {
-                markDirty();
+                markDirtyAndRender();
             }
         }
     }
@@ -264,7 +265,7 @@ public class TilePipeline extends TileEntity implements ITickable {
             }
         }
         if (changed) {
-            markDirty();
+            markDirtyAndRender();
         }
         return changed;
     }
@@ -274,7 +275,7 @@ public class TilePipeline extends TileEntity implements ITickable {
             TilePipeline tp = (TilePipeline) te;
             EnumFacing opposite = facing.getOpposite();
             if (((TilePipeline) te).isConnected(opposite) && ((TilePipeline) te).setConnected(opposite, false)) {
-                te.markDirty();
+                ((TilePipeline) te).markDirtyAndRender();
             }
         }
         BlockPos connectPos = pos.offset(facing);
@@ -294,13 +295,13 @@ public class TilePipeline extends TileEntity implements ITickable {
                 // 其他管道可连接
                 changed = setConnected(facing, true);
                 if (tp.setConnected(opposite, true)) {
-                    tp.markDirty();
+                    tp.markDirtyAndRender();
                 }
             } else {
                 // 其他管道不可连接
                 changed = setConnected(facing, false);
                 if (tp.setConnected(opposite, false)) {
-                    tp.markDirty();
+                    tp.markDirtyAndRender();
                 }
             }
             BlockPos connectPos = pos.offset(facing);
@@ -350,8 +351,21 @@ public class TilePipeline extends TileEntity implements ITickable {
 
     // NBT && 同步
 
-    @Override
-    public void markDirty() {
+    public boolean updateElement() {
+        boolean dirty = false;
+        for (PLElement element : elementsAdd) {
+            if (!elements.contains(element)) {
+                element.tp = this;
+                dirty = elements.add(element);
+            }
+        }
+        elementsAdd.clear();
+        dirty = elements.removeAll(elementsRemove) | dirty;
+        elementsRemove.clear();
+        return dirty;
+    }
+
+    public void markDirtyAndRender() {
         if (world != null && world.isBlockLoaded(pos) && world.getBlockState(pos).getBlock() == getBlockType()) {
             IBlockState bs;
             if (!isInvalid()) {
@@ -395,11 +409,7 @@ public class TilePipeline extends TileEntity implements ITickable {
         pipeline.setInteger(NBT_BIND_TP_DISCONNECTED, mDisconnected);
         pipeline.setTag(NBT_BIND_TP_INFO, mInfo.serializeNBT());
         NBTTagList listElements = new NBTTagList();
-        elements.addAll(elementsAdd);
-        elements.removeAll(elementsRemove);
-        for (PLElement plElement : elements) {
-            listElements.appendTag(plElement.serializeNBT());
-        }
+        updateElement();
         pipeline.setTag(NBT_BIND_TP_ELEMENTS, listElements);
         compound.setTag(NBT_BIND_TP, pipeline);
         return compound;

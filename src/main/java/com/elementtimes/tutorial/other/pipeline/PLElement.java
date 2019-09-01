@@ -69,8 +69,13 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
         path.tick = 0;
         final TileEntity tileEntity = world.getTileEntity(path.path.get(position).pos);
         if (tileEntity instanceof TilePipeline && element != null) {
-            tp = (TilePipeline) tileEntity;
+            setTp((TilePipeline) tileEntity);
         }
+    }
+
+    public void setTp(TilePipeline tp) {
+        this.tp.elementsRemove.add(this);
+        tp.elementsAdd.add(this);
     }
 
     public PLElement copy() {
@@ -83,7 +88,7 @@ public class PLElement implements INBTSerializable<NBTTagCompound> {
         e.path = path.copy();
         e.serializer = serializer;
         e.serializerClass = serializerClass;
-        e.tp = tp;
+        e.setTp(tp);
         return e;
     }
 

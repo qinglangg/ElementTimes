@@ -3,6 +3,9 @@ package com.elementtimes.tutorial.other.pipeline.interfaces;
 import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
+import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
+import com.elementtimes.tutorial.interfaces.tileentity.ITileItemHandler;
+import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.pipeline.PLConnType;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
@@ -221,7 +224,12 @@ public interface PathAction {
                 TileEntity te = world.getTileEntity(nextPos);
                 if (te != null) {
                     EnumFacing facing = ECUtils.block.getPosFacing(thisPos, nextPos);
-                    IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                    IItemHandler capability;
+                    if (te instanceof ITileItemHandler) {
+                        capability = ((ITileItemHandler) te).getItemHandler(SideHandlerType.OUTPUT);
+                    } else {
+                        capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                    }
                     if (capability != null) {
                         ItemStack items = (ItemStack) element.element;
                         ItemStack itemsCopy = items.copy();
@@ -340,14 +348,17 @@ public interface PathAction {
                 TileEntity te = world.getTileEntity(nextPos);
                 if (te != null) {
                     EnumFacing facing = ECUtils.block.getPosFacing(thisPos, nextPos);
-                    if (te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
-                        IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-                        if (capability != null) {
-                            FluidStack fluid = (FluidStack) element.element;
-                            FluidStack fluidCopy = new FluidStack(fluid, fluid.amount);
-                            int amount = capability.fill(fluidCopy, !similar);
-                            return new FluidStack(fluidCopy, fluidCopy.amount - amount);
-                        }
+                    IFluidHandler capability;
+                    if (te instanceof ITileFluidHandler) {
+                        capability = ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT);
+                    } else {
+                        capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+                    }
+                    if (capability != null) {
+                        FluidStack fluid = (FluidStack) element.element;
+                        FluidStack fluidCopy = new FluidStack(fluid, fluid.amount);
+                        int amount = capability.fill(fluidCopy, !similar);
+                        return new FluidStack(fluidCopy, fluidCopy.amount - amount);
                     }
                 }
             }

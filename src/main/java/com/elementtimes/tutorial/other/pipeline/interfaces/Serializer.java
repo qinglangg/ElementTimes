@@ -60,7 +60,11 @@ public interface Serializer {
      * @return 是否相同
      */
     default boolean isObjectEqual(Object object1, Object object2) {
-        return Objects.equals(object1, object2);
+        if (object1 instanceof ItemStack && object2 instanceof ItemStack) {
+            return ItemStack.areItemStacksEqual((ItemStack) object1, (ItemStack) object2);
+        } else {
+            return object1 == object2;
+        }
     }
 
 

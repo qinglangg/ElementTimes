@@ -28,15 +28,41 @@ public class ElementtimesGUI implements IGuiHandler {
         /**
          * 所有以 BaseMachine 为 TileEntity 的基类的机器 GUI 枚举
          */
-        ElementGenerator, Pulverize, Compressor, FuelGenerator,
-        Furnace, Rebuild, Extractor, Forming, SolidMelter,
-        FluidReactor, SolidReactor, Condenser,
-        FluidHeater, ElectrolyticCell, SolidFluidReactor,
-        PumpAir, PumpFluid, ItemReducer, SupportStandAL, Centrifuge,
-        Coagulator, SolidCentrifuge, SupportStandC;
+        ElementGenerator("0"),
+        FuelGenerator("0"),
+        Pulverize("5"),
+        Compressor("5"),
+        Furnace("5"),
+        Rebuild("5"),
+        Extractor("5"),
+        Forming("5"),
+        ItemReducer("5"),
+        SolidMelter("solidmelter"),
+        FluidReactor("fluidreactor"),
+        SolidReactor("solidreactor"),
+        Condenser("condenser"),
+        FluidHeater("fluidheater"),
+        ElectrolyticCell("electrolyticcell"),
+        SolidFluidReactor("solidfluidreactor"),
+        PumpAir("pump"),
+        PumpFluid("pump"),
+        Centrifuge("centrifuge"),
+        Coagulator("coagulator"),
+        SolidCentrifuge("solidcentrifuge"),
+        SupportStandAL("supportstand"),
+        SupportStandC("supportstand");
+
+        Machines(String texture) {
+            this.texture = texture;
+        }
+
+        private String texture;
 
         public int id() {
             return ordinal();
+        }
+        public String texture() {
+            return texture;
         }
     }
 
@@ -96,10 +122,11 @@ public class ElementtimesGUI implements IGuiHandler {
             TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
             if (tileEntity instanceof BaseMachine) {
                 BaseMachine machine = (BaseMachine) tileEntity;
-                switch (machine.getGuiType()) {
+                final Machines type = machine.getGuiType();
+                switch (type) {
                     case ElementGenerator:
                     case FuelGenerator:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), "0", 60,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), type.texture, 60,
                                 new int[0][], new int[][] {new int[] {43, 55, 0, 156, 89, 4}});
                     case Pulverize:
                     case Compressor:
@@ -108,49 +135,49 @@ public class ElementtimesGUI implements IGuiHandler {
                     case Extractor:
                     case Forming:
                     case ItemReducer:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), "5", 60,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_156_74(machine, player), type.texture, 60,
                                 80, 30, 0, 156, 24, 17,
                                 43, 55, 24, 156, 90, 4);
                     case Centrifuge:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "centrifuge", 112,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 112,
                                 40, 30, 43, 107);
                     case SolidMelter:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), "solidmelter", 4,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), type.texture, 4,
                                 65, 31, 43, 72);
                     case Condenser:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "condenser", 115,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 115,
                                 new int[][] {new int[] {54, 18, 0, 204, 70, 20}, new int[] {55, 52, 0, 224, 64, 15}},
                                 45, 89, 0, 239, 90, 4);
                     case FluidReactor:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "fluidreactor", 100,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 100,
                                 58, 30, 43, 108);
                     case SolidReactor:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "solidreactor", 85,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 85,
                                 75, 42, 43, 108);
                     case SolidFluidReactor:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "solidfluidreactor", 14,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 14,
                                 65, 30, 43, 108);
                     case FluidHeater:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "fluidheater", 117,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 117,
                                 new int[][] {new int[] {53, 18, 0, 204, 70, 19}, new int[] {57, 52, 0, 223, 62, 15}},
                                 45, 89, 0, 237, 90, 4);
                     case ElectrolyticCell:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "electrolyticcell", 108,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 108,
                                 new int[][] {new int[] {58, 20, 0, 204, 24, 17}, new int[] {63, 35, 0, 221, 16, 16}},
                                 43, 107, 24, 204, 90, 4);
                     case PumpAir:
                     case PumpFluid:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), "pump", 85,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_204_122(machine, player), type.texture, 85,
                                 new int[0][], 43, 108, 24, 204, 90, 4);
                     case SupportStandAL:
                     case SupportStandC:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_201_119(machine, player), "supportstand", 105,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_201_119(machine, player), type.texture, 105,
                                 80, 26, 0, 201, 14, 14, new int[0][]);
                     case Coagulator:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_179_97(machine, player), "coagulator", 85,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_179_97(machine, player), type.texture, 85,
                                 81, 36, 0, 196, 16, 16, 43,86, 24, 179, 90 ,4);
                     case SolidCentrifuge:
-                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), "solidcentrifuge", 72,
+                        return new com.elementtimes.tutorial.client.gui.base.GuiContainerElectrical(ContainerMachine.cm176_166_84(machine, player), type.texture, 72,
                                 80, 31, 0, 183, 16, 16, 43, 73, 24, 166, 90, 4);
                     default:
                         return null;

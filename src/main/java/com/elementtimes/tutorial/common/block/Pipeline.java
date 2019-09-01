@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.block;
 import com.elementtimes.elementcore.api.ECUtils;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
+import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;
 import com.google.common.base.Optional;
 import net.minecraft.block.Block;
@@ -203,6 +204,21 @@ public class Pipeline extends Block implements ITileEntityProvider {
                 }
             }
         }
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (!worldIn.isRemote) {
+            final TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TilePipeline) {
+                ((TilePipeline) te).updateElement();
+                final List<PLElement> elements = ((TilePipeline) te).elements;
+                for (PLElement element : elements) {
+                    element.serializer.drop(worldIn, element, pos);
+                }
+            }
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override
