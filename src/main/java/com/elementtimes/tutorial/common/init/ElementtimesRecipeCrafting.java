@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModRecipe;
+import com.elementtimes.elementcore.api.annotation.ModRecipe;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.other.FluidIngredient;

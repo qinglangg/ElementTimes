@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModInvokeStatic;
+import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;

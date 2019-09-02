@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.ItemHandler;
 import com.elementtimes.tutorial.common.capability.impl.RfEnergy;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;

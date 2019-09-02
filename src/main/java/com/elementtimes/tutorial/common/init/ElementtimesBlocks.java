@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModBlock;
-import com.elementtimes.elementcore.api.annotation.annotations.ModOreDict;
+import com.elementtimes.elementcore.api.annotation.ModBlock;
+import com.elementtimes.elementcore.api.annotation.ModOreDict;
 import com.elementtimes.elementcore.api.annotation.enums.GenType;
 import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;

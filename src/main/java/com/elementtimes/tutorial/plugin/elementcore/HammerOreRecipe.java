@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.plugin.elementcore;
 
-import com.elementtimes.elementcore.api.ECModContainer;
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECModContainer;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.elementcore.api.template.DamageIngredient;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.inventory.InventoryCrafting;

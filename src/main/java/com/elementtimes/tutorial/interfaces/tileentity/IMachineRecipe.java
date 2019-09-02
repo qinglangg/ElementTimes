@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.interfaces.tileentity;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeCapture;
 import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.client;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.elementcore.api.utils.FluidUtils;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;

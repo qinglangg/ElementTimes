@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.other.machineRecipe;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;

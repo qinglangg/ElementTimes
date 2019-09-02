@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.ModNetwork;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;

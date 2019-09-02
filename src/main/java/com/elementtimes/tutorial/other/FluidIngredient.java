@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.other;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
 import com.elementtimes.tutorial.interfaces.tileentity.ITileItemHandler;

@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.block;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.common.capability.impl.TankHandler;
 import com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp;
 import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;

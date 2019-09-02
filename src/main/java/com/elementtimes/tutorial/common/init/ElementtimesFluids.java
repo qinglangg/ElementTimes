@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModFluid;
+import com.elementtimes.elementcore.api.annotation.ModFluid;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;

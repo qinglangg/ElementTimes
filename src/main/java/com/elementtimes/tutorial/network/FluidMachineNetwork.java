@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.ModNetwork;
 import com.elementtimes.elementcore.api.utils.FluidUtils;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import com.elementtimes.tutorial.other.SideHandlerType;

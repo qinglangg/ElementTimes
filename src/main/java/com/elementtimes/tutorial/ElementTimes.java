@@ -1,20 +1,15 @@
 package com.elementtimes.tutorial;
 
 import com.elementtimes.elementcore.ElementCore;
-import com.elementtimes.elementcore.api.ECModContainer;
-import com.elementtimes.elementcore.api.annotation.LoadState;
+import com.elementtimes.elementcore.api.annotation.enums.LoadState;
+import com.elementtimes.elementcore.api.common.ECModContainer;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author qinglan,ksgfk,luqin2007
@@ -22,11 +17,6 @@ import java.util.regex.Pattern;
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-before:elementcore")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
-    public static final boolean DEBUG = true;
-
-    public ElementTimes() {
-        FluidRegistry.enableUniversalBucket();
-    }
 
     @SidedProxy(serverSide = "com.elementtimes.tutorial.common.CommonProxy", clientSide = "com.elementtimes.tutorial.client.ClientProxy")
     public static CommonProxy proxy;

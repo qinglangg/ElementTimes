@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.elementcore.api.ECUtils;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;

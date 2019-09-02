@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.test;
+package com.elementtimes.tutorial.client.event;
 
 import java.util.List;
 
@@ -15,9 +15,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber
-public class Test {
+@SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber(Side.CLIENT)
+public class TooltipsEvent {
     @SubscribeEvent
     public static void onTooltips(ItemTooltipEvent event) {
         final ItemStack itemStack = event.getItemStack();
@@ -29,6 +32,11 @@ public class Test {
         }
         else if (itemStack.getItem() == Item.getItemFromBlock(ElementtimesBlocks.copperOre)) {
             lines.add(new TextComponentString("CuO").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+            lines.add("SiO2");
+            lines.add("CaCO3");
+        }
+        else if (itemStack.getItem() == Item.getItemFromBlock(Blocks.GLOWSTONE)) {
+            lines.add(new TextComponentString("CaF2").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("SiO2");
             lines.add("CaCO3");
         }

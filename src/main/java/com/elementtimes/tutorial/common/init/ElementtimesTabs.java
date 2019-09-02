@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModCreativeTabs;
+import com.elementtimes.elementcore.api.annotation.ModCreativeTabs;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

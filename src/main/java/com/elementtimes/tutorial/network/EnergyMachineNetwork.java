@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.network;
 
-import com.elementtimes.elementcore.api.annotation.annotations.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.ModNetwork;
 import com.elementtimes.tutorial.inventory.base.ContainerMachine;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
