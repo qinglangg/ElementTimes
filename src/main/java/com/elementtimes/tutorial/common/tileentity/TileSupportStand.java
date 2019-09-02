@@ -24,9 +24,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -42,12 +39,11 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     public static MachineRecipeHandler RECIPE_EVAPORATING_DISH = null;
     public static MachineRecipeHandler RECIPE_CRUCIBLE = null;
 
-    private NonNullList<RenderObject> tesr = NonNullList.create();
-    private NBTTagCompound properties = new NBTTagCompound();
-
-    public int alcoholLamp = registerRender(RenderObject.create(ElementtimesBlocks.alcoholLamp, .5, -.13, .5));
-    public int crucible = registerRender(RenderObject.create(ElementtimesBlocks.crucible, .5, .375, .5));
-    public int evaporatingDish = registerRender(RenderObject.create(ElementtimesBlocks.evaporatingDish, .5, .375, .5));
+    private NonNullList<RenderObject> tesr;
+    private NBTTagCompound properties;
+    public int alcoholLamp;
+    public int crucible;
+    public int evaporatingDish;
 
     public TileSupportStand() {
         super(0, 3, 3, 2, 16000, 1, 16000);
@@ -82,9 +78,16 @@ public class TileSupportStand extends BaseMachine implements ITESRSupport {
     }
 
     // ITESRSupport
+    @Override
+    protected void onCreate() {
+        tesr = NonNullList.create();
+        properties = new NBTTagCompound();
+        alcoholLamp = registerRender(RenderObject.create(ElementtimesBlocks.alcoholLamp, .5, -.13, .5));
+        crucible = registerRender(RenderObject.create(ElementtimesBlocks.crucible, .5, .375, .5));
+        evaporatingDish = registerRender(RenderObject.create(ElementtimesBlocks.evaporatingDish, .5, .375, .5));
+    }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public NonNullList<RenderObject> getRenderItems() {
         return tesr;
     }

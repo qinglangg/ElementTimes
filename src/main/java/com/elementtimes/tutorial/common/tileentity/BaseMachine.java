@@ -60,6 +60,7 @@ public abstract class BaseMachine extends TileEntity implements
     }
 
     BaseMachine(int energyCapacity, int inputCount, int outputCount, int fluidInput, int inputCapacity, int fluidOutput, int outputCapacity) {
+        onCreate();
         mEnergyHandler = new RfEnergy(energyCapacity, Integer.MAX_VALUE, Integer.MAX_VALUE);
         setItemSlot(inputCount, outputCount);
         setFluidSlot(fluidInput, inputCapacity, fluidOutput, outputCapacity);
@@ -76,6 +77,8 @@ public abstract class BaseMachine extends TileEntity implements
         addLifeCycle(defaultMachineLifecycle);
         applyConfig();
     }
+
+    protected void onCreate() {}
 
     @Override
     public Set<IMachineLifecycle> getAllLifecycles() {
