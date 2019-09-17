@@ -1,8 +1,8 @@
 package com.elementtimes.tutorial.plugin.jei.wrapper;
 
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipe;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipe;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;

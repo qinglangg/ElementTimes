@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.plugin.jei;
 
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.tileentity.*;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.plugin.jei.category.MachineRecipeCategory;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.*;
@@ -54,16 +54,16 @@ public class JeiSupport implements IModPlugin {
         blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCrop));
         blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCropUp));
         // 机器配方
-        registerJeiRecipes(registry, ElementtimesBlocks.pulverizer, TilePulverize.sRecipeHandler, ID_PULVERIZE);
-        registerJeiRecipes(registry, ElementtimesBlocks.rebuild, TileRebuild.sRecipeHandler, ID_REBUILD);
-        registerJeiRecipes(registry, ElementtimesBlocks.forming, TileForming.sGearRecipeHandler, ID_FORMING);
+        registerJeiRecipes(registry, ElementtimesBlocks.pulverizer, TilePulverize.RECIPE, ID_PULVERIZE);
+        registerJeiRecipes(registry, ElementtimesBlocks.rebuild, TileRebuild.RECIPE, ID_REBUILD);
+        registerJeiRecipes(registry, ElementtimesBlocks.forming, TileForming.RECIPE, ID_FORMING);
         registerJeiRecipes(registry, ElementtimesBlocks.fluidReactor, TileFluidReactor.RECIPES, ID_FLUID_REACTOR);
         registerJeiRecipes(registry, ElementtimesBlocks.fluidHeater, TileFluidHeater.RECIPE, ID_FLUID_HEATER);
-        registerJeiRecipes(registry, ElementtimesBlocks.extractor, TileExtractor.sRecipeHandler, ID_EXTRACTOR);
-        registerJeiRecipes(registry, ElementtimesBlocks.elementGenerator, TileGeneratorElement.sRecipeHandler, ID_ELEMENT_GENERATOR);
+        registerJeiRecipes(registry, ElementtimesBlocks.extractor, TileExtractor.RECIPE, ID_EXTRACTOR);
+        registerJeiRecipes(registry, ElementtimesBlocks.elementGenerator, TileGeneratorElement.RECIPE, ID_ELEMENT_GENERATOR);
         registerJeiRecipes(registry, ElementtimesBlocks.electrolyticCell, TileElectrolyticCell.RECIPE, ID_ELECTROLYTIC_CELL);
         registerJeiRecipes(registry, ElementtimesBlocks.condenser, TileCondenser.RECIPE, ID_CONDENSER);
-        registerJeiRecipes(registry, ElementtimesBlocks.compressor, TileCompressor.sRecipeHandler, ID_COMPRESSOR);
+        registerJeiRecipes(registry, ElementtimesBlocks.compressor, TileCompressor.RECIPE, ID_COMPRESSOR);
         registerJeiRecipes(registry, ElementtimesBlocks.pumpAir, TilePumpAir.RECIPE, ID_PUMP_AIR);
         registerJeiRecipes(registry, ElementtimesBlocks.solidFluidReactor, TileSolidFluidReactor.RECIPE, ID_SOLID_FLUID_REACTOR);
         registerJeiRecipes(registry, ElementtimesBlocks.solidMelter, TileSolidMelter.RECIPE, ID_SOLID_MELTER);
@@ -79,36 +79,26 @@ public class JeiSupport implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_ITEM_REDUCER, "itemreducer"));
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_COMPRESSOR, "compressor"));
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_REBUILD, "rebuild"));
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_PULVERIZE, "pulverize"));
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_EXTRACTOR, "extractor"));
-        registry.addRecipeCategories(MachineRecipeCategory.createOneToOne(guiHelper, ID_FORMING, "forming"));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "pump", ID_PUMP_AIR, "pumpair",
-                45, 21, 80, 61, new int[0][], new int[][]{{77, 28}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "condenser", ID_CONDENSER, "condenser",
-                4, 11, 168, 92, new int[0][], new int[][]{{17, 25}, {143, 25}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "electrolyticcell", ID_ELECTROLYTIC_CELL, "electrolyticcell",
-                32, 8, 112, 93, new int[0][], new int[][]{{36, 12}, {88, 12}, {106, 12}, {124, 12}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "0", ID_ELEMENT_GENERATOR, "elementgenerator",
-                40, 24, 95, 39, new int[][]{{80, 30}}, new int[0][]));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "fluidheater", ID_FLUID_HEATER, "fluidheater",
-                4, 11, 168, 92, new int[0][], new int[][]{{17, 25}, {143, 25}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "fluidreactor", ID_FLUID_REACTOR, "fluidreactor",
-                14, 11, 148, 93, new int[][]{{88, 30}}, new int[][]{{18, 15}, {36, 15}, {106, 15}, {124, 15}, {142, 15}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "solidmelter", ID_SOLID_MELTER, "solidmelter",
-                38, 12, 100, 56, new int[][]{{45,31}}, new int[][]{{95,16}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "solidreactor", ID_SOLID_REACTOR, "solidreactor",
-                30, 5, 117, 96, new int[][]{{35,42}, {53,42}, {105,33}, {105,51}}, new int[][]{{126,11}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "solidfluidreactor", ID_SOLID_FLUID_REACTOR, "solidfluidreactor",
-                17, 10, 141, 55, new int[][]{{22,30}, {43,66}, {116,66}}, new int[][]{{42,15}, {116,15}, {137,15}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "centrifuge", ID_CENTRIFUGE, "centrifuge",
-                16, 13, 146, 52, new int[0][], new int[][]{{18, 15}, {70, 15}, {88,15}, {106,15}, {124, 15}, {142, 15}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "coagulator", ID_COAGULATOR, "coagulator",
-                44, 7, 83, 73, new int[][]{{108,30}}, new int[][]{{56,10}}));
-        registry.addRecipeCategories(new MachineRecipeCategory(guiHelper, "solidcentrifuge", ID_SOLID_CENTRIFUGE, "solidcentrifuge",
-                52, 12, 76, 58, new int[][] {{55, 31}, {109, 15}, {109, 33}, {109, 51}}, new int[0][]));
+        registry.addRecipeCategories(
+                new MachineRecipeCategory(guiHelper, new TileItemReducer(), ID_ITEM_REDUCER, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TileCompressor(), ID_COMPRESSOR, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TileRebuild(), ID_REBUILD, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TilePulverize(), ID_PULVERIZE, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TileExtractor(), ID_EXTRACTOR, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TileForming(), ID_FORMING, 44, 16, 90, 44),
+                new MachineRecipeCategory(guiHelper, new TilePumpAir(), ID_PUMP_AIR, 45, 21, 80, 61),
+                new MachineRecipeCategory(guiHelper, new TileCondenser(), ID_CONDENSER, 4, 11, 168, 92),
+                new MachineRecipeCategory(guiHelper, new TileElectrolyticCell(), ID_ELECTROLYTIC_CELL, 32, 8, 112, 93),
+                new MachineRecipeCategory(guiHelper, new TileGeneratorElement(), ID_ELEMENT_GENERATOR, 40, 24, 95, 39),
+                new MachineRecipeCategory(guiHelper, new TileFluidHeater(), ID_FLUID_HEATER, 4, 11, 168, 92),
+                new MachineRecipeCategory(guiHelper, new TileFluidReactor(), ID_FLUID_REACTOR, 14, 11, 148, 93),
+                new MachineRecipeCategory(guiHelper, new TileSolidMelter(), ID_SOLID_MELTER, 38, 12, 100, 56),
+                new MachineRecipeCategory(guiHelper, new TileSolidReactor(), ID_SOLID_REACTOR, 30, 5, 117, 96),
+                new MachineRecipeCategory(guiHelper, new TileSolidFluidReactor(), ID_SOLID_FLUID_REACTOR,  17, 10, 141, 55),
+                new MachineRecipeCategory(guiHelper, new TileCentrifuge(), ID_CENTRIFUGE, 16, 13, 146, 52),
+                new MachineRecipeCategory(guiHelper, new TileCoagulator(), ID_COAGULATOR, 44, 7, 83, 73),
+                new MachineRecipeCategory(guiHelper, new TileSolidCentrifuge(), ID_SOLID_CENTRIFUGE, 52, 12, 76, 58)
+        );
     }
 
     private void registerJeiRecipes(IModRegistry registry, Block machine, MachineRecipeHandler recipes, String id) {

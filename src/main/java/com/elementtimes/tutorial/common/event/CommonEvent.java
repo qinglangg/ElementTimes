@@ -17,7 +17,7 @@ import java.util.Random;
  * @author 金竹
  */
 @Mod.EventBusSubscriber
-public class BlockEvent {
+public class CommonEvent {
 
 	@SubscribeEvent
 	public static void onBreakGrass(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {

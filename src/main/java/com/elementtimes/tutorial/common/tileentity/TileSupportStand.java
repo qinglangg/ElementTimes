@@ -1,219 +1,318 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
-import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.elementcore.api.template.capability.fluid.ITankHandler;
+import com.elementtimes.elementcore.api.template.capability.fluid.TankHandler;
+import com.elementtimes.elementcore.api.template.capability.item.IItemHandler;
+import com.elementtimes.elementcore.api.template.capability.item.ItemHandler;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeCapture;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.common.block.AlcoholLamp;
+import com.elementtimes.tutorial.common.block.SupportStand;
+import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.interfaces.tileentity.ITESRSupport;
-import com.elementtimes.tutorial.network.SupportStandRenderNetwork;
-import com.elementtimes.tutorial.other.RenderObject;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.lifecycle.PremiseMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.management.PlayerChunkMapEntry;
-import net.minecraft.util.NonNullList;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.items.SlotItemHandler;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author KSGFK create in 2019/6/12
  */
-@ModInvokeStatic("init")
-public class TileSupportStand extends BaseMachine implements ITESRSupport {
-    public static MachineRecipeHandler RECIPE_EMPTY = new MachineRecipeHandler();
-    public static MachineRecipeHandler RECIPE_EVAPORATING_DISH = null;
-    public static MachineRecipeHandler RECIPE_CRUCIBLE = null;
+@SuppressWarnings({"WeakerAccess", "unused"})
+public class TileSupportStand extends BaseTileEntity implements ITileTESR {
 
-    private NonNullList<RenderObject> tesr;
+    public static MachineRecipeHandler RECIPE_EMPTY = new MachineRecipeHandler(0, 0, 0, 0);
+
+    private static final String NBT_RAIN_COLD_DOWN = "_nbt_bind_support_stand_cold_down_";
+    private static final String NBT_ALCOHOL = "_nbt_bind_support_stand_alcohol_";
+
+    private HashMap<String, RenderObject> tesr;
     private NBTTagCompound properties;
-    public int alcoholLamp;
-    public int crucible;
-    public int evaporatingDish;
+    private MachineRecipeHandler recipe = RECIPE_EMPTY;
+    private IGuiProvider displayGui = null;
+
+    private int rainOutFireColdDown = 0;
+    private ITankHandler mEthanolTank = new TankHandler((i, f) -> f.getFluid() == ElementtimesFluids.ethanol, TankHandler.TRUE, 1, AlcoholLamp.ALCOHOL_AMOUNT);
 
     public TileSupportStand() {
-        super(0, 3, 3, 2, 16000, 1, 16000);
-        markBucketInput(0, 1, 2);
-        addLifeCycle(new PremiseMachineLifecycle(this::isFire));
-        addLifeCycle(new FluidMachineLifecycle(this, 2, 1));
-    }
-
-    public static void init() {
-        if (RECIPE_EVAPORATING_DISH == null) {
-            // 蒸发皿
-            RECIPE_EVAPORATING_DISH = new MachineRecipeHandler()
-            		.newRecipe("NaCl")
-                    .addCost(0)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute,1000))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 1000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 100))
-                    .endAdd();
-        }
-        if (RECIPE_CRUCIBLE == null) {
-            // 坩埚
-            RECIPE_CRUCIBLE = new MachineRecipeHandler()
-            		//CaCO3=CaO+co2
-                    .add("CaO", 0, 1000, "CaCO3=CaO+co2", 1000)
-                    .newRecipe("U")
-                    .addCost(0)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.uraniumPowder,1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 3000))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 3))
-                    .endAdd();
-        }
-    }
-
-    // ITESRSupport
-    @Override
-    protected void onCreate() {
-        tesr = NonNullList.create();
-        properties = new NBTTagCompound();
-        alcoholLamp = registerRender(RenderObject.create(ElementtimesBlocks.alcoholLamp, .5, -.13, .5));
-        crucible = registerRender(RenderObject.create(ElementtimesBlocks.crucible, .5, .375, .5));
-        evaporatingDish = registerRender(RenderObject.create(ElementtimesBlocks.evaporatingDish, .5, .375, .5));
+        super(-1, 0, 0, 0, 0, 0, 0);
+        addLifeCycle(new AlcoholLampLifeCycle());
     }
 
     @Override
-    public NonNullList<RenderObject> getRenderItems() {
+    public ITankHandler getTanks(SideHandlerType type) {
+        if (type == SideHandlerType.NONE) {
+            return mEthanolTank;
+        }
+        return super.getTanks(type);
+    }
+
+    // 机器切换
+    public void clear() {
+        recipe = RECIPE_EMPTY;
+        displayGui = null;
+        resetHandler();
+        resetRecipe(null, 0);
+        setEnergyProcessed(0);
+        markBucketInput();
+        getAllLifecycles().removeIf(o -> o instanceof FluidMachineLifecycle);
+    }
+    public void initSubBlock(@Nullable String renderKey, MachineRecipeHandler handler, MachineRecipeCapture recipe, int process, FluidStack[] fluids, ItemStack[] items) {
+        if (renderKey != null) {
+            setRender(renderKey, true, pos);
+        }
+        this.recipe = handler;
+        resetHandler();
+        resetRecipe(recipe, process);
+        fillHandlers(fluids, items);
+    }
+    public void renderModule(ISupportStandModule module) {
+        if (!isRenderRegistered(module.getKey())) {
+            registerRender(module.getKey(), module.createRender());
+        }
+        setRender(module.getKey(), true, pos);
+    }
+    private void resetHandler() {
+        setItemHandler(SideHandlerType.INPUT, new ItemHandler(recipe.inputItemCount + recipe.inputFluidCount + recipe.outputFluidCount, this::isInputValid));
+        setItemHandler(SideHandlerType.OUTPUT, new ItemHandler(recipe.outputItemCount + recipe.inputFluidCount + recipe.outputFluidCount, ItemHandler.TRUE));
+        setTanks(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, recipe.inputFluidCount, 16000));
+        setTanks(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, recipe.outputFluidCount, 16000));
+
+        int[] ia = new int[recipe.inputFluidCount + recipe.outputFluidCount];
+        for (int i = 0; i < recipe.inputFluidCount + recipe.outputFluidCount; i++) {
+            ia[i] = i;
+        }
+        markBucketInput(ia);
+        addLifeCycle(new FluidMachineLifecycle(this, recipe.inputFluidCount, recipe.outputFluidCount));
+    }
+    private void resetRecipe(MachineRecipeCapture recipe, int process) {
+        setWorkingRecipe(recipe);
+        setEnergyProcessed(process);
+        interrupt();
+    }
+    private void fillHandlers(FluidStack[] fluids, ItemStack[] items) {
+        ITankHandler inputFluids = getTanks(SideHandlerType.INPUT);
+        ITankHandler outputFluids = getTanks(SideHandlerType.OUTPUT);
+        for (int i = 0; i < recipe.inputFluidCount; i++) {
+            inputFluids.fillIgnoreCheck(i, fluids[i], true);
+        }
+        for (int i = 0; i < recipe.outputFluidCount; i++) {
+            inputFluids.fillIgnoreCheck(i, fluids[recipe.inputFluidCount + i], true);
+        }
+        IItemHandler inputHandler = getItemHandler(SideHandlerType.INPUT);
+        IItemHandler outputHandler = getItemHandler(SideHandlerType.OUTPUT);
+        for (int i = 0; i < recipe.inputItemCount; i++) {
+            outputHandler.insertItemIgnoreValid(i, items[i], false);
+        }
+        for (int i = 0; i < recipe.outputItemCount; i++) {
+            outputHandler.insertItemIgnoreValid(i, items[recipe.inputItemCount + i], false);
+        }
+    }
+
+    // Machine
+    @Override
+    public int getEnergyTick() {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public MachineRecipeHandler getRecipes() {
+        return recipe;
+    }
+
+    @Override
+    public HashMap<String, RenderObject> getRenderItems() {
+        if (tesr == null) {
+            tesr = new HashMap<>(10);
+            for (ISupportStandModule module : SupportStand.MODULES) {
+                registerRender(module.getKey(), module.createRender());
+            }
+        }
         return tesr;
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getRenderProperties() {
+        if (properties == null) {
+            properties = new NBTTagCompound();
+        }
         return properties;
     }
 
     @Override
-    public void setRenderProperties(NBTTagCompound properties) {
+    public void setRenderProperties(@Nonnull NBTTagCompound properties) {
         this.properties = properties;
-    }
-
-    @Override
-    public void markRenderClient() {
-        if (world instanceof WorldServer) {
-            PlayerChunkMapEntry entry = ((WorldServer) world).getPlayerChunkMap().getEntry(pos.getX() >> 4, pos.getZ() >> 4);
-            if (entry != null) {
-                for (EntityPlayerMP player : entry.getWatchingPlayers()) {
-                    ElementTimes.CONTAINER.elements.channel.sendTo(new SupportStandRenderNetwork(ITESRSupport.super.serializeNBT(), world.provider.getDimension(), pos), player);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void setRender(int index, boolean isRender) {
-        ITESRSupport.super.setRender(index, isRender);
-        markRebuildFluids();
-        markRebuildSlots();
-        createRecipe();
+        markRenderClient(pos);
     }
 
     // gui
+    @Override
+    public int getGuiId() {
+        for (ISupportStandModule module : SupportStand.MODULES) {
+            if (module.isAdded(world, pos)) {
+                IGuiProvider provider = module.getGuiProvider(world, pos);
+                if (provider != null) {
+                    displayGui = provider;
+                    return provider.getGuiId();
+                }
+            }
+        }
+        return -1;
+    }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
-            return ElementtimesGUI.Machines.SupportStandAL;
-        } else if (isRender(alcoholLamp) && isRender(crucible)) {
-            return ElementtimesGUI.Machines.SupportStandC;
-        }
-        return null;
+    public ResourceLocation getBackground() {
+        return displayGui == null ? null : displayGui.getBackground();
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return displayGui == null ? null : displayGui.getSize();
+    }
+
+    @Override
+    public String getTitle() {
+        return displayGui == null ? null : displayGui.getTitle();
+    }
+
+    @Override
+    public List<EntityPlayerMP> getOpenedPlayers() {
+        return displayGui == null ? Collections.emptyList() : displayGui.getOpenedPlayers();
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
-        if (isRender(alcoholLamp) && isRender(evaporatingDish)) {
-            return RECIPE_EVAPORATING_DISH;
-        } else if (isRender(alcoholLamp) && isRender(crucible)) {
-            return RECIPE_CRUCIBLE;
-        }
-        return RECIPE_EMPTY;
+    public Slot[] getSlots() {
+        return displayGui == null ? IGuiProvider.ITEM_NULL : displayGui.getSlots();
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
-        if ((isRender(alcoholLamp) && isRender(evaporatingDish))
-                || (isRender(alcoholLamp) && isRender(crucible))) {
-            return new Slot[] {
-                    new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 37, 16),
-                    new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 101, 16),
-                    new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 2, 71, 85),
-                    new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 37, 34),
-                    new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 101, 34),
-                    new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 89, 85),
-            };
-        }
-        return super.createSlots();
-    }
-
-    @Nonnull
-    @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        if ((isRender(alcoholLamp) && isRender(evaporatingDish))
-                || (isRender(alcoholLamp) && isRender(crucible))) {
-            Map<SideHandlerType, Int2ObjectMap<int[]>> fluids = new HashMap<>(3);
-            fluids.put(SideHandlerType.INPUT, new Int2ObjectArrayMap<>(new int[] {0, 1}, new int[][] {
-                    new int[] {58, 10, 16, 46}, new int[] {65, 64, 46, 16}
-            }));
-            fluids.put(SideHandlerType.OUTPUT, new Int2ObjectArrayMap<>(new int[] {0}, new int[][] {new int[] {122, 10, 16, 46}}));
-            return fluids;
-        }
-        return super.createFluids();
+    public FluidSlotInfo[] getFluids() {
+        return displayGui == null ? IGuiProvider.FLUID_NULL : displayGui.getFluids();
     }
 
     @Override
-    public boolean isHorizontalFluidSlot(SideHandlerType type, int index) {
-        return isRender(alcoholLamp) && isRender(evaporatingDish) && type == SideHandlerType.INPUT && index == 1;
+    public float getProcess() {
+        return displayGui == null ? 0 : displayGui.getProcess();
     }
 
-    public void setFire(boolean fire) {
-        NBTTagCompound renderProperties = getRenderProperties();
-        if (renderProperties != null) {
-            renderProperties.setBoolean("fire", fire);
-            markRenderClient();
+    @Override
+    public void onGuiClosed(EntityPlayer player) {
+        if (displayGui != null) {
+            displayGui.onGuiClosed(player);
         }
+        displayGui = null;
     }
 
-    public boolean isFire() {
-        NBTTagCompound renderProperties = getRenderProperties();
-        if (renderProperties != null && renderProperties.hasKey("fire")) {
-            return renderProperties.getBoolean("fire");
-        }
-        return false;
-    }
-
+    // NBT
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        ITESRSupport.super.readFromNBT(nbt);
+        ITileTESR.super.readFromNBT(nbt);
+        rainOutFireColdDown = nbt.getInteger(NBT_RAIN_COLD_DOWN);
+        mEthanolTank.deserializeNBT(nbt.getCompoundTag(NBT_ALCOHOL));
+        markRenderClient(pos);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        super.writeToNBT(nbt);
-        return ITESRSupport.super.writeToNBT(nbt);
+        nbt = super.writeToNBT(nbt);
+        nbt.setInteger(NBT_RAIN_COLD_DOWN, rainOutFireColdDown);
+        nbt.setTag(NBT_ALCOHOL, mEthanolTank.serializeNBT());
+        return ITileTESR.super.writeRenderNbt(nbt);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
         NBTTagCompound nbt = pkt.getNbtCompound();
-        ITESRSupport.super.deserializeNBT(nbt);
+        ITileTESR.super.deserializeNBT(nbt);
+    }
+
+    @Override
+    public void update() {
+        update(this);
+    }
+
+    private class AlcoholLampLifeCycle implements IMachineLifecycle {
+        @Override
+        public void onTickStart() {
+            boolean isFire = ((ISupportStandModule) ElementtimesBlocks.alcoholLamp).isAdded(world, pos)
+                    && getRenderProperties().getBoolean(AlcoholLamp.BIND_ALCOHOL);
+            // 雨天无阻挡：几率灭火
+            if (rainOutFireColdDown > 0) {
+                rainOutFireColdDown--;
+            } else {
+                if (world.isRainingAt(pos) && isFire && world.rand.nextFloat() <= AlcoholLamp.ALCOHOL_RAIN_PROBABILITY) {
+                    boolean needOutFire = true;
+                    for (int h = pos.getY(); h < world.getActualHeight(); h++) {
+                        final BlockPos pos = new BlockPos(TileSupportStand.this.pos.getX(), h, TileSupportStand.this.pos.getZ());
+                        final IBlockState state = world.getBlockState(pos);
+                        if (state.getBlock().isAir(state, world, pos)) {
+                            needOutFire = false;
+                        }
+                    }
+                    if (needOutFire) {
+                        getRenderProperties().setBoolean(AlcoholLamp.BIND_ALCOHOL, false);
+                        markRenderClient(pos);
+                    } else {
+                        // 10s 内不在检查
+                        rainOutFireColdDown = 2000;
+                    }
+                }
+            }
+            // 酒精消耗
+            if (isFire) {
+                FluidStack drain = getTanks(SideHandlerType.NONE).drain(0, AlcoholLamp.ALCOHOL_TICK, false);
+                if (drain == null || drain.amount < AlcoholLamp.ALCOHOL_TICK) {
+                    getRenderProperties().setBoolean(AlcoholLamp.BIND_ALCOHOL, false);
+                    markRenderClient(pos);
+                    return;
+                } else {
+                    getTanks(SideHandlerType.NONE).drain(0, AlcoholLamp.ALCOHOL_TICK, true);
+                }
+            }
+
+            markDirty();
+        }
+
+        @Override
+        public boolean onCheckStart() {
+            return getRenderProperties().getBoolean(AlcoholLamp.BIND_ALCOHOL);
+        }
+
+        @Override
+        public boolean onLoop() {
+            return getRenderProperties().getBoolean(AlcoholLamp.BIND_ALCOHOL);
+        }
+
+        @Override
+        public boolean onCheckResume() {
+            return getRenderProperties().getBoolean(AlcoholLamp.BIND_ALCOHOL);
+        }
     }
 }

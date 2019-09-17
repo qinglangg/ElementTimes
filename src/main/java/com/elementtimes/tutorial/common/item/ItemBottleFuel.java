@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.common.item;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileFluidHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
-import com.elementtimes.tutorial.other.SideHandlerType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -17,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -28,8 +29,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStackSimple;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,6 +108,13 @@ public class ItemBottleFuel extends Item {
         FluidHandlerItemStackSimple capability = (FluidHandlerItemStackSimple) itemStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
         capability.fill(fluid, true);
         return itemStack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(TextFormatting.RED.toString() + "该物品将会在之后的版本中删除，请尽快使用或转换成原版桶");
     }
 
     @Nullable

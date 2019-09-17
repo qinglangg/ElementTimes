@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.item;
 
-import com.elementtimes.tutorial.interfaces.block.IDismantleBlock;
+import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -15,6 +15,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
+/**
+ * 扳手
+ * @author ???
+ */
 public class Spanner extends Item {
 
     @Nonnull
@@ -25,15 +29,9 @@ public class Spanner extends Item {
             if (tile != null) {
                 Block b = worldIn.getBlockState(pos).getBlock();
                 if (b instanceof IDismantleBlock) {
-                    IDismantleBlock d = (IDismantleBlock) b;
-                    ItemStack drop = d.dismantleBlock(worldIn, pos);
-                    InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), drop);
-
-                    worldIn.setBlockToAir(pos);
-                    worldIn.removeTileEntity(pos);
+                    ((IDismantleBlock) b).dismantleBlock(worldIn, pos);
                 }
             }
-            return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.PASS;
     }

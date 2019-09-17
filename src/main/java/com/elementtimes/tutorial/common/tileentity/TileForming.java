@@ -1,11 +1,18 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
@@ -14,50 +21,81 @@ import javax.annotation.Nonnull;
  * @author luqin2007
  */
 @ModInvokeStatic("init")
-public class TileForming extends BaseOneToOne {
+public class TileForming extends BaseTileEntity {
 
     public TileForming() {
-        super(ElementtimesConfig.FORMING.maxEnergy);
+        super(ElementtimesConfig.FORMING.maxEnergy, 1, 1);
     }
 
-    public static MachineRecipeHandler sGearRecipeHandler;
+    public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
-        sGearRecipeHandler = new MachineRecipeHandler()
-                .add("1", 10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
-                .add("2", 10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
-                .add("3", 10000, "stone", 9, ElementtimesItems.gearStone, 3)
-                .add("4", 10000, "coal", 9, ElementtimesItems.gearCarbon, 3)
-                .add("5", 10000, "ingotGold", 9, ElementtimesItems.gearGold, 3)
-                .add("6", 10000, "ingotSteel", 9, ElementtimesItems.gearSteel, 3)
-                .add("7", 10000, "gemDiamond", 9, ElementtimesItems.gearDiamond, 3)
-                .add("8", 10000, "ingotIron", 9, ElementtimesItems.gearIron, 3)
-                .add("9", 10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
-                .add("0", 10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3)
-                .add("10", 10000, "ingotlead", 9, ElementtimesItems.gearLead, 3)
-                .add("11", 10000, ElementtimesItems.diamondIngot, 9, ElementtimesItems.gearAdamas, 3)
-                .add("12", 10000,Blocks.OBSIDIAN, 9, ElementtimesItems.gearObsidian, 3)
-                .add("13", 10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
+        if (RECIPE == null) {
+            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
+                    .add(10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
+                    .add(10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
+                    .add(10000, "stone", 9, ElementtimesItems.gearStone, 3)
+                    .add(10000, "coal", 9, ElementtimesItems.gearCarbon, 3)
+                    .add(10000, "ingotGold", 9, ElementtimesItems.gearGold, 3)
+                    .add(10000, "ingotSteel", 9, ElementtimesItems.gearSteel, 3)
+                    .add(10000, "gemDiamond", 9, ElementtimesItems.gearDiamond, 3)
+                    .add(10000, "ingotIron", 9, ElementtimesItems.gearIron, 3)
+                    .add(10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
+                    .add(10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3)
+                    .add(10000, "ingotlead", 9, ElementtimesItems.gearLead, 3)
+                    .add(10000, ElementtimesItems.diamondIngot, 9, ElementtimesItems.gearAdamas, 3)
+                    .add(10000,Blocks.OBSIDIAN, 9, ElementtimesItems.gearObsidian, 3)
+                    .add(10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
+        }
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
-        return sGearRecipeHandler;
+    public MachineRecipeHandler getRecipes() {
+        return RECIPE;
     }
 
     @Override
     public void applyConfig() {
-        setMaxTransfer(ElementtimesConfig.FORMING.maxReceive);
+        setEnergyTransfer(ElementtimesConfig.FORMING.maxReceive);
     }
 
     @Override
-    public int getMaxEnergyChange() {
+    public int getEnergyTick() {
         return ElementtimesConfig.FORMING.maxExtract;
     }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.Forming;
+    @Nonnull
+    public Slot[] getSlots() {
+        return new Slot[]{new SlotItemHandler(this.getItemHandler(SideHandlerType.INPUT), 0, 56, 30), new SlotItemHandler(this.getItemHandler(SideHandlerType.OUTPUT), 0, 110, 30)};
+    }
+
+    @Override
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/5.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_156_74.copy().withTitleY(60)
+                .withProcess(80, 30, 0, 156, 24, 17)
+                .withEnergy(43, 55, 24, 156, 90, 4);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.forming.getLocalizedName();
+
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.Forming.id();
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

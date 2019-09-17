@@ -1,8 +1,7 @@
 package com.elementtimes.tutorial.plugin.jei.category;
 
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.interfaces.tileentity.IGuiProvider;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -11,7 +10,7 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.inventory.Slot;
 
 import javax.annotation.Nonnull;
 
@@ -25,40 +24,28 @@ import javax.annotation.Nonnull;
  */
 public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapper> {
 
-    private IDrawable mBackground;
-    private String machine;
+    private IDrawable background;
     private String id;
+    private String title;
     private int[][] items;
     private int[][] fluids;
 
-    public static MachineRecipeCategory createOneToOne(IGuiHelper helper, String id, String machine) {
-        return new MachineRecipeCategory(helper, "5", id, machine, 44, 16, 90, 44,
-                new int[][]{new int[] {55,29}, new int[]{109,29}}, new int[0][]);
-    }
-
-    public static MachineRecipeCategory createFromBaseMachine(IGuiHelper helper, ElementtimesGUI.Machines guiType,
-                                                              int u, int v, int w, int h, int[][] itemXYs, int[][] fluidXYs) {
-        final String name = guiType.name().toLowerCase();
-        final String id = ElementTimes.MODID + "." + name + ".jei.category";
-        return new MachineRecipeCategory(helper, guiType.texture(), id, name, u, v, w, h, itemXYs, fluidXYs);
-    }
-
-    public MachineRecipeCategory(IGuiHelper helper, String texture, String id, String machine,
-                                 int u, int v, int width, int height,
-                                 int[][] itemXYs, int[][] fluidXYs) {
-        mBackground = helper.createDrawable(new ResourceLocation(ElementTimes.MODID, "textures/gui/" + texture + ".png"), u, v, width, height);
-        this.machine = machine;
+    public MachineRecipeCategory(IGuiHelper helper, IGuiProvider gui, String id, int u, int v, int w, int h) {
+        this.background = helper.createDrawable(gui.getBackground(), u, v, w, h);
         this.id = id;
-        for (int[] xy : itemXYs) {
-            xy[0] -= u;
-            xy[1] -= v;
+        this.title = gui.getTitle();
+        Slot[] slots = gui.getSlots();
+        this.items = new int[slots.length][];
+        for (int i = 0; i < slots.length; i++) {
+            Slot slot = slots[i];
+            items[i] = new int[] { slot.xPos - u, slot.yPos - v };
         }
-        for (int[] xy : fluidXYs) {
-            xy[0] -= u;
-            xy[1] -= v;
+        IGuiProvider.FluidSlotInfo[] fluidSlots = gui.getFluids();
+        this.fluids = new int[fluidSlots.length][];
+        for (int i = 0; i < fluidSlots.length; i++) {
+            IGuiProvider.FluidSlotInfo slot = fluidSlots[i];
+            fluids[i] = new int[] { slot.x - u, slot.y - v };
         }
-        items = itemXYs;
-        fluids = fluidXYs;
     }
 
     @Nonnull
@@ -70,7 +57,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     @Nonnull
     @Override
     public String getTitle() {
-        return net.minecraft.client.resources.I18n.format(String.format("jei.%s.%s", ElementTimes.MODID, machine));
+        return title;
     }
 
     @Nonnull
@@ -82,7 +69,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     @Nonnull
     @Override
     public IDrawable getBackground() {
-        return mBackground;
+        return background;
     }
 
     @Override

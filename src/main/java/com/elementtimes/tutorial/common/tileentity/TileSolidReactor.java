@@ -1,54 +1,55 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 @ModInvokeStatic("init")
-public class TileSolidReactor extends BaseMachine {
+public class TileSolidReactor extends BaseTileEntity {
 
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
         if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler()
+            RECIPE = new MachineRecipeHandler(2, 2, 0, 1)
             		//CaO+3C=CaC2+CO
-                    .newRecipe("CaC2")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 3))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    
-                    
+
+
                     //铁矿石获得铁
-                    .newRecipe("IRON_INGOT1")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
-                    .endAdd()   
-                    
-                    .newRecipe("IRON_INGOT2")
+                    .endAdd()
+
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
@@ -56,59 +57,58 @@ public class TileSolidReactor extends BaseMachine {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    
+
                   //铜矿石获得铜
-                    .newRecipe("oreCopper1")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem("oreCopper",1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
-                    .endAdd()   
+                    .endAdd()
 
-                    .newRecipe("oreCopper2")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
-                    .endAdd() 
-                    
-                    
+                    .endAdd()
+
+
                     //钢锭
-                    .newRecipe("2")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
                     .endAdd()
 
-                    
-                    .newRecipe("coarseSilicon")
+
+                    .newRecipe()
                     .addCost(100000)
                     .addItemInput(IngredientPart.forItem(Items.COAL,1))
                     .addItemInput(IngredientPart.forItem(Blocks.SAND,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.coarseSilicon,1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    
-                    .newRecipe("SiC")
+
+                    .newRecipe()
                     .addCost(100000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.Silicon,1))
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.diamondIngot,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.SiC,1))
                     .endAdd()
                     //铀锭的获得
-                    .newRecipe("U")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.UO2,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 1))
                     .endAdd();
-
         }
     }
 
@@ -119,13 +119,28 @@ public class TileSolidReactor extends BaseMachine {
     }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.SolidReactor;
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/solidreactor.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_204_122.copy().withTitleY(85).withProcess(75, 42).withEnergy(43, 108);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.solidReactor.getLocalizedName();
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.SolidReactor.id();
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
+    public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 35, 42),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 53, 42),
@@ -138,18 +153,20 @@ public class TileSolidReactor extends BaseMachine {
 
     @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        Map<SideHandlerType, Int2ObjectMap<int[]>> fluids = new HashMap<>(1);
-        Int2ObjectMap<int[]> output = new Int2ObjectArrayMap<>(
-                new int[] {0}, new int[][] {new int[] {126, 11, 16, 46}}
-        );
-        fluids.put(SideHandlerType.OUTPUT, output);
-        return fluids;
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createOutput(0, 126, 11)
+        };
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
+    public MachineRecipeHandler getRecipes() {
         return RECIPE;
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

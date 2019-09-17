@@ -1,11 +1,11 @@
 package com.elementtimes.tutorial.other.pipeline.interfaces;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileFluidHandler;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
 import com.elementtimes.tutorial.common.block.Pipeline;
 import com.elementtimes.tutorial.common.tileentity.TilePipeline;
-import com.elementtimes.tutorial.interfaces.tileentity.ITileFluidHandler;
-import com.elementtimes.tutorial.interfaces.tileentity.ITileItemHandler;
-import com.elementtimes.tutorial.other.SideHandlerType;
 import com.elementtimes.tutorial.other.pipeline.PLConnType;
 import com.elementtimes.tutorial.other.pipeline.PLElement;
 import com.elementtimes.tutorial.other.pipeline.PLInfo;

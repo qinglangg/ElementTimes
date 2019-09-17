@@ -4,9 +4,8 @@ import com.elementtimes.elementcore.api.annotation.ModRecipe;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import com.elementtimes.tutorial.other.FluidIngredient;
-import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
 import com.elementtimes.tutorial.other.recipe.RecipeUtil;
-
+import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -17,10 +16,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 
 import java.util.LinkedList;
 import java.util.List;

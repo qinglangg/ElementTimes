@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.block.machine;
 
-import com.elementtimes.tutorial.common.block.base.BaseClosableMachine;
+import com.elementtimes.elementcore.api.template.block.BaseClosableMachine;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.tileentity.TileCompressor;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -18,13 +19,15 @@ import net.minecraftforge.common.property.Properties;
 
 import javax.annotation.Nonnull;
 
+import static com.elementtimes.elementcore.api.template.block.Properties.*;
+
 /**
  * @author luqin2007
  */
 public class Compressor extends BaseClosableMachine<TileCompressor> {
 
     public Compressor() {
-        super(TileCompressor.class);
+        super(TileCompressor.class, ElementTimes.instance);
         setDefaultState(getDefaultState().withProperty(Properties.StaticProperty, false));
     }
 

@@ -1,34 +1,34 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 气泵
  * @author luqin2007
  */
 @ModInvokeStatic("init")
-public class TilePumpAir extends BaseMachine {
+public class TilePumpAir extends BaseTileEntity {
 
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
         if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler()
-                    .newRecipe("air")
+            RECIPE = new MachineRecipeHandler(0, 0, 0, 1)
+                    .newRecipe()
                     .addCost(100)
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.air, 1))
                     .endAdd();
@@ -42,24 +42,40 @@ public class TilePumpAir extends BaseMachine {
     }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.PumpAir;
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/pump.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_204_122.copy().withTitleY(85).withEnergy(43, 108, 24, 204, 90, 4);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.pumpAir.getLocalizedName();
+
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.PumpAir.id();
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
+    public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }
 
     @Override
-    public int getMaxEnergyChange() {
+    public int getEnergyTick() {
         return 1;
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
+    public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 56, 58),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 98, 58)
@@ -68,9 +84,14 @@ public class TilePumpAir extends BaseMachine {
 
     @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        HashMap<SideHandlerType, Int2ObjectMap<int[]>> map = new HashMap<>(1);
-        map.put(SideHandlerType.OUTPUT, new Int2ObjectArrayMap<>(new int[]{0}, new int[][]{new int[]{77, 28, 16, 46}}));
-        return map;
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createOutput(0, 77, 28)
+        };
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

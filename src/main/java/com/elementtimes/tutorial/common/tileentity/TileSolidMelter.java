@@ -1,41 +1,42 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 固体熔化机
  * @author luqin2007
  */
 @ModInvokeStatic("init")
-public class TileSolidMelter extends BaseMachine {
+public class TileSolidMelter extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler();
+    public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
-        if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE = new MachineRecipeHandler()
-                    .newRecipe("0")
+        if (RECIPE == null) {
+            RECIPE = new MachineRecipeHandler(1, 0, 0, 1)
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    .newRecipe("1")
+                    .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.Al2O3_Na3AlF6, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Al2O3_Na3AlF6, Fluid.BUCKET_VOLUME))
@@ -51,28 +52,41 @@ public class TileSolidMelter extends BaseMachine {
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
+    public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.SolidMelter;
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/solidmelter.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_166_84.copy().withTitleY(4).withProcess(65, 31).withEnergy(43, 72);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.solidMelter.getLocalizedName();
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.SolidMelter.id();
     }
 
     @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        HashMap<SideHandlerType, Int2ObjectMap<int[]>> map = new HashMap<>(1);
-        Int2ObjectArrayMap<int[]> value = new Int2ObjectArrayMap<>();
-        value.put(0, new int[] {95, 16, 16, 46});
-        map.put(SideHandlerType.OUTPUT, value);
-        return map;
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createOutput(0, 95, 16)
+        };
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
+    public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 45, 31),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 116, 28),
@@ -81,7 +95,12 @@ public class TileSolidMelter extends BaseMachine {
     }
 
     @Override
-    public int getMaxEnergyChange() {
+    public int getEnergyTick() {
         return 10;
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

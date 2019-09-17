@@ -1,31 +1,35 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * 离心机
+ * @author luqin2007
+ */
 @ModInvokeStatic("init")
-public class TileCentrifuge extends BaseMachine {
+public class TileCentrifuge extends BaseTileEntity {
 
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
         if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler()
-                    .newRecipe("air")
+            RECIPE = new MachineRecipeHandler(0, 0, 1, 5)
+                    .newRecipe()
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))
@@ -43,20 +47,15 @@ public class TileCentrifuge extends BaseMachine {
         addLifeCycle(new FluidMachineLifecycle(this, 1, 5));
     }
 
-    @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.Centrifuge;
-    }
-
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
+    public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
+    public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 18, 66),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 70, 66),
@@ -75,16 +74,40 @@ public class TileCentrifuge extends BaseMachine {
 
     @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        Map<SideHandlerType, Int2ObjectMap<int[]>> fluids = new HashMap<>(6);
-        fluids.put(SideHandlerType.INPUT, new Int2ObjectArrayMap<>(new int[] {0}, new int[][] {new int[]{18, 15, 16, 46}}));
-        fluids.put(SideHandlerType.OUTPUT, new Int2ObjectArrayMap<>(new int[] {0,1,2,3,4}, new int[][] {
-                new int[]{70, 15, 16, 46},
-                new int[]{88, 15, 16, 46},
-                new int[]{106, 15, 16, 46},
-                new int[]{124, 15, 16, 46},
-                new int[]{142, 15, 16, 46}
-        }));
-        return fluids;
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createInput(0, 18, 15),
+                FluidSlotInfo.createOutput(0, 70, 15),
+                FluidSlotInfo.createOutput(1, 88, 15),
+                FluidSlotInfo.createOutput(2, 106, 15),
+                FluidSlotInfo.createOutput(3, 124, 15),
+                FluidSlotInfo.createOutput(4, 142, 15),
+        };
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.Centrifuge.id();
+    }
+
+    @Override
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/centrifuge.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_204_122.copy().withProcess(40, 30).withEnergy(43, 107).withTitleY(112);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.centrifuge.getLocalizedName();
+
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

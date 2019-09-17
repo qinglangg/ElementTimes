@@ -1,40 +1,40 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.other.SideHandlerType;
-import com.elementtimes.tutorial.other.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.tutorial.other.machineRecipe.IngredientPart;
-import com.elementtimes.tutorial.other.machineRecipe.MachineRecipeHandler;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 流体加热器
  * @author luqin2007
  */
 @ModInvokeStatic("init")
-public class TileFluidHeater extends BaseMachine {
+public class TileFluidHeater extends BaseTileEntity {
 
     public static MachineRecipeHandler RECIPE = null;
     public static void init() {
         if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler()
-                    .newRecipe("0")
+            RECIPE = new MachineRecipeHandler(0, 0, 1, 1)
+                    .newRecipe()
                     .addCost(2000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, Fluid.BUCKET_VOLUME))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
                     .endAdd()
-                    .newRecipe("1")
+                    .newRecipe()
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, Fluid.BUCKET_VOLUME))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, Fluid.BUCKET_VOLUME))
@@ -49,39 +49,61 @@ public class TileFluidHeater extends BaseMachine {
     }
 
     @Override
-    public ElementtimesGUI.Machines getGuiType() {
-        return ElementtimesGUI.Machines.FluidHeater;
+    public ResourceLocation getBackground() {
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/fluidheater.png");
+    }
+
+    @Override
+    public GuiSize getSize() {
+        return GUI_SIZE_176_204_122.copy().withTitleY(117)
+                .withProcess(53, 18, 0, 204, 70, 19)
+                .withProcess(57, 52, 0, 223, 62, 15)
+                .withEnergy(45, 89, 0, 237, 90, 4);
+    }
+
+    @Override
+    public String getTitle() {
+        return ElementtimesBlocks.fluidHeater.getLocalizedName();
+    }
+
+    @Override
+    public int getGuiId() {
+        return ElementtimesGUI.Machines.FluidHeater.id();
     }
 
     @Nonnull
     @Override
-    public MachineRecipeHandler createRecipe() {
-        init();
+    public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }
 
     @Override
-    public int getMaxEnergyChange() {
+    public int getEnergyTick() {
         return 10;
     }
 
     @Nonnull
     @Override
-    public Map<SideHandlerType, Int2ObjectMap<int[]>> createFluids() {
-        Map<SideHandlerType, Int2ObjectMap<int[]>> fluids = new HashMap<>(2);
-        fluids.put(SideHandlerType.INPUT, new Int2ObjectArrayMap<>(new int[]{0}, new int[][]{new int[]{17, 25, 16, 46}}));
-        fluids.put(SideHandlerType.OUTPUT, new Int2ObjectArrayMap<>(new int[]{0}, new int[][]{new int[]{143, 25, 16, 46}}));
-        return fluids;
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createInput(0, 17, 25),
+                FluidSlotInfo.createOutput(0, 143, 25)
+        };
     }
 
     @Nonnull
     @Override
-    public Slot[] createSlots() {
+    public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 8, 83),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 136, 83),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 26, 83),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 152, 83)
         };
+    }
+
+    @Override
+    public void update() {
+        update(this);
     }
 }

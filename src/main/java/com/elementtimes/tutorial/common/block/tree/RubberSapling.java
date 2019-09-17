@@ -1,9 +1,8 @@
 package com.elementtimes.tutorial.common.block.tree;
 
+import com.elementtimes.tutorial.common.generator.RubberGenerator;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import com.elementtimes.tutorial.interfaces.tileentity.IConfigApply;
-import com.elementtimes.tutorial.common.generator.RubberGenerator;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +18,7 @@ import java.util.Random;
 /**
  * @author KSGFK create in 2019/6/4
  */
-public class RubberSapling extends BlockBush implements IGrowable, IConfigApply {
+public class RubberSapling extends BlockBush implements IGrowable {
     private int rubberProbability;
 
     public RubberSapling() {
@@ -60,7 +59,6 @@ public class RubberSapling extends BlockBush implements IGrowable, IConfigApply 
         }
     }
 
-    @Override
     public void applyConfig() {
         rubberProbability = ElementtimesConfig.GENERAL.rubberTreeGenRubberProbability;
     }
