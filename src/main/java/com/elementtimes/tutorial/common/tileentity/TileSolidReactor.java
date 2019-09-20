@@ -11,7 +11,6 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -29,6 +28,24 @@ public class TileSolidReactor extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(2, 2, 0, 1)
+                    //CaO+SiO2=CaSiO3
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1))
+                    .addItemInput(IngredientPart.forItem(Blocks.SAND, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesBlocks.cement , 1))
+                    .endAdd()
+            		//CaCO3+SiO2=CaSiO3+co2
+            		.newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate,1))
+                    .addItemInput(IngredientPart.forItem(Blocks.SAND, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesBlocks.cement , 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+
+
+
             		//CaO+3C=CaC2+CO
                     .newRecipe()
                     .addCost(10000)
@@ -43,19 +60,19 @@ public class TileSolidReactor extends BaseTileEntity {
                     .newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
-                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 3))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 2))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co,3000))
                     .endAdd()
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
-                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 3))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co,3000))
                     .endAdd()
 
                   //铜矿石获得铜
@@ -83,6 +100,12 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.pigIron, 1))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.pigIron,1))
+                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
                     .endAdd()
 

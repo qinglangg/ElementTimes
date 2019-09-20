@@ -34,7 +34,7 @@ item.elementtimes.elementsleeveleggings.name=elementsleeveleggings
 item.elementtimes.elementsleeveboots.name=elementsleeveboots
 item.elementtimes.copper.name=copper
 item.elementtimes.spanner.name=spanner
-item.elementtimes.ironpowder.name=ironpowder
+item.elementtimes.fe2o3.name=fe2o3
 item.elementtimes.copperpowder.name=copperpowder
 item.elementtimes.redstonepowder.name=redstonepowder
 item.elementtimes.greenstonepowder.name=greenstonepowder
@@ -306,3 +306,4 @@ chat.elementtimes.hammer.pipeline_path=from [%s, %s, %s] to [%s, %s, %s], time: 
 # subtitle
 subtitle.elementtimes.sounds=Cube Land
 subtitle.elementtimes.record=record(ET)
+item.elementknife.name=Element Knife

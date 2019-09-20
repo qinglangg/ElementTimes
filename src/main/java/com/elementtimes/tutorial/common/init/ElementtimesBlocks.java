@@ -62,6 +62,7 @@ public class ElementtimesBlocks {
     @ModOreDict("oreCopper")
     @ModBlock.HarvestLevel
     @ModBlock.WorldGen
+    @ModBlock.Tooltip({"\u00a79CuO", "SiO2", "CaCO3"})
     public static Block copperOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("orePlatinum")
@@ -89,6 +90,7 @@ public class ElementtimesBlocks {
     @ModOreDict("oreUranium")
     @ModBlock.HarvestLevel(level = 3)
     @ModBlock.WorldGen(YMin = 5, YRange = 10, probability = 0.3f)
+    @ModBlock.Tooltip("\u00a79U3O8 U^235/238")
     public static Block uraniumOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
 
 

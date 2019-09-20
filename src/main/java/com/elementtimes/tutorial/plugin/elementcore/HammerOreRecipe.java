@@ -66,7 +66,7 @@ public class HammerOreRecipe {
         // 矿物锤合成
         final Map<String, Object> annotationInfo = data.getAnnotationInfo();
         LoaderHelper.getOrLoadClass(container.elements, data.getClassName())
-                .flatMap(clazz -> ECUtils.reflect.getField(clazz, data.getObjectName(), null, Object.class, container.logger))
+                .flatMap(clazz -> ECUtils.reflect.getFromFieldOrMethod(clazz, data.getObjectName()))
                 .ifPresent(ore -> {
             String value = (String) annotationInfo.get("value");
             int damage = (int) annotationInfo.getOrDefault("damage", 1);
@@ -80,6 +80,7 @@ public class HammerOreRecipe {
                 for (Map.Entry<ItemStack, ItemStack> entry : itemStacks.entrySet()) {
                     container.elements.recipes.add(() -> {
                         ItemStack outputItem = entry.getValue().copy();
+                        outputItem.setCount(dustCount);
                         NonNullList<Ingredient> input = NonNullList.create();
                         input.add(Ingredient.fromStacks(entry.getKey()));
                         ShapelessOreRecipe recipe = getRecipeHammer(input, outputItem, damage, value
@@ -91,6 +92,7 @@ public class HammerOreRecipe {
                 }
             } else {
                 container.elements.recipes.add(() -> {
+                    System.out.println(ore + " + Hammer = " + output);
                     ItemStack[] matchingStacks = ECUtils.recipe.getIngredient(output).getMatchingStacks();
                     if (matchingStacks.length == 0) {
                         return null;

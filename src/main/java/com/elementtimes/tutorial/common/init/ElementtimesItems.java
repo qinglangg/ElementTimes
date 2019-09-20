@@ -44,17 +44,19 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("itemSilicon")
     public static Item coarseSilicon = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item SiC = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item Al = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item pigIron = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item slag = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item sandpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item stonepowder = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item Silicon = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item bambooCharcoal = new ItemFuel(800);
@@ -78,6 +80,7 @@ public class ElementtimesItems {
     public static Item Na3AlF6 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("ingotSteel")
+    @ModItem.Tooltip("\u00a79Fe")
     public static Item steelIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item carbonRod = new Item();
@@ -108,11 +111,14 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item silverPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModItem.Tooltip("\u00a79U3O8 U^235/238")
     public static Item uraniumPowder = new Item();
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModItem.Tooltip("\u00a79UO2 U^235/238")
     public static Item UO2 = new Item();
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item uranium = new Item();
+    @ModItem.Tooltip("\u00a79U U^235/238")
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item tinPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
@@ -122,7 +128,7 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item bluestonePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    public static Item ironPowder = new Item();
+    public static Item Fe2O3 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item goldPowder;
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)

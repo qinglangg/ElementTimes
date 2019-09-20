@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  * @author KSGFK
  */
 public class ElementtimesRecipe {
+
     public static void init(FMLInitializationEvent event) {
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(Items.IRON_INGOT), ItemBottleFuel.createByFluid(ElementtimesFluids.H));
     	BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(ItemBottleFuel.createByFluid(ElementtimesFluids.steam), PotionTypes.EMPTY), new ItemStack(ElementtimesItems.coalPowder),new ItemStack(Items.COAL));
@@ -54,7 +55,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.platinumOrePowder, new ItemStack(ElementtimesItems.platinumIngot, 1), 4.0f);
 		GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), ItemBottleFuel.createByFluid(ElementtimesFluids.steam), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.rubberRaw, new ItemStack(ElementtimesItems.rubber), 2.0f);
-		GameRegistry.addSmelting(ElementtimesBlocks.oreSalt, new ItemStack(ElementtimesItems.salt, 6), 2.0f);
+		GameRegistry.addSmelting(ElementtimesBlocks.oreSalt, new ItemStack(ElementtimesItems.salt, 3), 2.0f);
 		GameRegistry.addSmelting(ElementtimesBlocks.rubberLog, new ItemStack(Items.COAL, 1, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.stonepowder, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sandpowder, new ItemStack(Blocks.SAND, 1), 2.0f);

@@ -11,7 +11,6 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -23,6 +22,7 @@ import javax.annotation.Nonnull;
 
 /**
  * 固液反应器
+ *
  * @author luqin2007
  */
 @ModInvokeStatic("init")
@@ -33,43 +33,42 @@ public class TileSolidFluidReactor extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(1, 2, 1, 2)
-            		//AL2O3+6HCL=2ALCL3+3H2O
-            		.newRecipe()
+                    //AL2O3+6HCL=2ALCL3+3H2O
+                    .newRecipe()
                     .addCost(2000)
                     .addItemInput(IngredientPart.forItem(Items.REDSTONE, 1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl,6000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
 
-            		//CaF2+H2SO4==CaSO4+2HF
-            		.newRecipe()
+                    //CaF2+H2SO4==CaSO4+2HF
+                    .newRecipe()
                     .addCost(2000)
                     .addItemInput(IngredientPart.forItem(ElementtimesBlocks.calciumFluoride, 1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.CaSo4, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.hf, 2000))
                     .endAdd()
                     .newRecipe()
                     .addCost(2000)
                     .addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE, 1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.CaSo4, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.hf, 2000))
                     .endAdd()
 
 
-
-            		//2na+cl2=2nacl
-            		.newRecipe()
+                    //2na+cl2=2nacl
+                    .newRecipe()
                     .addCost(0)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.na, 2))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
                     .endAdd()
 
 
-            		//C+H2O(g)=CO+H2
+                    //C+H2O(g)=CO+H2
                     .newRecipe()
                     .addCost(6000)
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
@@ -78,7 +77,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
                     .endAdd()
 
-                   //钠与水反应
+                    //钠与水反应
                     .newRecipe()
                     .addCost(0)
                     .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
@@ -94,11 +93,11 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .endAdd()
 
-            		//电石制取乙炔
+                    //电石制取乙炔
                     .newRecipe()
                     .addCost(0)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 2000))
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumacetylide , 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumacetylide, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calciumHydroxide, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
@@ -108,14 +107,14 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .newRecipe()
                     .addCost(5000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 2000))
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.coarseSilicon , 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.coarseSilicon, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Sicl4, 1000))
                     .endAdd()
 
                     //铁矿石获得铁
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
+                    .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -124,17 +123,17 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
-                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 3000))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
-                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
 
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE,1))
+                    .addItemInput(IngredientPart.forItem(Blocks.IRON_ORE, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -143,20 +142,18 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironPowder,1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
-                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 3000))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 3000))
                     .endAdd()
-
-
 
 
                     //铜矿石获得铜
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem("oreCopper",1))
+                    .addItemInput(IngredientPart.forItem("oreCopper", 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -165,7 +162,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -175,7 +172,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem("oreCopper",1))
+                    .addItemInput(IngredientPart.forItem("oreCopper", 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -184,7 +181,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
@@ -232,7 +229,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
     @Nonnull
     @Override
     public FluidSlotInfo[] getFluids() {
-        return new FluidSlotInfo[] {
+        return new FluidSlotInfo[]{
                 FluidSlotInfo.createInput(0, 42, 15),
                 FluidSlotInfo.createOutput(0, 116, 15),
                 FluidSlotInfo.createOutput(1, 137, 15)
@@ -242,7 +239,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
     @Nonnull
     @Override
     public Slot[] getSlots() {
-        return new Slot[] {
+        return new Slot[]{
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 22, 30),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 43, 66),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 2, 116, 66),

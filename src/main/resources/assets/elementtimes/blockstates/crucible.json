@@ -9,6 +9,11 @@
         "particle": "elementtimes:blocks/crucible/on"
       }
     }],
+    "normal": [{
+      "textures": {
+        "particle": "elementtimes:blocks/crucible/on"
+      }
+    }],
     "running": {
       "true": {
         "textures": {

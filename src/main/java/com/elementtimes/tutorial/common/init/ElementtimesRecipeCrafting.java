@@ -24,7 +24,7 @@ public class ElementtimesRecipeCrafting {
     @Ore(value = "tinpowder", output = "elementtimes:tinpowder")
     public static String oreTin = "oreTin";
 	
-    @Ore(value = "ironpowder", output = "elementtimes:ironpowder")
+    @Ore(value = "fe2o3", output = "elementtimes:fe2o3")
     public static String oreIron = "oreIron";
 
     @Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
@@ -72,6 +72,8 @@ public class ElementtimesRecipeCrafting {
     @Ore(value = "wood", dustCount = 16, output = "")
     public static String logWood = "logWood";
 
+    @Ore(value = "gravel->flint", dustCount = 5, output = "minecraft:flint")
+    public static String gravel = "minecraft:gravel";
 
     @ModRecipe(shaped = false)
     public static Object[] Al2O3_Na3AlF6 = new Object[] {
@@ -146,17 +148,17 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe
     public static Object[] condenser = new Object[]{
             ElementtimesBlocks.condenser,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesItems.waterElement, ElementtimesItems.waterElement, ElementtimesItems.waterElement,
-            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+            ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiGoldPlatinum,
+            ElementtimesItems.waterElement, ElementtimesBlocks.fluidReactor, ElementtimesItems.waterElement,
+            ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiObsidianDiamond
     };
 
     @ModRecipe
     public static Object[] fluidheater = new Object[]{
             ElementtimesBlocks.fluidHeater,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesItems.fireElement, ElementtimesItems.fireElement, ElementtimesItems.fireElement,
-            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiSilverCopper
+            ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiTinLead,
+            ElementtimesItems.fireElement, ElementtimesBlocks.fluidReactor, ElementtimesItems.fireElement,
+            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiObsidianDiamond
     };
 
     @ModRecipe
@@ -170,8 +172,8 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe
     public static Object[] fluidreactor = new Object[]{
             ElementtimesBlocks.fluidReactor,
-            ElementtimesBlocks.blockMultiWoodStone, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel,
-            ElementtimesBlocks.fluidHeater, ElementtimesBlocks.pumpFluid, ElementtimesBlocks.condenser,
+            ElementtimesBlocks.cement, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.cement,
+            ElementtimesBlocks.pumpFluid, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.pumpFluid,
             ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiSilverCopper
     };
 
@@ -187,14 +189,36 @@ public class ElementtimesRecipeCrafting {
     public static Object[] electrolyticCell = new Object[]{
             ElementtimesBlocks.electrolyticCell,
             ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
-            ElementtimesBlocks.fluidHeater, ElementtimesBlocks.fluidReactor, ElementtimesBlocks.condenser,
+            ElementtimesBlocks.fluidHeater, ElementtimesBlocks.coagulator, ElementtimesBlocks.condenser,
             ElementtimesItems.carbonRod, ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesItems.carbonRod,
     };
+    @ModRecipe
+    public static Object[] coagulator = new Object[]{
+            ElementtimesBlocks.coagulator,
+            ElementtimesBlocks.blockMultiCarbonSteel, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiGoldPlatinum,
+            ElementtimesItems.soilElement, ElementtimesBlocks.fluidReactor, ElementtimesItems.soilElement,
+            ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.cementAndSteelBarMixture, ElementtimesBlocks.blockMultiObsidianDiamond
+    };
+    @ModRecipe
+    public static Object[] centrifuge = new Object[]{
+            ElementtimesBlocks.centrifuge,
+            Blocks.STICKY_PISTON, Items.SLIME_BALL, Blocks.CLAY,
+            ElementtimesItems.woodElement, ElementtimesBlocks.fuelGenerator, ElementtimesItems.woodElement,
+            Blocks.CLAY, Items.SLIME_BALL, Blocks.STICKY_PISTON,
+    };
+    @ModRecipe
+    public static Object[] solidCentrifuge = new Object[]{
+            ElementtimesBlocks.solidCentrifuge,
+            Blocks.STICKY_PISTON,ElementtimesBlocks.cementAndSteelBarMixture, Blocks.CLAY,
+            ElementtimesItems.woodElement, ElementtimesBlocks.centrifuge, ElementtimesItems.woodElement,
+            Blocks.CLAY, ElementtimesBlocks.cementAndSteelBarMixture, Blocks.STICKY_PISTON,
+    };
+
 
     @ModRecipe
     public static Object[] woodenHalter = new Object[]{
             ElementtimesItems.woodenHalter,
-            null, "logWood", null,
+            null,      "logWood", null,
             "logWood", "logWood", "logWood",
             "logWood"
     };
@@ -202,9 +226,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe(ore = false)
     public static Object[] rebuild = new Object[]{
             ElementtimesBlocks.rebuild,
-            ElementtimesBlocks.blockMultiSilverCopper, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiGoldPlatinum,
+            ElementtimesBlocks.coagulator, ElementtimesBlocks.pulverizer, ElementtimesBlocks.condenser,
             ElementtimesBlocks.forming, ElementtimesBlocks.electrolyticCell, ElementtimesBlocks.extractor,
-            ElementtimesBlocks.blockMultiObsidianDiamond, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.blockMultiCarbonSteel
+            ElementtimesBlocks.centrifuge, ElementtimesBlocks.compressor, ElementtimesBlocks.blockMultiCarbonSteel
     };
 
     @ModRecipe
