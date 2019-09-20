@@ -97,13 +97,8 @@ public class TileSupportStand extends BaseTileEntity implements ITileTESR {
         setItemHandler(SideHandlerType.OUTPUT, new ItemHandler(recipe.outputItemCount + recipe.inputFluidCount + recipe.outputFluidCount, ItemHandler.TRUE));
         setTanks(SideHandlerType.INPUT, new TankHandler(this::isFillValid, TankHandler.FALSE, recipe.inputFluidCount, 16000));
         setTanks(SideHandlerType.OUTPUT, new TankHandler(TankHandler.FALSE, TankHandler.TRUE, recipe.outputFluidCount, 16000));
-
-        int[] ia = new int[recipe.inputFluidCount + recipe.outputFluidCount];
-        for (int i = 0; i < recipe.inputFluidCount + recipe.outputFluidCount; i++) {
-            ia[i] = i;
-        }
-        markBucketInput(ia);
-        addLifeCycle(new FluidMachineLifecycle(this, recipe.inputFluidCount, recipe.outputFluidCount));
+        getAllLifecycles().removeIf(o -> o instanceof FluidMachineLifecycle);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
     private void resetRecipe(MachineRecipeCapture recipe, int process) {
         setWorkingRecipe(recipe);

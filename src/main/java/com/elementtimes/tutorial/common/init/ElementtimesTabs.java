@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.elementcore.api.annotation.ModCreativeTabs;
+import com.elementtimes.elementcore.api.template.tabs.CreativeTabDynamic;
+import com.elementtimes.elementcore.api.template.tabs.CreativeTabStatic;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -21,53 +23,27 @@ public class ElementtimesTabs {
     public static final String ORE = "ore";
 
     @ModCreativeTabs(value = MAIN)
-    public static CreativeTabs Main = new CreativeTabs(ElementTimes.MODID + ".Elementtimes") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesItems.fiveElements);
-        }
-    };
+    public static CreativeTabs Main = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimes", 20,
+            ElementtimesItems.fireElement, ElementtimesItems.waterElement, ElementtimesItems.endElement,
+            ElementtimesItems.photoElement, ElementtimesItems.woodElement, ElementtimesItems.goldElement,
+            ElementtimesItems.soilElement, ElementtimesItems.fiveElements);
 
     @ModCreativeTabs(value = AGRICULTURE)
-    public static CreativeTabs Agriculture = new CreativeTabs(ElementTimes.MODID + ".Agriculture") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesItems.corn);
-        }
-    };
+    public static CreativeTabs Agriculture = new CreativeTabDynamic(ElementTimes.MODID + ".Agriculture", 20,
+            ElementtimesItems.corn, ElementtimesItems.bakedCorn, ElementtimesItems.puremeat);
 
     @ModCreativeTabs(value = CHEMICAL)
-    public static CreativeTabs Chemical = new CreativeTabs(ElementTimes.MODID + ".Elementtimeschemicalindustry") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesItems.bottle);
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void displayAllRelevantItems(NonNullList<ItemStack> itemStacks) {
-            super.displayAllRelevantItems(itemStacks);
-            for (Fluid fluid : FluidRegistry.getBucketFluids()) {
-                if (fluid.getName().startsWith("elementtimes.")) {
-                    itemStacks.add(FluidUtil.getFilledBucket(new FluidStack(fluid, Fluid.BUCKET_VOLUME)));
-                }
-            }
-        }
-    };
+    public static CreativeTabs Chemical = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimeschemicalindustry",
+            FluidRegistry.getBucketFluids().stream()
+                    .filter(f -> f.getName().startsWith("elementtimes"))
+                    .map(f -> FluidUtil.getFilledBucket(new FluidStack(f, Fluid.BUCKET_VOLUME)))
+                    .toArray(ItemStack[]::new));
 
     @ModCreativeTabs(value = INDUSTRY)
-    public static CreativeTabs Industry = new CreativeTabs(ElementTimes.MODID + ".Industry") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesBlocks.elementGenerator);
-        }
-    };
+    public static CreativeTabs Industry = new CreativeTabStatic(ElementTimes.MODID + ".Industry", ElementtimesItems.spanner);
 
     @ModCreativeTabs(value = ORE)
-    public static CreativeTabs Ore = new CreativeTabs(ElementTimes.MODID + ".Elementtimesore") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ElementtimesItems.bigHammer);
-        }
-    };
+    public static CreativeTabs Ore = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimesore", 20,
+            ElementtimesBlocks.oreSalt, ElementtimesBlocks.copperOre, ElementtimesBlocks.platinumOre,
+            ElementtimesBlocks.sulfurOre, ElementtimesBlocks.uraniumOre, ElementtimesBlocks.leadOre, ElementtimesBlocks.tinOre);
 }

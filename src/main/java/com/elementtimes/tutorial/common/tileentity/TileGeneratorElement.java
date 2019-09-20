@@ -42,7 +42,7 @@ public class TileGeneratorElement extends BaseTileEntity {
 
     public TileGeneratorElement() {
         super(ElementtimesConfig.GENERAL.generaterMaxEnergy, 1, 0);
-        addLifeCycle(new EnergyGeneratorLifecycle(this, this));
+        addLifeCycle(new EnergyGeneratorLifecycle<>(this));
     }
 
     @Override

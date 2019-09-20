@@ -195,9 +195,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
     public TileSolidFluidReactor() {
         super(10000, 4, 5, 1, 16000, 2, 16000);
-        markBucketInput(1, 2, 3);
-        addLifeCycle(new FluidMachineLifecycle(this, new Int2ObjectArrayMap<>(new int[]{0}, new int[][]{new int[]{1, 2}}),
-                new Int2ObjectArrayMap<>(new int[]{0, 1}, new int[][]{new int[]{2, 3}, new int[]{3, 4}})));
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override

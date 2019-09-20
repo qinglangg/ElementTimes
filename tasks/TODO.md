@@ -8,14 +8,10 @@
 
 # bug
 - 离心机进度显示为电量
-- 凝固器流体槽位不对
-- 电解器流体转移有问题
-- 流体加热器产出问题，文字位置问题
-- 流体反应器 gui 输入位置错位
+- 无法输入输出
 
-# 其他 
+# 其他
 - 概率显示的 JEI 支持
 
 # 代码
 - 更改 BaseMachine 为相关接口集合
-- 将 markBucketInput 并入 FluidMachineLifecycle 构造

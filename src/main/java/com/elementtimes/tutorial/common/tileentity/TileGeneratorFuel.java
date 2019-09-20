@@ -48,7 +48,7 @@ public class TileGeneratorFuel extends BaseTileEntity {
 
     public TileGeneratorFuel() {
         super(ElementtimesConfig.FUEL_GENERAL.generaterMaxEnergy, 1, 0);
-        addLifeCycle(new EnergyGeneratorLifecycle(this, this));
+        addLifeCycle(new EnergyGeneratorLifecycle<>(this));
     }
 
     @Nonnull

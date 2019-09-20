@@ -43,9 +43,8 @@ public class TileFluidHeater extends BaseTileEntity {
     }
 
     public TileFluidHeater() {
-        super(1, 2, 2, 1, 16000, 1, 16000);
-        markBucketInput(0, 1);
-        addLifeCycle(new FluidMachineLifecycle(this, 1, 1, 0, 0));
+        super(100000, 2, 2, 1, 16000, 1, 16000);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override
@@ -55,7 +54,7 @@ public class TileFluidHeater extends BaseTileEntity {
 
     @Override
     public GuiSize getSize() {
-        return GUI_SIZE_176_204_122.copy().withTitleY(117)
+        return GUI_SIZE_176_204_122.copy().withTitleY(100)
                 .withProcess(53, 18, 0, 204, 70, 19)
                 .withProcess(57, 52, 0, 223, 62, 15)
                 .withEnergy(45, 89, 0, 237, 90, 4);

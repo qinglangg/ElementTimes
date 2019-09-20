@@ -11,7 +11,6 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -46,8 +45,7 @@ public class TileSolidMelter extends BaseTileEntity {
 
     public TileSolidMelter() {
         super(100000, 2, 1, 0, 0, 1, 16000);
-        addLifeCycle(new FluidMachineLifecycle(this, new Int2ObjectArrayMap<>(), new Int2ObjectArrayMap<>(new int[]{0}, new int[][] {new int[] {1, 0}})));
-        markBucketInput(1);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Nonnull

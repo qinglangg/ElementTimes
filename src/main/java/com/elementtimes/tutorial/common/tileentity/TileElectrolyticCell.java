@@ -56,8 +56,7 @@ public class TileElectrolyticCell extends BaseTileEntity {
 
     public TileElectrolyticCell() {
         super(10000, 4, 4, 1, 16000, 3, 16000);
-        addLifeCycle(new FluidMachineLifecycle(this, 1, 3));
-        markBucketInput(0, 1, 2, 3);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override

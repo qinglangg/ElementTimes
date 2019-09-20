@@ -37,8 +37,7 @@ public class TilePumpAir extends BaseTileEntity {
 
     public TilePumpAir() {
         super(1000, 1, 1, 0, 0, 1, 16000);
-        addLifeCycle(new FluidMachineLifecycle(this, 0, 1));
-        markBucketInput(0);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override

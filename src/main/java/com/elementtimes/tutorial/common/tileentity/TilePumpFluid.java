@@ -31,8 +31,7 @@ public class TilePumpFluid extends BaseTileEntity {
         super(1000, 1, 1, 0, 0, 1, 16000);
         addLifeCycle(new WorldReplaceMachineLifecycle(this, this::replace, this::collect,
                 20, 10, 20));
-        addLifeCycle(new FluidMachineLifecycle(this, 0, 1));
-        markBucketInput(0);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     private Fluid search = null;

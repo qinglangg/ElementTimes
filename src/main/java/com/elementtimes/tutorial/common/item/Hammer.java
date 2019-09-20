@@ -15,7 +15,8 @@ import javax.annotation.Nonnull;
  */
 public class Hammer extends Item {
 
-    private static final String TAG_DAMAGE = "damage";
+    public static final String TAG_DAMAGE = "damage";
+    public static final String TAG_REMOVE = "damage";
 
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
@@ -31,7 +32,11 @@ public class Hammer extends Item {
             d = bind.getInteger(TAG_DAMAGE);
         }
         ItemStack container = itemStack.copy();
-        container.removeSubCompound(ElementTimes.MODID + "_bind");
+        if (bind.getBoolean(TAG_REMOVE)) {
+            container.setTagCompound(null);
+        } else {
+            container.removeSubCompound(ElementTimes.MODID + "_bind");
+        }
         container.attemptDamageItem(d, itemRand, null);
 
         return container;

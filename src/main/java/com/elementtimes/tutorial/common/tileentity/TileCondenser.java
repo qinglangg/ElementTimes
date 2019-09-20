@@ -34,10 +34,7 @@ public class TileCondenser extends BaseTileEntity {
 
     public TileCondenser() {
         super(100000, 2, 2, 1, 16000, 1, 16000);
-        addLifeCycle(new FluidMachineLifecycle(this,
-                new Int2ObjectArrayMap<>(new int[] {0}, new int[][] {new int[] {0, 0}}),
-                new Int2ObjectArrayMap<>(new int[] {0}, new int[][] {new int[] {1, 1}})));
-        markBucketInput(0, 1);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Nonnull

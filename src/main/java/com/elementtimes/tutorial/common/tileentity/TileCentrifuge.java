@@ -43,8 +43,7 @@ public class TileCentrifuge extends BaseTileEntity {
 
     public TileCentrifuge() {
         super(100000, 6, 6, 1, 16000, 5, 16000);
-        markBucketInput(0, 1, 2, 3, 4, 5);
-        addLifeCycle(new FluidMachineLifecycle(this, 1, 5));
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Nonnull

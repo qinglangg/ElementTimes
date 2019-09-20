@@ -169,8 +169,7 @@ public class TileFluidReactor extends BaseTileEntity {
 
     public TileFluidReactor() {
         super(10000, 5, 6, 2, 16000, 3, 16000);
-        addLifeCycle(new FluidMachineLifecycle(this, 2, 3));
-        markBucketInput(0, 1, 2, 3, 4);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override
@@ -204,17 +203,17 @@ public class TileFluidReactor extends BaseTileEntity {
     @Override
     public Slot[] getSlots() {
         return new Slot[] {
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 88, 30),
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 18, 66),
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 2, 36, 66),
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 3, 106, 66),
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 4, 124, 66),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 18, 84),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 36, 84),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 106, 84),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 3, 124, 84),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 4, 142, 84),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 5, 142, 66)
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 18, 66),
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 1, 36, 66),
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 2, 106, 66),
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 3, 124, 66),
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 4, 142, 66),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 88, 30),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 18, 84),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 36, 84),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 3, 106, 84),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 4, 124, 84),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 5, 142, 84)
         };
     }
 

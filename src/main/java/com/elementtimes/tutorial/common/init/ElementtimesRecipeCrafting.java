@@ -1,26 +1,14 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.elementcore.api.annotation.ModRecipe;
-import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.common.item.ItemBottleFuel;
-import com.elementtimes.tutorial.other.FluidIngredient;
 import com.elementtimes.tutorial.other.recipe.RecipeUtil;
-import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.*;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Supplier;
+import static com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe.Ore;
 
 /**
  * 所有合成表
@@ -30,58 +18,58 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {
 
-    @HammerOreRecipe.Ore(value = "leadpowder", output = "elementtimes:leadpowder")
+    @Ore(value = "leadpowder", output = "elementtimes:leadpowder")
     public static String oreLead = "oreLead";
 	
-    @HammerOreRecipe.Ore(value = "tinpowder", output = "elementtimes:tinpowder")
+    @Ore(value = "tinpowder", output = "elementtimes:tinpowder")
     public static String oreTin = "oreTin";
 	
-    @HammerOreRecipe.Ore(value = "ironpowder", output = "elementtimes:ironpowder")
+    @Ore(value = "ironpowder", output = "elementtimes:ironpowder")
     public static String oreIron = "oreIron";
 
-    @HammerOreRecipe.Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
+    @Ore(value = "emeraldpowder", output = "elementtimes:greenstonepowder")
     public static String oreEmerald = "oreEmerald";
 
-    @HammerOreRecipe.Ore(value = "sulfurpowder", output = "elementtimes:sulfurorepowder")
+    @Ore(value = "sulfurpowder", output = "elementtimes:sulfurorepowder")
     public static String oreSulfur = "oreSulfur";
 
-    @HammerOreRecipe.Ore(value = "coalpodwer", output = "elementtimes:coalpowder")
+    @Ore(value = "coalpodwer", output = "elementtimes:coalpowder")
     public static String oreCoal = "oreCoal";
 
-    @HammerOreRecipe.Ore(value = "silverpowder", output = "elementtimes:silverpowder")
+    @Ore(value = "silverpowder", output = "elementtimes:silverpowder")
     public static String oreSilver = "oreSilver";
 
-    @HammerOreRecipe.Ore(value = "uraniumpowder", output = "elementtimes:uraniumpowder", dustCount = 1)
+    @Ore(value = "uraniumpowder", output = "elementtimes:uraniumpowder", dustCount = 1)
     public static String oreUranium = "oreUranium";
 
-    @HammerOreRecipe.Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)
+    @Ore(value = "salt", output = "elementtimes:salt", dustCount = 8)
     public static String oreSalt = "oreSalt";
     
-    @HammerOreRecipe.Ore(value = "goldpowder", output = "elementtimes:goldpowder")
+    @Ore(value = "goldpowder", output = "elementtimes:goldpowder")
     public static String oreGold = "oreGold";
 
-    @HammerOreRecipe.Ore(value = "copperpowder", output = "elementtimes:copperpowder")
+    @Ore(value = "copperpowder", output = "elementtimes:copperpowder")
     public static String oreCopper = "oreCopper";
 
-    @HammerOreRecipe.Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
+    @Ore(value = "platinumorepowder", output = "elementtimes:platinumorepowder")
     public static String orePlatinum = "orePlatinum";
 
-    @HammerOreRecipe.Ore(value = "quartz", output = "elementtimes:quartzpowder")
+    @Ore(value = "quartz", output = "elementtimes:quartzpowder")
     public static String oreQuartz = "oreQuartz";
 
-    @HammerOreRecipe.Ore(value = "lapis", output = "elementtimes:bluestonepowder")
+    @Ore(value = "lapis", output = "elementtimes:bluestonepowder")
     public static String oreLapis = "oreLapis";
 
-    @HammerOreRecipe.Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
+    @Ore(value = "redstonepowder", damage = 2, output = "elementtimes:redstonepowder")
     public static String oreRedstone = "oreRedstone";
 
-    @HammerOreRecipe.Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
+    @Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
     public static String oreDiamond = "oreDiamond";
 
-    @HammerOreRecipe.Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
+    @Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
     public static String blazeRod = "minecraft:blaze_rod";
 
-    @HammerOreRecipe.Ore(value = "wood", dustCount = 16, output = "")
+    @Ore(value = "wood", dustCount = 16, output = "")
     public static String logWood = "logWood";
 
 
@@ -294,26 +282,4 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe
     public static Object gearObsidian = RecipeUtil.gearRecipe("blockObsidian", "ingotObsidian", ElementtimesItems.gearObsidian);
 
-    @ModRecipe
-    public static Object createFluidRecipes() {
-        return (Supplier) () -> {
-            List<IRecipe> recipeList = new LinkedList<>();
-            FluidRegistry.getBucketFluids()
-                    .forEach(fluid -> {
-                        NonNullList<Ingredient> input0 = NonNullList.create();
-                        input0.add(Ingredient.fromItem(Items.GLASS_BOTTLE));
-                        input0.add(FluidIngredient.bucket(fluid));
-                        IRecipe bucketToBottle = new ShapelessRecipes("recipe", ItemBottleFuel.createByFluid(fluid), input0);
-                        bucketToBottle.setRegistryName(new ResourceLocation(ElementTimes.MODID, fluid.getName() + "_convert_0"));
-                        NonNullList<Ingredient> input1 = NonNullList.create();
-                        input1.add(Ingredient.fromItem(Items.BUCKET));
-                        input1.add(FluidIngredient.bottle(fluid));
-                        IRecipe bottleToBucket = new ShapelessRecipes("recipe", FluidUtil.getFilledBucket(new FluidStack(fluid, Fluid.BUCKET_VOLUME)), input1);
-                        bottleToBucket.setRegistryName(new ResourceLocation(ElementTimes.MODID, fluid.getName() + "_convert_1"));
-                        recipeList.add(bottleToBucket);
-                        recipeList.add(bucketToBottle);
-                    });
-            return recipeList;
-        };
-    }
 }

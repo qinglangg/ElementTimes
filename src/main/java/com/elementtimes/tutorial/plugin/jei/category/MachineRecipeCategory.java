@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.plugin.jei.category;
 
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
@@ -31,20 +33,41 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
     private int[][] fluids;
 
     public MachineRecipeCategory(IGuiHelper helper, IGuiProvider gui, String id, int u, int v, int w, int h) {
+        this(helper, gui, id, u, v, w, h, -1);
+    }
+
+    public MachineRecipeCategory(IGuiHelper helper, IGuiProvider gui, String id, int u, int v, int w, int h, int fixOffset) {
         this.background = helper.createDrawable(gui.getBackground(), u, v, w, h);
         this.id = id;
         this.title = gui.getTitle();
-        Slot[] slots = gui.getSlots();
-        this.items = new int[slots.length][];
-        for (int i = 0; i < slots.length; i++) {
-            Slot slot = slots[i];
-            items[i] = new int[] { slot.xPos - u, slot.yPos - v };
-        }
         IGuiProvider.FluidSlotInfo[] fluidSlots = gui.getFluids();
-        this.fluids = new int[fluidSlots.length][];
-        for (int i = 0; i < fluidSlots.length; i++) {
+        int fluidLength = fluidSlots.length;
+        this.fluids = new int[fluidLength][];
+        for (int i = 0; i < fluidLength; i++) {
             IGuiProvider.FluidSlotInfo slot = fluidSlots[i];
             fluids[i] = new int[] { slot.x - u, slot.y - v };
+        }
+        Slot[] slots = gui.getSlots();
+        if (gui instanceof ITileItemHandler && fluidLength > 0) {
+            int inputCount = ((ITileItemHandler) gui).getItemHandler(SideHandlerType.INPUT).getSlots();
+            int allowInputCount = inputCount - fluidLength;
+            int allowOutputCount = slots.length - inputCount - fluidLength;
+            int slotCount = allowInputCount + allowOutputCount;
+            this.items = new int[slotCount][];
+            for (int i = 0; i < allowInputCount; i++) {
+                Slot slot = slots[i];
+                items[i] = new int[] { slot.xPos - u + fixOffset, slot.yPos - v + fixOffset };
+            }
+            for (int i = 0; i < allowOutputCount; i++) {
+                Slot slot = slots[i + inputCount];
+                items[i + allowInputCount] = new int[] { slot.xPos - u + fixOffset, slot.yPos - v + fixOffset };
+            }
+        } else {
+            this.items = new int[slots.length][];
+            for (int i = 0; i < slots.length; i++) {
+                Slot slot = slots[i];
+                items[i] = new int[] { slot.xPos - u + fixOffset, slot.yPos - v + fixOffset };
+            }
         }
     }
 

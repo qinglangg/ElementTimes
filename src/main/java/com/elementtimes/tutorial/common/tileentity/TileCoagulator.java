@@ -48,8 +48,7 @@ public class TileCoagulator extends BaseTileEntity {
 
     public TileCoagulator() {
         super(100000, 1, 2, 1, 16000, 0, 0);
-        addLifeCycle(new FluidMachineLifecycle(this, 1, 0));
-        markBucketInput(0);
+        addLifeCycle(new FluidMachineLifecycle(this));
     }
 
     @Override

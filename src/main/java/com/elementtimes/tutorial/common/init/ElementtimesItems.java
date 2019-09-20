@@ -158,8 +158,8 @@ public class ElementtimesItems {
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item diamondIngot = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL,
-             itemColorClass = "com.elementtimes.tutorial.client.BottleItemStackColor")
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.ItemColor("com.elementtimes.tutorial.client.BottleItemStackColor")
     public static Item bottle = new ItemBottleFuel();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("rubber")
@@ -173,7 +173,6 @@ public class ElementtimesItems {
     public static Item starchball = new Starchball();
 
     // tools
-    
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item spanner = new Spanner();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
@@ -235,7 +234,6 @@ public class ElementtimesItems {
     public static Item elementPickaxe = new Elementpickaxe();
 
     // gear
-
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("gearWood")
     public static Item gearWood = new Item();
@@ -282,7 +280,6 @@ public class ElementtimesItems {
     public static Item gearAdamas = new Item();
 
     // plate
-
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("plateWood")
     public static Item platewood = new Item();
