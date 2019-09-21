@@ -21,7 +21,7 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item fiveElements = new ItemRecord(
             "sounds",
-            new SoundEvent(new ResourceLocation(ElementTimes.MODID,"sounds"))) {};
+            new SoundEvent(new ResourceLocation(ElementTimes.MODID,"sounds"))) {}.setMaxStackSize(64);
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item endElement = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)

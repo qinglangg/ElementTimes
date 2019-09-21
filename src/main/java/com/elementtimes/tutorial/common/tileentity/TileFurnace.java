@@ -84,7 +84,6 @@ public class TileFurnace extends BaseTileEntity {
     @Override
     public String getTitle() {
         return ElementtimesBlocks.furnace.getLocalizedName();
-
     }
 
     @Override
