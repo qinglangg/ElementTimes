@@ -240,6 +240,30 @@
       "custom": {
         "fluid": "elementtimes.co2"
       }
+    },
+    "elementtimes.hno3": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hno3"
+      }
+    },
+    "elementtimes.no": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.no"
+      }
+    },
+    "elementtimes.no2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.no2"
+      }
+    },
+    "elementtimes.o3": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.o3"
+      }
     }
   }
 }

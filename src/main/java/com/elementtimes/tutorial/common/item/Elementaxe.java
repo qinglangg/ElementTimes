@@ -11,8 +11,7 @@ import javax.annotation.Nonnull;
 
 public class Elementaxe  extends ItemAxe {
 
-	public Elementaxe() 
-	{
+	public Elementaxe() {
 		super(EnumHelper.addToolMaterial("elementaxe", 4, 3000, 1000.0F, 15.0F, 25),100.0F,0.0F);
 	}
 

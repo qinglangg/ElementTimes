@@ -92,7 +92,6 @@ public class HammerOreRecipe {
                 }
             } else {
                 container.elements.recipes.add(() -> {
-                    System.out.println(ore + " + Hammer = " + output);
                     ItemStack[] matchingStacks = ECUtils.recipe.getIngredient(output).getMatchingStacks();
                     if (matchingStacks.length == 0) {
                         return null;

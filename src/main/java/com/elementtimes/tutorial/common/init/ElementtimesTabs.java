@@ -37,7 +37,16 @@ public class ElementtimesTabs {
             FluidRegistry.getBucketFluids().stream()
                     .filter(f -> f.getName().startsWith("elementtimes"))
                     .map(f -> FluidUtil.getFilledBucket(new FluidStack(f, Fluid.BUCKET_VOLUME)))
-                    .toArray(ItemStack[]::new));
+                    .toArray(ItemStack[]::new)) {
+        @Override
+        public void displayAllRelevantItems(NonNullList<ItemStack> list) {
+            FluidRegistry.getBucketFluids().stream()
+                    .filter(f -> f.getName().startsWith("elementtimes"))
+                    .map(f -> FluidUtil.getFilledBucket(new FluidStack(f, Fluid.BUCKET_VOLUME)))
+                    .forEach(list::add);
+            super.displayAllRelevantItems(list);
+        }
+    };
 
     @ModCreativeTabs(value = INDUSTRY)
     public static CreativeTabs Industry = new CreativeTabStatic(ElementTimes.MODID + ".Industry", ElementtimesItems.spanner);

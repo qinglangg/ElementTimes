@@ -213,6 +213,7 @@ public class ElementtimesFluids {
     public static Fluid Na3AlF6 = new Fluid("elementtimes.na3alf6",
             new ResourceLocation(ElementTimes.MODID, "fluid/na3alf6_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/na3alf6_fluid"), 0xFF868686);
+
     @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid ammonia = new Fluid("elementtimes.ammonia",
@@ -248,4 +249,28 @@ public class ElementtimesFluids {
     public static Fluid co2 = new Fluid("elementtimes.co2",
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
+
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid hno3 = new Fluid("elementtimes.hno3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/hno3_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/hno3_fluid"), 0xFF96603B);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid no = new Fluid("elementtimes.no",
+            new ResourceLocation(ElementTimes.MODID, "fluid/no_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/no_fluid"), 0xFF967474);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid no2 = new Fluid("elementtimes.no2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/no2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/no2_fluid"), 0xFF9F3F3F);
+
+    @ModFluid(density = -10)
+    @ModFluid.FluidBlock
+    public static Fluid o3 = new Fluid("elementtimes.o3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/o3_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/o3_fluid"), 0xFF6F6F92);
 }
