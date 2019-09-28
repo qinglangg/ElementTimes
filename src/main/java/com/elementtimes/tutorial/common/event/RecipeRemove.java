@@ -6,7 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 import java.util.Map;
-
+/**
+ * @author 卿岚
+ */
 public class RecipeRemove{
 	public RecipeRemove(){
 		removeSmelting(Item.getItemFromBlock(Blocks.IRON_ORE));

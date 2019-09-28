@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * 客户端 Proxy
- * @author KSGFK
+ * @author qinglan,ksgfk,luqin2007
  */
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {

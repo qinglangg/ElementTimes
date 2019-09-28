@@ -2,7 +2,9 @@ package com.elementtimes.tutorial.common.item;
 
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-
+/**
+ * @author 卿岚
+ */
 public class Amylum extends ItemFood {
 
 	public Amylum() {

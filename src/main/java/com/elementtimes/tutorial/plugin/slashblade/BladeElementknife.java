@@ -14,7 +14,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
+/**
+ * @author 卿岚
+ */
 @Optional.Interface(iface = "", modid = "flammpfeil.slashblade")
 public class BladeElementknife {
     @SubscribeEvent

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * 服务器端 Proxy
  *
- * @author KSGFK
+ * @author qinglan,ksgfk,luqin2007
  */
 public class CommonProxy {
 

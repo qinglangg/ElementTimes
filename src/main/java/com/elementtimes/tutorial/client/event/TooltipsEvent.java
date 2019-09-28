@@ -14,6 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class TooltipsEvent {
@@ -22,7 +24,7 @@ public class TooltipsEvent {
         final ItemStack itemStack = event.getItemStack();
         final List<String> lines = event.getToolTip();
         if (itemStack.getItem() == Item.getItemFromBlock(Blocks.IRON_ORE)) {
-            lines.add(new TextComponentString("FeO").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+            lines.add(new TextComponentString("Fe2O3").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("SiO2");
             lines.add("CaCO3");
         }
@@ -30,6 +32,18 @@ public class TooltipsEvent {
             lines.add(new TextComponentString("CaF2").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("SiO2");
             lines.add("CaCO3");
+        }
+        else if (itemStack.getItem() == ElementtimesItems.steelIngot) {
+            lines.add(new TextComponentString("Fe").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+            lines.add("C");
+        }
+        else if (itemStack.getItem() == ElementtimesItems.slag) {
+            lines.add("CaCO3");
+            lines.add("SiO2");
+        }
+        else if (itemStack.getItem() == ElementtimesItems.Al2O3_Na3AlF6) {
+        	lines.add(new TextComponentString("Al2O3").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+        	lines.add(new TextComponentString("Na3AlF6").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
         }
     }
 }

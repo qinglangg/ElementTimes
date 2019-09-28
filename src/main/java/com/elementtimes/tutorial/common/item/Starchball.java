@@ -6,7 +6,9 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-
+/**
+ * @author 卿岚
+ */
 public class Starchball extends ItemFood {
 
     public Starchball() {

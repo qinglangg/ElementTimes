@@ -98,17 +98,10 @@ public class TileSolidReactor extends BaseTileEntity {
                     //钢锭
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
+                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,2))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.pigIron, 1))
-                    .endAdd()
-                    .newRecipe()
-                    .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.pigIron,1))
-                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 1))
                     .endAdd()
-
 
                     .newRecipe()
                     .addCost(100000)

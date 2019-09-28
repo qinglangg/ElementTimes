@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 
 /**
  * 扳手
- * @author ???
+ * @author KSGFK
  */
 public class Spanner extends Item {
 

@@ -15,6 +15,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * @author 卿岚
+ */
 public class CornCropUp 
 extends Block{
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 3);

@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.elementcore.api.annotation.ModBlock;
+import com.elementtimes.elementcore.api.annotation.ModItem;
 import com.elementtimes.elementcore.api.annotation.ModOreDict;
 import com.elementtimes.elementcore.api.annotation.enums.GenType;
 import com.elementtimes.elementcore.api.template.block.BaseClosableMachine;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * 所有方块
  *
- * @author KSGFK
+ * @author 卿岚
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @Mod.EventBusSubscriber
@@ -239,13 +240,14 @@ public class ElementtimesBlocks {
     // 其他
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel
-    public static Block stoneBlock = new Block(Material.ROCK).setHardness(100f).setResistance(15f);
+    @ModItem.Tooltip("\u00a79CaCO3")
+    public static Block stoneBlock = new Block(Material.ROCK).setHardness(75f).setResistance(15f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 3)
-    public static Block cement = new Block(Material.ROCK).setHardness(1000f).setResistance(30f);
+    public static Block cement = new Block(Material.ROCK).setHardness(750f).setResistance(30f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 4)
-    public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(10000f).setResistance(150f);
+    public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(7000f).setResistance(150f);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.HarvestLevel
     public static Block blockMultiSilverCopper = new Block(Material.IRON);

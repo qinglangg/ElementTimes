@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.Fluid;
 
 /**
  * 流体注册
- * @author luqin2007
+ * @author 卿岚
  */
 public class ElementtimesFluids {
 

@@ -13,7 +13,7 @@ import static com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe.Ore;
 /**
  * 所有合成表
  *
- * @author luqin2007
+ * @author 卿岚  luqin2007
  */
 @SuppressWarnings("unused")
 public class ElementtimesRecipeCrafting {

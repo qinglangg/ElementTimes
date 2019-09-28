@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 /**
  * 木笼头
- * @author luqin
+ * @author luqin2007
  */
 public class WoodenHalter extends Item {
 

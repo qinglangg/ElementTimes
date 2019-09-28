@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
-
+/**
+ * @author 卿岚
+ */
 public class Leafessence extends Block
 {
 	public Leafessence()

@@ -7,7 +7,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 
 import java.util.Random;
-
+/**
+ * @author 卿岚
+ */
 public class Sulfurore extends Block
 {
 	public Sulfurore()

@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 /**
  * 所有物品
- * @author KSGFK
+ * @author 卿岚
  */
 @SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "ConstantConditions"})
 public class ElementtimesItems {
@@ -45,11 +45,11 @@ public class ElementtimesItems {
     @ModOreDict("itemSilicon")
     public static Item coarseSilicon = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79SiC")
     public static Item SiC = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79Al")
     public static Item Al = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    public static Item pigIron = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item slag = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
@@ -57,6 +57,7 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item stonepowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79Si")
     public static Item Silicon = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item bambooCharcoal = new ItemFuel(800);
@@ -71,16 +72,18 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item bakedCorn = new ItemFood(5, 0.2F, false);
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79CaCO3")
     public static Item stoneIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item Al2O3_Na3AlF6 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79CaSo4")
     public static Item CaSo4 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79Na3AlF6")
     public static Item Na3AlF6 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("ingotSteel")
-    @ModItem.Tooltip("\u00a79Fe")
     public static Item steelIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item carbonRod = new Item();

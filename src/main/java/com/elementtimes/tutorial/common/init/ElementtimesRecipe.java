@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * 所有合成表
- * @author KSGFK
+ * @author 卿岚
  */
 public class ElementtimesRecipe {
 
