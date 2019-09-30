@@ -42,10 +42,10 @@ public class TileForming extends BaseTileEntity {
                     .add(10000, "ingotIron", 9, ElementtimesItems.gearIron, 3)
                     .add(10000, "ingotPlatinum", 9, ElementtimesItems.gearPlatinum, 3)
                     .add(10000, "ingotCopper", 9, ElementtimesItems.gearCopper, 3)
-                    .add(10000, "ingotlead", 9, ElementtimesItems.gearLead, 3)
+                    .add(10000, "ingotLead", 9, ElementtimesItems.gearLead, 3)
                     .add(10000, ElementtimesItems.diamondIngot, 9, ElementtimesItems.gearAdamas, 3)
                     .add(10000,Blocks.OBSIDIAN, 9, ElementtimesItems.gearObsidian, 3)
-                    .add(10000, "ingottin", 9, ElementtimesItems.gearTin, 3);
+                    .add(10000, "ingotTin", 9, ElementtimesItems.gearTin, 3);
         }
     }
 

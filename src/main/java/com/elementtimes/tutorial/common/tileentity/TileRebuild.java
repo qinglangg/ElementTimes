@@ -32,7 +32,6 @@ public class TileRebuild extends BaseTileEntity {
             RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
                     .add(4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
                     .add(100000, new ItemStack(Items.GOLDEN_APPLE, 1, 1), Items.TOTEM_OF_UNDYING, 1)
-                    .add(4000, ElementtimesItems.sucroseCharCoal, 2, new ItemStack(Items.COAL, 1, 1))
                     .add(4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))
                     .add(50000, new ItemStack(Items.COAL, 1, 0), Items.DIAMOND, 1)
                     .add(50000, Blocks.DIAMOND_BLOCK, 1, ElementtimesItems.diamondIngot, 3)

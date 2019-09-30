@@ -36,7 +36,7 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.AlCl3,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 3000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NH4Cl, 3000))
                     .endAdd()
 
@@ -45,7 +45,7 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 1000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2, 1000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
                     .endAdd()
 
@@ -54,7 +54,7 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 1000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 1000))
                     .endAdd()
 
@@ -63,7 +63,7 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calmogastrin,1000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 3000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 1000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
 
