@@ -185,9 +185,13 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item spanner = new Spanner();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModItem.Damageable(100)
+    @ModItem.Damageable(120)
     @ModItem.RetainInCrafting
     public static Item bigHammer = new Hammer();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModItem.Damageable(40)
+    @ModItem.RetainInCrafting
+    public static Item mediumHammer = new Hammer();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModItem.Damageable(10)
     @ModItem.RetainInCrafting
@@ -237,6 +241,8 @@ public class ElementtimesItems {
     public static Item elementSword = new Elementsword();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementAxe = new Elementaxe();
+    @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
+    public static Item elementscissors = new Elementshears();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementbow = new Elementbow();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)

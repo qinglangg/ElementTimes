@@ -3,17 +3,18 @@ package com.elementtimes.tutorial.common.item;
 import com.elementtimes.elementcore.api.common.ECUtils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
 
-public class Elementbow  extends ItemBow {
+public class Elementshears  extends ItemShears {
 
-	public Elementbow() 
+	public Elementshears() 
 	{
 		super();
-        this.setMaxDamage(3840);
+        this.setMaxDamage(2380);
 	}
 
 	@Override
