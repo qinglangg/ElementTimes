@@ -49,6 +49,9 @@ public class ElementtimesItems {
     public static Item SiC = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModItem.Tooltip("\u00a79Al")
+    public static Item Mg = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79Al")
     public static Item Al = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item slag = new Item();
@@ -199,6 +202,8 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementShovel = new Elementshovel();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
+    public static Item elementshears = new Elementshears();
+    @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementHoe = new Elementhoe();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item platinumSword = new ItemSword(EnumHelper.addToolMaterial("platinumsword", 4, 500, 10.0F, 20.0F, 20));
@@ -241,8 +246,6 @@ public class ElementtimesItems {
     public static Item elementSword = new Elementsword();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementAxe = new Elementaxe();
-    @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item elementscissors = new Elementshears();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementbow = new Elementbow();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)

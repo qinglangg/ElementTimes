@@ -32,12 +32,10 @@ public class TileCrucible extends TileEntity implements IGuiProvider {
 
     public static void init() {
         RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                //CaCO3=CaO+co2
-                // .add(0, 1000, "CaCO3=CaO+co2", 1000)
                 .newRecipe()
                 .addCost(20)
-                .addItemInput(IngredientPart.forItem(ElementtimesItems.uraniumPowder,1))
-                .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 3))
+                .addItemInput(IngredientPart.forItem(ElementtimesItems.stoneIngot,1))
+                .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumOxide,1 ))
                 .endAdd();
     }
 

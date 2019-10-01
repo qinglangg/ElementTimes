@@ -55,6 +55,12 @@ public class ElementtimesFluids {
     
     @ModFluid
     @ModFluid.FluidBlock
+    public static Fluid Mg = new Fluid("elementtimes.na",
+            new ResourceLocation(ElementTimes.MODID, "fluid/na_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/na_fluid"), 0xFF8A8AAF);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
     public static Fluid Sicl4 = new Fluid("elementtimes.sicl4",
             new ResourceLocation(ElementTimes.MODID, "fluid/sicl4_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/sicl4_fluid"), 0xFF928181);
@@ -73,6 +79,11 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/nacl_fluid"), 0xFF1D5B5B);
     @ModFluid
     @ModFluid.FluidBlock
+    public static Fluid MgCl2 = new Fluid("elementtimes.nacl",
+            new ResourceLocation(ElementTimes.MODID, "fluid/nacl_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/nacl_fluid"), 0xFF1D5B5B);
+    @ModFluid
+    @ModFluid.FluidBlock
     public static Fluid AlCl3 = new Fluid("elementtimes.alcl3",
             new ResourceLocation(ElementTimes.MODID, "fluid/alcl3_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/alcl3_fluid"), 0xFF1D5B5B);
@@ -80,6 +91,12 @@ public class ElementtimesFluids {
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid NaClSolutionConcentrated = new Fluid("elementtimes.naclsolutionconcentrated",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid seawater = new Fluid("elementtimes.naclsolutionconcentrated",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);
 

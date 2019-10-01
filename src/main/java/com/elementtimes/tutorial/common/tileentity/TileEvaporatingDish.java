@@ -35,7 +35,7 @@ public class TileEvaporatingDish extends TileEntity implements IGuiProvider {
                 .newRecipe()
                 .addCost(20)
                 .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute,1000))
-                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 100))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 1000))
                 .endAdd();
     }
 

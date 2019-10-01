@@ -14,6 +14,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
@@ -36,10 +37,32 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     //AL2O3+6HCL=2ALCL3+3H2O
                     .newRecipe()
                     .addCost(2000)
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 2, 4)))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(2000)
                     .addItemInput(IngredientPart.forItem(Items.REDSTONE, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
+                    .endAdd()
+                    //Al2O3 + 2NaOH== 2NaAlO2(偏铝酸钠) + H2O
+                    .newRecipe()
+                    .addCost(2000)
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 2, 4)))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(2000)
+                    .addItemInput(IngredientPart.forItem(Items.REDSTONE, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaAlO2, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
                     .endAdd()
 
                     //CaF2+H2SO4==CaSO4+2HF

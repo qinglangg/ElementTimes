@@ -7,11 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "elementtimes:diamondingot"
+      "item": "elementtimes:sic"
     },
     "B": {
-      "type":"forge:ore_dict",
-      "ore":"ingotCopper"
+      "item": "elementtimes:diamondingot"
     }
   },
   "result": {

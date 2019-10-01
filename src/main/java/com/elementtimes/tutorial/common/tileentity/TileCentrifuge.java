@@ -37,6 +37,13 @@ public class TileCentrifuge extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.rareGases, 8))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.seawater, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 780))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.MgCl2, 210))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 10))
                     .endAdd();
         }
     }

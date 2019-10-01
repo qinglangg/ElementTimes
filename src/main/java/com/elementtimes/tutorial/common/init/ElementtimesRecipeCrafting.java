@@ -80,7 +80,18 @@ public class ElementtimesRecipeCrafting {
     		ElementtimesItems.Al2O3_Na3AlF6,
     		ElementtimesItems.Na3AlF6, Items.REDSTONE
     };
-
+    @ModRecipe(shaped = false)
+    public static Object[] Al2O3_Na3AlF62 = new Object[] {
+    		ElementtimesItems.Al2O3_Na3AlF6,
+    		ElementtimesItems.Na3AlF6, new ItemStack(Items.DYE, 2, 4)
+    };
+    @ModRecipe
+    public static Object[] Goldelement= new Object[]{
+            ElementtimesItems.goldElement,
+            ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesBlocks.blockMultiGoldPlatinum,ElementtimesBlocks.blockMultiIronQuartz,
+            ElementtimesBlocks.blockMultiObsidianDiamond,ElementtimesBlocks.blockMultiSilverCopper,ElementtimesBlocks.blockMultiTinLead,
+            ElementtimesItems.na,ElementtimesItems.Mg,ElementtimesItems.Al
+    };
     @ModRecipe
     public static Object[] blockMultiSliverCopper = new Object[]{
             ElementtimesBlocks.blockMultiSilverCopper,
