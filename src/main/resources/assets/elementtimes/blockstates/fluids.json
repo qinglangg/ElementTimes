@@ -61,6 +61,24 @@
         "fluid": "elementtimes.co"
       }
     },
+	"elementtimes.mgcl2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.mgcl2"
+      }
+    },
+	"elementtimes.seawater": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.seawater"
+      }
+    },
+	"elementtimes.mg": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.mg"
+      }
+    },
     "elementtimes.naoh": {
       "model": "forge:fluid",
       "custom": {

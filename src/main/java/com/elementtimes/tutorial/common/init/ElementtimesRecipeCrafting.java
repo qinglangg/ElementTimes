@@ -66,7 +66,7 @@ public class ElementtimesRecipeCrafting {
     @Ore(value = "diamondpowder", damage = 2, output = "elementtimes:diamondpowder")
     public static String oreDiamond = "oreDiamond";
 
-    @Ore(value = "blaze_powder", damage = 2, dustCount = 8, output = "minecraft:blaze_powder")
+    @Ore(value = "blaze_powder",dustCount = 6, output = "minecraft:blaze_powder")
     public static String blazeRod = "minecraft:blaze_rod";
 
     @Ore(value = "wood", dustCount = 16, output = "")

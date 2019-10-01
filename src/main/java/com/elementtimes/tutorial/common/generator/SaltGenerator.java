@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.generator;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -38,10 +37,6 @@ public class SaltGenerator extends WorldGenerator {
                             if (block == Blocks.DIRT || block == Blocks.CLAY || block == ElementtimesBlocks.oreSalt) {
                                 worldIn.setBlockState(blockpos, ElementtimesBlocks.oreSalt.getDefaultState(), 2);
                             }
-                            
-                         //   else if (block == Blocks.DIRT || block == Blocks.CLAY || block == ElementtimesBlocks.seawater) {
-                           //     worldIn.setBlockState(blockpos, ElementtimesBlocks.seawater.getDefaultState(), 2);
-                           // }
                         }
                     }
                 }

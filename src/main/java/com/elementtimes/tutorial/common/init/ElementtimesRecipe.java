@@ -59,5 +59,8 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesBlocks.rubberLog, new ItemStack(Items.COAL, 1, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.stonepowder, new ItemStack(ElementtimesItems.stoneIngot, 1), 2.0f);
 		GameRegistry.addSmelting(ElementtimesItems.sandpowder, new ItemStack(Blocks.SAND, 1), 2.0f);
+		GameRegistry.addSmelting(ElementtimesItems.smallHammer, new ItemStack(ElementtimesItems.copper, 1),5.0f);
+		GameRegistry.addSmelting(ElementtimesItems.mediumHammer, new ItemStack(ElementtimesItems.steelIngot, 1),5.0f);
+		GameRegistry.addSmelting(ElementtimesItems.bigHammer, new ItemStack(ElementtimesItems.diamondIngot, 1),5.0f);
     }
 }

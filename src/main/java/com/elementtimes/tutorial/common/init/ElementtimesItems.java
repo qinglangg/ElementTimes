@@ -40,6 +40,7 @@ public class ElementtimesItems {
     @ModOreDict("bamboo")
     public static Item bamboo = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem.Tooltip("\u00a79Na")
     public static Item na = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("itemSilicon")
@@ -48,7 +49,7 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79SiC")
     public static Item SiC = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
-    @ModItem.Tooltip("\u00a79Al")
+    @ModItem.Tooltip("\u00a79Mg")
     public static Item Mg = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModItem.Tooltip("\u00a79Al")

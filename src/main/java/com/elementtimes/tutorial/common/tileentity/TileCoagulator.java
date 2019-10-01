@@ -11,8 +11,11 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -28,6 +31,18 @@ public class TileCoagulator extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(0, 1, 1, 0)
+            		.newRecipe()
+            		.addCost(1000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addItemOutput(IngredientPart.forItem(Blocks.ICE,1))
+            		.endAdd()
+            		.newRecipe()
+            		.addCost(1000)
+            		.addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
+            		.addItemOutput(IngredientPart.forItem(Blocks.ICE,1))
+            		.endAdd()
+            		
+            		
             		.newRecipe()
                     .addCost(20000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Na, 1000))
