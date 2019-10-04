@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * @author qinglan,ksgfk,luqin2007
- * TODO:草径：草方块+任意锹1点耐久    
+ * TODO:草径：草方块+任意锹1点耐久
  * TODO:耕地：泥土+任意锄头1点耐久    
  * TODO：seawater和saltore生成更新：变成海里、湖里、河里生成盐， 海里生成海水，都是最底层【检测上方水方块】
  */

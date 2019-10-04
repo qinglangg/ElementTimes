@@ -1,0 +1,46 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube"
+  },
+  "variants": {
+    "running": {
+      "false": {
+        "textures": {
+          "particle": "elementtimes:blocks/fermenter/top",
+          "down": "elementtimes:blocks/fermenter/bottom",
+          "up": "elementtimes:blocks/fermenter/top",
+          "north": "elementtimes:blocks/fermenter/side",
+          "south": "elementtimes:blocks/fermenter/side",
+          "west": "elementtimes:blocks/fermenter/side",
+          "east": "elementtimes:blocks/fermenter/off"
+        }
+      },
+      "true": {
+        "textures": {
+          "particle": "elementtimes:blocks/fermenter/top",
+          "down": "elementtimes:blocks/fermenter/bottom",
+          "up": "elementtimes:blocks/fermenter/top",
+          "north": "elementtimes:blocks/fermenter/side",
+          "south": "elementtimes:blocks/fermenter/side",
+          "west": "elementtimes:blocks/fermenter/side",
+          "east": "elementtimes:blocks/fermenter/on"
+        }
+      }
+    },
+    "facing": {
+      "north": {
+        "y": 90
+      },
+      "east": {
+        "y": 180
+      },
+      "south": {
+        "y": 270
+      },
+      "west": {
+        "y": 0
+      }
+    }
+  }
+}

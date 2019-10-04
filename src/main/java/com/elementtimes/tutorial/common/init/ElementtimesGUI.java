@@ -24,6 +24,7 @@ public class ElementtimesGUI implements IGuiHandler {
          */
         ElementGenerator,
         FuelGenerator,
+        FluidGenerator,
         Pulverize,
         Compressor,
         Furnace,
@@ -44,7 +45,9 @@ public class ElementtimesGUI implements IGuiHandler {
         Coagulator,
         SolidCentrifuge,
         SupportStandED,
-        SupportStandC;
+        SupportStandC,
+        SolarDecomposer,
+        Fermenter;
 
         public int id() {
             return ordinal();
@@ -58,9 +61,9 @@ public class ElementtimesGUI implements IGuiHandler {
     @Nullable
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-        if (tileEntity instanceof IGuiProvider) {
-            return new BaseContainer(tileEntity, (IGuiProvider) tileEntity, player);
+        TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+        if (te instanceof IGuiProvider) {
+            return ((IGuiProvider) te).getGuiId() >= 0 ? new BaseContainer(te, (IGuiProvider) te, player) : null;
         }
         return null;
     }

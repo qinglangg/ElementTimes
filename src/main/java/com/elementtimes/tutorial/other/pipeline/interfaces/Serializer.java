@@ -19,7 +19,6 @@ import net.minecraftforge.fluids.FluidStack;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public interface Serializer {
     Map<String, Serializer> SERIALIZERS = new HashMap<>();

@@ -62,7 +62,7 @@ public class TileCompressor extends BaseTileEntity {
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotLead", 1, ElementtimesItems.plateLead, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotTin", 1, ElementtimesItems.plateTin, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.gearAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
+                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.plateAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, Blocks.OBSIDIAN, 1, ElementtimesItems.plateObsidian, ElementtimesConfig.COMPRESSOR.powderCount);
 
         }

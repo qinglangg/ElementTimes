@@ -48,7 +48,7 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block leafesSence = new EssenceLeaf();
 
-    // ore
+    // Ore
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("oreTin")
     @ModBlock.HarvestLevel
@@ -93,9 +93,6 @@ public class ElementtimesBlocks {
     @ModBlock.WorldGen(YMin = 5, YRange = 10, probability = 0.3f)
     @ModBlock.Tooltip("\u00a79U3O8 U^235/238")
     public static Block uraniumOre = new Block(Material.ROCK).setHardness(20f).setResistance(10f);
-
-
-    // Block
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("blockTin")
     @ModBlock.HarvestLevel
@@ -135,6 +132,11 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class, ElementTimes.instance);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorSun")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block sunGenerator = new BaseClosableMachine<>(TileGeneratorSun.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY, registerName = "rebuild", unlocalizedName = "rebuild")
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
     @ModBlock.StateMapperCustom
@@ -180,6 +182,11 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block fluidReactor = new BaseClosableMachine<>(TileFluidReactor.class, ElementTimes.instance);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFluid")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block fluidGenerator = new BaseClosableMachine<>(TileGeneratorFluid.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidReactor")
     @ModBlock.StateMapperCustom
@@ -230,8 +237,18 @@ public class ElementtimesBlocks {
     @ModBlock.StateMapperCustom
     @ModBlock.StateMap
     public static Block solidCentrifuge = new BaseClosableMachine<>(TileSolidCentrifuge.class, ElementTimes.instance);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileSolarDecomposer")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block solarDecomposer = new BaseClosableMachine<>(TileSolarDecomposer.class, ElementTimes.instance);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileFermenter")
+    @ModBlock.StateMapperCustom
+    @ModBlock.StateMap
+    public static Block fermenter = new BaseClosableMachine<>(TileFermenter.class, ElementTimes.instance);
 
-    // pipeline
+    // Pipeline
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
     @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
@@ -269,16 +286,24 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.HarvestLevel
     public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
+    @ModBlock
+    public static Block fr = new FluidReplace();
+
+    // Chemical
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "alcohol_lamp", unlocalizedName = "alcohol_lamp")
-    @ModBlock.TileEntity(name = "alcohol_lamp", clazz = "com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp")
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp")
     @SupportStandModule
     public static Block alcoholLamp = new AlcoholLamp();
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "evaporating_dish", unlocalizedName = "evaporating_dish")
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileEvaporatingDish")
     @SupportStandModule
     public static Block evaporatingDish = new EvaporatingDish();
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileCrucible")
     @SupportStandModule
     public static Block crucible = new Crucible();
-    @ModBlock
-    public static Block fr = new FluidReplace();
+    @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileBeaker")
+    @SupportStandModule
+    public static Block beaker = new Beaker();
 }

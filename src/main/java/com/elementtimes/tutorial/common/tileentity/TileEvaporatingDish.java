@@ -1,77 +1,56 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
-import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
-import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
-import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeCapture;
+import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.common.block.EvaporatingDish;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 蒸发皿
  * @author luqin2007
  */
 @ModInvokeStatic("init")
-public class TileEvaporatingDish extends TileEntity implements IGuiProvider {
+public class TileEvaporatingDish extends BaseTileEntity {
 
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
-        RECIPE = new MachineRecipeHandler(0, 0, 1, 1)
-                .newRecipe()
-                .addCost(20)
-                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute,1000))
-                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 1000))
-                .endAdd();
+        RECIPE = new MachineRecipeHandler(0, 2, 1, 2);
     }
 
-    public NBTTagCompound nbt = new NBTTagCompound();
-    private List<EntityPlayerMP> player = new ArrayList<>(3);
+    public TileEvaporatingDish() {
+        super(0, 0, 2, 1, 16000, 2, 16000);
+    }
 
-    public TileEvaporatingDish() {}
     public TileEvaporatingDish(World world, BlockPos pos) {
+        this();
         this.world = world;
         this.pos = pos;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey(EvaporatingDish.BIND_EVAPORATING_DISH)) {
-            nbt = compound.getCompoundTag(EvaporatingDish.BIND_EVAPORATING_DISH);
-        }
-    }
-
-    @Nonnull
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        NBTTagCompound compoundNbt = super.writeToNBT(compound);
-        compoundNbt.setTag(EvaporatingDish.BIND_EVAPORATING_DISH, nbt);
-        return compoundNbt;
-    }
-
-    @Override
     public ResourceLocation getBackground() {
-        return new ResourceLocation(ElementTimes.MODID, "textures/gui/supportstand.png");
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/evaporatingdish.png");
     }
 
     @Override
     public GuiSize getSize() {
-        return GUI_SIZE_176_201_119.copy().withTitleY(105).withProcess(80, 26, 0, 201, 14, 14);
+        return new GuiSize().withSize(176, 215, 7, 132)
+                .withProcess(50, 38)
+                .withProcess(56, 21, 0, 232, 14, 14)
+                .withTitleY(126);
     }
 
     @Override
@@ -80,25 +59,48 @@ public class TileEvaporatingDish extends TileEntity implements IGuiProvider {
     }
 
     @Override
-    public List<EntityPlayerMP> getOpenedPlayers() {
-        return player;
-    }
-
-    @Override
     public int getGuiId() {
         return ElementtimesGUI.Machines.SupportStandED.id();
     }
 
+    @Nonnull
     @Override
-    public float getProcess() {
+    public Slot[] getSlots() {
         TileEntity te = world.getTileEntity(pos);
-        if (te instanceof TileSupportStand) {
-            TileSupportStand tss = (TileSupportStand) te;
-            MachineRecipeCapture workingRecipe = tss.getWorkingRecipe();
-            if (workingRecipe != null) {
-                return ((float) tss.getEnergyProcessed()) / ((float) workingRecipe.energy);
-            }
+        if (te instanceof ITileItemHandler) {
+            ITileItemHandler handler = (ITileItemHandler) te;
+            return new Slot[] {
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.INPUT), 0, 13, 65),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.INPUT), 0, 89, 65),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.INPUT), 0, 128, 65),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.OUTPUT), 0, 77, 19),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.OUTPUT), 0, 77, 37),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.OUTPUT), 0, 31, 65),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.OUTPUT), 0, 107, 65),
+                    new SlotItemHandler(handler.getItemHandler(SideHandlerType.OUTPUT), 0, 146, 65),
+            };
         }
-        return 0;
+        return new Slot[0];
+    }
+
+    @Nonnull
+    @Override
+    public FluidSlotInfo[] getFluids() {
+        return new FluidSlotInfo[] {
+                FluidSlotInfo.createHorizontal(0, SideHandlerType.NONE, 66, 87),
+                FluidSlotInfo.createInput(0, 23, 15),
+                FluidSlotInfo.createOutput(0, 99, 15),
+                FluidSlotInfo.createOutput(0, 138, 15)
+        };
+    }
+
+    @Override
+    public void update() {
+        update(this);
+    }
+
+    @Override
+    public MachineRecipeHandler getRecipes() {
+        return RECIPE;
     }
 }

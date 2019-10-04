@@ -22,10 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * (铁)架台，不一定是铁
@@ -35,13 +32,7 @@ import java.util.Random;
  */
 public class SupportStand extends BlockAABB implements ITileEntityProvider, IDismantleBlock {
 
-    public static final List<ISupportStandModule> MODULES = new LinkedList<>();
-
-    public static void registerModule(ISupportStandModule module) {
-        if (!MODULES.contains(module)) {
-            MODULES.add(module);
-        }
-    }
+    public static Map<String, ISupportStandModule> MODULES = new HashMap<>();
 
     public SupportStand() {
         super(new AxisAlignedBB(0.1D, 0D, 0.1D, 0.9D, 0.88D, 0.9D));
@@ -54,20 +45,28 @@ public class SupportStand extends BlockAABB implements ITileEntityProvider, IDis
         if (!worldIn.isRemote) {
             boolean activated = false;
             ItemStack item = playerIn.getHeldItem(hand);
-            Iterator<ISupportStandModule> iterator = MODULES.iterator();
-            while (!activated && iterator.hasNext()) {
-                ISupportStandModule module = iterator.next();
-                if (module.isAdded(worldIn, pos)) {
-                    activated = module.onActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-                } else if (module.getModelItem().isItemEqual(item)) {
-                    module.addModule(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-                    activated = true;
+            TileSupportStand s = (TileSupportStand) worldIn.getTileEntity(pos);
+            assert s != null;
+            for (String moduleKey : s.getModules()) {
+                ISupportStandModule module = MODULES.get(moduleKey);
+                activated = module.onActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+                if (activated) {
+                    break;
                 }
             }
             if (!activated) {
-                TileSupportStand s = (TileSupportStand) worldIn.getTileEntity(pos);
-                int guiId = s == null ? -1 : s.getGuiId();
-                playerIn.openGui(ElementTimes.instance, guiId, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                for (ISupportStandModule module : MODULES.values()) {
+                    if (module.getModelItem().isItemEqual(item)) {
+                        module.addModule(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+                        activated = true;
+                        break;
+                    }
+                }
+            }
+            if (!activated) {
+                if (s.getGuiId() >= 0) {
+                    playerIn.openGui(ElementTimes.instance, s.getGuiId(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+                }
             }
         }
         return true;
@@ -76,7 +75,7 @@ public class SupportStand extends BlockAABB implements ITileEntityProvider, IDis
     // 方块及掉落
     @Override
     public boolean dismantleBlock(World world, BlockPos pos) {
-        for (ISupportStandModule module : MODULES) {
+        for (ISupportStandModule module : MODULES.values()) {
             if (module.isAdded(world, pos)) {
                 module.dropModule(world, pos);
                 TileSupportStand s = (TileSupportStand) world.getTileEntity(pos);
@@ -99,10 +98,10 @@ public class SupportStand extends BlockAABB implements ITileEntityProvider, IDis
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        for (ISupportStandModule module : MODULES) {
-            if (module.isAdded(worldIn, pos)) {
-                module.randomDisplayTickClient(stateIn, worldIn, pos, rand);
-            }
+        TileSupportStand s = (TileSupportStand) worldIn.getTileEntity(pos);
+        assert s != null;
+        for (String moduleKey : s.getModules()) {
+            MODULES.get(moduleKey).randomDisplayTickClient(stateIn, worldIn, pos, rand);
         }
     }
 
@@ -117,5 +116,12 @@ public class SupportStand extends BlockAABB implements ITileEntityProvider, IDis
     @Override
     public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
         return new TileSupportStand();
+    }
+
+    public static void registerModule(ISupportStandModule module) {
+        String key = module.getKey();
+        if (!SupportStand.MODULES.containsKey(key)) {
+            SupportStand.MODULES.put(key, module);
+        }
     }
 }

@@ -11,11 +11,11 @@ import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp;
 import com.elementtimes.tutorial.common.tileentity.TileSupportStand;
+import com.elementtimes.tutorial.common.tileentity.interfaces.ISSMTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -39,6 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import static com.elementtimes.elementcore.api.template.block.Properties.IS_BURNING;
 
@@ -52,7 +53,7 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
     public static final int ALCOHOL_TICK = 10;
     public static final float ALCOHOL_RAIN_PROBABILITY = 0.1f;
     public static final String BIND_ALCOHOL = "_nbt_alcohol_";
-    private static final String BIND_ALCOHOL_COUNT = "_nbt_alcohol_count_";
+    public static final String BIND_ALCOHOL_RAIN = "_nbt_alcohol_rain_";
 
     public AlcoholLamp() {
         super(new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 0.5D, 0.75D));
@@ -103,19 +104,6 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        NBTTagCompound tagCompound = stack.getTagCompound();
-        if (tagCompound != null && tagCompound.hasKey(BIND_ALCOHOL)) {
-            ITankHandler ethanolTank = getEthanolTank(worldIn, pos);
-            if (ethanolTank != null) {
-                int amount = tagCompound.getCompoundTag(BIND_ALCOHOL).getInteger(BIND_ALCOHOL_COUNT);
-                ethanolTank.fillIgnoreCheck(0, new FluidStack(ElementtimesFluids.ethanol, amount), true);
-            }
-        }
-    }
-
-    @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         if (world instanceof World) {
             return isFire((World) world, pos) ? 15 : 0;
@@ -123,24 +111,21 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
         return super.getLightValue(state, world, pos);
     }
 
-    @Override
-    public boolean dismantleBlock(World world, BlockPos pos) {
-        if (!world.isRemote) {
-            ItemStack alcoholLamp = new ItemStack(ElementtimesBlocks.alcoholLamp);
-            ITankHandler ethanolTank = getEthanolTank(world, pos);
-            FluidStack fluid = ethanolTank == null ? null : ethanolTank.getFluidFirst();
-            alcoholLamp.getOrCreateSubCompound(BIND_ALCOHOL).setInteger(BIND_ALCOHOL_COUNT,
-                    fluid == null ? 0 : fluid.amount);
-            Block.spawnAsEntity(world, pos, alcoholLamp);
-            world.setBlockToAir(pos);
-        }
-        return true;
-    }
-
     @Nonnull
     @Override
     public ItemStack getModelItem() {
         return new ItemStack(this);
+    }
+
+    @Nonnull
+    @Override
+    public Supplier getActiveObject(World worldIn, BlockPos pos) {
+        return () -> new TileAlcoholLamp(worldIn, pos);
+    }
+
+    @Override
+    public boolean isActive(World worldIn, BlockPos pos) {
+        return false;
     }
 
     @Nonnull
@@ -153,52 +138,6 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
     @Override
     public ITileTESR.RenderObject createRender() {
         return new ITileTESR.RenderObject(getModelItem()).translate(.5, -.13, .5).scale(3, 3, 3);
-    }
-
-    @Override
-    public void addModule(World worldIn, BlockPos pos, IBlockState state,
-                          EntityPlayer playerIn, EnumHand hand, EnumFacing facing,
-                          float hitX, float hitY, float hitZ) {
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileSupportStand) {
-            TileSupportStand tss = (TileSupportStand) te;
-            tss.renderModule(this);
-            // ethanol
-            ItemStack heldItem = playerIn.getHeldItem(hand);
-            NBTTagCompound nbt = heldItem.getSubCompound(BIND_ALCOHOL);
-            if (nbt != null && nbt.hasKey(BIND_ALCOHOL_COUNT)) {
-                int alcohol = nbt.getInteger(BIND_ALCOHOL_COUNT);
-                if (alcohol > 0) {
-                    ITankHandler et = getEthanolTank(worldIn, pos);
-                    int i = et == null ? 0 : et.fill(new FluidStack(ElementtimesFluids.ethanol, alcohol), true);
-                    nbt.setInteger(BIND_ALCOHOL_COUNT, alcohol - i);
-                }
-            }
-            heldItem.shrink(1);
-        }
-    }
-
-    @Override
-    public void dropModule(World worldIn, BlockPos pos) {
-        setFire(worldIn, pos, false);
-        TileSupportStand tss = (TileSupportStand) worldIn.getTileEntity(pos);
-        assert tss != null;
-        ITankHandler ethanolTank = tss.getTanks(SideHandlerType.NONE);
-        FluidStack fluid = ethanolTank == null ? null : ethanolTank.getFluid(0, false);
-        int amount = 0;
-        if (fluid != null) {
-            amount = fluid.amount;
-            fluid.amount = 0;
-        }
-        ItemStack alcoholLamp = new ItemStack(this);
-        alcoholLamp.getOrCreateSubCompound(BIND_ALCOHOL).setInteger(BIND_ALCOHOL_COUNT, amount);
-        if (ethanolTank != null) {
-            FluidStack f = ethanolTank.getFluid(0, false);
-            if (f != null) {
-                f.amount = 0;
-            }
-        }
-        Block.spawnAsEntity(worldIn, pos, alcoholLamp);
     }
 
     @Override
@@ -225,7 +164,9 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
             // 水桶
             if (isFire(worldIn, pos)) {
                 setFire(worldIn, pos, false);
-                playerIn.setHeldItem(hand, new ItemStack(Items.BUCKET));
+                if (!playerIn.isCreative()) {
+                    playerIn.setHeldItem(hand, new ItemStack(Items.BUCKET));
+                }
                 return true;
             }
         } else if (held.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
@@ -233,10 +174,14 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
             FluidActionResult far = FluidUtil.tryEmptyContainer(held, getEthanolTank(worldIn, pos), ALCOHOL_AMOUNT, playerIn, true);
             if (far.isSuccess() && !playerIn.isCreative()) {
                 playerIn.setHeldItem(hand, far.getResult());
-                return true;
             }
+            return true;
         } else if (held.isEmpty()) {
             // 空手
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileSupportStand && ((TileSupportStand) te).getGuiId() >= 0) {
+                return false;
+            }
             if (isFire(worldIn, pos)) {
                 setFire(worldIn, pos, false);
                 if (worldIn.rand.nextInt(1) == 0) {
@@ -264,12 +209,20 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
         }
     }
 
+    @Nullable
     private ITankHandler getEthanolTank(World world, BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
-        if (te instanceof TileSupportStand) {
-            return ((TileSupportStand) te).getTanks(SideHandlerType.NONE);
+        TileAlcoholLamp al = null;
+        if (te instanceof ISSMTileEntity) {
+            Object object = ((ISSMTileEntity) te).getModuleObject(getKey());
+            if (object instanceof TileAlcoholLamp) {
+                al = (TileAlcoholLamp) object;
+            }
         } else if (te instanceof TileAlcoholLamp) {
-            return ((TileAlcoholLamp) te).getTanks(SideHandlerType.INPUT);
+            al = (TileAlcoholLamp) te;
+        }
+        if (al != null) {
+            return al.getTanks(SideHandlerType.INPUT);
         }
         return null;
     }
@@ -278,8 +231,7 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
         if (!world.isRemote) {
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof TileAlcoholLamp) {
-                IBlockState oldState = world.getBlockState(pos);
-                IBlockState newState = oldState.withProperty(IS_BURNING, fire);
+                IBlockState newState = world.getBlockState(pos).withProperty(IS_BURNING, fire);
                 ECUtils.block.setBlockState(world, pos, newState, te);
                 world.markBlockRangeForRenderUpdate(pos, pos);
             } else if (te instanceof TileSupportStand) {
