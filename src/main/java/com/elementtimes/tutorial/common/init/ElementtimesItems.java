@@ -251,6 +251,8 @@ public class ElementtimesItems {
     public static Item elementbow = new Elementbow();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementPickaxe = new Elementpickaxe();
+    @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
+    public static Item elementFishPole = new ElementFishPole();
 
     // gear
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
