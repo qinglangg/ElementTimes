@@ -3,6 +3,8 @@ package com.elementtimes.tutorial.client;
 import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.elementcore.api.tools.CreativeTabWrapper;
 import com.elementtimes.tutorial.common.CommonProxy;
+import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeModContainer;
@@ -20,6 +22,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        new NetworkLoader();
         // 创造
         CreativeTabWrapper.apply(CreativeTabs.MISC, "misc").addPredicate(itemStack -> {
             Item item = itemStack.getItem();

@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common;
 import com.elementtimes.tutorial.common.event.RecipeRemove;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
+import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraftforge.fml.common.Loader;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
+    	new NetworkLoader();
         String flammPfeil = "flammpfeil.slashblade";
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());
