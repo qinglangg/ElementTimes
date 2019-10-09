@@ -14,6 +14,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
@@ -28,6 +30,22 @@ public class TileSolidReactor extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(2, 2, 0, 1)
+            		
+            		.newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(Blocks.GRASS, 1))
+                    .addItemInput(IngredientPart.forItem(Blocks.DIRT, 1))
+                    .addItemOutput(IngredientPart.forItem(Blocks.GRASS_PATH , 1))
+                    .endAdd()
+            		.newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(Blocks.DIRT, 1))
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 1, 15)))
+                    .addItemOutput(IngredientPart.forItem(Blocks.FARMLAND , 1))
+                    .endAdd()
+            		
+            		
+            		
                     //CaO+SiO2=CaSiO3
                     .newRecipe()
                     .addCost(5000)
@@ -125,6 +143,8 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 1))
                     .endAdd();
+            
+            
         }
     }
 

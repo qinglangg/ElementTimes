@@ -37,7 +37,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     //AL2O3+6HCL=2ALCL3+3H2O
                     .newRecipe()
                     .addCost(2000)
-                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 2, 4)))
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 1, 4)))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))

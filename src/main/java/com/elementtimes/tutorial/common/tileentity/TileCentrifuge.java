@@ -30,7 +30,7 @@ public class TileCentrifuge extends BaseTileEntity {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(0, 0, 1, 5)
                     .newRecipe()
-                    .addCost(1000)
+                    .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 210))
@@ -39,7 +39,7 @@ public class TileCentrifuge extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1))
                     .endAdd()
                     .newRecipe()
-                    .addCost(1000)
+                    .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.seawater, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 780))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.MgCl2, 210))

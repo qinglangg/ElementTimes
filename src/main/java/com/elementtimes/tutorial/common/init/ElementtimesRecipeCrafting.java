@@ -90,7 +90,7 @@ public class ElementtimesRecipeCrafting {
             ElementtimesItems.goldElement,
             ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesBlocks.blockMultiGoldPlatinum,ElementtimesBlocks.blockMultiIronQuartz,
             ElementtimesBlocks.blockMultiObsidianDiamond,ElementtimesBlocks.blockMultiSilverCopper,ElementtimesBlocks.blockMultiTinLead,
-            ElementtimesItems.na,ElementtimesItems.Mg,ElementtimesItems.Al
+            ElementtimesItems.na,ElementtimesBlocks.blockMultiWoodStone,ElementtimesItems.Al
     };
     @ModRecipe
     public static Object[] blockMultiSliverCopper = new Object[]{
