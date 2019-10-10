@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * TODO：seawater和saltore生成更新：变成海里、湖里、河里生成盐， 海里生成海水，都是最底层【检测上方水方块】
  * TODO：海水完成后，将金元素第八格改为没
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@(0.2.1,0.3.0)")
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@(0.2.2,0.3.0)")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
 

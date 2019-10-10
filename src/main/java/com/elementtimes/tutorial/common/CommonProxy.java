@@ -1,11 +1,13 @@
 package com.elementtimes.tutorial.common;
 
+import com.elementtimes.tutorial.common.event.OreEvent;
 import com.elementtimes.tutorial.common.event.RecipeRemove;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import mods.flammpfeil.slashblade.SlashBlade;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -29,6 +31,7 @@ public class CommonProxy {
     public void init(FMLInitializationEvent event) {
         new ElementtimesGUI().init();
         ElementtimesRecipe.init(event);
+        MinecraftForge.ORE_GEN_BUS.register(OreEvent.class);
     }
 
     public void postInit(FMLPostInitializationEvent event) {

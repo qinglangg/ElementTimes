@@ -95,7 +95,7 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);
     
     @ModFluid
-    @ModFluid.FluidBlock
+    @ModFluid.FluidBlock(className = "com.elementtimes.tutorial.common.block.fluid.SeaWaterBlock")
     public static Fluid seawater = new Fluid("elementtimes.seawater",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);

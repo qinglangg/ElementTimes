@@ -181,7 +181,7 @@ public class ElementtimesItems {
     public static Item rubberRaw = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModOreDict("salt")
-    public static Item salt = new Item();
+    public static Item salt = new Salt();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item starchball = new Starchball();
 
