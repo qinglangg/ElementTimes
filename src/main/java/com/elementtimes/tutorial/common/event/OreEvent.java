@@ -4,6 +4,10 @@ import com.elementtimes.tutorial.common.generator.OceanGenerator;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * 矿物相关事件
+ * @author luqin2007
+ */
 public class OreEvent {
 
     private static final OceanGenerator GENERATOR_OCEAN = new OceanGenerator();

@@ -35,7 +35,7 @@ import java.io.*;
 import java.util.UUID;
 
 /**
- * 与海水相关的药水效果
+ * 与海水相关的事件
  * @author luqin2007
  */
 @Mod.EventBusSubscriber

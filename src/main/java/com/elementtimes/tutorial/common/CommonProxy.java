@@ -1,12 +1,14 @@
 package com.elementtimes.tutorial.common;
 
 import com.elementtimes.tutorial.common.event.OreEvent;
-import com.elementtimes.tutorial.common.event.RecipeRemove;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import mods.flammpfeil.slashblade.SlashBlade;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -35,6 +37,7 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-        new RecipeRemove();
+        FurnaceRecipes.instance().getSmeltingList().keySet()
+                .removeIf(input -> input.getItem() == Item.getItemFromBlock(Blocks.IRON_ORE));
     }
 }
