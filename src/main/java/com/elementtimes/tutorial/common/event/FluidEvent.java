@@ -1,8 +1,6 @@
 package com.elementtimes.tutorial.common.event;
 
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * 流体相关事件
@@ -15,11 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber
 public class FluidEvent {
 
-    @SubscribeEvent
-    public static void onFill(FillBucketEvent event) {
-    }
-
-    @SubscribeEvent
-    public static void onDrain() {
-    }
+//    @SubscribeEvent
+//    public static void onFill(FillBucketEvent event) {
+//    }
+//
+//    @SubscribeEvent
+//    public static void onDrain() {
+//    }
 }

@@ -253,13 +253,6 @@
         "fluid": "elementtimes.na3alf6"
       }
     },
-	
-	"elementtimes.hf": {
-      "model": "forge:fluid",
-      "custom": {
-        "fluid": "elementtimes.hf"
-      }
-    },
 	"elementtimes.f2": {
       "model": "forge:fluid",
       "custom": {
