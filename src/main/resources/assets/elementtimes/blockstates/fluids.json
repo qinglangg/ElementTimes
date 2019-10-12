@@ -253,6 +253,66 @@
         "fluid": "elementtimes.na3alf6"
       }
     },
+	
+	"elementtimes.hf": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hf"
+      }
+    },
+	"elementtimes.f2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.f2"
+      }
+    },
+	"elementtimes.concentratedhydrochloricacid": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.concentratedhydrochloricacid"
+      }
+    },
+	"elementtimes.dilutehydrochloricacid": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.dilutehydrochloricacid"
+      }
+    },
+	"elementtimes.i2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.i2"
+      }
+    },
+	"elementtimes.hi": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hi"
+      }
+    },
+		
+
+	"elementtimes.br2": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.br2"
+      }
+    },	   
+	"elementtimes.hbr": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hbr"
+      }
+    },
+	"elementtimes.hclo": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.hclo"
+      }
+    },
+	
+	
+	
     "elementtimes.co2": {
       "model": "forge:fluid",
       "custom": {

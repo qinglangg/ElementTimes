@@ -54,6 +54,15 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModItem.Tooltip("\u00a79Al")
     public static Item Al = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79AgBr")
+    public static Item AgBr = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79AgCl")
+    public static Item AgCl = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
+    @ModItem.Tooltip("\u00a79AgI")
+    public static Item AgI = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item slag = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
