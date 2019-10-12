@@ -38,14 +38,14 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .newRecipe()
                     .addCost(2000)
                     .addItemInput(IngredientPart.forItem(new ItemStack(Items.DYE, 1, 4)))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 6000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
                     .newRecipe()
                     .addCost(2000)
                     .addItemInput(IngredientPart.forItem(Items.REDSTONE, 1))
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl, 6000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 6000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.AlCl3, 2000))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
@@ -82,7 +82,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .endAdd()
 
 
-                    //2na+cl2=2nacl
+                    //2Na+Cl2=2NaCl
                     .newRecipe()
                     .addCost(0)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.na, 2))
@@ -90,6 +90,27 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
                     .endAdd()
 
+                    //2Ag+Cl2=2AgCl
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.silver, 2))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.AgCl, 2))
+                    .endAdd()
+                    //2Ag+Br2=2AgBr
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.silver, 2))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Br2, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.AgBr, 2))
+                    .endAdd()
+                    //2Ag+Br2=2AgI
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.silver, 2))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.I2, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.AgI, 2))
+                    .endAdd()
 
                     //C+H2O(g)=CO+H2
                     .newRecipe()

@@ -10,12 +10,62 @@ import net.minecraftforge.fluids.Fluid;
  * @author 卿岚
  */
 public class ElementtimesFluids {
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid HF = new Fluid("elementtimes.hf",
+            new ResourceLocation(ElementTimes.MODID, "fluid/f2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/f2_fluid"), 0xFF6E4A26);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid F2 = new Fluid("elementtimes.f2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/f2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/f2_fluid"), 0xFF6E4A26);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid ConcentratedHydrochloricAcid = new Fluid("elementtimes.concentratedhydrochloricacid",
+            new ResourceLocation(ElementTimes.MODID, "fluid/nonghcl_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/nonghcl_fluid"), 0xFF6F6F43);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid DiluteHydrochloricAcid = new Fluid("elementtimes.dilutehydrochloricacid",
+            new ResourceLocation(ElementTimes.MODID, "fluid/xihclL_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/xihcl_fluid"), 0xFF979750);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid I2 = new Fluid("elementtimes.i2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/i2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/i2_fluid"), 0xFF595928);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid HI = new Fluid("elementtimes.HI",
+            new ResourceLocation(ElementTimes.MODID, "fluid/i2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/i2_fluid"), 0xFF595928);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Br2 = new Fluid("elementtimes.br2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/br2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/br2_fluid"), 0xFF83833F);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid HBr = new Fluid("elementtimes.HBr",
+            new ResourceLocation(ElementTimes.MODID, "fluid/br2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/br2_fluid"), 0xFF83833F);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid HClO = new Fluid("elementtimes.hclo",
+            new ResourceLocation(ElementTimes.MODID, "fluid/hclo_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/hclo_fluid"), 0xFF5F943E);
 
+    
+    
+    
+    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid h2so4 = new Fluid("elementtimes.h2so4",
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_fluid"), 0xFF969642);
+    
     
     @ModFluid
     @ModFluid.FluidBlock
@@ -70,7 +120,6 @@ public class ElementtimesFluids {
     public static Fluid HCl = new Fluid("elementtimes.hcl",
             new ResourceLocation(ElementTimes.MODID, "fluid/hcl_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/hcl_fluid"), 0xFF969642);
-   
 
     @ModFluid
     @ModFluid.FluidBlock
