@@ -20,9 +20,26 @@ public final class WireRegister {
 	
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
-		Block wire = new WireBlock("wire_copper");
-		event.getRegistry().register(wire);
-		blockList.add(wire);
+		//铜
+		blockList.add(new WireBlock("wire_copper"));
+		//铁
+		blockList.add(new WireBlock("wire_iron"));
+		//铝
+		blockList.add(new WireBlock("wire_aluminum"));
+		//金
+		blockList.add(new WireBlock("wire_glod"));
+		//锡
+		blockList.add(new WireBlock("wire_tin"));
+		//高能-银
+		blockList.add(new WireBlock("wire_silver_high"));
+		//高能-铜
+		blockList.add(new WireBlock("wire_copper_high"));
+		//高能-铝
+		blockList.add(new WireBlock("wire_aluminum_high"));
+		//元素
+		blockList.add(new WireBlock("wire_element"));
+		
+		event.getRegistry().registerAll((Block[]) blockList.toArray());
 	}
 	
 	@SubscribeEvent

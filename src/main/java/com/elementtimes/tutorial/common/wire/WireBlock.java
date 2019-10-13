@@ -1,4 +1,4 @@
-/**   
+/*
 * @Title: WireBlock.java
 * @Package minedreams.mi.blocks.tools.wire
 * @author EmptyDreams
@@ -7,21 +7,12 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import static com.elementtimes.tutorial.common.wire.Wire.DOWN;
-import static com.elementtimes.tutorial.common.wire.Wire.EAST; 
-import static com.elementtimes.tutorial.common.wire.Wire.NORTH;
-import static com.elementtimes.tutorial.common.wire.Wire.SOUTH;
-import static com.elementtimes.tutorial.common.wire.Wire.UP;   
-import static com.elementtimes.tutorial.common.wire.Wire.WEST; 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.elementtimes.elementcore.api.annotation.ModItem;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesTabs;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -37,6 +28,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import static com.elementtimes.tutorial.common.wire.Wire.*;
+
 /**
  * 普通电线
  * @author EmptyDremas
@@ -47,24 +40,20 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 		super(Material.CIRCUITS);
 		setSoundType(SoundType.SNOW);
 		setHardness(0.35F);
-	    setCreativeTab(ElementtimesTabs.Industry);
+		setCreativeTab(ElementtimesTabs.Industry);
 		setRegistryName(ElementTimes.MODID, name);
 		setUnlocalizedName(name);
 		setDefaultState(getDefaultState().withProperty(SOUTH, false)
 				.withProperty(NORTH, false).withProperty(WEST, false).withProperty(EAST, false)
 				.withProperty(DOWN, false).withProperty(UP, false));
-		
-		//这里注册方块 交给执着
-		//AutoRegister.addAutoBlock(this, BlockRegister.WIRE_COPPER);
-		//AutoRegister.addItem(getItemBlock(), getItemBlock().getRegistryName().getResourcePath());
 	}
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		Wire.NBT nbt = (Wire.NBT) worldIn.getTileEntity(pos);
-		state = state.withProperty(UP, nbt.up).withProperty(DOWN, nbt.down)
-							.withProperty(EAST, nbt.east).withProperty(WEST, nbt.west)
-							.withProperty(NORTH, nbt.north).withProperty(SOUTH, nbt.south);
+		TileEntityWire nbt = (TileEntityWire) worldIn.getTileEntity(pos);
+		state = state.withProperty(UP, nbt.getUp()).withProperty(DOWN, nbt.getDown())
+							.withProperty(EAST, nbt.getEast()).withProperty(WEST, nbt.getWest())
+							.withProperty(NORTH, nbt.getNorth()).withProperty(SOUTH, nbt.getSouth());
 		return state;
 	}
 	
@@ -105,7 +94,7 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 		noUpdate = (noUpdate == null) ? new ArrayList<>() : noUpdate;
 		noUpdate.add(pos);
 		//更新不区分客户端与服务端，以此减少信息同步异常的可能
-		BlockPos[] poss = Wire.getAllPos(pos);
+		BlockPos[] poss = Tools.getBlockPosList(pos);
 		Block block;
 		
 		IBlockState oldState;
@@ -150,8 +139,8 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 	}
 	
 	@Override
-	public ElectricityUser createNewTileEntity(World worldIn, int meta) {
-		return new Wire.NBT();
+	public ElectricityTranster createNewTileEntity(World worldIn, int meta) {
+		return new TileEntityWire();
 	}
 
 	@Override
@@ -161,29 +150,38 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 
 	@Override
 	public boolean canLink(LinkInfo info, boolean nowIsExist, boolean fromIsExist) {
+		//判断当前方块是否存在
 		if (nowIsExist) {
+			//当前方块存在，判断调用方块
 			if (info.fromBlock instanceof WireBlock) {
-				Wire.NBT nbt = (Wire.NBT) ((info.nowUser == null) ? info.world.getTileEntity(info.nowPos) : info.nowUser);
-				Wire.NBT nbt2 = (Wire.NBT) ((info.fromUser == null) ? info.world.getTileEntity(info.fromPos) : info.fromUser);
-				return nbt.canLink(info.fromPos) && nbt2.canLink(info.nowPos);
+				ElectricityTranster nbt = (ElectricityTranster)
+						                          ((info.nowUser == null) ?
+								                           info.world.getTileEntity(info.nowPos) :info.nowUser);
+				ElectricityTranster nbt2 = (ElectricityTranster)
+						                           ((info.fromUser == null) ?
+								                            info.world.getTileEntity(info.fromPos) : info.fromUser);
+				return nbt.canLink(nbt2) && nbt2.canLink(nbt);
 			} else if (info.fromBlock instanceof IEleInfo) {
 				LinkInfo info2 = new LinkInfo(info.world, info.nowPos, info.fromPos, info.nowBlock, info.fromBlock);
 				return ((IEleInfo) info.fromBlock).canLink(info2, fromIsExist, nowIsExist);
 			}
 			return false;
 		} else {
-			if (info.fromBlock instanceof WireBlock) {
-				Wire.NBT nbt;
+			if (info.fromBlock instanceof IEleInfo) {
+				if (info.nowUser == null) throw new NullPointerException("判断信息不足，nowUser设置不能为空");
+				ElectricityTranster nbt;
 				if (info.fromUser != null)
-					nbt = (Wire.NBT) (info.fromUser);
+					nbt = (ElectricityTranster) info.fromUser;
 				else
-					nbt = (Wire.NBT) info.world.getTileEntity(info.fromPos);
-				return nbt.canLink(info.nowPos);
-			} else if (info.fromBlock instanceof IEleInfo) {
-				LinkInfo info2 = new LinkInfo(info.world, info.nowPos, info.fromPos, info.nowBlock, info.fromBlock);
-				return ((IEleInfo) info.fromBlock).canLink(info2, fromIsExist, nowIsExist);
+					nbt = (ElectricityTranster) info.world.getTileEntity(info.fromPos);
+				if (info.nowUser instanceof ElectricityTranster) {
+					return ((ElectricityTranster) info.nowUser).canLink(nbt) && nbt.canLink(info.nowUser);
+				} else {
+					return nbt.canLink(info.nowUser);
+				}
+			} else {
+				return EleUtils.canLinkMinecraft(info.fromBlock);
 			}
-			return false;
 		}
 	}
 	

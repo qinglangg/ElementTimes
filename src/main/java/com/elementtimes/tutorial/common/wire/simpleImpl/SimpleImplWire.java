@@ -1,4 +1,4 @@
-/**   
+/*
 * @Title: SimpleImplWire.java
 * @Package minedreams.mi.simpleImpl
 * @author EmptyDreams
@@ -7,7 +7,7 @@
 */
 package com.elementtimes.tutorial.common.wire.simpleImpl;
 
-import com.elementtimes.tutorial.common.wire.Wire.NBT;
+import com.elementtimes.tutorial.common.wire.TileEntityWire;
 import com.elementtimes.tutorial.common.wire.simpleImpl.manager.InfoManagerTileEntity;
 
 import io.netty.buffer.ByteBuf;
@@ -27,9 +27,9 @@ public final class SimpleImplWire implements IMessage {
 	/** 存储需要同步的电线 */
 	public final InfoManagerTileEntity manager = new InfoManagerTileEntity();
 	/** 需要同步的方块 */
-	private NBT nbt;
+	private TileEntityWire nbt;
 	
-	public void ini(NBT nbt) {
+	public void ini(TileEntityWire nbt) {
 		this.nbt = nbt;
 	}
 	
@@ -49,7 +49,7 @@ public final class SimpleImplWire implements IMessage {
 		public IMessage onMessage(WireToServerMessage message, MessageContext ctx) {
 			if (message.dimension == -100) return null;
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
-			NBT nbt = (NBT) world.getTileEntity(message.pos.getInfo());
+			TileEntityWire nbt = (TileEntityWire) world.getTileEntity(message.pos.getInfo());
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			nbt.players.add(player.getName());
 			return null;

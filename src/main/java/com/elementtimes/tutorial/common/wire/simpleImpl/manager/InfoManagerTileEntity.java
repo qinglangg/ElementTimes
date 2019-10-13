@@ -1,4 +1,4 @@
-/**   
+/*
 * @Title: InfoManagerTileEntity.java
 * @Package minedreams.mi.simpleImpl.manager
 * @author EmptyDreams
@@ -9,18 +9,17 @@ package com.elementtimes.tutorial.common.wire.simpleImpl.manager;
 
 import java.util.List;
 
-import com.elementtimes.tutorial.common.wire.Wire;
-import com.elementtimes.tutorial.common.wire.Wire.NBT;
+import com.elementtimes.tutorial.common.wire.TileEntityWire;
 import com.elementtimes.tutorial.common.wire.simpleImpl.info.InfoBooleans;
 import com.elementtimes.tutorial.common.wire.simpleImpl.info.InfoLocation;
 
 import io.netty.buffer.ByteBuf;
 
 /**
- * 为{@link minedreams.mi.simpleImpl.SimpleImplWire}定做的信息管理类
+ * 为{@link com.elementtimes.tutorial.common.wire.simpleImpl.SimpleImplWire}定做的信息管理类
  * @author EmptyDremas
  */
-public final class InfoManagerTileEntity implements InfoManager<Wire.NBT> {
+public final class InfoManagerTileEntity implements InfoManager<TileEntityWire> {
 
 	/** 存储电线的连接方向 */
 	private final InfoBooleans bools = new InfoBooleans();
@@ -54,7 +53,7 @@ public final class InfoManagerTileEntity implements InfoManager<Wire.NBT> {
 	}
 
 	@Override
-	public void writeTo(NBT t, ByteBuf buf) {
+	public void writeTo(TileEntityWire t, ByteBuf buf) {
 		bools.add(t.getUp());
 		bools.add(t.getDown());
 		bools.add(t.getEast());
@@ -83,7 +82,7 @@ public final class InfoManagerTileEntity implements InfoManager<Wire.NBT> {
 	}
 
 	@Override
-	public void readTo(NBT t) {
+	public void readTo(TileEntityWire t) {
 		List<Boolean> lists = bools.getInfos();
 		t.setUp(lists.get(0));
 		t.setDown(lists.get(1));
@@ -92,8 +91,8 @@ public final class InfoManagerTileEntity implements InfoManager<Wire.NBT> {
 		t.setSouth(lists.get(4));
 		t.setNorth(lists.get(5));
 		t.deleteAllLink();
-		t.link(links[0].getInfo());
-		t.link(links[1].getInfo());
+		t.linkForce(links[0].getInfo());
+		t.linkForce(links[1].getInfo());
 	}
 	
 }

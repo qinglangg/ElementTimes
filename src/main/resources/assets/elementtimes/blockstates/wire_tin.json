@@ -1,0 +1,49 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "elementtimes:wire/tin/point"
+    },
+    "variants": {
+        "inventory": [{ }],
+        "up": {
+        "up": {
+            "false": { },
+            "true": {
+                "submodel": "elementtimes:wire/tin/north",
+                "x": 270
+            }
+        },
+        "down": {
+            "false": { },
+            "true": {
+                "submodel": "elementtimes:wire/tin/north",
+                "x": 90
+            }
+        },
+        "south": {
+            "false": { },
+            "true": {
+                "submodel": "elementtimes:wire/tin/north",
+                "y": 180
+            }
+        },
+        "north": {
+            "false": { },
+            "true": { "submodel": "elementtimes:wire/tin/north" }
+        },
+        "west": {
+            "false": { },
+            "true": {
+                "submodel": "elementtimes:wire/tin/north",
+                "y": 270
+            }
+        },
+        "east": {
+            "false": { },
+            "true": {
+                "submodel": "elementtimes:wire/tin/north",
+                "y": 90
+            }
+        }
+    }
+}

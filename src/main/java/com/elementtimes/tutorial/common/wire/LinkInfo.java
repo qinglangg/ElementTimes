@@ -35,7 +35,7 @@ public final class LinkInfo {
 	/** 调用方块的TE */
 	public TileEntity fromUser;
 	/** 当前方块的TE */
-	public ElectricityUser nowUser;
+	public Electricity nowUser;
 	/** 调用方块的IBlockState */
 	public IBlockState fromState;
 	/** 当前方块的IBlockState */

@@ -1,5 +1,5 @@
-/**   
-* @Title: ElcUtils.java
+/*
+* @Title: EleUtils.java
 * @Package minedreams.mi.api.electricity
 * @author EmptyDreams
 * @date 2019年10月1日 下午8:52:18
@@ -13,13 +13,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * 这个类用于电线的一些判断，目前只实现了判断方块电线是否可以连接和
- * 获取方块需要的电能两个功能，
- * 其中涉及了原版的方块（如：铁块、钻石块等）
  * @author EmptyDremas
+ *
  */
-public final class ElcUtils {
+public final class EleUtils {
 
+	public static boolean canLinkMinecraft(Block block) {
+		switch (block.getRegistryName().getResourcePath()) {
+			case "gravel": case "gold_ore": case "iron_ore": case "lapis_ore":
+			case "lapis_block": case "gold_block": case "iron_block": case "diamond_ore":
+			case "diamond_block": case "iron_door": case "redstone_ore": case "lit_redstone_ore":
+			case "iron_bars": case "redstone_lamp": case "lit_redstone_lamp": case "emerald_ore":
+			case "emerald_block": case "anvil": case "redstone_block": case "quartz_ore": case "hopper":
+			case "iron_trapdoor": case "sea_lantern": return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * 判断方块是否可以连接电线，
 	 * <b>注意：此方法不保证fromPos/nowPos在此时已经在世界存在，所以提供了额外的参数</b>
@@ -29,14 +39,7 @@ public final class ElcUtils {
 	 */
 	public static boolean canLink(LinkInfo info, boolean nowIsExist, boolean fromIsExist) {
 		if (info.nowBlock.getRegistryName().getResourceDomain().equals("minecraft")) {
-			switch (info.nowBlock.getRegistryName().getResourcePath()) {
-				case "gravel": case "gold_ore": case "iron_ore": case "lapis_ore":
-				case "lapis_block": case "gold_block": case "iron_block": case "diamond_ore":
-				case "diamond_block": case "iron_door": case "redstone_ore": case "lit_redstone_ore":
-				case "iron_bars": case "redstone_lamp": case "lit_redstone_lamp": case "emerald_ore":
-				case "emerald_block": case "anvil": case "redstone_block": case "quartz_ore": case "hopper":
-				case "iron_trapdoor": case "sea_lantern": return true;
-			}
+			return canLinkMinecraft(info.nowBlock);
 		} else if (info.nowBlock instanceof IEleInfo) {
 			return ((IEleInfo) info.nowBlock).canLink(info, nowIsExist, fromIsExist);
 		}
@@ -49,7 +52,6 @@ public final class ElcUtils {
 	 * @param pos 方块坐标
 	 * @param block 方块种类(可以为null)
 	 * @param te 方块TE(可以为null)
-	 * @return
 	 */
 	public static double energy(World world, BlockPos pos, Block block, TileEntity te) {
 		if (block == null) block = world.getBlockState(pos).getBlock();
