@@ -1,11 +1,5 @@
 package com.elementtimes.tutorial.common.wire;
 
-import static com.elementtimes.tutorial.common.wire.Wire.*;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.elementtimes.tutorial.common.wire.simpleImpl.SimpleImplWire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +9,12 @@ import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.elementtimes.tutorial.common.wire.Wire.*;
 
 public class TileEntityWire extends ElectricityTranster {
 	
@@ -32,7 +32,9 @@ public class TileEntityWire extends ElectricityTranster {
 	
 	@Override
 	public void send(SimpleNetworkWrapper simple, boolean isClient) {
-		if (isClient) return;
+		if (isClient) {
+			return;
+		}
 		super.send(simple, isClient);
 		//新建消息
 		SimpleImplWire siw = new SimpleImplWire();
@@ -40,8 +42,9 @@ public class TileEntityWire extends ElectricityTranster {
 		//遍历所有玩家
 		for (EntityPlayer player : world.playerEntities) {
 			//如果玩家已经更新过则跳过
-			if (!EntitySelectors.NOT_SPECTATING.apply(player) || (players.contains(player.getName())))
+			if (!EntitySelectors.NOT_SPECTATING.apply(player) || (players.contains(player.getName()))) {
 				continue;
+			}
 			
 			//判断玩家是否在范围之内（判断方法借用World中的代码）
 			double d = player.getDistance(pos.getX(), pos.getY(), pos.getZ());
@@ -66,43 +69,61 @@ public class TileEntityWire extends ElectricityTranster {
 	
 	@Override
 	public boolean canLink(TileEntity ele) {
-		if (ele == null) return false;
+		if (ele == null) {
+			return false;
+		}
 		boolean exET = ele instanceof ElectricityTranster;
 		if (!exET) {
 			if (!(EleUtils.canLink(new LinkInfo(world, getPos(), ele.getPos(),
-					getBlockType(), ele.getBlockType()), true, false))) return false;
+					getBlockType(), ele.getBlockType()), true, false))) {
+				return false;
+			}
 			EnumFacing facing = Tools.whatFacing(getPos(), ele.getPos());
 			if (linkBlock.containsKey(facing)) {
 				return linkBlock.get(facing) == null;
 			}
 			return true;
 		}
-		if (ele.equals(next) || ele.equals(prev)) return true;
+		if (ele.equals(next) || ele.equals(prev)) {
+			return true;
+		}
 		return next == null || prev == null;
 	}
 	
 	@Override
 	public ElectricityTranster next(ElectricityTranster ele) {
-		if (next != null && next.equals(ele)) return prev;
-		if (prev != null && prev.equals(ele)) return next;
+		if (next != null && next.equals(ele)) {
+			return prev;
+		}
+		if (prev != null && prev.equals(ele)) {
+			return next;
+		}
 		return null;
 	}
 	
 	@Override
 	public boolean linkForce(TileEntity ele) {
-		if (ele == null) return false;
+		if (ele == null) {
+			return false;
+		}
 		boolean exET = ele instanceof ElectricityTranster;
 		if (!exET) {
 			if (!(EleUtils.canLink(new LinkInfo(world, getPos(), ele.getPos(),
-					getBlockType(), ele.getBlockType()), true, false))) return false;
+					getBlockType(), ele.getBlockType()), true, false))) {
+				return false;
+			}
 			EnumFacing facing = Tools.whatFacing(getPos(), ele.getPos());
 			if (linkBlock.containsKey(facing)) {
-				if (linkBlock.get(facing) != null) return false;
+				if (linkBlock.get(facing) != null) {
+					return false;
+				}
 			}
 			linkBlock.put(facing, ele);
 		}
 		ElectricityTranster et = (ElectricityTranster) ele;
-		if (ele.equals(next) || ele.equals(prev)) return true;
+		if (ele.equals(next) || ele.equals(prev)) {
+			return true;
+		}
 		if (next == null) {
 			if (exET) {
 				next = et;
@@ -123,6 +144,7 @@ public class TileEntityWire extends ElectricityTranster {
 	 * @param blockPos 需要连接的电线所在方块
 	 * @return 是否连接成功
 	 */
+	@Override
 	public boolean linkForce(BlockPos blockPos) {
 		return linkForce(blockPos == null ? null : (TileEntityWire) world.getTileEntity(blockPos));
 	}
@@ -139,7 +161,9 @@ public class TileEntityWire extends ElectricityTranster {
 		south = state.getValue(SOUTH);
 		north = state.getValue(NORTH);
 		markDirty();
-		if (!world.isRemote) players.clear();
+		if (!world.isRemote) {
+			players.clear();
+		}
 	}
 	
 }

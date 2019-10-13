@@ -1,16 +1,18 @@
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public final class WireRegister {
@@ -38,8 +40,10 @@ public final class WireRegister {
 		blockList.add(new WireBlock("wire_aluminum_high"));
 		//元素
 		blockList.add(new WireBlock("wire_element"));
-		
-		event.getRegistry().registerAll((Block[]) blockList.toArray());
+		// java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Lnet.minecraft.block.Block;
+		event.getRegistry().registerAll(blockList.toArray(new Block[0]));
+		// registerTileEntity
+		GameRegistry.registerTileEntity(TileEntityWire.class, new ResourceLocation("elementtimes", "wire"));
 	}
 	
 	@SubscribeEvent

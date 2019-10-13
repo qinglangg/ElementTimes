@@ -26,31 +26,42 @@ public final class Tools {
 	public static EnumFacing whatFacing(BlockPos now, BlockPos other) {
 		BlockPos cache = now.west();
 		int code = other.hashCode();
-		if (cache.hashCode() == code && cache.equals(other))
+		if (cache.hashCode() == code && cache.equals(other)) {
 			return WEST;
+		}
 		cache = now.east();
-		if (cache.hashCode() == code && cache.equals(other))
+		if (cache.hashCode() == code && cache.equals(other)) {
 			return EAST;
+		}
 		cache = now.south();
-		if (cache.hashCode() == code && cache.equals(other))
+		if (cache.hashCode() == code && cache.equals(other)) {
 			return SOUTH;
+		}
 		cache = now.north();
-		if (cache.hashCode() == code && cache.equals(other))
+		if (cache.hashCode() == code && cache.equals(other)) {
 			return NORTH;
+		}
 		cache = now.down();
-		if (cache.hashCode() == code && cache.equals(other))
+		if (cache.hashCode() == code && cache.equals(other)) {
 			return DOWN;
+		}
 		return UP;
 	}
 	
 	/** 去除数组中的null元素 */
 	public static BlockPos[] removeNull(BlockPos[] array) {
-		if (array == null) return null;
+		if (array == null) {
+			return null;
+		}
 		int i = 0;
 		for (Object t : array) {
-			if (t != null) ++i;
+			if (t != null) {
+				++i;
+			}
 		}
-		if (i == 0) return null;
+		if (i == 0) {
+			return null;
+		}
 		BlockPos[] ts = new BlockPos[i];
 		i = 0;
 		for (BlockPos t : array) {
@@ -64,30 +75,43 @@ public final class Tools {
 	
 	/** 在数组中查找某个元素 */
 	public static<T> int findValue(T[] array, T t) {
-		if (array == null) return -1;
+		if (array == null) {
+			return -1;
+		}
 		if (t == null) {
 			for (int i = 0; i < array.length; ++i) {
-				if (array[i] == null) return i;
+				if (array[i] == null) {
+					return i;
+				}
 			}
 		}
 		int hash = t.hashCode();
 		for (int i = 0; i < array.length; ++i) {
-			if (array[i] == null) continue;
-			if (array[i].hashCode() == hash && array[i].equals(t))
+			if (array[i] == null) {
+				continue;
+			}
+			if (array[i].hashCode() == hash && array[i].equals(t)) {
 				return i;
+			}
 		}
 		return -1;
 	}
 	
 	/** 检查数组中是否包含某个元素 */
 	public static<T> boolean hasValue(T[] array, T t) {
-		if (array == null) return false;
+		if (array == null) {
+			return false;
+		}
 		for (T a : array) {
 			if (a == null) {
-				if (t == null) return true;
+				if (t == null) {
+					return true;
+				}
 				continue;
 			}
-			if (a.equals(t)) return true;
+			if (a.equals(t)) {
+				return true;
+			}
 		}
 		return false;
 	}

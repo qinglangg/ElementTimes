@@ -37,7 +37,7 @@ public abstract class Electricity extends TileEntity implements ITickable {
 	 * 机器运行的接口，该接口不应该处理电器运行内容，
 	 * 应当处理电器运行前的例行检查，应该使用{@link #useElectricity()}
 	 * 方法来处理运行内容。<br>
-	 * 该方法默认50ms运行一次，与MC时间线相同，玩家可以通过修改{@link SysInfo}
+	 * 该方法默认50ms运行一次，与MC时间线相同，玩家可以通过修改 SysInfo
 	 * 内的信息来更改运行间隔，间隔最小为10ms，最大为100ms，
 	 * 如果需要实现更多的间隔需要玩家自己实现。
 	 * 

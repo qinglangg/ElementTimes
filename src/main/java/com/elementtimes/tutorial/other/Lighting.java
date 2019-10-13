@@ -55,10 +55,8 @@ public class Lighting {
         if (!world.isRemote) {
             loadedWorld.add(world.provider.getDimension());
             try {
-                Field weatherList = World.class.getField("weatherEffects");
+                Field weatherList = World.class.getField(MCPNames.WORLD_WEATHER_EFFECTS);
                 LightingList list = new LightingList();
-                System.out.println(world);
-                System.out.println(world.weatherEffects);
                 list.addAll(world.weatherEffects);
                 ECUtils.reflect.setFinalField(world, weatherList, list);
             } catch (IllegalAccessException | NoSuchFieldException e) {
@@ -206,19 +204,17 @@ public class Lighting {
 
     public static class LightingFluidStorage extends WorldSavedData {
 
-        private static final Map<String, LightingFluidStorage> DATAS = new HashMap<>();
+        private static final Map<String, LightingFluidStorage> DATA = new HashMap<>();
 
         public static LightingFluidStorage get(World world) {
-            String name = "etlf" + world.provider.getDimension();
-            LightingFluidStorage data = DATAS.get(name);
-            if (data == null) {
-                data = (LightingFluidStorage) world.getPerWorldStorage().getOrLoadData(LightingFluidStorage.class, name);
+            return DATA.computeIfAbsent("etlf" + world.provider.getDimension(), name -> {
+                LightingFluidStorage data = (LightingFluidStorage) world.getPerWorldStorage().getOrLoadData(LightingFluidStorage.class, name);
                 if (data == null) {
                     data = new LightingFluidStorage(name);
                     world.getPerWorldStorage().setData(name, data);
                 }
-            }
-            return data;
+                return data;
+            });
         }
 
         public final Map<BlockPos, Fluid> fluids = Collections.synchronizedMap(new HashMap<>());
@@ -250,6 +246,7 @@ public class Lighting {
             }
         }
 
+        @Nonnull
         @Override
         public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
             NBTTagList list = new NBTTagList();

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -19,22 +20,29 @@ public class SaltGenerator extends WorldGenerator {
 
     @Override
     public boolean generate(World worldIn, @Nonnull Random rand, @Nonnull BlockPos position) {
-        BlockPos sPosition = worldIn.getTopSolidOrLiquidBlock(position);
+        BlockPos pos = worldIn.getTopSolidOrLiquidBlock(position);
         // 来自于 WorldGenClay
-        if (worldIn.getBlockState(sPosition).getMaterial() == Material.WATER) {
-            int i = rand.nextInt(2) + 2;
-            int j = 1;
+        if (worldIn.getBlockState(pos).getMaterial() == Material.WATER) {
+            int size = rand.nextInt(2) + 2;
+            // 防止递归加载区块
+            ChunkPos chunkPos = worldIn.getChunkFromBlockCoords(pos).getPos();
+            int disChunkX = pos.getX() - size - chunkPos.getXStart();
+            int disChunkZ = pos.getZ() - size - chunkPos.getZStart();
+            int offsetX = disChunkX < 0 ? -disChunkX :
+                    disChunkX + (size << 1) + 1 > 16 ? -(size << 1) - 1 : 0;
+            int offsetZ = disChunkZ < 0 ? -disChunkZ :
+                    disChunkZ + (size << 1) + 1 > 16 ? -(size << 1) - 1 : 0;
+            pos = pos.add(offsetX, 0, offsetZ);
+            // 生成
+            for (int x = pos.getX() - size; x <= pos.getX() + size; ++x) {
+                for (int z = pos.getZ() - size; z <= pos.getZ() + size; ++z) {
+                    int dx = x - pos.getX();
+                    int dz = z - pos.getZ();
 
-            for (int k = sPosition.getX() - i; k <= sPosition.getX() + i; ++k) {
-                for (int l = sPosition.getZ() - i; l <= sPosition.getZ() + i; ++l) {
-                    int i1 = k - sPosition.getX();
-                    int j1 = l - sPosition.getZ();
-
-                    if (i1 * i1 + j1 * j1 <= i * i) {
-                        for (int k1 = sPosition.getY() - 1; k1 <= sPosition.getY() + 1; ++k1) {
-                            BlockPos blockpos = new BlockPos(k, k1, l);
+                    if (dx * dx + dz * dz <= size * size) {
+                        for (int y = pos.getY() - 1; y <= pos.getY() + 1; ++y) {
+                            BlockPos blockpos = new BlockPos(x, y, z);
                             Block block = worldIn.getBlockState(blockpos).getBlock();
-
                             if (block == Blocks.DIRT || block == Blocks.CLAY || block == ElementtimesBlocks.oreSalt) {
                                 worldIn.setBlockState(blockpos, ElementtimesBlocks.oreSalt.getDefaultState(), 2);
                             }

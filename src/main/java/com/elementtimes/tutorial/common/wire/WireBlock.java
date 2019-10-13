@@ -7,11 +7,6 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -21,14 +16,15 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import static com.elementtimes.tutorial.common.wire.Wire.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 普通电线
@@ -41,19 +37,19 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 		setSoundType(SoundType.SNOW);
 		setHardness(0.35F);
 		setCreativeTab(ElementtimesTabs.Industry);
-		setRegistryName(ElementTimes.MODID, name);
+		setRegistryName("elementtimes", name);
 		setUnlocalizedName(name);
-		setDefaultState(getDefaultState().withProperty(SOUTH, false)
-				.withProperty(NORTH, false).withProperty(WEST, false).withProperty(EAST, false)
-				.withProperty(DOWN, false).withProperty(UP, false));
+		setDefaultState(getDefaultState().withProperty(Wire.SOUTH, false)
+				.withProperty(Wire.NORTH, false).withProperty(Wire.WEST, false).withProperty(Wire.EAST, false)
+				.withProperty(Wire.DOWN, false).withProperty(Wire.UP, false));
 	}
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		TileEntityWire nbt = (TileEntityWire) worldIn.getTileEntity(pos);
-		state = state.withProperty(UP, nbt.getUp()).withProperty(DOWN, nbt.getDown())
-							.withProperty(EAST, nbt.getEast()).withProperty(WEST, nbt.getWest())
-							.withProperty(NORTH, nbt.getNorth()).withProperty(SOUTH, nbt.getSouth());
+		state = state.withProperty(Wire.UP, nbt.getUp()).withProperty(Wire.DOWN, nbt.getDown())
+							.withProperty(Wire.EAST, nbt.getEast()).withProperty(Wire.WEST, nbt.getWest())
+							.withProperty(Wire.NORTH, nbt.getNorth()).withProperty(Wire.SOUTH, nbt.getSouth());
 		return state;
 	}
 	
@@ -65,14 +61,23 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
 			List<AxisAlignedBB> list, Entity entityIn, boolean isActualState) {
-		if (!isActualState)
+		if (!isActualState) {
 			state = getActualState(state, worldIn, pos);
+		}
 		
 		addCollisionBoxToList(pos, entityBox, list, Wire.B_POINT);
-		if (state.getValue(SOUTH)) addCollisionBoxToList(pos, entityBox, list, Wire.B_SOUTH);
-		if (state.getValue(NORTH)) addCollisionBoxToList(pos, entityBox, list, Wire.B_NORTH);
-		if (state.getValue(WEST)) addCollisionBoxToList(pos, entityBox, list, Wire.B_WEST);
-		if (state.getValue(EAST)) addCollisionBoxToList(pos, entityBox, list, Wire.B_EAST);
+		if (state.getValue(Wire.SOUTH)) {
+			addCollisionBoxToList(pos, entityBox, list, Wire.B_SOUTH);
+		}
+		if (state.getValue(Wire.NORTH)) {
+			addCollisionBoxToList(pos, entityBox, list, Wire.B_NORTH);
+		}
+		if (state.getValue(Wire.WEST)) {
+			addCollisionBoxToList(pos, entityBox, list, Wire.B_WEST);
+		}
+		if (state.getValue(Wire.EAST)) {
+			addCollisionBoxToList(pos, entityBox, list, Wire.B_EAST);
+		}
 	}
 	
 	/**
@@ -135,7 +140,7 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, EAST, NORTH, SOUTH, WEST, DOWN, UP);
+		return new BlockStateContainer(this, Wire.EAST, Wire.NORTH, Wire.SOUTH, Wire.WEST, Wire.DOWN, Wire.UP);
 	}
 	
 	@Override
@@ -168,12 +173,15 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 			return false;
 		} else {
 			if (info.fromBlock instanceof IEleInfo) {
-				if (info.nowUser == null) throw new NullPointerException("判断信息不足，nowUser设置不能为空");
+				if (info.nowUser == null) {
+					throw new NullPointerException("判断信息不足，nowUser设置不能为空");
+				}
 				ElectricityTranster nbt;
-				if (info.fromUser != null)
+				if (info.fromUser != null) {
 					nbt = (ElectricityTranster) info.fromUser;
-				else
+				} else {
 					nbt = (ElectricityTranster) info.world.getTileEntity(info.fromPos);
+				}
 				if (info.nowUser instanceof ElectricityTranster) {
 					return ((ElectricityTranster) info.nowUser).canLink(nbt) && nbt.canLink(info.nowUser);
 				} else {
@@ -189,12 +197,12 @@ public final class WireBlock extends BlockContainer implements IEleInfo {
 	 * 判断方块显示是否需要更新
 	 */
 	public static boolean needUpdate(IBlockState old, IBlockState now) {
-		return (old.getValue(UP) != now.getValue(UP)) ||
-				       (old.getValue(DOWN) != now.getValue(DOWN)) ||
-				       (old.getValue(SOUTH) != now.getValue(SOUTH)) ||
-				       (old.getValue(NORTH) != now.getValue(NORTH)) ||
-				       (old.getValue(WEST) != now.getValue(WEST)) ||
-				       (old.getValue(EAST) != now.getValue(EAST));
+		return (!old.getValue(Wire.UP).equals(now.getValue(Wire.UP))) ||
+				       (!old.getValue(Wire.DOWN).equals(now.getValue(Wire.DOWN))) ||
+				       (!old.getValue(Wire.SOUTH).equals(now.getValue(Wire.SOUTH))) ||
+				       (!old.getValue(Wire.NORTH).equals(now.getValue(Wire.NORTH))) ||
+				       (!old.getValue(Wire.WEST).equals(now.getValue(Wire.WEST))) ||
+				       (!old.getValue(Wire.EAST).equals(now.getValue(Wire.EAST)));
 	}
 	
 }

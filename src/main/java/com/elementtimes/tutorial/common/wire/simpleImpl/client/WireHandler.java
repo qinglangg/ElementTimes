@@ -7,16 +7,15 @@
  */
 package com.elementtimes.tutorial.common.wire.simpleImpl.client;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.elementtimes.tutorial.common.wire.Wire.NBT;
+import com.elementtimes.tutorial.common.wire.TileEntityWire;
 import com.elementtimes.tutorial.common.wire.simpleImpl.SimpleImplWire;
 import com.elementtimes.tutorial.common.wire.simpleImpl.WireToServerMessage;
 import com.elementtimes.tutorial.common.wire.simpleImpl.info.InfoLocation;
-
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author EmptyDremas
@@ -33,7 +32,7 @@ public final class WireHandler implements IMessageHandler<SimpleImplWire, WireTo
 		if (pos == null) {
 			return wt;
 		}
-		NBT nbt = (NBT) net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(pos.getInfo());
+		TileEntityWire nbt = (TileEntityWire) net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(pos.getInfo());
 		if (nbt == null) {
 			return wt;
 		}

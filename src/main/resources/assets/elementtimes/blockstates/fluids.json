@@ -61,19 +61,19 @@
         "fluid": "elementtimes.co"
       }
     },
-	"elementtimes.mgcl2": {
+    "elementtimes.mgcl2": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.mgcl2"
       }
     },
-	"elementtimes.seawater": {
+    "elementtimes.seawater": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.seawater"
       }
     },
-	"elementtimes.mg": {
+    "elementtimes.mg": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.mg"
@@ -253,59 +253,54 @@
         "fluid": "elementtimes.na3alf6"
       }
     },
-	"elementtimes.f2": {
+    "elementtimes.f2": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.f2"
       }
     },
-	"elementtimes.concentratedhydrochloricacid": {
+    "elementtimes.concentratedhydrochloricacid": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.concentratedhydrochloricacid"
       }
     },
-	"elementtimes.dilutehydrochloricacid": {
+    "elementtimes.dilutehydrochloricacid": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.dilutehydrochloricacid"
       }
     },
-	"elementtimes.i2": {
+    "elementtimes.i2": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.i2"
       }
     },
-	"elementtimes.hi": {
+    "elementtimes.hi": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.hi"
       }
     },
-		
-
-	"elementtimes.br2": {
+    "elementtimes.br2": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.br2"
       }
-    },	   
-	"elementtimes.hbr": {
+    },
+    "elementtimes.hbr": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.hbr"
       }
     },
-	"elementtimes.hclo": {
+    "elementtimes.hclo": {
       "model": "forge:fluid",
       "custom": {
         "fluid": "elementtimes.hclo"
       }
     },
-	
-	
-	
     "elementtimes.co2": {
       "model": "forge:fluid",
       "custom": {

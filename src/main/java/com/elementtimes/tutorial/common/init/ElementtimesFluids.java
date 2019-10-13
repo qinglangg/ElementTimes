@@ -23,7 +23,7 @@ public class ElementtimesFluids {
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid DiluteHydrochloricAcid = new Fluid("elementtimes.dilutehydrochloricacid",
-            new ResourceLocation(ElementTimes.MODID, "fluid/xihclL_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/xihcl_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/xihcl_fluid"), 0xFF979750);
     @ModFluid
     @ModFluid.FluidBlock

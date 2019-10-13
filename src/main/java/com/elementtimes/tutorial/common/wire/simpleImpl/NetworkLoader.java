@@ -16,16 +16,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import static net.minecraftforge.fml.relauncher.Side.CLIENT;
 import static net.minecraftforge.fml.relauncher.Side.SERVER;
 
-import com.elementtimes.tutorial.ElementTimes;
-
 /**
  * @author EmptyDremas
  *
  */
 public final class NetworkLoader {
 
-	public static final SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(ElementTimes.MODID);
-	
+	public static final SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel("elementtimes");
+
 	private int nextID = 0;
 	 
 	public NetworkLoader() {

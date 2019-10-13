@@ -4,6 +4,7 @@
     "model": "cube"
   },
   "variants": {
+    "inventory": [{}],
     "running": {
       "false": {
         "textures": {

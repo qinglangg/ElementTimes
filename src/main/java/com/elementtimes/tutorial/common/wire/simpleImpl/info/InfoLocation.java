@@ -47,8 +47,9 @@ public final class InfoLocation implements SimpleImplInfo<BlockPos> {
 
 	@Override
 	public void readFrom(ByteBuf buf) {
-		if (buf.readBoolean())
+		if (buf.readBoolean()) {
 			pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+		}
 	}
 
 }

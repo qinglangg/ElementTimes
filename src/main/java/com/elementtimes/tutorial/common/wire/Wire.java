@@ -7,13 +7,6 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import minedreams.mi.api.electricity.EleUtils;
-import minedreams.mi.blocks.te.BlockNBT;
-import minedreams.mi.blocks.te.TileEntityWire;
-import minedreams.mi.tools.Tools;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -34,13 +27,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.ArrayUtils;
 
-import static minedreams.mi.ModernIndustry.MODID;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author EmptyDremas
  *
  */
-@BlockNBT(name = "wire")
+//@BlockNBT(name = "wire")
 public final class Wire extends Item {
 	
 	public static final AxisAlignedBB B_POINT = new AxisAlignedBB(0.375F, 0.375F, 0.375F, 0.625F, 0.625F, 0.625F);
@@ -73,7 +67,7 @@ public final class Wire extends Item {
 	
 	public Wire(Block block, String name) {
 		this.block = block;
-		setRegistryName(MODID, name);
+		setRegistryName("elementtimes", name);
 		setUnlocalizedName(name);
 		setCreativeTab(block.getCreativeTabToDisplayOn());
 	}
@@ -127,14 +121,17 @@ public final class Wire extends Item {
 	}
 	
 	private IBlockState placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, IBlockState newState) {
-        if (!world.setBlockState(pos, newState, 11)) return null;
+        if (!world.setBlockState(pos, newState, 11)) {
+			return null;
+		}
 
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() == this.block) {
             ItemBlock.setTileEntityNBT(world, player, pos, stack);
             this.block.onBlockPlacedBy(world, pos, state, player, stack);
-            if (player instanceof EntityPlayerMP)
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
+            if (player instanceof EntityPlayerMP) {
+				CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
+			}
         }
 
         return state;
@@ -157,7 +154,9 @@ public final class Wire extends Item {
 			nbt.setPos(pos);
 		}
 		Block block = nbt.getBlockType();
-		if (!(block instanceof IEleInfo)) return;
+		if (!(block instanceof IEleInfo)) {
+			return;
+		}
 		Object[] os = whatState(world, block.getDefaultState(), pos, donnotLink, true, nbt.getLinks(), nbt);
 		IBlockState state = (IBlockState) os[0];
 		world.setBlockState(pos, state);
@@ -209,7 +208,7 @@ public final class Wire extends Item {
 		firstPos = ArrayUtils.removeElements(firstPos, donnotLink);
 		/* 获取方块附近方块的信息 */
 		//附近方块的BlockPos，移除不连接的方块
-		BlockPos[] allPos = ArrayUtils.removeElements(Tools.getBlockPosList(pos).toList(), donnotLink);
+		BlockPos[] allPos = ArrayUtils.removeElements(Tools.getBlockPosList(pos), donnotLink);
 		//附近方块的IBlockState
 		IBlockState[] states = new IBlockState[allPos.length];
 		//附近方块的Block
@@ -241,7 +240,9 @@ public final class Wire extends Item {
 				LinkInfo info = new LinkInfo(world, allPos[index], pos, blocks[index], state.getBlock());
 				info.fromState = states[index];
 				info.nowUser = nbt;
-				if (!EleUtils.canLink(info, isExistNow, isExisting)) continue;
+				if (!EleUtils.canLink(info, isExistNow, isExisting)) {
+					continue;
+				}
 				nbt.linkForce(tes[index]);
 				//更新state
 				state = state.withProperty(getProperty(Tools.whatFacing(pos, bp)), true);
@@ -253,11 +254,15 @@ public final class Wire extends Item {
 		BlockPos bp;
 		for (int i = 0; i < allPos.length; ++i) {
 			bp = allPos[i];
-			if (Tools.hasValue(firstPos, bp)) continue;
+			if (Tools.hasValue(firstPos, bp)) {
+				continue;
+			}
 			LinkInfo info = new LinkInfo(world, allPos[i], pos, blocks[i], state.getBlock());
 			info.fromState = states[i];
 			info.nowUser = nbt;
-			if (!EleUtils.canLink(info, isExistNow, isExisting)) continue;
+			if (!EleUtils.canLink(info, isExistNow, isExisting)) {
+				continue;
+			}
 			//如果连接电线数量超出极限则不再连接
 			nbt.linkForce(tes[i]);
 			state = state.withProperty(getProperty(Tools.whatFacing(pos, bp)), true);

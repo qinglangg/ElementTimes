@@ -81,7 +81,7 @@ public class ElementtimesBlocks {
     public static OreSalt oreSalt = new OreSalt();
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("oreSulfur")
-    @ModBlock.WorldGen
+    @ModBlock.WorldGenClass("com.elementtimes.tutorial.common.generator.SulfurGenerator")
     public static Block sulfurOre = new Sulfurore();
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModBlock.HarvestLevel

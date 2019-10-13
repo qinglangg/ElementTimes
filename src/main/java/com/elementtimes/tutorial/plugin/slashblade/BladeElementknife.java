@@ -14,14 +14,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 /**
  * @author 卿岚
  */
 @Optional.Interface(iface = "", modid = "flammpfeil.slashblade")
 public class BladeElementknife {
+
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event)
-    {
+    public void init(LoadEvent.InitEvent event) {
         String name = "elementknife";//此刀的名字（可自定义）
         ItemStack etherealshadow = new ItemStack(SlashBlade.bladeNamed, 1, 0);//这一段默认这样，如果想做有特效的刀，比如风雷太刀，就可以修改
         NBTTagCompound tag = new NBTTagCompound();//开始设置NBT
@@ -35,21 +36,27 @@ public class BladeElementknife {
         ItemSlashBlade.ModelName.set(tag, "elementtimes/uilon");//模型名（可自定义）,会读取assets/flammpfeil.slashblade/model/modid/BladeName下的BladeName.obj模型文件
         ItemSlashBlade.SpecialAttackType.set(tag, Integer.valueOf(3));//此刀的SA ID(可修改),假如添加了一个自己SA，那么要使用新的SA就得填写新SA的ID
         ItemSlashBlade.StandbyRenderType.set(tag, Integer.valueOf(3));//手中不持刀时此刀的显示情况，0是不显示，1是在左手，2是在背后，3是背在背上
-        etherealshadow.addEnchantment(Enchantments.FORTUNE,3);
-        etherealshadow.addEnchantment(Enchantments.LOOTING,3);
-        etherealshadow.addEnchantment(Enchantments.POWER,4);
-        etherealshadow.addEnchantment(Enchantments.PROTECTION,5);
-        etherealshadow.addEnchantment(Enchantments.SHARPNESS,4);
-        etherealshadow.addEnchantment(Enchantments.FIRE_ASPECT,1);
-        SlashBlade.registerCustomItemStack(name,etherealshadow);
+        etherealshadow.addEnchantment(Enchantments.FORTUNE, 3);
+        etherealshadow.addEnchantment(Enchantments.LOOTING, 3);
+        etherealshadow.addEnchantment(Enchantments.POWER, 4);
+        etherealshadow.addEnchantment(Enchantments.PROTECTION, 5);
+        etherealshadow.addEnchantment(Enchantments.SHARPNESS, 4);
+        etherealshadow.addEnchantment(Enchantments.FIRE_ASPECT, 1);
+        SlashBlade.registerCustomItemStack(name, etherealshadow);
         //设置名字
         ItemSlashBladeNamed.NamedBlades.add(name);
     }
-        @SubscribeEvent
-        public void postinit(LoadEvent.PostInitEvent event) {
-            ItemStack requiredBlade = SlashBlade.findItemStack("flammpfeil.slashblade", "slashbladeWrapper", 1);
-            ItemStack blade = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameWhite);
-            ItemStack blade2 = SlashBlade.getCustomBlade("flammpfeil.slashblade",Fox.nameBlack);
-            SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"), SlashBlade.getCustomBlade("flammpfeil.slashblade","elementknife"), requiredBlade, "VXW", "XXX", "AXB", 'X', new ItemStack(ElementtimesItems.fiveElements), 'B', blade2,'A', blade,'V',new ItemStack(ElementtimesItems.photoElement),'W',new ItemStack(ElementtimesItems.endElement)));
+
+    @SubscribeEvent
+    public void postinit(LoadEvent.PostInitEvent event) {
+        SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"),
+                SlashBlade.getCustomBlade("flammpfeil.slashblade", "elementknife"),
+                SlashBlade.findItemStack("flammpfeil.slashblade", "slashbladeWrapper", 1),
+                "VXW", "XXX", "AXB",
+                'X', new ItemStack(ElementtimesItems.fiveElements),
+                'B', SlashBlade.getCustomBlade("flammpfeil.slashblade", Fox.nameBlack),
+                'A', SlashBlade.getCustomBlade("flammpfeil.slashblade", Fox.nameWhite),
+                'V', new ItemStack(ElementtimesItems.photoElement),
+                'W', new ItemStack(ElementtimesItems.endElement)));
     }
 }

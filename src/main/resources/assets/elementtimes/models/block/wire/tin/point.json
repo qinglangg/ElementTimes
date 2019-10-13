@@ -1,0 +1,38 @@
+{
+	"credit": "by EmptyDreams",
+	"textures": {
+		"0": "elementtimes:blocks/wire/copper",
+		"particle": "elementtimes:blocks/wire/copper"
+	},
+	"elements": [
+		{
+			"from": [6, 6, 6],
+			"to": [10, 10, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0, -1]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 0, -1]
+		},
+		"firstperson_righthand": {
+			"translation": [1.25, 3.75, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [1.25, 3.75, 0]
+		},
+		"head": {
+			"translation": [0, 8.5, 0]
+		}
+	}
+}

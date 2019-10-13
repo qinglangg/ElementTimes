@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "elementcore:beaker"
+      "model": "elementtimes:beaker"
     }
   }
 }

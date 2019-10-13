@@ -7,9 +7,8 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.Objects;
-
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * 能量单位
@@ -76,8 +75,12 @@ public final class ElectricityEnergy {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) return false;
-		if (obj == this) return true;
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
 		if (obj instanceof ElectricityEnergy) {
 			return equals((ElectricityEnergy) obj);
 		}

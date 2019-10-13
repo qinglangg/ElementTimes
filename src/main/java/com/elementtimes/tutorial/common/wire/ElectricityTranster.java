@@ -7,10 +7,6 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +14,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 电力传输设备的父级TE
@@ -56,6 +56,7 @@ public abstract class ElectricityTranster extends Electricity {
 		/** 设置当前方块的ET */
 		public EETransfer setET(ElectricityTranster et) {
 			//这里是更新loss,need和nowET的地方并且返回this
+			return this;
 		}
 		
 	}
@@ -164,10 +165,16 @@ public abstract class ElectricityTranster extends Electricity {
 	 */
 	@Override
 	public void send(SimpleNetworkWrapper simple, boolean isClient) {
-		if (isClient) return;
+		if (isClient) {
+			return;
+		}
 		if (cachePos != null) {
-			if (cachePos[0] != null) next = (ElectricityTranster) world.getTileEntity(cachePos[0]);
-			if (cachePos[1] != null) prev = (ElectricityTranster) world.getTileEntity(cachePos[1]);
+			if (cachePos[0] != null) {
+				next = (ElectricityTranster) world.getTileEntity(cachePos[0]);
+			}
+			if (cachePos[1] != null) {
+				prev = (ElectricityTranster) world.getTileEntity(cachePos[1]);
+			}
 			cachePos = null;
 		}
 	}
@@ -175,17 +182,24 @@ public abstract class ElectricityTranster extends Electricity {
 	public EETransfer transTo(Electricity from, EETransfer ee) {
 		//这里是电力传输的接口
 		//按需求更改参数及返回值
+		return ee;
 	}
 	
 	/** 取消所有连接 */
 	public final void deleteAllLink() { next = prev = null; }
 	/** 取消某一个连接 */
 	public final void deleteLink(TileEntity e) {
-		if (e == null) return;
+		if (e == null) {
+			return;
+		}
 		if (e instanceof ElectricityTranster) {
-			if (e == next) next = null;
-			else if (e == prev) prev = null;
-			else throw new IndexOutOfBoundsException("未知的连接：" + e);
+			if (e == next) {
+				next = null;
+			} else if (e == prev) {
+				prev = null;
+			} else {
+				throw new IndexOutOfBoundsException("未知的连接：" + e);
+			}
 		} else {
 			if (linkBlock.containsValue(e)) {
 				EnumFacing key = null;
@@ -241,8 +255,12 @@ public abstract class ElectricityTranster extends Electricity {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null) return false;
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
 		if (obj instanceof ElectricityTranster) {
 			return equals((ElectricityTranster) obj);
 		}
@@ -253,8 +271,12 @@ public abstract class ElectricityTranster extends Electricity {
 	 * 当两个对象的world都为空时判断可能不准确
 	 */
 	public boolean equals(ElectricityTranster et) {
-		if (et == null) return false;
-		if (et == this) return true;
+		if (et == null) {
+			return false;
+		}
+		if (et == this) {
+			return true;
+		}
 		if (next == null) {
 			if (et.next == null) {
 				if (prev == null) {
@@ -273,14 +295,16 @@ public abstract class ElectricityTranster extends Electricity {
 		} else if (et.next == null) {
 			return false;
 		} else if (prev == null) {
-			if (et.prev == null)
+			if (et.prev == null) {
 				return pos.equals(et.pos);
+			}
 			return false;
 		} else if (et.prev == null) {
 			return false;
 		} else if (world == null) {
-			if (et.world == null)
+			if (et.world == null) {
 				return next.pos.equals(et.next.pos) && prev.pos.equals(et.prev.pos) && pos.equals(et.pos);
+			}
 			return false;
 		} else if (et.world == null) {
 			return false;

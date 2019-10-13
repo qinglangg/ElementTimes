@@ -4,42 +4,45 @@
         "model": "elementtimes:wire/tin/point"
     },
     "variants": {
-        "inventory": [{ }],
+        "inventory": [
+            {}
+        ],
         "up": {
-        "up": {
-            "false": { },
+            "false": {},
             "true": {
                 "submodel": "elementtimes:wire/tin/north",
                 "x": 270
             }
         },
         "down": {
-            "false": { },
+            "false": {},
             "true": {
                 "submodel": "elementtimes:wire/tin/north",
                 "x": 90
             }
         },
         "south": {
-            "false": { },
+            "false": {},
             "true": {
                 "submodel": "elementtimes:wire/tin/north",
                 "y": 180
             }
         },
         "north": {
-            "false": { },
-            "true": { "submodel": "elementtimes:wire/tin/north" }
+            "false": {},
+            "true": {
+                "submodel": "elementtimes:wire/tin/north"
+            }
         },
         "west": {
-            "false": { },
+            "false": {},
             "true": {
                 "submodel": "elementtimes:wire/tin/north",
                 "y": 270
             }
         },
         "east": {
-            "false": { },
+            "false": {},
             "true": {
                 "submodel": "elementtimes:wire/tin/north",
                 "y": 90

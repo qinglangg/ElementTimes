@@ -7,9 +7,9 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import java.util.Objects;
-
 import com.elementtimes.elementcore.api.annotation.ModBlock;
+
+import java.util.Objects;
 
 /**
  * 所有电力设备的父级TE，其中包含了最为基础的方法和循环接口
@@ -72,14 +72,18 @@ public abstract class ElectricityUser extends Electricity {
 	
 	/** 设置所需电能（单位：me，默认值100me），如果能量小于0，则保持原设置不变 */
 	protected final void setEnergy(int me) {
-		if (me >= 0) EE.setEnergy(me);
+		if (me >= 0) {
+			EE.setEnergy(me);
+		}
 	}
 	
 	/**
 	 * 设置所需电压（单位：V，默认值：220V），如果电压小于等于0，则保持原设置不变
 	 */
 	protected final void setVoltage(int v) {
-		if (v >= 0) EE.setVoltage(v);
+		if (v >= 0) {
+			EE.setVoltage(v);
+		}
 	}
 	
 	/**
@@ -87,7 +91,9 @@ public abstract class ElectricityUser extends Electricity {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) return false;
+		if (obj == null) {
+			return false;
+		}
 		if (obj instanceof ElectricityUser) {
 			return equals((ElectricityUser) obj);
 		}
@@ -99,7 +105,9 @@ public abstract class ElectricityUser extends Electricity {
 	 */
 	public boolean equals(ElectricityUser user) {
 		if (world == null) {
-			if (user.world != null) return false;
+			if (user.world != null) {
+				return false;
+			}
 			return (biggerVoltageOperate == user.biggerVoltageOperate) &&
 					(maxVoltage == user.maxVoltage) &&
 					(biggerVoltageTime == user.biggerVoltageTime) &&

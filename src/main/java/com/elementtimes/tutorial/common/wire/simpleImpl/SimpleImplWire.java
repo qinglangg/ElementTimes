@@ -47,7 +47,9 @@ public final class SimpleImplWire implements IMessage {
 		
 		@Override
 		public IMessage onMessage(WireToServerMessage message, MessageContext ctx) {
-			if (message.dimension == -100) return null;
+			if (message.dimension == -100) {
+				return null;
+			}
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
 			TileEntityWire nbt = (TileEntityWire) world.getTileEntity(message.pos.getInfo());
 			EntityPlayerMP player = ctx.getServerHandler().player;
