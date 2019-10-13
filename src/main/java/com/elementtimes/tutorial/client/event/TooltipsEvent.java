@@ -1,5 +1,7 @@
 package com.elementtimes.tutorial.client.event;
 
+import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,10 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
-
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = ElementTimes.MODID)
 public class TooltipsEvent {
     @SubscribeEvent
     public static void onTooltips(ItemTooltipEvent event) {

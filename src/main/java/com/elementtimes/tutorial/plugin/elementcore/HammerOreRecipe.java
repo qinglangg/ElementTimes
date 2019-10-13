@@ -108,7 +108,7 @@ public class HammerOreRecipe {
     }
 
     private static ShapelessOreRecipe getRecipeHammer(NonNullList<Ingredient> input, ItemStack output, int damage, String name, String modid) {
-        input.add(new DamageIngredient(new Item[] {ElementtimesItems.smallHammer, ElementtimesItems.bigHammer}, damage));
+        input.add(new DamageIngredient(new Item[] {ElementtimesItems.smallHammer, ElementtimesItems.mediumHammer, ElementtimesItems.bigHammer}, damage));
         ShapelessOreRecipe recipe = new ShapelessOreRecipe(new ResourceLocation(modid, "recipe"), input, output) {
             @Nonnull
             @Override

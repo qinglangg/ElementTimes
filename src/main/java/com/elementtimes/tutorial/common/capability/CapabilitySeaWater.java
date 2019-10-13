@@ -17,9 +17,9 @@ import javax.annotation.Nullable;
  * 记录实体使用盐数量
  * @author luqin2007
  */
-@ModCapability(storageClass = "com.elementtimes.tutorial.common.capability.CapabilitySaltAmount$SeaStorage",
-        typeInterfaceClass = "com.elementtimes.tutorial.common.capability.CapabilitySaltAmount$ISeaWater",
-        typeImplementationClass = "com.elementtimes.tutorial.common.capability.CapabilitySaltAmount$SeaWater")
+@ModCapability(storageClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$SeaStorage",
+        typeInterfaceClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$ISeaWater",
+        typeImplementationClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$SeaWater")
 public class CapabilitySeaWater {
 
     public static final ResourceLocation NAME = new ResourceLocation(ElementTimes.MODID, "cap_salt");

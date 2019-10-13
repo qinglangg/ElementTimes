@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.event;
 
+import com.elementtimes.tutorial.ElementTimes;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
  * 标记：https://sourcegraph.com/github.com/Lothrazar/Cyclic@01e4322039150710fa329e9c2a0951f3cc65ab76/-/blob/src/main/java/com/lothrazar/cyclicmagic/liquid/milk/FluidMilk.java
  * @author luqin2007
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ElementTimes.MODID)
 public class FluidEvent {
 
 //    @SubscribeEvent

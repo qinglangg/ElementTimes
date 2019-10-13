@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.event;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -15,7 +16,7 @@ import java.util.Random;
 /**
  * 植物相关事件
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ElementTimes.MODID)
 public class PlantEvent {
 
 	/**

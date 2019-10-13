@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.other;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -32,7 +33,7 @@ import java.util.function.Predicate;
  * 用于监视雷电
  * @author luqin2007
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ElementTimes.MODID)
 public class Lighting {
 
     private static final float PROBABILITY_HNO3 = 0.02f;

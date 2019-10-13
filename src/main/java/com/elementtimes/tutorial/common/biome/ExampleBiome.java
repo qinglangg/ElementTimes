@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.biome;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.structure.StructureOceanMonument;
+import net.minecraftforge.common.BiomeManager;
 
 import javax.annotation.Nonnull;
 
@@ -17,11 +17,9 @@ public class ExampleBiome extends Biome {
         initSpawnable();
         initDecorator();
         fillerBlock = ElementtimesFluids.seawater.getBlock().getDefaultState();
-    }
 
-    private void registerStructure() {
-        StructureOceanMonument.SPAWN_BIOMES.add(this);
-        StructureOceanMonument.WATER_BIOMES.add(this);
+        BiomeManager.oceanBiomes.add(this);
+        BiomeManager.addSpawnBiome(this);
     }
 
     private void initSpawnable() {

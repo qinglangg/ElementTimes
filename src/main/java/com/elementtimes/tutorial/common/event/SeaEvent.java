@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.event;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.CapabilitySeaWater;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
@@ -38,7 +39,7 @@ import java.util.UUID;
  * 与海水相关的事件
  * @author luqin2007
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ElementTimes.MODID)
 public class SeaEvent {
 
     private static UUID UUID_SPEED = UUID.fromString("c343e6bf-7660-4c69-8c67-d231b66de537");
@@ -60,12 +61,15 @@ public class SeaEvent {
      */
     @SubscribeEvent
     public static void onEntityCopy(PlayerEvent.Clone event) {
-        Capability<CapabilitySeaWater.ISeaWater> capability = CapabilitySeaWater.CAPABILITY_SEA_WATER;
-        EntityPlayer playerOri = event.getOriginal();
-        EntityPlayer playerNew = event.getEntityPlayer();
-        if (playerOri.hasCapability(capability, null) && playerNew.hasCapability(capability, null)) {
-            NBTBase nbt = capability.writeNBT(playerOri.getCapability(capability, null), null);
-            capability.readNBT(playerNew.getCapability(capability, null), null, nbt);
+        if (!event.getEntity().world.isRemote) {
+            Capability<CapabilitySeaWater.ISeaWater> capability = CapabilitySeaWater.CAPABILITY_SEA_WATER;
+            EntityPlayer playerOri = event.getOriginal();
+            EntityPlayer playerNew = event.getEntityPlayer();
+            if (playerOri.hasCapability(capability, null) && playerNew.hasCapability(capability, null)) {
+                CapabilitySeaWater.ISeaWater cap = playerOri.getCapability(capability, null);
+                NBTBase nbt = capability.writeNBT(cap, null);
+                capability.readNBT(playerNew.getCapability(capability, null), null, nbt);
+            }
         }
     }
 
