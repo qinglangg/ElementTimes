@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common;
 
-import com.elementtimes.tutorial.common.event.BiomeStructureEvent;
 import com.elementtimes.tutorial.common.event.OreEvent;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
@@ -35,7 +34,7 @@ public class CommonProxy {
         new ElementtimesGUI().init();
         ElementtimesRecipe.init(event);
         MinecraftForge.ORE_GEN_BUS.register(OreEvent.class);
-        MinecraftForge.TERRAIN_GEN_BUS.register(BiomeStructureEvent.class);
+//        MinecraftForge.TERRAIN_GEN_BUS.register(BiomeStructureEvent.class);
     }
 
     public void postInit(FMLPostInitializationEvent event) {
