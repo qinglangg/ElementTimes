@@ -10,16 +10,11 @@ import net.minecraftforge.fluids.Fluid;
  * @author 卿岚
  */
 public class ElementtimesFluids {
-//    @ModFluid
-//    @ModFluid.FluidBlock
-//    public static Fluid HF = new Fluid("elementtimes.hf",
-//            new ResourceLocation(ElementTimes.MODID, "fluid/f2_still"),
-//            new ResourceLocation(ElementTimes.MODID, "fluid/f2_fluid"), 0xFF6E4A26);
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid F2 = new Fluid("elementtimes.f2",
-            new ResourceLocation(ElementTimes.MODID, "fluid/f2_still"),
-            new ResourceLocation(ElementTimes.MODID, "fluid/f2_fluid"), 0xFF6E4A26);
+            new ResourceLocation(ElementTimes.MODID, "fluid/hf_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/hf_fluid"), 0xFF6E4A26);
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid ConcentratedHydrochloricAcid = new Fluid("elementtimes.concentratedhydrochloricacid",
