@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
  * 盐
  * @author luqin2007
  */
-public class Salt extends ItemFood {
+public class Salt extends ModFood {
 
     public Salt() {
-        super(0, 0, false);
+        super(0, 0.1F);
         setAlwaysEdible();
     }
 

@@ -2,17 +2,16 @@ package com.elementtimes.tutorial.common.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 /**
  * @author 卿岚
  */
-public class Starchball extends ItemFood {
+public class Starchball extends ModFood {
 
     public Starchball() {
-        super(20, 0.5F, false);
+        super(20, 20.0F);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class Starchball extends ItemFood {
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         if (!worldIn.isRemote) {
             player.addExperience(10);
-            player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 0));
+            player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 1));
         }
 
         super.onFoodEaten(stack, worldIn, player);

@@ -1,14 +1,13 @@
 package com.elementtimes.tutorial.common.item;
 
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 /**
  * @author 卿岚
  */
-public class Amylum extends ItemFood {
+public class Amylum extends ModFood {
 
 	public Amylum() {
-		super(5, 0.6F, false);
+		super(5, 4.0F);
 	}
 
 	@Override

@@ -32,13 +32,9 @@ public final class WireRegister {
 		blockList.add(new WireBlock("wire_glod"));
 		//锡
 		blockList.add(new WireBlock("wire_tin"));
-		//高能-银
-		blockList.add(new WireBlock("wire_silver_high"));
-		//高能-铜
-		blockList.add(new WireBlock("wire_copper_high"));
-		//高能-铝
-		blockList.add(new WireBlock("wire_aluminum_high"));
-		//元素
+		//高能导线
+		blockList.add(new WireBlock("wire_high"));
+		//元素导线
 		blockList.add(new WireBlock("wire_element"));
 		// java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Lnet.minecraft.block.Block;
 		event.getRegistry().registerAll(blockList.toArray(new Block[0]));

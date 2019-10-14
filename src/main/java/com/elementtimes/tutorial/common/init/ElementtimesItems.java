@@ -75,15 +75,15 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item bambooCharcoal = new ItemFuel(800);
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item starchPowder = new ItemFood(1, 0.0F, false);
+    public static Item starchPowder = new ModFood(1, 0.0F);
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item amylum = new Amylum();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item puremeat = new ItemFood(4, 0.5f, false);
+    public static Item puremeat = new ModFood(4, 1.0f);
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item corn = new Corn();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item bakedCorn = new ItemFood(5, 0.2F, false);
+    public static Item bakedCorn = new ModFood(5, 2.0F);
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModItem.Tooltip("\u00a79CaCO3")
     public static Item stoneIngot = new Item();

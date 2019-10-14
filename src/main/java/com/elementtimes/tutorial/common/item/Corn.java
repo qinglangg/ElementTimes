@@ -5,7 +5,6 @@ import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemFood;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,11 +13,11 @@ import net.minecraft.world.World;
 /**
  * @author 卿岚
  */
-public class Corn extends ItemFood {
+public class Corn extends ModFood {
 
 	public Corn() 
 	{
-		super(5, 0.0F, false);
+		super(5, 0.0F);
 	}
 
 	@Override
