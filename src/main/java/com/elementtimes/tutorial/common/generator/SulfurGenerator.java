@@ -2,10 +2,9 @@ package com.elementtimes.tutorial.common.generator;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -20,50 +19,32 @@ public class SulfurGenerator extends WorldGenerator {
 
     @Override
     public boolean generate(@Nonnull World worldIn, @Nonnull Random rand, @Nonnull BlockPos position) {
-        ChunkPos chunkPos = worldIn.getChunkFromBlockCoords(position).getPos();
-        int fixX = position.getX() == chunkPos.getXStart() ? 1 : position.getX() == chunkPos.getXEnd() ? -1 : 0;
-        int fixZ = position.getZ() == chunkPos.getZStart() ? 1 : position.getZ() == chunkPos.getZEnd() ? -1 : 0;
-        BlockPos pos = findSpawnPos(worldIn, position.add(fixX, 0, fixZ), 30);
-        if (pos == null) {
-            return false;
-        }
-        if (worldIn.getBlockState(pos).getMaterial() == Material.WATER) {
-            int size = rand.nextInt(2) + 3;
-            // 防止递归加载区块
-            int disChunkX = pos.getX() - size - chunkPos.getXStart();
-            int disChunkZ = pos.getZ() - size - chunkPos.getZStart();
-            int offsetX = disChunkX < 0 ? -disChunkX :
-                    disChunkX + (size << 1) + 1 > 16 ? -(size << 1) - 1 : 0;
-            int offsetZ = disChunkZ < 0 ? -disChunkZ :
-                    disChunkZ + (size << 1) + 1 > 16 ? -(size << 1) - 1 : 0;
-            pos = pos.add(offsetX, 0, offsetZ);
+        IBlockState spawnBlock = ElementtimesBlocks.sulfurOre.getDefaultState();
+        int r = rand.nextInt(1) + 1;
+        int size = r + 3;
+        BlockPos pos = findSpawnPos(worldIn, position.add(rand.nextInt(16 - 2 * r), 0, rand.nextInt(16 - 2 * r)));
+        if (pos != null) {
             // 生成
-            for (int x = pos.getX() - size; x <= pos.getX() + size; ++x) {
-                for (int z = pos.getZ() - size; z <= pos.getZ() + size; ++z) {
-                    int dx = x - pos.getX();
-                    int dz = z - pos.getZ();
-
-                    if (dx * dx + dz * dz <= size * size) {
-                        for (int y = pos.getY() - 1; y <= pos.getY() + 1; ++y) {
-                            BlockPos blockpos = new BlockPos(x, y, z);
-                            Block block = worldIn.getBlockState(blockpos).getBlock();
-                            if (block == Blocks.DIRT || block == Blocks.CLAY || block == ElementtimesBlocks.oreSalt) {
-                                worldIn.setBlockState(blockpos, ElementtimesBlocks.sulfurOre.getDefaultState(), 2);
-                            }
+            for (int x = pos.getX(); x <= pos.getX() + size * r; ++x) {
+                for (int z = pos.getZ(); z <= pos.getZ() + size * r; ++z) {
+                    for (int y = pos.getY(); y <= pos.getY() + r; ++y) {
+                        BlockPos blockpos = new BlockPos(x, y, z);
+                        Block block = worldIn.getBlockState(blockpos).getBlock();
+                        if (block == Blocks.STONE || block == Blocks.COBBLESTONE) {
+                            worldIn.setBlockState(blockpos, spawnBlock, 2);
                         }
                     }
                 }
             }
-
             return true;
         }
         return false;
     }
 
-    private BlockPos findSpawnPos(World world, BlockPos pos, int top) {
+    private BlockPos findSpawnPos(World world, BlockPos pos) {
         BlockPos posPtr = new BlockPos(pos.getX(), 0, pos.getZ());
         int lavaHeight = -1;
-        while (posPtr.getY() <= top) {
+        while (posPtr.getY() <= 30) {
             Block block = world.getBlockState(posPtr).getBlock();
             if (block == Blocks.AIR) {
                 if (isLavaBlock(world, posPtr.down())) {
@@ -95,9 +76,6 @@ public class SulfurGenerator extends WorldGenerator {
 
     private boolean isLavaBlock(World world, BlockPos pos) {
         Block down = world.getBlockState(pos).getBlock();
-        if (down == Blocks.LAVA || down == Blocks.FLOWING_LAVA) {
-            return true;
-        }
-        return false;
+        return down == Blocks.LAVA || down == Blocks.FLOWING_LAVA;
     }
 }

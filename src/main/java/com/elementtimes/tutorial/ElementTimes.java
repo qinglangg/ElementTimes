@@ -31,7 +31,7 @@ public class ElementTimes {
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
         CONTAINER = ElementCore.builder()
-                .enableDebugMessage()
+                .disableDebugMessage()
                 .registerAnnotation(LoadState.PreInit, HammerOreRecipe.Ore.class, HammerOreRecipe::parser)
                 .registerAnnotation(LoadState.Init, SSMRegister.SupportStandModule.class, SSMRegister::register)
                 .build(event);

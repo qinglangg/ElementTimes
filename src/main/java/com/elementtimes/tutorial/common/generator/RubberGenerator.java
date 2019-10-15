@@ -50,7 +50,6 @@ public class RubberGenerator extends WorldGenTrees {
                     float f = rand.nextFloat();
                     if (f <= PROBABILITY) {
                         if (generator.generate(worldIn, rand, pos)) {
-                            System.out.println("Spawn At " + pos);
                             spawnCount++;
                         }
                     }

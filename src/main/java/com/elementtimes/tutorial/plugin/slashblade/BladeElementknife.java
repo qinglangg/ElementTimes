@@ -55,6 +55,7 @@ public class BladeElementknife {
     public void postinit(LoadEvent.PostInitEvent event) {
         SlashBlade.addRecipe("elementknife", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "elementknife"),
                 SlashBlade.getCustomBlade("flammpfeil.slashblade", "elementknife"),
+                // 此变量应该是比对 NBT 判断 🔪 是否可以合成
                 ItemStack.EMPTY,
                 "VXW", "XXX", "AXB",
                 'X', new ItemStack(ElementtimesItems.fiveElements),
