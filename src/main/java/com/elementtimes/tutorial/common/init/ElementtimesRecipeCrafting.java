@@ -86,6 +86,27 @@ public class ElementtimesRecipeCrafting {
     		ElementtimesItems.Na3AlF6, new ItemStack(Items.DYE, 2, 4)
     };
     @ModRecipe
+    public static Object[] fluidreactor= new Object[]{
+            ElementtimesBlocks.fluidReactor,
+            ElementtimesBlocks.cement,"ingotSteel",ElementtimesBlocks.cement,
+            "ingotSteel",ElementtimesBlocks.pumpAir,"ingotSteel",
+            "ingotSteel",ElementtimesBlocks.fuelGenerator,"ingotSteel"
+    };
+    @ModRecipe
+    public static Object[] solidreactor= new Object[]{
+            ElementtimesBlocks.solidReactor,
+            ElementtimesBlocks.cement,"ingotSteel",ElementtimesBlocks.cement,
+            "ingotSteel",null,"ingotSteel",
+            "ingotSteel",ElementtimesBlocks.fuelGenerator,"ingotSteel"
+    };
+    @ModRecipe
+    public static Object[] fuelGenerator= new Object[]{
+            ElementtimesBlocks.fuelGenerator,
+            null,"ingotSteel",null,
+            "ingotSteel",Blocks.FURNACE,"ingotSteel",
+            "ingotSteel",Blocks.FURNACE,"ingotSteel"
+    };
+    @ModRecipe
     public static Object[] Goldelement= new Object[]{
             ElementtimesItems.goldElement,
             ElementtimesBlocks.blockMultiCarbonSteel,ElementtimesBlocks.blockMultiGoldPlatinum,ElementtimesBlocks.blockMultiIronQuartz,
@@ -180,13 +201,6 @@ public class ElementtimesRecipeCrafting {
             "gearDiamond", "blockCopper", "gearDiamond"
     };
 
-    @ModRecipe
-    public static Object[] fluidreactor = new Object[]{
-            ElementtimesBlocks.fluidReactor,
-            ElementtimesBlocks.cement, ElementtimesBlocks.blockMultiTinLead, ElementtimesBlocks.cement,
-            ElementtimesBlocks.pumpFluid, ElementtimesBlocks.fuelGenerator, ElementtimesBlocks.pumpFluid,
-            ElementtimesBlocks.blockMultiGoldPlatinum, ElementtimesBlocks.blockMultiIronQuartz, ElementtimesBlocks.blockMultiSilverCopper
-    };
 
     @ModRecipe
     public static Object[] compressor = new Object[]{
