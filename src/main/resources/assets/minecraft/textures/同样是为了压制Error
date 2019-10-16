@@ -1,0 +1,17 @@
+[FML.TEXTURE_ERRORS]: +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+[FML.TEXTURE_ERRORS]: The following texture errors were found.
+[FML.TEXTURE_ERRORS]: ==================================================
+[FML.TEXTURE_ERRORS]:   DOMAIN minecraft
+[FML.TEXTURE_ERRORS]: --------------------------------------------------
+[FML.TEXTURE_ERRORS]:   domain minecraft is missing 1 texture
+[FML.TEXTURE_ERRORS]:     domain minecraft has 3 locations:
+[FML.TEXTURE_ERRORS]:       unknown resourcepack type net.minecraft.client.resources.DefaultResourcePack : Default
+[FML.TEXTURE_ERRORS]:       unknown resourcepack type net.minecraft.client.resources.LegacyV2Adapter : FMLFileResourcePack:Forge Mod Loader
+[FML.TEXTURE_ERRORS]:       unknown resourcepack type net.minecraft.client.resources.LegacyV2Adapter : FMLFileResourcePack:Minecraft Forge
+[FML.TEXTURE_ERRORS]: -------------------------
+[FML.TEXTURE_ERRORS]:     The missing resources for domain minecraft are:
+[FML.TEXTURE_ERRORS]:       textures/soul.png.png
+[FML.TEXTURE_ERRORS]: -------------------------
+[FML.TEXTURE_ERRORS]:     No other errors exist for domain minecraft
+[FML.TEXTURE_ERRORS]: ==================================================
+[FML.TEXTURE_ERRORS]: +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=

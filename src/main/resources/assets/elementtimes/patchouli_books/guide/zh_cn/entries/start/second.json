@@ -1,0 +1,37 @@
+{
+  "name": "然后...",
+  "icon": "elementtimes:bamboo",
+  "category": "start",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "minecraft:oak_planks",
+      "title": "合成 1",
+      "text": "然后，你需要使用这些木头..."
+    },
+    {
+      "type": "crafting",
+      "recipe": "minecraft:crafting_table",
+      "recipe2": "stick"
+    },
+    {
+      "type": "smelting",
+      "title": "或者烧了他们",
+      "recipe": "minecraft:log:0",
+      "text": "现在，你可以点亮周围了！"
+    },
+    {
+      "type": "entity",
+      "title": "然后……",
+      "entity": "minecraft:zombie",
+      "text": "你可能会死……"
+    },
+    {
+      "type": "link",
+      "title": "游戏结束",
+      "text": "是的，这本书还在编写中……",
+      "url": "https://github.com/qinglangg/ElementTimes",
+      "link_text": "感谢体验此 mod！"
+    }
+  ]
+}

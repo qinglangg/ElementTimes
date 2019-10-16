@@ -1,0 +1,17 @@
+{
+  "name": "First",
+  "icon": "elementtimes:fiveelements",
+  "category": "start",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The first step...find a tree?"
+    },
+    {
+      "type": "image",
+      "images": ["elementtimes:textures/book/tree.png"],
+      "title": "Tree",
+      "text": "Yes, find a tree like this and fell it!"
+    }
+  ]
+}

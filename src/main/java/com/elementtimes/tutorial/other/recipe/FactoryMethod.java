@@ -16,7 +16,7 @@ import java.lang.reflect.Modifier;
 /**
  * 返回值从方法中获取
  * 参数：
- *  parent: 相当于原本的 type。
+ *  override: 相当于原本的 type。
  *      Factory 会以该 type 创建 IRecipe 对象
  *      因此，该 json 应当包含 parent 对应 type 的所有元素
  *      parent 不可为 elementtimes:method，会导致递归调用
@@ -36,19 +36,24 @@ public class FactoryMethod implements IRecipeFactory {
         json.addProperty("type", type);
         IRecipe recipe = CraftingHelper.getRecipe(json, context);
         return new RecipeWrapper(recipe) {
+            private ItemStack mStack = null;
+
             @Nonnull
             @Override
             public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
-                if (recipe.getCraftingResult(inv).isEmpty()) {
-                    return ItemStack.EMPTY;
+                if (mStack == null) {
+                    mStack = getResult(json, recipe);
                 }
-                return getResult(json, recipe);
+                return mStack.copy();
             }
 
             @Nonnull
             @Override
             public ItemStack getRecipeOutput() {
-                return getResult(json, recipe);
+                if (mStack == null) {
+                    mStack = getResult(json, recipe);
+                }
+                return mStack;
             }
         };
     }

@@ -24,6 +24,10 @@ public class RecipeWrapper implements IRecipe {
         mRecipe = recipe;
     }
 
+    public IRecipe getRecipe() {
+        return mRecipe;
+    }
+
     // IRecipe
     @Override
     public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World worldIn) {

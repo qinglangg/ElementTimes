@@ -1,0 +1,37 @@
+{
+  "name": "Second",
+  "icon": "elementtimes:bamboo",
+  "category": "start",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "minecraft:oak_planks",
+      "title": "Crafting 1",
+      "text": "And you need use the wood..."
+    },
+    {
+      "type": "crafting",
+      "recipe": "minecraft:crafting_table",
+      "recipe2": "stick"
+    },
+    {
+      "type": "smelting",
+      "title": "Or smelt it",
+      "recipe": "minecraft:log:0",
+      "text": "You can light around now!"
+    },
+    {
+      "type": "entity",
+      "title": "Then...",
+      "entity": "minecraft:zombie",
+      "text": "You may die..."
+    },
+    {
+      "type": "link",
+      "title": "Game Over",
+      "text": "Yes, this book is WIP...",
+      "url": "https://github.com/qinglangg/ElementTimes",
+      "link_text": "Thanks to play the mod!"
+    }
+  ]
+}

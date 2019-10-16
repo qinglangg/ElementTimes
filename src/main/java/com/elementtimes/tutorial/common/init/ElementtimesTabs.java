@@ -4,6 +4,7 @@ import com.elementtimes.elementcore.api.annotation.ModCreativeTabs;
 import com.elementtimes.elementcore.api.template.tabs.CreativeTabDynamic;
 import com.elementtimes.elementcore.api.template.tabs.CreativeTabStatic;
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.plugin.GuideBook;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -13,6 +14,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author luqin2007 create in 2019/2/17
@@ -29,7 +32,18 @@ public class ElementtimesTabs {
     public static CreativeTabs Main = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimes", 20,
             ElementtimesItems.fireElement, ElementtimesItems.waterElement, ElementtimesItems.endElement,
             ElementtimesItems.photoElement, ElementtimesItems.woodElement, ElementtimesItems.goldElement,
-            ElementtimesItems.soilElement, ElementtimesItems.fiveElements);
+            ElementtimesItems.soilElement, ElementtimesItems.fiveElements) {
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void displayAllRelevantItems(@Nonnull NonNullList<ItemStack> itemStacks) {
+            super.displayAllRelevantItems(itemStacks);
+            ItemStack patchouli = GuideBook.patchouliBook();
+            if (!patchouli.isEmpty()) {
+                itemStacks.add(patchouli);
+            }
+        }
+    };
 
     @ModCreativeTabs(value = AGRICULTURE)
     public static CreativeTabs Agriculture = new CreativeTabDynamic(ElementTimes.MODID + ".Agriculture", 20,

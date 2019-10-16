@@ -348,3 +348,5 @@ chat.elementtimes.hammer.pipeline_path=from [%s, %s, %s] to [%s, %s, %s], time: 
 subtitle.elementtimes.sounds=Cube Land
 subtitle.elementtimes.record=record(ET)
 item.elementknife.name=Element Knife
+# book
+elementtimes.book.patchouli.landing=$(o)$(4)Welcome to Element Times!

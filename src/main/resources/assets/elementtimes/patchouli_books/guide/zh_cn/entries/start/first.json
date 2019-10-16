@@ -1,0 +1,17 @@
+{
+  "name": "首先...",
+  "icon": "elementtimes:fiveelements",
+  "category": "start",
+  "pages": [
+    {
+      "type": "text",
+      "text": "第一步是……找一棵树？"
+    },
+    {
+      "type": "image",
+      "images": ["elementtimes:textures/book/tree.png"],
+      "title": "Tree",
+      "text": "是的，找到这样的一棵树，然后砍了它！"
+    }
+  ]
+}
