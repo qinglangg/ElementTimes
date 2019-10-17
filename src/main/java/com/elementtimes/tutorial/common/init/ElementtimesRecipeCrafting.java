@@ -95,9 +95,9 @@ public class ElementtimesRecipeCrafting {
     @ModRecipe
     public static Object[] solidreactor= new Object[]{
             ElementtimesBlocks.solidReactor,
-            ElementtimesBlocks.cement,"ingotSteel",ElementtimesBlocks.cement,
-            "ingotSteel",null,"ingotSteel",
-            "ingotSteel",ElementtimesBlocks.fuelGenerator,"ingotSteel"
+            ElementtimesBlocks.cement,"plateSteel",ElementtimesBlocks.cement,
+            "plateSteel",null,"plateSteel",
+            "plateSteel",ElementtimesBlocks.fuelGenerator,"plateSteel"
     };
     @ModRecipe
     public static Object[] fuelGenerator= new Object[]{
