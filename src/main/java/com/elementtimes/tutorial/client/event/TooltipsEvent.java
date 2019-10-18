@@ -71,6 +71,13 @@ public class TooltipsEvent {
         }
         
         
+        else if (itemStack.getItem() == ElementtimesItems.diamondIngot) {
+            lines.add(new TextComponentString("C").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
+            lines.add(new TextComponentString("先将物品栏中煤炭块拆解为单个物品，不是叠加状态，仅在一个物品时且左键放入酿造台。").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+            lines.add(new TextComponentString("再在酿造台上面格子左键放入一个钻石块，再在下面左键放入1-3个煤炭块。即可获得金刚锭。").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+        }
+        
+        
         
         else if (itemStack.getItem() == ElementtimesItems.steelIngot) {
             lines.add(new TextComponentString("Fe").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());

@@ -9,8 +9,11 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -37,6 +40,8 @@ public class TileItemReducer extends BaseTileEntity {
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSilver", 1, ElementtimesItems.silver, 9)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSteel", 1, ElementtimesItems.steelIngot, 9)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesBlocks.diamondBlock, 1, ElementtimesItems.diamondIngot, 9)
+                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, (new ItemStack(Blocks.SAND, 1,2)), (new ItemStack(Blocks.SAND, 1,1)))
+                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, (new ItemStack(Blocks.SAND, 1,1)), (new ItemStack(Blocks.SAND, 1,0)))
             ;
         }
     }
