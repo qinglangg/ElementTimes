@@ -60,7 +60,18 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addItemInput(IngredientPart.forItem(new ItemStack(Blocks.PRISMARINE, 1,2)))
                     .addItemOutput(IngredientPart.forItem(Blocks.SEA_LANTERN , 1))
                     .endAdd()
-            		
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Blocks.PRISMARINE, 1,0)))
+                    .addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE,1)) 
+                    .addItemOutput(IngredientPart.forItem(Blocks.SEA_LANTERN , 1))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Blocks.PRISMARINE, 3,0)))
+                    .addItemInput(IngredientPart.forItem(Items.GLOWSTONE_DUST,1)) 
+                    .addItemOutput(IngredientPart.forItem(Blocks.SEA_LANTERN , 1))
+                    .endAdd()
             		
             		
                     //CaO+SiO2=CaSiO3
