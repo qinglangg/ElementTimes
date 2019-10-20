@@ -1,5 +1,6 @@
 Patchouli 是V姐写的一个手册类 Mod，可以不加额外的引用，直接在资源文件中创建对应 json 文件即可向 mc 中创建对应的书（前提是需要 patchouli mod）
-我会在这几天陆续尝试添加 patchouli，GuideAPI，FTBGuides，Project Intelligence 的手册，我就知道这四种手册///
+我会在这几天陆续尝试添加 patchouli，GuideAPI，FTBGuide 的手册，我就知道这四种手册///
+    Project Intelligence：没找到 Wiki，对不起，打扰了
 不知道网易版有没有呢？毕竟老是打开一个网页对照看也不太好的样子，又没空写一个单独的手册。。。祈祷。。。
 
 可使用 patchouli:guide_book 附带NBT： patchouli:book=elementtimes:guide 获取书

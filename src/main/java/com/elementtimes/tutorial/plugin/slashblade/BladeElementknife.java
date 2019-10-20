@@ -63,5 +63,19 @@ public class BladeElementknife {
                 'A', SlashBlade.getCustomBlade("flammpfeil.slashblade", Fox.nameWhite),
                 'V', new ItemStack(ElementtimesItems.photoElement),
                 'W', new ItemStack(ElementtimesItems.endElement)));
+
+        SlashBlade.addRecipe("et_extra1", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "et_extra1"),
+                SlashBlade.getCustomBlade("flammpfeil.slashblade", Fox.nameBlack),
+                ItemStack.EMPTY,
+                "AF",
+                'A', SlashBlade.getCustomBlade("flammpfeil.slashblade", "flammpfeil.slashblade.named.orotiagito.seald"),
+                'F', SlashBlade.getCustomBlade("flammpfeil.slashblade", "flammpfeil.slashblade.named.yamato")));
+
+        SlashBlade.addRecipe("et_extra2", new RecipeAwakeBlade(new ResourceLocation("flammpfeil.slashblade", "et_extra2"),
+                SlashBlade.getCustomBlade("flammpfeil.slashblade", Fox.nameWhite),
+                ItemStack.EMPTY,
+                "AB",
+                'A', SlashBlade.getCustomBlade("flammpfeil.slashblade", "testsilver"),
+                'B', ElementtimesItems.intermediateRubbingSunCompound));
     }
 }
