@@ -3,7 +3,7 @@
   "pattern": [
     "LWL",
     "LWL",
-    "CST"
+    "GSC"
   ],
   "key": {
     "L": {
@@ -18,8 +18,9 @@
     "S": {
       "item": "elementtimes:saplingessence"
     },
-    "T": {
-      "item": "minecraft:totem_of_undying"
+    "G": {
+      "item": "minecraft:golden_apple",
+       "data": 1
     }
   },
   "result": {

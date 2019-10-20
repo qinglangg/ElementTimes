@@ -3,9 +3,11 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
@@ -14,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -30,13 +33,14 @@ public class TileRebuild extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
+                    .add(10000000,Items.EGG, 1,new ItemStack(Blocks.DRAGON_EGG, 1))
                     .add(4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
-                    .add(100000, new ItemStack(Items.GOLDEN_APPLE, 1, 1), Items.TOTEM_OF_UNDYING, 1)
+                    .add(10000,ElementtimesItems.woodElement, 1, Items.TOTEM_OF_UNDYING, 1)
                     .add(4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))
                     .add(50000, new ItemStack(Items.COAL, 1, 0), Items.DIAMOND, 1)
                     .add(50000, Blocks.DIAMOND_BLOCK, 1, ElementtimesItems.diamondIngot, 3)
-                    .add(100000, Blocks.DIRT, 1, Blocks.FARMLAND, 1)
-                    .add(100000, Blocks.GRASS, 1, Blocks.GRASS_PATH, 1)
+                    .add(10000, Blocks.DIRT, 1, Blocks.FARMLAND, 1)
+                    .add(10000, Blocks.GRASS, 1, Blocks.GRASS_PATH, 1)
                     .add(20000, Blocks.SAND, 1, Blocks.SOUL_SAND, 1)
                     .add(20000, Blocks.GLASS, 1, Items.QUARTZ, 1)
                     .add(2000, ElementtimesItems.sucroseCharCoal,1, ElementtimesItems.bambooCharcoal, 1)

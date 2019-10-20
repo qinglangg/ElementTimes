@@ -19,12 +19,8 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = ElementTimes.MODID)
 public class PlantEvent {
 
-	/**
-	 * 打草几率掉玉米事件
-	 * @author 金竹
-	 */
 	@SubscribeEvent
-	public static void onBreakGrass(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {
+	public static void onBreakGrass1(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {
 		IBlockState state = e.getState();
 		World world = e.getWorld();
 		Random rand = world.rand;
@@ -35,6 +31,21 @@ public class PlantEvent {
 			if (rand.nextInt(chance) == 0) {
 				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
 						new ItemStack(ElementtimesItems.corn)));
+			}
+		}
+	}
+	@SubscribeEvent
+	public static void onBreakGrass2(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {
+		IBlockState state = e.getState();
+		World world = e.getWorld();
+		Random rand = world.rand;
+		BlockPos pos = e.getPos();
+		if (state.getBlock() == Blocks.TALLGRASS) {
+			//几率掉落（三十分之一）
+			int chance = 30;
+			if (rand.nextInt(chance) == 0) {
+				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
+						new ItemStack(ElementtimesItems.bamboo)));
 			}
 		}
 	}

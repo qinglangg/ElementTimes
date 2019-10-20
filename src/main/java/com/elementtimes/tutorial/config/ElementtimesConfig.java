@@ -1,6 +1,11 @@
 package com.elementtimes.tutorial.config;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Extractor;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Forming;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Furnace;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Rebuild;
+
 import net.minecraftforge.common.config.Config;
 
 /**
@@ -55,7 +60,7 @@ public class ElementtimesConfig {
         @Config.Comment("设置发电机最大输出")
         @Config.RequiresWorldRestart
         @Config.Name("generaterMaxExtract")
-        public int generaterMaxExtract = 500000;
+        public int generaterMaxExtract = 1000000;
 
         @Config.Comment("设置发电机发电速度")
         @Config.Name("generaterMaxReceive")
@@ -165,19 +170,6 @@ public class ElementtimesConfig {
         @Config.Name("compressorPowderCount")
         public int powderCount = 1;
 
-//        @Config.Comment("设置压缩机可放入的矿石")
-//        @Config.Name("compressorCanPutIn")
-//        public String[] canPutIn = new String[]{
-//                "oreIron",
-//                "oreRedstone",
-//                "oreGold",
-//                "oreDiamond",
-//                "oreLapis",
-//                "oreEmerald",
-//                "oreCopper",
-//                "oreCoal",
-//                "orePlatinum"};
-    }
 
     public static final class Furnace {
         @Config.Comment("设置熔炉最大电容量")
@@ -200,11 +192,11 @@ public class ElementtimesConfig {
 
         @Config.Comment("设置提取机每Tick消耗电量")
         @Config.Name("maxExtract")
-        public int maxExtract = 15;
+        public int maxExtract = 20;
 
         @Config.Comment("设置提取机最大输入")
         @Config.Name("maxReceive")
-        public int maxReceive = 15;
+        public int maxReceive = 20;
     }
 
     public static final class Rebuild {
@@ -233,5 +225,6 @@ public class ElementtimesConfig {
         @Config.Comment("设置整形机最大输入")
         @Config.Name("maxReceive")
         public int maxReceive = 20;
+    }
     }
 }

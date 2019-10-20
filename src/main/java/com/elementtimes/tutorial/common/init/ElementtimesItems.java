@@ -99,6 +99,8 @@ public class ElementtimesItems {
     @ModOreDict("ingotSteel")
     public static Item steelIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item solarPanels = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item carbonRod = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item calciumacetylide = new Item();

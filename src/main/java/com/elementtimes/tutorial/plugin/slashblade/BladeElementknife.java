@@ -34,7 +34,7 @@ public class BladeElementknife {
         // 最大耐久值（可自定义）
         ItemSlashBladeNamed.CustomMaxDamage.set(tag, 1024);
         // 基础伤害（可以修改150.0F和IRON,注意IRON是材料，默认绿宝石）
-        ItemSlashBlade.setBaseAttackModifier(tag, 150.0F + Item.ToolMaterial.IRON.getAttackDamage());
+        ItemSlashBlade.setBaseAttackModifier(tag, 200.0F + Item.ToolMaterial.IRON.getAttackDamage());
         // 是否默认为妖刀（true或false）
         ItemSlashBladeNamed.IsDefaultBewitched.set(tag, true);
         // 材质名（可自定义），会读取assets/flammpfeil.slashblade/model/modid/BladeName下的BladeName.png贴图文件
