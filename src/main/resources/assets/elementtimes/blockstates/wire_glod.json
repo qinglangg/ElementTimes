@@ -1,46 +1,46 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "elementtimes:wire/copper/point"
+        "model": "elementtimes:wire/glod/point"
     },
     "variants": {
         "inventory": [{ }],
         "up": {
             "false": { },
             "true": {
-                "submodel": "elementtimes:wire/copper/north",
+                "submodel": "elementtimes:wire/glod/north",
                 "x": 270
             }
         },
         "down": {
             "false": { },
             "true": {
-                "submodel": "elementtimes:wire/copper/north",
+                "submodel": "elementtimes:wire/glod/north",
                 "x": 90
             }
         },
         "south": {
             "false": { },
             "true": {
-                "submodel": "elementtimes:wire/copper/north",
+                "submodel": "elementtimes:wire/glod/north",
                 "y": 180
             }
         },
         "north": {
             "false": { },
-            "true": { "submodel": "elementtimes:wire/copper/north" }
+            "true": { "submodel": "elementtimes:wire/glod/north" }
         },
         "west": {
             "false": { },
             "true": {
-                "submodel": "elementtimes:wire/copper/north",
+                "submodel": "elementtimes:wire/glod/north",
                 "y": 270
             }
         },
         "east": {
             "false": { },
             "true": {
-                "submodel": "elementtimes:wire/copper/north",
+                "submodel": "elementtimes:wire/glod/north",
                 "y": 90
             }
         }

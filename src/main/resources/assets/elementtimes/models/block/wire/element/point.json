@@ -1,8 +1,8 @@
 {
 	"credit": "by EmptyDreams",
 	"textures": {
-		"0": "elementtimes:blocks/wire/tin",
-		"particle": "elementtimes:blocks/wire/tin"
+		"0": "elementtimes:blocks/wire/element",
+		"particle": "elementtimes:blocks/wire/element"
 	},
 	"elements": [
 		{

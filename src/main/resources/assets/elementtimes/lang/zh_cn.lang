@@ -350,3 +350,11 @@ subtitle.elementtimes.record=唱片响(元素时代)
 item.elementknife.name=元素刀
 # book
 elementtimes.book.patchouli.landing=$(o)$(4)欢迎来到元素时代!
+# wire
+item.wire_copper.name=铜导线
+item.wire_iron.name=铁导线
+item.wire_aluminum.name=铝导线
+item.wire_glod.name=金导线
+item.wire_tin.name=锡导线
+item.wire_high.name=高能导线
+item.wire_element.name=元素导线

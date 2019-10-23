@@ -351,3 +351,11 @@ subtitle.elementtimes.record=record(ET)
 item.elementknife.name=Element Knife
 # book
 elementtimes.book.patchouli.landing=$(o)$(4)Welcome to Element Times!
+# wire
+item.wire_copper.name=wire_copper
+item.wire_iron.name=wire_iron
+item.wire_aluminum.name=wire_aluminum
+item.wire_glod.name=wire_glod
+item.wire_tin.name=wire_tin
+item.wire_high.name=wire_high
+item.wire_element.name=wire_element
