@@ -96,6 +96,10 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79Na3AlF6")
     public static Item Na3AlF6 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item siliconSolarCell = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item light_guide_fibre = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("ingotSteel")
     public static Item steelIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)

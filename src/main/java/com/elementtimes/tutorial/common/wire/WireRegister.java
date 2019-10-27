@@ -17,8 +17,7 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public final class WireRegister {
 
-	private static List<Block> blockList = new ArrayList<>();
-	private static List<Item> itemList = new ArrayList<>();
+	private static List<Block> blockList = new ArrayList<>(7);
 	
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
@@ -36,24 +35,21 @@ public final class WireRegister {
 		blockList.add(new WireBlock("wire_high"));
 		//元素导线
 		blockList.add(new WireBlock("wire_element"));
-		// java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [Lnet.minecraft.block.Block;
-		event.getRegistry().registerAll(blockList.toArray(new Block[0]));
+		for (Block b : blockList) {
+			event.getRegistry().register(b);
+		}
 		// registerTileEntity
 		GameRegistry.registerTileEntity(TileEntityWire.class, new ResourceLocation("elementtimes", "wire"));
 	}
 	
 	@SubscribeEvent
 	public static void registerItem(RegistryEvent.Register<Item> event) {
-		Item item;
 		for (Block b : blockList) {
-			item = new Wire(b, b.getRegistryName().getResourcePath());
-			itemList.add(item);
+			Item item = new Wire(b, b.getRegistryName().getResourcePath());
 			event.getRegistry().register(item);
-		}
-		if (FMLCommonHandler.instance().getSide().isClient()) {
-			for (int i = 0; i < blockList.size(); ++i) {
-				ModelResourceLocation model = new ModelResourceLocation(blockList.get(i).getRegistryName(), "inventory");
-				ModelLoader.setCustomModelResourceLocation(itemList.get(i), 0, model);
+			if (FMLCommonHandler.instance().getSide().isClient()) {
+				ModelResourceLocation model = new ModelResourceLocation(item.getRegistryName(), "inventory");
+				ModelLoader.setCustomModelResourceLocation(item, 0, model);
 			}
 		}
 	}

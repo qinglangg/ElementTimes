@@ -2,6 +2,8 @@ package com.elementtimes.tutorial.common.init;
 
 import com.elementtimes.elementcore.api.annotation.ModRecipe;
 import com.elementtimes.tutorial.other.recipe.RecipeUtil;
+import com.typesafe.config.ConfigException.Null;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -169,6 +171,39 @@ public class ElementtimesRecipeCrafting {
             "plateObsidian", "rubber", ElementtimesItems.plateAdamas
     };
 
+    @ModRecipe
+    public static Object[] siliconsolarcell = new Object[]{
+            ElementtimesItems.siliconSolarCell,
+            ElementtimesItems.carbonRod,ElementtimesItems.Al,ElementtimesItems.carbonRod,
+            ElementtimesItems.Silicon, ElementtimesItems.Silicon, ElementtimesItems.Silicon,
+            ElementtimesItems.AgI,ElementtimesItems.AgBr,ElementtimesItems.AgCl,
+            
+    };
+    @ModRecipe
+    public static Object[] solarpanels = new Object[]{
+            ElementtimesItems.solarPanels,
+            Blocks.DAYLIGHT_DETECTOR,Blocks.DAYLIGHT_DETECTOR,Blocks.DAYLIGHT_DETECTOR,
+            ElementtimesItems.siliconSolarCell,ElementtimesItems.siliconSolarCell,ElementtimesItems.siliconSolarCell,
+            ElementtimesItems.light_guide_fibre,ElementtimesItems.light_guide_fibre,ElementtimesItems.light_guide_fibre,
+    };
+    @ModRecipe
+    public static Object[] light_guide_fibre = new Object[]{
+            ElementtimesItems.light_guide_fibre,
+            ElementtimesItems.plateQuartz,Items.QUARTZ,ElementtimesItems.plateQuartz,
+            Blocks.GLASS,Items.QUARTZ,Blocks.GLASS,
+    };
+    @ModRecipe
+    public static Object[] sungenerator = new Object[]{
+            ElementtimesBlocks.sunGenerator,
+            ElementtimesItems.solarPanels,ElementtimesItems.solarPanels,ElementtimesItems.solarPanels,
+            null,ElementtimesBlocks.fuelGenerator,null,
+    };
+    @ModRecipe(shaped = false)
+    public static Object[] solardecomposer = new Object[]{
+            ElementtimesBlocks.solarDecomposer,
+            ElementtimesItems.solarPanels,ElementtimesItems.solarPanels,ElementtimesBlocks.itemReducer,
+    };
+    
     @ModRecipe
     public static Object[] spanner = new Object[]{
             ElementtimesItems.spanner,
