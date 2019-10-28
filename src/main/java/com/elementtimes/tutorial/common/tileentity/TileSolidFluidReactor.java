@@ -34,6 +34,14 @@ public class TileSolidFluidReactor extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(1, 2, 1, 2)
+                    //铁水变钢水
+                    .newRecipe()
+                    .addCost(10000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Fe, 2000))
+                    .addItemInput(IngredientPart.forItem(new ItemStack(Items.COAL, 1, 0)))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steel, 2000))
+                    .endAdd()
+                    
                     //AL2O3+6HCL=2ALCL3+3H2O
                     .newRecipe()
                     .addCost(2000)

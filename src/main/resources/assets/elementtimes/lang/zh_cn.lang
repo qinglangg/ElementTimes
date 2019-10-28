@@ -209,6 +209,10 @@ tile.elementtimes.leadore.name=铅矿
 tile.elementtimes.tinore.name=锡矿
 tile.elementtimes.uraniumore.name=铀矿
 # fluid
+fluid.elementtimes.steel=熔融钢
+tile.elementtimes.steel.name=熔融钢
+fluid.elementtimes.fe=熔融铁
+tile.elementtimes.fe.name=熔融铁
 fluid.elementtimes.hclo=次氯酸
 tile.elementtimes.hclo.name=次氯酸
 fluid.elementtimes.hno3=硝酸

@@ -13,6 +13,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -41,7 +42,16 @@ public class TileCoagulator extends BaseTileEntity {
             		.addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
             		.addItemOutput(IngredientPart.forItem(Blocks.ICE,1))
             		.endAdd()
-            		
+            		.newRecipe()
+            		.addCost(10000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.steel, 1000))
+            		.addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot,1))
+            		.endAdd()
+            		.newRecipe()
+            		.addCost(10000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Fe, 1000))
+            		.addItemOutput(IngredientPart.forItem(Items.IRON_INGOT,1))
+            		.endAdd()
             		
             		.newRecipe()
                     .addCost(20000)

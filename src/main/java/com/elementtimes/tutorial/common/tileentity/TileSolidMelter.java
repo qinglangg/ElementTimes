@@ -11,6 +11,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -37,9 +39,20 @@ public class TileSolidMelter extends BaseTileEntity {
                     .endAdd()
                     .newRecipe()
                     .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Items.IRON_INGOT, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Fe, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem("ingotSteel", 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steel, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.Al2O3_Na3AlF6, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Al2O3_Na3AlF6, Fluid.BUCKET_VOLUME))
                     .endAdd();
+
         }
     }
 

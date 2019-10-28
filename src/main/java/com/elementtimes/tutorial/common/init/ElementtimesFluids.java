@@ -12,6 +12,17 @@ import net.minecraftforge.fluids.Fluid;
 public class ElementtimesFluids {
     @ModFluid
     @ModFluid.FluidBlock
+    public static Fluid steel = new Fluid("elementtimes.steel",
+            new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_fluid"), 0xFF3B3B3B);
+
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Fe = new Fluid("elementtimes.fe",
+            new ResourceLocation(ElementTimes.MODID, "fluid/al_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/al_fluid"), 0xFF959595);
+    @ModFluid
+    @ModFluid.FluidBlock
     public static Fluid F2 = new Fluid("elementtimes.f2",
             new ResourceLocation(ElementTimes.MODID, "fluid/hf_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/hf_fluid"), 0xFF6E4A26);

@@ -210,6 +210,10 @@ tile.elementtimes.leadore.name=leadore
 tile.elementtimes.tinore.name=tinore
 tile.elementtimes.uraniumore.name=uraniumore(U3O8 U^235/238)
 # fluid
+fluid.elementtimes.steel=steel
+tile.elementtimes.steel.name=steel
+fluid.elementtimes.fe=fe
+tile.elementtimes.fe.name=fe
 fluid.elementtimes.hclo=hclo
 tile.elementtimes.hclo.name=hclo
 fluid.elementtimes.hno3=hno3

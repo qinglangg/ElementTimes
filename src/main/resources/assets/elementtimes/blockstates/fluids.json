@@ -325,6 +325,18 @@
         "fluid": "elementtimes.no2"
       }
     },
+    "elementtimes.steel": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.steel"
+      }
+    },
+    "elementtimes.fe": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.fe"
+      }
+    },
     "elementtimes.o3": {
       "model": "forge:fluid",
       "custom": {
