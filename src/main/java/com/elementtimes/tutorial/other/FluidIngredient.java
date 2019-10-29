@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.other;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.tutorial.common.item.ItemBottleFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
@@ -22,14 +21,6 @@ public class FluidIngredient extends Ingredient {
 
     public static FluidIngredient bucket(Fluid fluid) {
         return bucket(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
-    }
-
-    public static FluidIngredient bottle(FluidStack fluidStack) {
-        return new FluidIngredient(ItemBottleFuel.createByFluid(fluidStack));
-    }
-
-    public static FluidIngredient bottle(Fluid fluid) {
-        return new FluidIngredient(ItemBottleFuel.createByFluid(fluid));
     }
 
     @Override

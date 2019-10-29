@@ -180,9 +180,6 @@ public class ElementtimesItems {
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item diamondIngot = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
-    @ModItem.ItemColor("com.elementtimes.tutorial.client.BottleItemStackColor")
-    public static Item bottle = new ItemBottleFuel();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("rubber")
     public static Item rubber = new Item();

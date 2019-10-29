@@ -137,20 +137,20 @@ public class TileSolidReactor extends BaseTileEntity {
                   //铜矿石获得铜
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem("oreCopper",1))
+                    .addItemInput(IngredientPart.forItem("oreCopper",2))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 2))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 2))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 4))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .endAdd()
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder,2))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, Fluid.BUCKET_VOLUME))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 2))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 2))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .endAdd()
 
 

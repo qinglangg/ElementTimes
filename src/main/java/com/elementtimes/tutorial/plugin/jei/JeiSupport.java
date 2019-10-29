@@ -44,10 +44,6 @@ public class JeiSupport implements IModPlugin {
     private static final String ID_COAGULATOR = ElementTimes.MODID + ".coagulator.jei.category";
     private static final String ID_SOLID_CENTRIFUGE = ElementTimes.MODID + ".solidcentrifuge.jei.category";
 
-    @Override
-    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.useNbtForSubtypes(ElementtimesItems.bottle);
-    }
 
     @Override
     public void register(IModRegistry registry) {
