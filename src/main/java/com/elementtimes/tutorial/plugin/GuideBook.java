@@ -1,9 +1,6 @@
 package com.elementtimes.tutorial.plugin;
 
-import amerifrance.guideapi.api.GuideAPI;
-import amerifrance.guideapi.api.impl.Book;
 import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.tutorial.plugin.guideapi.ElementtimesGuideBook;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -120,15 +117,16 @@ public class GuideBook {
     }
 
     private static ItemStack guideApi() {
-        if (GUIDE_API_BOOK.isEmpty()) {
-            Book book = ElementtimesGuideBook.BOOK;
-            if (book != null) {
-                ItemStack stack = GuideAPI.getStackFromBook(book);
-                if (!stack.isEmpty()) {
-                    GUIDE_API_BOOK = stack;
-                }
-            }
-        }
+//        if (GUIDE_API_BOOK.isEmpty()) {
+//            amerifrance.guideapi.api.impl.Book book =
+//                    com.elementtimes.tutorial.plugin.guideapi.ElementtimesGuideBook.BOOK;
+//            if (book != null) {
+//                ItemStack stack = amerifrance.guideapi.api.GuideAPI.getStackFromBook(book);
+//                if (!stack.isEmpty()) {
+//                    GUIDE_API_BOOK = stack;
+//                }
+//            }
+//        }
         return GUIDE_API_BOOK.copy();
     }
 }
