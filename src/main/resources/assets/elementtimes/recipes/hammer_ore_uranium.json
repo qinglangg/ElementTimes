@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "oreUranium",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:uraniumpowder",
+    "count": 1
+  }
+}

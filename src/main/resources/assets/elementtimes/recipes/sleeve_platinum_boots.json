@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "B D",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:diamondingot"
+    },
+    "B": {
+      "type": "forge:ore_dict",
+      "ore": "ingotPlatinum"
+    },
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "D": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "elementtimes:platinum_sleeve_boots",
+    "count": 1
+  }
+}

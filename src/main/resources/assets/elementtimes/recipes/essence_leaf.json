@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "minecraft:leaves",
+      "data": 0
+    },
+    {
+      "item": "minecraft:leaves",
+      "data": 1
+    },
+    {
+      "item": "minecraft:leaves",
+      "data": 2
+    },
+    {
+      "item": "minecraft:leaves",
+      "data": 3
+    },
+    {
+      "item": "minecraft:leaves2",
+      "data": 0
+    },
+    {
+      "item": "minecraft:leaves2",
+      "data": 1
+    },
+    {
+      "item": "elementtimes:rubber_leaf"
+    }
+  ],
+  "result": {
+    "item": "elementtimes:leafessence",
+    "count": 1
+  }
+}

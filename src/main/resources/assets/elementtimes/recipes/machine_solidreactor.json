@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:solidreactor"
+  },
+  "pattern": [
+    "AHA",
+    "BCD",
+    "FEG"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:cement"
+    },
+    "B": {
+      "item": "minecraft:sandstone",
+      "data": 2
+    },
+    "C": {
+      "item": "elementtimes:fuelGenerator"
+    },
+    "D": {
+      "item": "minecraft:sandstone",
+      "data": 0
+    },
+    "E": {
+      "item": "minecraft:string"
+    },
+    "F": {
+      "item": "minecraft:firework_charge"
+    },
+    "G": {
+      "item": "minecraft:leather"
+    },
+    "H": {
+      "item": "minecraft:bone_block"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "elementtimes:book",
+  "author": "ElementTimes",
+  "color": "RED",
+  "title": "Elementtimes Guide",
+  "categories": [
+    {
+      "name": "Category One",
+      "icon": "elementtimes:endelement",
+      "entries": [
+        {
+          "id": "elementtimes:category1page1",
+          "name": "Page One",
+          "icon": "elementtimes:endelement",
+          "pages": [
+            {
+              "type": "text&image",
+              "text": "Page One: Text and Image",
+              "image": "elementtimes:textures/book/tree.png"
+            },
+            {
+              "type": "recipe",
+              "id": "elementtimes:blockmultislivercopper",
+              "render": "com.elementtimes.tutorial.plugin.guideapi.RecipeLaterRenderer"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

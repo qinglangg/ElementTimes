@@ -4,7 +4,6 @@ import com.elementtimes.elementcore.ElementCore;
 import com.elementtimes.elementcore.api.annotation.enums.LoadState;
 import com.elementtimes.elementcore.api.common.ECModContainer;
 import com.elementtimes.tutorial.common.CommonProxy;
-import com.elementtimes.tutorial.plugin.elementcore.HammerOreRecipe;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -15,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * @author qinglan,ksgfk,luqin2007
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@(0.2.2,0.3.0)")
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@(0.2.2,0.3.0);before:guideapi")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
 
@@ -32,7 +31,6 @@ public class ElementTimes {
         proxy.preInit(event);
         CONTAINER = ElementCore.builder()
                 .disableDebugMessage()
-                .registerAnnotation(LoadState.PreInit, HammerOreRecipe.Ore.class, HammerOreRecipe::parser)
                 .registerAnnotation(LoadState.Init, SSMRegister.SupportStandModule.class, SSMRegister::register)
                 .build(event);
     }

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "DDD",
+    "EEE",
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:end_rod"
+    },
+    "B": {
+      "item": "minecraft:redstone_torch"
+    },
+    "C": {
+      "item": "minecraft:torch"
+    },
+    "D": {
+      "item": "minecraft:glowstone"
+    },
+    "E": {
+      "item": "minecraft:sea_lantern"
+    }
+  },
+  "result": {
+    "item": "elementtimes:twiningsuncompound",
+    "count": 1
+  }
+}

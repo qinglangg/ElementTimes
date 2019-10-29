@@ -137,6 +137,7 @@ item.elementtimes.agbr.name=agbr
 item.elementtimes.agi.name=agi
 item.elementtimes.solarpanels.name=solarPanels
 item.elementtimes.elementfishpole.name=element fish pole
+item.elementtimes.saltedfish.name=Salted Fish
 item.elementtimes.siliconsolarcell.name=siliconsolarcell
 item.elementtimes.light_guide_fibre.name=light_guide_fibre
 item.elementtimes.pipeline.item.link.normal=Normal Item Pipeline
@@ -356,6 +357,7 @@ subtitle.elementtimes.sounds=Cube Land
 subtitle.elementtimes.record=record(ET)
 item.elementknife.name=Element Knife
 # book
+elementtimes.book.minecraft=ElementTimes Guide
 elementtimes.book.patchouli.landing=$(o)$(4)Welcome to Element Times!
 # wire
 item.wire_copper.name=wire_copper

@@ -1,0 +1,14 @@
+{
+  "type": "elementtimes:method",
+  "override": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    { "item": "minecraft:book" },
+    { "item": "elementtimes:smallhammer" }
+  ],
+  "result": {
+    "item": "minecraft:book",
+    "class": "com.elementtimes.tutorial.plugin.GuideBook",
+    "method": "getGuideBook"
+  }
+}

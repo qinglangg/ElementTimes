@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.other.recipe;
 
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -9,11 +10,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -23,19 +21,9 @@ import java.util.function.Supplier;
  */
 public class RecipeUtil {
 
-    /**
-     * 反射获取默认有序合成，即 minecraft:crafting_shaped 类型注册的 IRecipeFactory
-     */
-    public static IRecipeFactory shapedRecipesParser() {
-        try {
-            Field recipesField = CraftingHelper.class.getDeclaredField("recipes");
-            recipesField.setAccessible(true);
-            Map<ResourceLocation, IRecipeFactory> recipes = (Map<ResourceLocation, IRecipeFactory>) recipesField.get(null);
-            return recipes.get(new ResourceLocation("minecraft:crafting_shaped"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static ItemStack enchantment(ItemStack stack) {
+        ECUtils.item.addMaxEnchantments(stack);
+        return stack;
     }
 
     /**

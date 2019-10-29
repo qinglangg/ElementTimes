@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:diamondingot"
+    }
+  },
+  "result": {
+    "item": "elementtimes:diamondblock",
+    "count": 1
+  }
+}

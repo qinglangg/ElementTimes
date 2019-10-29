@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:solidreactor"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "BDB"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:cement"
+    },
+    "B": {
+      "type":"forge:ore_dict",
+      "ore":"ingotSteel"
+    },
+    "C": {
+      "item": "elementtimes:pumpair"
+    },
+    "D": {
+      "item": "elementtimes:fuelgenerator"
+    }
+  }
+}

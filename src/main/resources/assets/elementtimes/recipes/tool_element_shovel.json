@@ -1,0 +1,21 @@
+{
+  "type": "elementtimes:max_enchantment",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "F",
+    "F",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementshovel",
+    "count": 1
+    }
+}

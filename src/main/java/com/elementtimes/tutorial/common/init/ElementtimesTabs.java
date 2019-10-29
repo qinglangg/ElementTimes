@@ -38,10 +38,7 @@ public class ElementtimesTabs {
         @SideOnly(Side.CLIENT)
         public void displayAllRelevantItems(@Nonnull NonNullList<ItemStack> itemStacks) {
             super.displayAllRelevantItems(itemStacks);
-            ItemStack patchouli = GuideBook.patchouliBook();
-            if (!patchouli.isEmpty()) {
-                itemStacks.add(patchouli);
-            }
+            itemStacks.addAll(GuideBook.getAllGuideBook());
         }
     };
 

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    " S ",
+    "SGS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:twiningsuncompound"
+    },
+    "G": {
+      "item": "minecraft:golden_apple",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "elementtimes:intermediaterubbingsuncompound",
+    "count": 1
+  }
+}

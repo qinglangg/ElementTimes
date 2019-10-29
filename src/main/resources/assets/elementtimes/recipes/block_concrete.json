@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "ABD",
+    "BCB",
+    "DBA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:sand",
+      "data":0
+    },
+    "B": {
+      "item": "minecraft:clay_ball"
+    },
+    "C": {
+      "item": "elementtimes:calciumoxide"
+    },
+    "D": {
+      "item": "minecraft:gravel"
+    }
+  },
+  "result": {
+    "item": "elementtimes:concrete",
+    "count": 1
+    }
+}

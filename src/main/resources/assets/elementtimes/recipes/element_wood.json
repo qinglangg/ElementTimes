@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "LWL",
+    "LWL",
+    "GSC"
+  ],
+  "key": {
+    "L": {
+      "item": "elementtimes:leafessence"
+    },
+    "W": {
+      "item": "elementtimes:woodessence"
+    },
+    "C": {
+      "item": "elementtimes:cropessence"
+    },
+    "S": {
+      "item": "elementtimes:saplingessence"
+    },
+    "G": {
+      "item": "minecraft:golden_apple",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "elementtimes:woodelement",
+    "count": 1
+  }
+}

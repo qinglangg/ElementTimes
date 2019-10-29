@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "logWood",
+  "damage": 1,
+  "output": {
+    "item": "",
+    "count": 16
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "FF",
+    "FF"
+  ],
+  "key": {
+    "F": {
+      "item": "elementtimes:bamboo"
+    }
+  },
+  "result": {
+    "item": "elementtimes:bamboocharcoal",
+    "count": 1
+    }
+}

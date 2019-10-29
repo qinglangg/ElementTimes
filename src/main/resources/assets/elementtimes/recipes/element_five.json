@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    " A ",
+    "BCD",
+    " E "
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:waterelement"
+    },
+    "B": {
+      "item": "elementtimes:goldelement"
+    },
+    "C": {
+      "item": "elementtimes:soilelement"
+    },
+    "D": {
+      "item": "elementtimes:woodelement"
+    },
+    "E": {
+      "item": "elementtimes:fireelement"
+    }
+  },
+  "result": {
+    "item": "elementtimes:fiveelements",
+    "count": 1
+  }
+}

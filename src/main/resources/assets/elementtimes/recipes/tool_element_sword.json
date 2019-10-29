@@ -1,0 +1,24 @@
+{
+  "type": "elementtimes:max_enchantment",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    " F ",
+    "EFP",
+    " F "
+  ],
+  "key": {
+    "E": {
+      "item": "elementtimes:endelement"
+    },
+    "P": {
+      "item": "elementtimes:photoelement"
+    },
+    "F": {
+      "item": "elementtimes:fiveelements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementsword",
+    "count": 1
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "elementtimes:book",
+  "author": "ElementTimes",
+  "color": "RED",
+  "title": "元素时代--从入门到入土",
+  "categories": [
+    {
+      "name": "分类一",
+      "icon": "elementtimes:endelement",
+      "entries": [
+        {
+          "id": "elementtimes:category1page1",
+          "name": "第一类",
+          "icon": "elementtimes:endelement",
+          "pages": [
+            {
+              "type": "text&image",
+              "text": "图文页",
+              "image": "elementtimes:textures/book/tree.png"
+            },
+            {
+              "type": "recipe",
+              "id": "elementtimes:blockmultislivercopper",
+              "render": "com.elementtimes.tutorial.plugin.guideapi.RecipeLaterRenderer"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

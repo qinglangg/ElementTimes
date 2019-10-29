@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "AAA",
+    " B ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "B": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    }
+  },
+  "result": {
+    "item": "elementtimes:smallhammer"
+  }
+}

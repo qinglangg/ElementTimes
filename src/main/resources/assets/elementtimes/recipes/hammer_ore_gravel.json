@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "minecraft:gravel",
+  "damage": 1,
+  "output": {
+    "item": "minecraft:flint",
+    "count": 5
+  }
+}

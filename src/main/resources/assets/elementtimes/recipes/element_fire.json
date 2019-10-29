@@ -1,0 +1,36 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "group": "elementtimes:recipes",
+    "pattern":[
+        "AFC",
+        "BFD",
+        "GEG"
+    ],
+    "key":{
+        "A":{
+            "item":"minecraft:netherrack"
+        },
+        "B":{
+            "item":"minecraft:nether_brick"
+        },
+        "C":{
+            "item":"minecraft:nether_wart_block"
+        },
+        "D":{
+            "item":"minecraft:red_nether_brick"
+        },
+        "E":{
+            "item":"minecraft:magma"
+        },
+        "F":{
+            "item":"minecraft:lava_bucket"
+        },
+        "G":{
+            "item":"minecraft:blaze_rod"
+        }
+    },
+    "result":{
+        "item":"elementtimes:fireelement",
+        "count":1
+    }
+}

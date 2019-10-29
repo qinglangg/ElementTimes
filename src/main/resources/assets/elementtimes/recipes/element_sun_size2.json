@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "S": {
+      "item": "elementtimes:intermediaterubbingsuncompound"
+    }
+  },
+  "result": {
+    "item": "elementtimes:largerubbingsuncompound",
+    "count": 1
+    }
+}

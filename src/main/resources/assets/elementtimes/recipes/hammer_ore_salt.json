@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "oreSalt",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:salt",
+    "count": 8
+  }
+}

@@ -3,9 +3,7 @@ package com.elementtimes.tutorial.common.event;
 import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.CapabilitySeaWater;
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
-import com.elementtimes.tutorial.common.item.Salt;
 import com.elementtimes.tutorial.common.potion.SaltedFish;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,7 +11,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,14 +19,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
@@ -44,7 +38,7 @@ public class SeaEvent {
 
     private static UUID UUID_SPEED = UUID.fromString("c343e6bf-7660-4c69-8c67-d231b66de537");
 
-    /*
+    /**
     [Cap] 为玩家绑定 CapabilitySaltEffect 能力
      */
     @SubscribeEvent
@@ -56,7 +50,7 @@ public class SeaEvent {
         }
     }
 
-    /*
+    /**
     [Cap] 玩家穿越维度时复制 Capability
      */
     @SubscribeEvent
@@ -73,30 +67,7 @@ public class SeaEvent {
         }
     }
 
-    /*
-    [Salt] 若持有盐，处理盐的物品栈，使其可食用
-     */
-    @SubscribeEvent
-    public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
-        if (!event.getWorld().isRemote) {
-            EntityPlayer player = event.getEntityPlayer();
-            PotionEffect saltEffect = player.getActivePotionEffect(ElementtimesMagic.salt);
-            if (saltEffect != null) {
-                ItemStack heldItem = player.getHeldItem(event.getHand());
-                int[] oreIDs = OreDictionary.getOreIDs(player.getHeldItem(player.getActiveHand()));
-                if (ArrayUtils.contains(oreIDs, OreDictionary.getOreID("salt"))) {
-                    if (heldItem.getItem() == ElementtimesItems.salt) {
-                        Salt.bindTag(heldItem, null, saltEffect.getAmplifier());
-                    } else {
-                        ItemStack salt = new ItemStack(ElementtimesItems.salt, heldItem.getCount());
-                        Salt.bindTag(salt, heldItem, saltEffect.getAmplifier());
-                    }
-                }
-            }
-        }
-    }
-
-    /*
+    /**
     [Cap] 回复玩家的 ISeaWater
      */
     @SubscribeEvent
@@ -125,7 +96,7 @@ public class SeaEvent {
         }
     }
 
-    /*
+    /**
     [Cap] 保存玩家的 ISeaWater
      */
     @SubscribeEvent
@@ -154,22 +125,7 @@ public class SeaEvent {
         }
     }
 
-    /*
-    [Salt] 恢复盐的物品栈
-     */
-    @SubscribeEvent
-    public static void onItemUseFinished(LivingEntityUseItemEvent event) {
-        if (event instanceof LivingEntityUseItemEvent.Stop || event instanceof LivingEntityUseItemEvent.Finish) {
-            EntityLivingBase entityLiving = event.getEntityLiving();
-            if (entityLiving instanceof EntityPlayer && !entityLiving.world.isRemote) {
-                EntityPlayer player = (EntityPlayer) entityLiving;
-                ItemStack heldItem = player.getHeldItem(player.getActiveHand());
-                player.setHeldItem(player.getActiveHand(), Salt.removeTag(heldItem));
-            }
-        }
-    }
-
-    /*
+    /**
     [SaltedFish] 无法跳跃
      */
     @SubscribeEvent
@@ -181,7 +137,7 @@ public class SeaEvent {
         }
     }
 
-    /*
+    /**
     [Potion] 移除 Salt 效果时赋予 SaltedFish 效果
     [SaltedFish] 速度减少 90%
      */

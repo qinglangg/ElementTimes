@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "AAA",
+    " B ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:sic"
+    },
+    "B": {
+      "item": "elementtimes:diamondingot"
+    }
+  },
+  "result": {
+    "item": "elementtimes:bighammer"
+  }
+}

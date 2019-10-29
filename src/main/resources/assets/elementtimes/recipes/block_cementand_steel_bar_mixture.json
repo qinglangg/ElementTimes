@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "CCC",
+    "ABA",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:cement"
+    },
+    "B": {
+      "item": "elementtimes:ingotcolumn"
+    },
+    "C": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "elementtimes:cementandsteelbarmixture",
+    "count": 1
+    }
+}

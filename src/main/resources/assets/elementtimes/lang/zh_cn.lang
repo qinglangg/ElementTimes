@@ -50,6 +50,7 @@ item.elementtimes.quartzpowder.name=石英矿粉
 item.elementtimes.bighammer.name=大锤子
 item.elementtimes.smallhammer.name=小锤子
 item.elementtimes.cornbroth.name=玉米肉汤
+item.elementtimes.elementknife.name=elementknife
 item.elementtimes.money.name=服务器货币
 item.elementtimes.sulfurorepowder.name=硫矿粉
 item.elementtimes.sulfurpowder.name=硫粉
@@ -135,9 +136,10 @@ item.elementtimes.agcl.name=氯化银
 item.elementtimes.agbr.name=溴化银
 item.elementtimes.agi.name=碘化银
 item.elementtimes.solarpanels.name=太阳能板
+item.elementtimes.elementfishpole.name=元素钓鱼竿
+item.elementtimes.saltedfish.name=咸鱼
 item.elementtimes.siliconsolarcell.name=硅太阳能电池
 item.elementtimes.light_guide_fibre.name=光导纤维
-item.elementtimes.elementfishpole.name=元素钓鱼竿
 item.elementtimes.pipeline.item.link.normal=普通物品管道
 item.elementtimes.pipeline.item.input.normal=普通物品输入管道
 item.elementtimes.pipeline.item.output.normal=普通物品输出管道
@@ -355,6 +357,7 @@ subtitle.elementtimes.sounds=Cube Land(我的世界主题曲)
 subtitle.elementtimes.record=唱片响(元素时代)
 item.elementknife.name=元素刀
 # book
+elementtimes.book.minecraft=元素手册
 elementtimes.book.patchouli.landing=$(o)$(4)欢迎来到元素时代!
 # wire
 item.wire_copper.name=铜导线

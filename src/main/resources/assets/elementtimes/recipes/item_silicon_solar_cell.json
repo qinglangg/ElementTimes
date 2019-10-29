@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "ABA",
+    "DDD",
+    "EFG"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:carbonrod"
+    },
+    "B": {
+      "item": "elementtimes:al"
+    },
+    "D": {
+      "item": "elementtimes:silicon"
+    },
+    "E": {
+      "item": "elementtimes:agi"
+    },
+    "F": {
+      "item": "elementtimes:agbr"
+    },
+    "G": {
+      "item": "elementtimes:agcl"
+    }
+  },
+  "result": {
+    "item": "elementtimes:siliconsolarcell"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:amylum"
+    }
+  },
+  "result": {
+    "item": "elementtimes:starchball",
+    "count": 1
+  }
+}

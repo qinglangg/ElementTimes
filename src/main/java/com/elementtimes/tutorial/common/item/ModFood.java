@@ -8,6 +8,6 @@ import net.minecraft.item.ItemFood;
  */
 public class ModFood extends ItemFood {
     public ModFood(int amount, float c) {
-        super(amount, 2 * c / amount, false);
+        super(amount, amount == 0 ? 0 : 2 * c / amount, false);
     }
 }

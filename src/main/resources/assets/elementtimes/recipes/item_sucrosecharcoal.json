@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "FF",
+    "FF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:reeds"
+    }
+  },
+  "result": {
+    "item": "elementtimes:sucrosecharcoal",
+    "count": 1
+  }
+}

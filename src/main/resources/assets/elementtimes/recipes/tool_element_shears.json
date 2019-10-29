@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    " S",
+    "S "
+  ],
+  "key": {
+    "S": {
+      "item": "elementtimes:fiveElements"
+    }
+  },
+  "result": {
+    "item": "elementtimes:elementshears",
+    "count": 1
+  }
+}

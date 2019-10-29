@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "oreCoal",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:coalpowder",
+    "count": 3
+  }
+}

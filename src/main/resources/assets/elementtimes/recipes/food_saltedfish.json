@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "minecraft:fish",
+      "data": 32767
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "salt"
+    }
+  ],
+  "result": {
+    "item": "elementtimes:saltedfish"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "minecraft:blaze_rod",
+  "damage": 1,
+  "output": {
+    "item": "minecraft:blaze_powder",
+    "count": 6
+  }
+}
