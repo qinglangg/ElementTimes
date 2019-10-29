@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:spanner"
+  },
+  "pattern": [
+    "  A",
+    " A ",
+    "A  "
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    }
+  }
+}

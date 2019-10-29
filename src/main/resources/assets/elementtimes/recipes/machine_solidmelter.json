@@ -1,0 +1,33 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:solidmelter"
+  },
+  "pattern": [
+    "ABA",
+    "CCC",
+    "DED"
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gearGold"
+    },
+    "B": {
+      "type": "forge:ore_dict",
+      "ore": "blockSteel"
+    },
+    "C": {
+      "item": "elementtimes:furnace"
+    },
+    "D": {
+      "type": "forge:ore_dict",
+      "ore": "gearDiamond"
+    },
+    "E": {
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
+    }
+  }
+}

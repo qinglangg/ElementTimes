@@ -1,7 +1,7 @@
 {
   "recipes": {
     "max_enchantment": "com.elementtimes.tutorial.other.recipe.MaxEnchantmentLevelFactory",
-    "method": "com.elementtimes.tutorial.other.recipe.FactoryMethod",
+    "multi_block": "com.elementtimes.tutorial.other.recipe.FactoryMultiBlock",
     "ore": "com.elementtimes.tutorial.other.recipe.FactoryOre"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:solidcentrifuge"
+  },
+  "pattern": [
+    "ABC",
+    "DED",
+    "CBA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:sticky_piston"
+    },
+    "B": {
+      "item": "elementtimes:cementandsteelbarmixture"
+    },
+    "C": {
+      "item": "minecraft:clay"
+    },
+    "D": {
+      "item": "elementtimes:woodelement"
+    },
+    "E": {
+      "item": "elementtimes:centrifuge"
+    }
+  }
+}

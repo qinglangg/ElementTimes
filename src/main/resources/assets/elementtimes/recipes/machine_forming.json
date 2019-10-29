@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:forming"
+  },
+  "pattern": [
+    " A ",
+    "BCD",
+    " E "
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:blockmultiironquartz"
+    },
+    "B": {
+      "item": "elementtimes:blockmultigoldplatinum"
+    },
+    "C": {
+      "item": "elementtimes:fuelgenerator"
+    },
+    "D": {
+      "item": "elementtimes:blockmulticarbonsteel"
+    },
+    "E": {
+      "item": "elementtimes:blockmultitinlead"
+    }
+  }
+}

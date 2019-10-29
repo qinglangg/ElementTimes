@@ -1,0 +1,33 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:compressor"
+  },
+  "pattern": [
+    "ABA",
+    "DCD",
+    "EBE"
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "gearDiamond"
+    },
+    "B": {
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
+    },
+    "C": {
+      "item": "elementtimes:fuelgenerator"
+    },
+    "D": {
+      "type": "forge:ore_dict",
+      "ore": "blockSteel"
+    },
+    "E": {
+      "type": "forge:ore_dict",
+      "ore": "gearGold"
+    }
+  }
+}

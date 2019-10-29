@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "elementtimes:solarpanels"
+    },
+    {
+      "item": "elementtimes:solarpanels"
+    },
+    {
+      "item": "elementtimes:itemreducer"
+    }
+  ],
+  "result": {
+    "item": "elementtimes:solardecomposer"
+  }
+}

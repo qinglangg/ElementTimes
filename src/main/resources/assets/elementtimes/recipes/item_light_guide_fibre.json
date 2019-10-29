@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:light_guide_fibre"
+  },
+  "pattern": [
+    "   ",
+    "ABA",
+    "CBC"
+  ],
+  "key": {
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "plateQuartz"
+    },
+    "B": {
+      "item": "minecraft:quartz"
+    },
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "blockGlass"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:electrolyticcell"
+  },
+  "pattern": [
+    "ABA",
+    "CDE",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:carbonrod"
+    },
+    "B": {
+      "item": "elementtimes:blockmulticarbonsteel"
+    },
+    "C": {
+      "item": "elementtimes:fluidheater"
+    },
+    "D": {
+      "item": "elementtimes:coagulator"
+    },
+    "E": {
+      "item": "elementtimes:condenser"
+    }
+  }
+}

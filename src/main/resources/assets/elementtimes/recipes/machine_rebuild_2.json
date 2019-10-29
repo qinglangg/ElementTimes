@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:rebuild"
+  },
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:coagulator"
+    },
+    "B": {
+      "item": "elementtimes:pulverizer"
+    },
+    "C": {
+      "item": "elementtimes:condenser"
+    },
+    "D": {
+      "item": "elementtimes:forming"
+    },
+    "E": {
+      "item": "elementtimes:electrolyticcell"
+    },
+    "F": {
+      "item": "elementtimes:extractor"
+    },
+    "G": {
+      "item": "elementtimes:centrifuge"
+    },
+    "H": {
+      "item": "elementtimes:compressor"
+    },
+    "I": {
+      "item": "elementtimes:blockmulticarbonsteel"
+    }
+  }
+}

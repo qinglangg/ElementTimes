@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:pumpfluid"
+  },
+  "pattern": [
+    " A ",
+    "BCD",
+    " E "
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:blockmultisilvercopper"
+    },
+    "B": {
+      "item": "elementtimes:blockmultigoldplatinum"
+    },
+    "C": {
+      "item": "elementtimes:pumpair"
+    },
+    "D": {
+      "item": "elementtimes:blockmulticarbonsteel"
+    },
+    "E": {
+      "item": "elementtimes:blockmultiwoodstone"
+    }
+  }
+}

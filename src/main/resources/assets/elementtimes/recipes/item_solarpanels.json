@@ -16,5 +16,8 @@
     "C": {
       "item": "elementtimes:light_guide_fibre"
     }
+  },
+  "result": {
+    "item": "elementtimes:solarpanels"
   }
 }

@@ -314,6 +314,7 @@ public class ElementtimesItems {
     @ModOreDict("gearSilver")
     public static Item gearSilver = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModOreDict("gearAdamas")
     public static Item gearAdamas = new Item();
 
     // plate
@@ -360,5 +361,6 @@ public class ElementtimesItems {
     @ModOreDict("plateSilver")
     public static Item plateSilver = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModOreDict("plateAdamas")
     public static Item plateAdamas = new Item();
 }

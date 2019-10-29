@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:blockmulticarbonsteel"
+    },
+    "B": {
+      "item": "elementtimes:blockmultigoldplatinum"
+    },
+    "C": {
+      "item": "elementtimes:blockmultiironquartz"
+    },
+    "D": {
+      "item": "elementtimes:blockmultiobsidiandiamond"
+    },
+    "E": {
+      "item": "elementtimes:blockmultisilvercopper"
+    },
+    "F": {
+      "item": "elementtimes:blockmultitinlead"
+    },
+    "G": {
+      "item": "elementtimes:na"
+    },
+    "H": {
+      "item": "elementtimes:mg"
+    },
+    "I": {
+      "item": "elementtimes:al"
+    }
+  },
+  "result": {
+    "item": "elementtimes:goldelement",
+    "count": 1
+  }
+}

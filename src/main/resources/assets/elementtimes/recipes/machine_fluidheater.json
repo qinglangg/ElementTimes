@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "result": {
+    "item": "elementtimes:fluidheater"
+  },
+  "pattern": [
+    "ABC",
+    "DED",
+    "FBG"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:blockmultisilvercopper"
+    },
+    "B": {
+      "item": "elementtimes:cementandsteelbarmixture"
+    },
+    "C": {
+      "item": "elementtimes:blockmultitinlead"
+    },
+    "D": {
+      "item": "elementtimes:fireelement"
+    },
+    "E": {
+      "item": "elementtimes:fluidreactor"
+    },
+    "F": {
+      "item": "elementtimes:blockmultiwoodstone"
+    },
+    "G": {
+      "item": "elementtimes:blockmultiobsidiandiamond"
+    }
+  }
+}

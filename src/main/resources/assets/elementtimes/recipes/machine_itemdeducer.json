@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "elementtimes:woodelement"
+    },
+    {
+      "item": "minecraft:crafting_table"
+    },
+    {
+      "item": "elementtimes:fuelgenerator"
+    }
+  ],
+  "result": {
+    "item": "elementtimes:itemreducer"
+  }
+}

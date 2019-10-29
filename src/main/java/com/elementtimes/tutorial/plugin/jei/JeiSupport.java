@@ -3,13 +3,13 @@ package com.elementtimes.tutorial.plugin.jei;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.tileentity.*;
-import com.elementtimes.tutorial.other.recipe.RecipeWrapper;
 import com.elementtimes.tutorial.plugin.jei.category.MachineRecipeCategory;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
-import com.elementtimes.tutorial.plugin.jei.wrapper.VanillaRecipeWrapper;
-import mezz.jei.api.*;
+import mezz.jei.api.IGuiHelper;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
@@ -72,9 +72,6 @@ public class JeiSupport implements IModPlugin {
         registerJeiRecipes(registry, ElementtimesBlocks.solidCentrifuge, TileSolidCentrifuge.RECIPE, ID_SOLID_CENTRIFUGE);
         // 电炉
         registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.furnace), VanillaRecipeCategoryUid.SMELTING);
-        // RecipeWrapper 兼容
-        registry.handleRecipes(RecipeWrapper.class,
-                recipe -> VanillaRecipeWrapper.create(registry, recipe), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override
