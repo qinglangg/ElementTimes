@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +55,9 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
     }
 
     public static List<MachineRecipeWrapper> fromHandler(MachineRecipeHandler handler) {
+        if (handler == null) {
+            return Collections.emptyList();
+        }
         List<MachineRecipe> recipes = handler.getMachineRecipes();
         List<MachineRecipeWrapper> wrappers = new ArrayList<>(recipes.size());
         for (MachineRecipe recipe : recipes) {
