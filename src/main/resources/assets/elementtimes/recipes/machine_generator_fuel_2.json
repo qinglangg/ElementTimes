@@ -15,7 +15,7 @@
       "ore": "ingotSteel"
     },
     "B": {
-      "item": "elementtimes:furnace"
-    }
+     "item": "minecraft:furnace"
+       }
   }
 }

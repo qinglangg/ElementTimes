@@ -27,11 +27,20 @@ public class TileSolidCentrifuge extends BaseTileEntity {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(1, 3, 0, 0)
                     .newRecipe()
-                    .addCost(100)
+                    .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
-                    .endAdd();
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(1000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
+                    .endAdd()
+                    
+                    
+                    ;
         }
     }
 

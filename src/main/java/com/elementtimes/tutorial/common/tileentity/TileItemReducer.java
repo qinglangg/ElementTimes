@@ -40,8 +40,10 @@ public class TileItemReducer extends BaseTileEntity {
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSilver", 1, ElementtimesItems.silver, 9)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSteel", 1, ElementtimesItems.steelIngot, 9)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesBlocks.diamondBlock, 1, ElementtimesItems.diamondIngot, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, (new ItemStack(Blocks.SAND, 1,2)), (new ItemStack(Blocks.SAND, 1,1)))
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, (new ItemStack(Blocks.SAND, 1,1)), (new ItemStack(Blocks.SAND, 1,0)))
+                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.MELON_BLOCK,1,Items.MELON, 9)
+                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.NETHER_WART_BLOCK,1,Items.NETHER_WART, 9)
+                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.GLOWSTONE,1,Items.GLOWSTONE_DUST, 4)	
+                    
             ;
         }
     }

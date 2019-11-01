@@ -337,6 +337,12 @@
         "fluid": "elementtimes.fe"
       }
     },
+    "elementtimes.magnesiumchloridesolution": {
+      "model": "forge:fluid",
+      "custom": {
+        "fluid": "elementtimes.magnesiumchloridesolution"
+      }
+    },
     "elementtimes.o3": {
       "model": "forge:fluid",
       "custom": {

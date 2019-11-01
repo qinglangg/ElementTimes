@@ -15,7 +15,6 @@ public class ElementtimesFluids {
     public static Fluid steel = new Fluid("elementtimes.steel",
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_fluid"), 0xFF3B3B3B);
-
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Fe = new Fluid("elementtimes.fe",
@@ -61,36 +60,26 @@ public class ElementtimesFluids {
     public static Fluid HClO = new Fluid("elementtimes.hclo",
             new ResourceLocation(ElementTimes.MODID, "fluid/hclo_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/hclo_fluid"), 0xFF5F943E);
-
-    
-    
-    
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid h2so4 = new Fluid("elementtimes.h2so4",
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so4_fluid"), 0xFF969642);
-    
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid h2so3 = new Fluid("elementtimes.h2so3",
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so3_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/h2so3_fluid"), 0xFFAEAE53);
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid so3 = new Fluid("elementtimes.so3",
             new ResourceLocation(ElementTimes.MODID, "fluid/so3_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/so3_fluid"), 0xFF969642);
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid so2 = new Fluid("elementtimes.so2",
             new ResourceLocation(ElementTimes.MODID, "fluid/so2_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/so2_fluid"), 0xFF969642);
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid FluoroaluminicAcid = new Fluid("elementtimes.fluoroaluminicacid",
@@ -102,19 +91,16 @@ public class ElementtimesFluids {
     public static Fluid hf = new Fluid("elementtimes.hf",
             new ResourceLocation(ElementTimes.MODID, "fluid/hf_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/hf_fluid"), 0xFF969642);
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Na = new Fluid("elementtimes.na",
             new ResourceLocation(ElementTimes.MODID, "fluid/na_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/na_fluid"), 0xFF8A8AAF);
-    
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Mg = new Fluid("elementtimes.mg",
             new ResourceLocation(ElementTimes.MODID, "fluid/na_still"),
-            new ResourceLocation(ElementTimes.MODID, "fluid/na_fluid"), 0xFF8A8AAF);
-    
+            new ResourceLocation(ElementTimes.MODID, "fluid/na_fluid"), 0xFF8A8AAF);  
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Sicl4 = new Fluid("elementtimes.sicl4",
@@ -167,6 +153,11 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
 
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid MagnesiumChlorideSolution  = new Fluid("elementtimes.magnesiumchloridesolution",
+            new ResourceLocation(ElementTimes.MODID, "fluid/nh4cl_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/nh4cl_fluid"), 0xFF4E9696);
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid NH4Cl = new Fluid("elementtimes.nh4cl",
