@@ -27,7 +27,7 @@ public class TileCondenser extends BaseTileEntity {
     public static void init() {
         if (RECIPE == null) {
             RECIPE = new MachineRecipeHandler(0, 0, 1, 1)
-                    .add(1000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
+                    .add(2000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
         }
     }
 

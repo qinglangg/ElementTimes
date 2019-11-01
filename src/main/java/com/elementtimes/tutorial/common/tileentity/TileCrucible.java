@@ -5,16 +5,24 @@ import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Tick;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -29,7 +37,20 @@ public class TileCrucible extends BaseTileEntity {
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
-        RECIPE = new MachineRecipeHandler(1, 2, 0, 2);
+        RECIPE = new MachineRecipeHandler(1, 2, 0, 2)
+        		.newRecipe()
+        		.addCost(200)
+                .addItemInput(IngredientPart.forItem(ElementtimesItems.uraniumPowder, 1))
+                .addItemOutput(IngredientPart.forItem(ElementtimesItems.UO2 ,1))
+                .endAdd()
+        		.newRecipe()
+        		.addCost(200)
+                .addItemInput(IngredientPart.forItem(ElementtimesItems.stoneIngot, 1))
+                .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumOxide ,1))
+                .endAdd()
+        		
+        		
+        		;
     }
 
     public NBTTagCompound nbt = new NBTTagCompound();

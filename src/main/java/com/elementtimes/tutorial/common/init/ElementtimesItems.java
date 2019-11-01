@@ -363,4 +363,14 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("plateAdamas")
     public static Item plateAdamas = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item aluminiumPlate = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item siliconPlate  = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item cpu = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item cpuUp  = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    public static Item cpuDown  = new Item();
 }

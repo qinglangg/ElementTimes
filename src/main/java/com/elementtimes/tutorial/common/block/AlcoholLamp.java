@@ -50,7 +50,7 @@ import static com.elementtimes.elementcore.api.template.block.Properties.IS_BURN
 public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupportStandModule, IDismantleBlock {
 
     public static final int ALCOHOL_AMOUNT = 32000;
-    public static final int ALCOHOL_TICK = 10;
+    public static final int ALCOHOL_TICK = 5;
     public static final float ALCOHOL_RAIN_PROBABILITY = 0.1f;
     public static final String BIND_ALCOHOL = "_nbt_alcohol_";
     public static final String BIND_ALCOHOL_RAIN = "_nbt_alcohol_rain_";

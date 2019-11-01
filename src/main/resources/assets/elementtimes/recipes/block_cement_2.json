@@ -16,7 +16,7 @@
     "C": {
       "item": "minecraft:potion",
       "nbt": {
-      "potion":"minecraft:water"
+      "Potion":"minecraft:water"
       }
     }
   },

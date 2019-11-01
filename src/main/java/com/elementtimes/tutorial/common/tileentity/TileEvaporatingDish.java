@@ -4,15 +4,20 @@ import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
+import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
+
 import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -27,7 +32,24 @@ public class TileEvaporatingDish extends BaseTileEntity {
     public static MachineRecipeHandler RECIPE = null;
 
     public static void init() {
-        RECIPE = new MachineRecipeHandler(0, 2, 1, 2);
+        RECIPE = new MachineRecipeHandler(0, 2, 1, 2)
+        		.newRecipe()
+        		.addCost(200)
+                .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 1000))
+                .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 1000))
+                .endAdd()
+        		
+        		
+        		
+        		
+        		
+        		
+        		
+        		
+        		
+        		
+        		
+        		;
     }
 
     public TileEvaporatingDish() {
