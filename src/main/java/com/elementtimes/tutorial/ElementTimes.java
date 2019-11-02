@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * @author qinglan,ksgfk,luqin2007
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@(0.2.3,0.3.0);before:guideapi")
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.2.5,0.3.0);before:guideapi")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
 
