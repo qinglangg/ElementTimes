@@ -4,6 +4,7 @@ import com.elementtimes.elementcore.ElementCore;
 import com.elementtimes.elementcore.api.annotation.enums.LoadState;
 import com.elementtimes.elementcore.api.common.ECModContainer;
 import com.elementtimes.tutorial.common.CommonProxy;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -32,6 +33,7 @@ public class ElementTimes {
         CONTAINER = ElementCore.builder()
                 .disableDebugMessage()
                 .registerAnnotation(LoadState.Init, SSMRegister.SupportStandModule.class, SSMRegister::register)
+                .registerAnnotation(LoadState.Init, JeiRecipe.MachineRecipe.class, JeiRecipe::parser)
                 .build(event);
     }
 

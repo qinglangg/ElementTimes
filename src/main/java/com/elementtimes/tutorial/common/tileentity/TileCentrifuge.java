@@ -10,6 +10,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -24,12 +25,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileCentrifuge extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:centrifuge", gui = TileCentrifuge.class, u = 16, v = 13, w = 146, h = 52)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 1, 5);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(0, 0, 1, 5)
-                    .newRecipe()
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.newRecipe()
                     .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.air, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 780))

@@ -22,17 +22,17 @@ import java.util.Collections;
 
 /**
  * 火力发电机的TileEntity
+ *
  * @author lq2007 create in 2019/5/22
  */
 @ModInvokeStatic("init")
 public class TileGeneratorFuel extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 0, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 0, 0, 0)
-                    .newRecipe()
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.newRecipe()
                     .addItemInput(itemStack -> TileEntityFurnace.getItemBurnTime(itemStack) > 0,
                             itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, 1),
                             Collections.emptyList())
@@ -80,7 +80,7 @@ public class TileGeneratorFuel extends BaseTileEntity {
     @Nonnull
     @Override
     public Slot[] getSlots() {
-        return new Slot[] {
+        return new Slot[]{
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 80, 30)
         };
     }

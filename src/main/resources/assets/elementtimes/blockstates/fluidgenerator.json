@@ -7,24 +7,24 @@
     "running": {
       "false": {
         "textures": {
-          "particle": "elementtimes:blocks/sungenerator/off",
-          "down": "elementtimes:blocks/sungenerator/side",
-          "up": "elementtimes:blocks/sungenerator/up",
-          "north": "elementtimes:blocks/sungenerator/side",
-          "south": "elementtimes:blocks/sungenerator/side",
-          "west": "elementtimes:blocks/sungenerator/side",
-          "east": "elementtimes:blocks/sungenerator/off"
+          "particle": "elementtimes:blocks/fluidgenerator/off",
+          "down": "elementtimes:blocks/fluidgenerator/down",
+          "up": "elementtimes:blocks/fluidgenerator/up",
+          "north": "elementtimes:blocks/fluidgenerator/side",
+          "south": "elementtimes:blocks/fluidgenerator/side",
+          "west": "elementtimes:blocks/fluidgenerator/side",
+          "east": "elementtimes:blocks/fluidgenerator/off"
         }
       },
       "true": {
         "textures": {
-          "particle": "elementtimes:blocks/sungenerator/off",
-          "down": "elementtimes:blocks/sungenerator/side",
-          "up": "elementtimes:blocks/sungenerator/up",
-          "north": "elementtimes:blocks/sungenerator/side",
-          "south": "elementtimes:blocks/sungenerator/side",
-          "west": "elementtimes:blocks/sungenerator/side",
-          "east": "elementtimes:blocks/sungenerator/on"
+          "particle": "elementtimes:blocks/fluidgenerator/off",
+          "down": "elementtimes:blocks/fluidgenerator/down",
+          "up": "elementtimes:blocks/fluidgenerator/up",
+          "north": "elementtimes:blocks/fluidgenerator/side",
+          "south": "elementtimes:blocks/fluidgenerator/side",
+          "west": "elementtimes:blocks/fluidgenerator/side",
+          "east": "elementtimes:blocks/fluidgenerator/on"
         }
       }
     },

@@ -333,25 +333,6 @@ fluid.elementtimes.air=空气
 tile.elementtimes.air.name=空气
 # enchantment
 enchantment.elementtimes.hammerdebugger=调试
-# jei
-jei.elementtimes.pulverize=打粉机
-jei.elementtimes.rebuild=物质重构机
-jei.elementtimes.compressor=压缩机
-jei.elementtimes.elementgenerator=元素发电机
-jei.elementtimes.extractor=提取机
-jei.elementtimes.forming=成型机
-jei.elementtimes.solidmelter=固体融化机
-jei.elementtimes.fluidreactor=流体反应器
-jei.elementtimes.solidreactor=固体反应器
-jei.elementtimes.condenser=冷凝器
-jei.elementtimes.fluidheater=流体加热器
-jei.elementtimes.electrolyticcell=电解器
-jei.elementtimes.solidfluidreactor=固液反应器
-jei.elementtimes.pumpair=气泵
-jei.elementtimes.itemreducer=物体还原机
-jei.elementtimes.centrifuge=离心机
-jei.elementtimes.coagulator=凝固器
-jei.elementtimes.solidcentrifuge=固体离心机
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
 tooltip.elementtimes.enchantment.debug=开发者专用调试工具

@@ -3,20 +3,18 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
-import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -28,12 +26,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileRebuild extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:rebuild", gui = TileRebuild.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                    .add(10000000,Items.EGG, 1,new ItemStack(Blocks.DRAGON_EGG, 1))
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(10000000,Items.EGG, 1,new ItemStack(Blocks.DRAGON_EGG, 1))
                     .add(4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
                     .add(10000,ElementtimesItems.woodElement, 1, Items.TOTEM_OF_UNDYING, 1)
                     .add(4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))

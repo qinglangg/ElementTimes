@@ -10,6 +10,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
@@ -18,22 +19,15 @@ import javax.annotation.Nonnull;
 
 /**
  * 气泵
+ *
  * @author luqin2007
  */
 @ModInvokeStatic("init")
 public class TilePumpAir extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
-
-    public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(0, 0, 0, 1)
-                    .newRecipe()
-                    .addCost(100)
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.air, 1))
-                    .endAdd();
-        }
-    }
+    @JeiRecipe.MachineRecipe(block = "elementtimes:pumpair", gui = TilePumpAir.class, u = 45, v = 21, w = 80, h = 61)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 0, 1)
+            .newRecipe().addCost(100).addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.air, 1)).endAdd();
 
     public TilePumpAir() {
         super(1000, 1, 1, 0, 0, 1, 16000);
@@ -75,7 +69,7 @@ public class TilePumpAir extends BaseTileEntity {
     @Nonnull
     @Override
     public Slot[] getSlots() {
-        return new Slot[] {
+        return new Slot[]{
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 56, 58),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 98, 58)
         };
@@ -84,7 +78,7 @@ public class TilePumpAir extends BaseTileEntity {
     @Nonnull
     @Override
     public FluidSlotInfo[] getFluids() {
-        return new FluidSlotInfo[] {
+        return new FluidSlotInfo[]{
                 FluidSlotInfo.createOutput(0, 77, 28)
         };
     }

@@ -10,6 +10,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -24,12 +25,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileGeneratorElement extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:elementgenerater", gui = TileGeneratorElement.class, u = 40, v = 21, w = 95, h = 39)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 0, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 0, 0, 0)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterFive, ElementtimesItems.fiveElements)
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(r -> -ElementtimesConfig.GENERAL.generaterFive, ElementtimesItems.fiveElements)
                     .add(r -> -ElementtimesConfig.GENERAL.generaterEnd, ElementtimesItems.endElement)
                     .add(r -> -ElementtimesConfig.GENERAL.generaterSoilGen, ElementtimesItems.soilElement)
                     .add(r -> -ElementtimesConfig.GENERAL.generaterWoodGen, ElementtimesItems.woodElement)

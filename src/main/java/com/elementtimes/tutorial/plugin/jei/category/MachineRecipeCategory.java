@@ -13,8 +13,12 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 有一个物品输入和一个物品输出的 JEI 合成表界面兼容
@@ -97,6 +101,14 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, MachineRecipeWrapper recipeWrapper, @Nonnull IIngredients ingredients) {
+        recipeLayout.getItemStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
+            List<Map<ItemStack, List<String>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
+            tooltip.addAll(stringMaps.get(slotIndex).get(ingredient));
+        });
+        recipeLayout.getFluidStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
+            List<Map<FluidStack, List<String>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
+            tooltip.addAll(stringMaps.get(slotIndex).get(ingredient));
+        });
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();
         int inputItemCount = recipeWrapper.inputItems.size();

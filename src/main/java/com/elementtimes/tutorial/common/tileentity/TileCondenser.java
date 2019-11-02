@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
@@ -22,12 +23,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileCondenser extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:condenser", gui = TileCondenser.class, u = 4, v = 11, w = 168, h = 92)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 1, 1);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(0, 0, 1, 1)
-                    .add(2000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(2000, ElementtimesFluids.steam, ElementtimesFluids.waterDistilled);
         }
     }
 

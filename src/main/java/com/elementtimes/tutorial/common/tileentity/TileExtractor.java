@@ -7,9 +7,8 @@ import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipe
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-import net.minecraft.init.Items;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
@@ -27,14 +26,17 @@ public class TileExtractor extends BaseTileEntity {
         super(ElementtimesConfig.EXTRACTOR.maxEnergy, 1, 1);
     }
 
-    public static MachineRecipeHandler RECIPE;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:extractor", gui = TileExtractor.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 3, 0, 0);
 
     public static void init() {
-        RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                .add(1000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
-                .add(4000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 4)
-                .add(2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2)
-                .add(2000, Items.GUNPOWDER, 1, ElementtimesItems.sulfurPowder, 1);
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+//            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
+//                    .add(1000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
+//                    .add(4000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 4)
+//                    .add(2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2)
+//                    .add(2000, Items.GUNPOWDER, 1, ElementtimesItems.sulfurPowder, 1);
+        }
     }
 
     @Nonnull
@@ -56,19 +58,24 @@ public class TileExtractor extends BaseTileEntity {
     @Override
     @Nonnull
     public Slot[] getSlots() {
-        return new Slot[]{new SlotItemHandler(this.getItemHandler(SideHandlerType.INPUT), 0, 56, 30), new SlotItemHandler(this.getItemHandler(SideHandlerType.OUTPUT), 0, 110, 30)};
+        return new Slot[]{
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 55, 31),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 109, 15),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 109, 33),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 109, 51)
+        };
     }
 
     @Override
     public ResourceLocation getBackground() {
-        return new ResourceLocation(ElementTimes.MODID, "textures/gui/5.png");
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/solidcentrifuge.png");
     }
 
     @Override
     public GuiSize getSize() {
-        return GUI_SIZE_176_156_74.copy().withTitleY(60)
-                .withProcess(80, 30, 0, 156, 24, 17)
-                .withEnergy(43, 55, 24, 156, 90, 4);
+        return GUI_SIZE_176_166_84.copy().withTitleY(72)
+                .withProcess(80, 31, 0, 183, 16, 16)
+                .withEnergy(43, 73, 24, 166, 90, 4);
     }
 
     @Override

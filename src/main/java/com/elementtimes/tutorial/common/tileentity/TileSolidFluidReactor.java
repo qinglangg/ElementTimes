@@ -11,6 +11,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -29,12 +30,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileSolidFluidReactor extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:solidfluidreactor", gui = TileSolidFluidReactor.class, u = 17, v = 10, w = 141, h = 55)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 2, 1, 2);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 2, 1, 2)
-                    //铁水变钢水
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE   //铁水变钢水
                     .newRecipe()
                     .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Fe, 2000))

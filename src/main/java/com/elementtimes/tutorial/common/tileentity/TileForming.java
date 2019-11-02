@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -27,12 +28,12 @@ public class TileForming extends BaseTileEntity {
         super(ElementtimesConfig.FORMING.maxEnergy, 1, 1);
     }
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:forming", gui = TileForming.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                    .add(10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
                     .add(10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
                     .add(10000, "stone", 9, ElementtimesItems.gearStone, 3)
                     .add(10000, "coal", 9, ElementtimesItems.gearCarbon, 3)

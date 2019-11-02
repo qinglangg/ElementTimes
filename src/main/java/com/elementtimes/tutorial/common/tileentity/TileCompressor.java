@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -43,12 +44,12 @@ public class TileCompressor extends BaseTileEntity {
         super(ElementtimesConfig.COMPRESSOR.maxEnergy, 1, 1);
     }
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:compressor", gui = TileCompressor.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "plankWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(ElementtimesConfig.COMPRESSOR.powderEnergy, "plankWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotCopper", 1, ElementtimesItems.plateCopper, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "gemDiamond", 1, ElementtimesItems.plateDiamond, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotGold", 1, ElementtimesItems.plateGold, ElementtimesConfig.COMPRESSOR.powderCount)

@@ -11,6 +11,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -26,11 +27,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileFluidReactor extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPES = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:fluidreactor", gui = TileFluidReactor.class, u = 14, v = 11, w = 148, h = 93)
+    public static MachineRecipeHandler RECIPES = new MachineRecipeHandler(0, 1, 2, 3);
+
     public static void init() {
-        if (RECIPES == null) {
-            RECIPES = new MachineRecipeHandler(0, 1, 2, 3)
-            		//AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
+        if (RECIPES.getMachineRecipes().isEmpty()) {
+            RECIPES //AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
             		.newRecipe()
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.AlCl3,1000))

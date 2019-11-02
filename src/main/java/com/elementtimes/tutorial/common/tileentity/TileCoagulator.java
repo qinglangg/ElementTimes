@@ -12,6 +12,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -28,11 +29,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileCoagulator extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:coagulator", gui = TileCoagulator.class, u = 44, v = 7, w = 83, h = 73)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 1, 1, 0);
+
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(0, 1, 1, 0)
-            		.newRecipe()
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.newRecipe()
             		.addCost(1000)
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addItemOutput(IngredientPart.forItem(Blocks.ICE,1))

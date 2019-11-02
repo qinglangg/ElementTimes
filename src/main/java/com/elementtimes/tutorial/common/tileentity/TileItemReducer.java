@@ -9,11 +9,10 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
-
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -26,12 +25,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileItemReducer extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:itemreducer", gui = TileItemReducer.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesItems.bambooCharcoal, 1, ElementtimesItems.bamboo, 4)
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesItems.bambooCharcoal, 1, ElementtimesItems.bamboo, 4)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesItems.sucroseCharCoal, 1, Items.REEDS, 4)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockTin", 1, ElementtimesItems.tin, 9)
                     .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockLead", 1, ElementtimesItems.lead, 9)

@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -23,12 +24,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TilePulverize extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:pulverizer", gui = TilePulverize.class, u = 44, v = 16, w = 90, h = 44)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.Fe2O3, ElementtimesConfig.PUL.pulPowderCount)
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.add(ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.Fe2O3, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)

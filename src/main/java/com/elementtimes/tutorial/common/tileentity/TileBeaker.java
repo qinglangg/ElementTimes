@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,29 +17,26 @@ import net.minecraftforge.fluids.Fluid;
 
 @ModInvokeStatic("init")
 public class TileBeaker extends BaseTileEntity implements IGuiProvider {
-
-    public static MachineRecipeHandler RECIPE = null, RECIPE_STAND = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:beaker", gui = TileBeaker.class, u = 16, v = 7, w = 144, h = 77)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(3, 0, 2, 1);
+    @JeiRecipe.MachineRecipe(block = "elementtimes:beaker", id = "elementtimes:beaker.stand", gui = TileBeaker.class, u = 16, v = 7, w = 144, h = 77)
+    public static MachineRecipeHandler RECIPE_STAND = new MachineRecipeHandler(3, 0, 2, 1);
 
     public static void init() {
-        if (RECIPE == null || RECIPE_STAND == null) {
-            RECIPE = new MachineRecipeHandler(3, 0, 2, 1);
-            RECIPE_STAND = new MachineRecipeHandler(3, 0, 2, 1)
-            //盐溶解
-    		.newRecipe()
-            .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
-            .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
-            .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
-            .endAdd()
-            //盐浓溶液稀释
-    		.newRecipe()
-            .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
-            .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
-            .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
-            .endAdd()
-            
-            
-            
-            ;
+        if (RECIPE.getMachineRecipes().isEmpty() && RECIPE_STAND.getMachineRecipes().isEmpty()) {
+            RECIPE_STAND
+                    //盐溶解
+                    .newRecipe()
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    //盐浓溶液稀释
+                    .newRecipe()
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, Fluid.BUCKET_VOLUME))
+                    .endAdd();
         }
     }
 

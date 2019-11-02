@@ -333,25 +333,6 @@ fluid.elementtimes.air=Air
 tile.elementtimes.air.name=Air
 # enchantment
 enchantment.elementtimes.hammerdebugger=Debugger
-# jei
-jei.elementtimes.pulverize=Pulverize
-jei.elementtimes.rebuild=Rebuilder
-jei.elementtimes.compressor=Compressor
-jei.elementtimes.elementgenerator=Element Generator
-jei.elementtimes.extractor=Extractor
-jei.elementtimes.forming=Forming
-jei.elementtimes.solidmelter=Solid Melter
-jei.elementtimes.fluidreactor=Fluid Reactor
-jei.elementtimes.solidreactor=Solid Reactor
-jei.elementtimes.condenser=Condenser
-jei.elementtimes.fluidheater=Fluid Heater
-jei.elementtimes.electrolyticcell=Electrolytic Cell
-jei.elementtimes.solidfluidreactor=Solid Fluid Reactor
-jei.elementtimes.pumpair=Air Pump
-jei.elementtimes.itemreducer=Item Reducer
-jei.elementtimes.centrifuge=Centrifuge
-jei.elementtimes.coagulator=Coagulator
-jei.elementtimes.solidcentrifuge=Solid Centrifuge
 # tooltip
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
 tooltip.elementtimes.enchantment.debug=Enchantment: Enable

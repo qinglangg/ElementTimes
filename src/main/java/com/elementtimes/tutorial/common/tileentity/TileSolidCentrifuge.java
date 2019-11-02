@@ -9,6 +9,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
@@ -17,30 +18,23 @@ import javax.annotation.Nonnull;
 
 /**
  * 固体离心机
+ *
  * @author luqin2007
  */
 @ModInvokeStatic("init")
 public class TileSolidCentrifuge extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:solidcentrifuge", gui = TileSolidCentrifuge.class, u = 52, v = 12, w = 76, h = 58)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 3, 0, 0);
+
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 3, 0, 0)
-                    .newRecipe()
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.newRecipe()
                     .addCost(1000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
-                    .endAdd()
-                    .newRecipe()
-                    .addCost(1000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.slag,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder,1))
-                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder,1))
-                    .endAdd()
-                    
-                    
-                    ;
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder, 1))
+                    .endAdd();
         }
     }
 
@@ -80,11 +74,11 @@ public class TileSolidCentrifuge extends BaseTileEntity {
     @Nonnull
     @Override
     public Slot[] getSlots() {
-        return new Slot[] {
+        return new Slot[]{
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 55, 31),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 109, 15),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 109, 33),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 109, 51)
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 109, 33),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 109, 51)
         };
     }
 

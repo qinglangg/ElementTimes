@@ -12,6 +12,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
+import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -27,12 +28,12 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileSolidMelter extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    @JeiRecipe.MachineRecipe(block = "elementtimes:solidmelter", gui = TileSolidMelter.class, u = 38, v = 12, w = 100, h = 56)
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 0, 0, 1);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(1, 0, 0, 1)
-                    .newRecipe()
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            RECIPE.newRecipe()
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.salt, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaCl, Fluid.BUCKET_VOLUME))
