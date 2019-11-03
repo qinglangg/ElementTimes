@@ -44,9 +44,11 @@ public class SeaEvent {
     @SubscribeEvent
     public static void onEntityCapabilityAttach(AttachCapabilitiesEvent<Entity> event) {
         Entity entity = event.getObject();
-        if (!entity.world.isRemote && entity instanceof EntityPlayer) {
-            CapabilitySeaWater.SaltAmountCapProvider cap = new CapabilitySeaWater.SaltAmountCapProvider();
-            event.addCapability(CapabilitySeaWater.NAME, cap);
+        if (entity != null && entity.world != null) {
+            if (!entity.world.isRemote && entity instanceof EntityPlayer) {
+                CapabilitySeaWater.SaltAmountCapProvider cap = new CapabilitySeaWater.SaltAmountCapProvider();
+                event.addCapability(CapabilitySeaWater.NAME, cap);
+            }
         }
     }
 

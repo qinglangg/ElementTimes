@@ -3,12 +3,15 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
@@ -22,21 +25,40 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileExtractor extends BaseTileEntity {
 
-    public TileExtractor() {
-        super(ElementtimesConfig.EXTRACTOR.maxEnergy, 1, 1);
-    }
-
     @JeiRecipe.MachineRecipe(block = "elementtimes:extractor", gui = TileExtractor.class, u = 44, v = 16, w = 90, h = 44)
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 3, 0, 0);
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-//            RECIPE = new MachineRecipeHandler(1, 1, 0, 0)
-//                    .add(1000, ElementtimesBlocks.rubberLeaf, 1, ElementtimesItems.rubberRaw, 1)
-//                    .add(4000, ElementtimesBlocks.rubberLog, 1, ElementtimesItems.rubberRaw, 4)
-//                    .add(2000, ElementtimesBlocks.rubberSapling, 1, ElementtimesItems.rubberRaw, 2)
-//                    .add(2000, Items.GUNPOWDER, 1, ElementtimesItems.sulfurPowder, 1);
+            RECIPE.newRecipe().addCost(1000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesBlocks.rubberLeaf, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.rubberRaw, 1))
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .endAdd()
+                    .newRecipe().addCost(4000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesBlocks.rubberLog, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.rubberRaw, 4))
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .endAdd()
+                    .newRecipe().addCost(2000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesBlocks.rubberSapling, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.rubberRaw, 2))
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .endAdd()
+                    .newRecipe().addCost(2000)
+                    .addItemInput(IngredientPart.forItem(Items.GUNPOWDER, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.sulfurPowder, 1))
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .addItemOutput(IngredientPart.EMPTY_ITEM)
+                    .endAdd();
         }
+    }
+
+    public TileExtractor() {
+        super(ElementtimesConfig.EXTRACTOR.maxEnergy, 1, 3);
     }
 
     @Nonnull
