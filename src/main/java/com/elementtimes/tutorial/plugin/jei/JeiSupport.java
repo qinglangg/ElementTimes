@@ -83,7 +83,6 @@ public class JeiSupport implements IModPlugin {
 
     public static void registerMachineRecipe(Block block, IGuiProvider gui, MachineRecipeHandler recipe, String id, int u, int v, int w, int h) {
         MACHINES.add(new MachineRecipeData(block, gui, recipe, id, u, v, w, h));
-        System.out.println("add: " + block.getRegistryName().toString());
     }
 
     static class MachineRecipeData {

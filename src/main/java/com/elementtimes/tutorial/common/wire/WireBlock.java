@@ -9,7 +9,7 @@ package com.elementtimes.tutorial.common.wire;
 
 import com.elementtimes.tutorial.common.init.ElementtimesTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,7 +30,7 @@ import java.util.Random;
  * 普通电线
  * @author EmptyDremas
  */
-public final class WireBlock extends BlockContainer implements IEleInfo {
+public final class WireBlock extends Block implements IEleInfo, ITileEntityProvider {
 	
 	public WireBlock(String name) {
 		super(Material.CIRCUITS);

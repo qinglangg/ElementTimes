@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity;
 
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGeneratorLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
@@ -14,6 +15,12 @@ public class TileGeneratorSun extends BaseTileEntity {
     public TileGeneratorSun() {
         super(16000, 0, 0);
         addLifeCycle(new EnergyGeneratorLifecycle<>(this));
+        addLifeCycle(new IMachineLifecycle() {
+            @Override
+            public boolean onCheckStart() {
+                return world != null && world.isDaytime();
+            }
+        });
     }
 
     @Override

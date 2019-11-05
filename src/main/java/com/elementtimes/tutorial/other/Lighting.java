@@ -25,7 +25,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -54,14 +53,18 @@ public class Lighting {
         World world = event.getWorld();
         if (!world.isRemote) {
             loadedWorld.add(world.provider.getDimension());
-            try {
-                Field weatherList = World.class.getField(MCPNames.WORLD_WEATHER_EFFECTS);
-                LightingList list = new LightingList();
-                list.addAll(world.weatherEffects);
-                ECUtils.reflect.setFinalField(world, weatherList, list);
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-                e.printStackTrace();
-            }
+            Arrays.stream(World.class.getFields())
+                    .filter(field -> MCPNames.WORLD_WEATHER_EFFECTS.match(field.getName()))
+                    .findFirst()
+                    .ifPresent(weatherList -> {
+                        try {
+                            LightingList list = new LightingList();
+                            list.addAll(world.weatherEffects);
+                            ECUtils.reflect.setFinalField(world, weatherList, list);
+                        } catch (NoSuchFieldException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    });
         }
     }
 
