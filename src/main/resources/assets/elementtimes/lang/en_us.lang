@@ -144,6 +144,7 @@ item.elementtimes.siliconplate.name=siliconPlate
 item.elementtimes.cpu.name=cpu
 item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
+item.elementtimes.carvedcpu.name=carvedcpu
 item.elementtimes.pipeline.item.link.normal=Normal Item Pipeline
 item.elementtimes.pipeline.item.input.normal=Normal Item Pipeline In
 item.elementtimes.pipeline.item.output.normal=Normal Item Pipeline Out

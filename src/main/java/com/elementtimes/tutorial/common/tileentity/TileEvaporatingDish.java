@@ -37,18 +37,7 @@ public class TileEvaporatingDish extends BaseTileEntity {
         		.addCost(200)
                 .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, 1000))
                 .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 1000))
-                .endAdd()
-        		
-        		
-        		
-        		
-        		
-        		
-        		
-        		
-        		
-        		
-        		
+                .endAdd()	
         		;
     }
 
