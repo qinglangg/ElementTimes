@@ -72,7 +72,7 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addItemInput(IngredientPart.forItem(Items.GLOWSTONE_DUST,1)) 
                     .addItemOutput(IngredientPart.forItem(Blocks.SEA_LANTERN , 1))
                     .endAdd()
-            		
+
             		
                     //CaO+SiO2=CaSiO3
                     .newRecipe()

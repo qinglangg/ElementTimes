@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+    "item": "elementtimes:cpu"
+    },
+    {
+    "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:skull",
+      "data": 3
+    }
+  ],
+  "result": {
+    "item": "elementtimes:cpudown",
+    "count": 1
+  }
+}

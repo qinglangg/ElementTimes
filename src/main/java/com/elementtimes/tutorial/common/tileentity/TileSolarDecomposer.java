@@ -42,13 +42,13 @@ public class TileSolarDecomposer extends TileSolidFluidReactor {
             .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.HCl, 2000))
             .endAdd()
             //4HNO3=2H2O+4NO2+O2
-    		.newRecipe()
-            .addCost(400)
-            .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hno3, 4000))
-            .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
-            .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no2, 4000))
-            .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
-            .endAdd()
+    		//.newRecipe()
+            //.addCost(400)
+            //.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hno3, 4000))
+            //.addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
+           // .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no2, 4000))
+            //.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
+            //.endAdd()
     
     
     ;

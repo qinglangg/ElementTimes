@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "WWW"
+  ],
+  "key": {
+    "W": {
+        "type": "forge:ore_dict",
+      "ore": "ingotTin"
+    }
+  },
+  "result": {
+    "item": "elementtimes:wire_tin",
+    "count": 10
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "elementtimes:aluminiumplate"
+    },
+    {
+      "item": "elementtimes:wire_aluminum"
+    }
+  ],
+  "result": {
+    "item": "elementtimes:cpu",
+    "count": 1
+  }
+}

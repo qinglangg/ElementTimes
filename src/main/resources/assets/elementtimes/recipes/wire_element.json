@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+    "item": "elementtimes:photoelement"
+    },
+   "B": {
+    "item": "elementtimes:fiveelements"
+    },
+    "C": {
+    "item": "elementtimes:endelement"
+    }
+  },
+  "result": {
+    "item": "elementtimes:wire_element",
+    "count": 10
+    }
+}

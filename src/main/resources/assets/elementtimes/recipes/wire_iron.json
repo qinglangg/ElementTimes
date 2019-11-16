@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "WWW"
+  ],
+  "key": {
+    "W": {
+    "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "elementtimes:wire_iron",
+    "count": 10
+    }
+}

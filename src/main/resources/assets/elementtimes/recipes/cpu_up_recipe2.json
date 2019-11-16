@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+    "item": "elementtimes:cpu"
+    },
+    {
+    "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:skull",
+      "data":1 
+    }
+  ],
+  "result": {
+    "item": "elementtimes:cpuup",
+    "count": 1
+  }
+}

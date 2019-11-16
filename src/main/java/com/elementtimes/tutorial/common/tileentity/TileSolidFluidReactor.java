@@ -239,7 +239,17 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1000))
-                    .endAdd();
+                    .endAdd()
+                    
+                    
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.cpu,1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hf, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.carvedCpu , 1))
+                    .endAdd()
+                    
+                    ;
         }
     }
 

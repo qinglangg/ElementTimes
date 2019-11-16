@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "WWW"
+  ],
+  "key": {
+    "W": {
+    "item": "elementtimes:al"
+    }
+  },
+  "result": {
+    "item": "elementtimes:wire_aluminum",
+    "count": 10
+    }
+}
