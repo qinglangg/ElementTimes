@@ -144,7 +144,6 @@ item.elementtimes.siliconplate.name=硅板
 item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
-item.elementtimes.carvedcpu.name=雕刻后的芯片
 item.elementtimes.pipeline.item.link.normal=普通物品管道
 item.elementtimes.pipeline.item.input.normal=普通物品输入管道
 item.elementtimes.pipeline.item.output.normal=普通物品输出管道

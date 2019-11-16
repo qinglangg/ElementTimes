@@ -1,39 +1,41 @@
 {
-  "type": "forge:ore_shaped",
+  "type": "minecraft:crafting_shaped",
   "group": "elementtimes:recipes",
   "result": {
     "item": "elementtimes:rebuild"
   },
   "pattern": [
-    "AAA",
-    "BCG",
-    "DEF"
+    "ABC",
+    "DEF",
+    "GHI"
   ],
   "key": {
     "A": {
-      "type": "forge:ore_dict",
-      "ore": "blockSteel"
+      "item": "elementtimes:coagulator"
     },
     "B": {
       "item": "elementtimes:pulverizer"
     },
     "C": {
-      "item": "elementtimes:furnace"
+      "item": "elementtimes:condenser"
     },
     "D": {
-      "type": "forge:ore_dict",
-      "ore": "gearPlatinum"
+      "item": "elementtimes:forming"
     },
     "E": {
-      "type": "forge:ore_dict",
-      "ore": "gearQuartz"
+      "item": "elementtimes:electrolyticcell"
     },
     "F": {
-      "type": "forge:ore_dict",
-      "ore": "gearDiamond"
+      "item": "elementtimes:extractor"
     },
     "G": {
+      "item": "elementtimes:centrifuge"
+    },
+    "H": {
       "item": "elementtimes:compressor"
+    },
+    "I": {
+      "item": "elementtimes:blockmulticarbonsteel"
     }
   }
 }
