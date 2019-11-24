@@ -5,10 +5,10 @@ import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.elementcore.api.common.LoaderHelper;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import jdk.internal.org.objectweb.asm.Type;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import org.objectweb.asm.Type;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
