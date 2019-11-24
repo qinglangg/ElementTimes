@@ -9,8 +9,10 @@ import com.elementtimes.elementcore.api.template.block.BlockTileBase;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.machine.Compressor;
+import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
 import com.elementtimes.tutorial.common.block.tree.*;
 import com.elementtimes.tutorial.common.tileentity.*;
+import com.elementtimes.tutorial.common.tileentity.pipeline.*;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -249,9 +251,23 @@ public class ElementtimesBlocks {
 
     // Pipeline
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(name = "pipeline", clazz = "com.elementtimes.tutorial.common.tileentity.TilePipeline")
-    @ModBlock.StateMapper(propertyName = "PL_TYPE", propertyIn = "com.elementtimes.tutorial.common.block.Pipeline")
-    public static Block pipeline = new Pipeline();
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemInputPipeline")
+    public static Block pipelineItemInput = new Pipeline(ItemInputPipeline::new);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemOutputPipeline")
+    public static Block pipelineItemOutput = new Pipeline(ItemOutputPipeline::new);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemConnectPipeline")
+    public static Block pipelineItemConnect = new Pipeline(ItemConnectPipeline::new);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidInputPipeline")
+    public static Block pipelineFluidInput = new Pipeline(FluidInputPipeline::new);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidOutputPipeline")
+    public static Block pipelineFluidOutput = new Pipeline(FluidOutputPipeline::new);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidConnectPipeline")
+    public static Block pipelineFluidConnect = new Pipeline(FluidConnectPipeline::new);
 
     // 其他
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)

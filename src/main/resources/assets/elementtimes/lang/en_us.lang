@@ -145,12 +145,12 @@ item.elementtimes.cpu.name=cpu
 item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
 item.elementtimes.carvedcpu.name=carvedcpu
-item.elementtimes.pipeline.item.link.normal=Normal Item Pipeline
-item.elementtimes.pipeline.item.input.normal=Normal Item Pipeline In
-item.elementtimes.pipeline.item.output.normal=Normal Item Pipeline Out
-item.elementtimes.pipeline.fluid.link.normal=Normal Fluid Pipeline
-item.elementtimes.pipeline.fluid.input.normal=Normal Fluid Pipeline In
-item.elementtimes.pipeline.fluid.output.normal=Normal Fluid Pipeline Out
+item.elementtimes.pipelineitemconnect.name=Normal Item Pipeline
+item.elementtimes.pipelineiteminput.name==Normal Item Pipeline In
+item.elementtimes.pipelineitemoutput.name=Normal Item Pipeline Out
+item.elementtimes.pipelinefluidconnect.name=Normal Fluid Pipeline
+item.elementtimes.pipelinefluidinput.name=Normal Fluid Pipeline In
+item.elementtimes.pipelinefluidoutput.name=Normal Fluid Pipeline Out
 # block
 tile.elementtimes.beaker.name=Beaker
 tile.elementtimes.crucible.name=Crucible
