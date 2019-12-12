@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
+import com.elementtimes.elementcore.api.annotation.ModRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -47,4 +48,12 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.mediumHammer, new ItemStack(ElementtimesItems.steelIngot, 1),5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.bigHammer, new ItemStack(ElementtimesItems.diamondIngot, 1),5.0f);
     }
+
+	@ModRecipe
+	public static Object[] CEMENT_Fix = new Object[] {
+			"elementtimes:cement",
+			null, "minecraft:flint", null,
+			"elementtimes:concrete", PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), "elementtimes:concrete",
+			null, "minecraft:flint", null
+	};
 }

@@ -3,7 +3,6 @@ package com.elementtimes.tutorial.plugin.jei;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.plugin.jei.category.MachineRecipeCategory;
 import com.elementtimes.tutorial.plugin.jei.wrapper.MachineRecipeWrapper;
 import mezz.jei.api.IGuiHelper;
@@ -14,15 +13,9 @@ import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,24 +39,6 @@ public class JeiSupport implements IModPlugin {
         }
         // 电炉
         registry.addRecipeCatalyst(new ItemStack(ElementtimesBlocks.furnace), VanillaRecipeCategoryUid.SMELTING);
-        // fix: 水瓶
-        NonNullList<Ingredient> inputFix = NonNullList.create();
-        ItemStack waterBottle = new ItemStack(Items.POTIONITEM);
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("Potion", "minecraft:water");
-        waterBottle.setTagCompound(nbt);
-        inputFix.add(Ingredient.EMPTY);
-        inputFix.add(Ingredient.fromItem(Items.FLINT));
-        inputFix.add(Ingredient.EMPTY);
-        inputFix.add(Ingredient.fromItem(ElementtimesItems.concrete));
-        inputFix.add(Ingredient.fromStacks(waterBottle));
-        inputFix.add(Ingredient.fromItem(ElementtimesItems.concrete));
-        inputFix.add(Ingredient.EMPTY);
-        inputFix.add(Ingredient.fromItem(Items.FLINT));
-        inputFix.add(Ingredient.EMPTY);
-        registry.addRecipes(Collections.singleton(
-                new ShapedRecipes("elementtimes:recipes_fix", 3, 3, inputFix, new ItemStack(ElementtimesBlocks.cement))
-        ), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override

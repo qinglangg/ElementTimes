@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileGeneratorSun extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 0, 0).newRecipe().addCost(-10).endAdd();
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 0, 0).newRecipe().addCost(-2000).endAdd();
 
     public TileGeneratorSun() {
         super(16000, 0, 0);
@@ -21,6 +21,7 @@ public class TileGeneratorSun extends BaseTileEntity {
                 return world != null && world.isDaytime();
             }
         });
+        setEnergyTransfer(2000);
     }
 
     @Override
