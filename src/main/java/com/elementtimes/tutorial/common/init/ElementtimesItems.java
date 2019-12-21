@@ -80,6 +80,7 @@ public class ElementtimesItems {
     public static Item corn = new Corn();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModItem.Tooltip("\u00a79CaCO3")
+    @ModOreDict("ingotStone")
     public static Item stoneIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     public static Item Al2O3_Na3AlF6 = new Item();

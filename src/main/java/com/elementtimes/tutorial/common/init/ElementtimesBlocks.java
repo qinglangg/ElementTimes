@@ -34,18 +34,19 @@ public class ElementtimesBlocks {
     public static Block cornCropUp = new CornCropUp();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
     @ModBlock.WorldGenClass(value = "com.elementtimes.tutorial.common.generator.RubberGenerator$RubberNatureGenerator", type = GenType.Tree)
+    @ModOreDict("treeSapling")
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_log", unlocalizedName = "rubber_log")
     @ModBlock.BurningTime(300)
     @ModOreDict("logWood")
     public static Block rubberLog = new RubberLog();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")
+    @ModOreDict("treeLeaves")
     public static Block rubberLeaf = new RubberLeaf();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block saplingEssence = new EssenceSapling();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModBlock.HarvestLevel(toolClass = "axe")
-    @ModOreDict("logWood")
     public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block leafesSence = new EssenceLeaf();
@@ -276,6 +277,7 @@ public class ElementtimesBlocks {
     public static Block stoneBlock = new Block(Material.ROCK).setHardness(75f).setResistance(15f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 3)
+    @ModOreDict("cement")
     public static Block cement = new Block(Material.ROCK).setHardness(750f).setResistance(30f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 4)
