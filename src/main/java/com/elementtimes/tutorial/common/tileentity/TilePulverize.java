@@ -29,7 +29,7 @@ public class TilePulverize extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.add(ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.Fe2O3, ElementtimesConfig.PUL.pulPowderCount)
+            RECIPE.add(ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironpowder, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
                     .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)

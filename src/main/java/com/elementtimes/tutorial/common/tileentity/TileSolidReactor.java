@@ -127,10 +127,17 @@ public class TileSolidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3,1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironpowder,1))
                     .addItemInput(IngredientPart.forItem(Items.COAL, 3))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co,3000))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 3))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co,3000))
                     .endAdd()
 
@@ -152,7 +159,13 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 2))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .endAdd()
-
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.CuO,2))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 1))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 2))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
+                    .endAdd()
 
                     //钢锭
                     .newRecipe()

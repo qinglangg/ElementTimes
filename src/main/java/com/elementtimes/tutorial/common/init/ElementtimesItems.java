@@ -145,7 +145,11 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item bluestonePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    public static Item ironpowder = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item Fe2O3 = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    public static Item CuO = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item goldPowder;
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)

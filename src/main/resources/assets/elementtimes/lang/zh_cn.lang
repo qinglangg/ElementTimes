@@ -34,7 +34,9 @@ item.elementtimes.elementsleeveleggings.name=元素护腿
 item.elementtimes.elementsleeveboots.name=元素靴子
 item.elementtimes.copper.name=铜锭
 item.elementtimes.spanner.name=扳手
-item.elementtimes.fe2o3.name=铁矿粉
+item.elementtimes.ironpowder.name=铁矿粉
+item.elementtimes.fe2o3.name=三氧化二铁
+item.elementtimes.cuo.name=氧化铜
 item.elementtimes.copperpowder.name=铜矿粉
 item.elementtimes.redstonepowder.name=红石矿粉
 item.elementtimes.greenstonepowder.name=绿宝石矿粉
@@ -346,6 +348,7 @@ chat.elementtimes.hammer.pipeline_path=[%s, %s, %s]-[%s, %s, %s], %s
 # subtitle
 subtitle.elementtimes.sounds=Cube Land(我的世界主题曲)
 subtitle.elementtimes.record=唱片响(元素时代)
+item.record.sounds.desc=Cube Land(我的世界主题曲)
 item.elementknife.name=元素刀
 # book
 elementtimes.book.minecraft=元素手册

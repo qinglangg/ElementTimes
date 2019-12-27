@@ -4,7 +4,7 @@
   "input": "oreIron",
   "damage": 1,
   "output": {
-    "item": "elementtimes:fe2o3",
+    "item": "elementtimes:ironpowder",
     "count": 3
   }
 }

@@ -176,13 +176,20 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironpowder, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 3000))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
-
+                    
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 3000))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 3000))
+                    .endAdd()
 
                     .newRecipe()
                     .addCost(10000)
@@ -195,11 +202,19 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     .newRecipe()
                     .addCost(10000)
-                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.ironpowder, 1))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 3000))
                     .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 3000))
+                    .endAdd()
+                    
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 3000))
+                    .addItemOutput(IngredientPart.forItem(Items.IRON_INGOT, 2))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
 
 
@@ -221,6 +236,14 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
                     .endAdd()
+                    .newRecipe()
+                    
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.CuO, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 1000))
+                    .endAdd()
 
 
                     .newRecipe()
@@ -240,7 +263,13 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1000))
                     .endAdd()
-                   
+                    .newRecipe()
+                    .addCost(5000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.CuO, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co, 1000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co2, 1000))
+                    .endAdd()
                     ;
         }
     }
