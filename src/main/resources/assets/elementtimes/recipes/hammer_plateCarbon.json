@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "minecraft:coal",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:plateCarbon",
+    "count": 1
+  }
+}

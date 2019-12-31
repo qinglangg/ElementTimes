@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "plankWood",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:platewood",
+    "count": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "ingotSteel",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:plateSteel",
+    "count": 1
+  }
+}

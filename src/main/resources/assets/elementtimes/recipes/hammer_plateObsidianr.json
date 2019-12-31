@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "minecraft:quartz",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:plateObsidian",
+    "count": 1
+  }
+}

@@ -30,7 +30,7 @@ public class TileElectrolyticCell extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.newRecipe()
+            RECIPE  .newRecipe()
                     .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HI, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))

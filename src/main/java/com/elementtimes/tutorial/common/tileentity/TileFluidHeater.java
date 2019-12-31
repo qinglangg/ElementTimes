@@ -45,7 +45,13 @@ public class TileFluidHeater extends BaseTileEntity {
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, Fluid.BUCKET_VOLUME))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, Fluid.BUCKET_VOLUME))
-                    .endAdd();
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(5000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    ;
         }
     }
 

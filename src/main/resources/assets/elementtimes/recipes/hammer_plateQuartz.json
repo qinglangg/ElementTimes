@@ -1,0 +1,10 @@
+{
+  "type": "elementtimes:ore",
+  "group": "elementtimes:recipes",
+  "input": "gemQuartz",
+  "damage": 1,
+  "output": {
+    "item": "elementtimes:plateQuartz",
+    "count": 1
+  }
+}
