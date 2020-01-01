@@ -1,7 +1,7 @@
 {
   "type": "elementtimes:ore",
   "group": "elementtimes:recipes",
-  "input": "elementtimes：diamondingot",
+  "input": "elementtimes:diamondingot",
   "damage": 1,
   "output": {
     "item": "elementtimes:plateAdamas",
