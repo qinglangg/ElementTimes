@@ -90,10 +90,5 @@ public class TileFurnace extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.Furnace.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }
 

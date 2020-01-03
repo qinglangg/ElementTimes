@@ -4,6 +4,9 @@ import com.elementtimes.tutorial.common.event.BiomeStructureEvent;
 import com.elementtimes.tutorial.common.event.OreEvent;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
+import com.elementtimes.tutorial.common.pipeline.ElementType;
+import com.elementtimes.tutorial.common.pipeline.FluidElement;
+import com.elementtimes.tutorial.common.pipeline.ItemElement;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import mods.flammpfeil.slashblade.SlashBlade;
@@ -36,6 +39,7 @@ public class CommonProxy {
         ElementtimesRecipe.init(event);
         MinecraftForge.ORE_GEN_BUS.register(OreEvent.class);
         MinecraftForge.TERRAIN_GEN_BUS.register(BiomeStructureEvent.class);
+        ElementType.register(FluidElement.TYPE, ItemElement.TYPE);
     }
 
     public void postInit(FMLPostInitializationEvent event) {

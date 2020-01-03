@@ -86,9 +86,4 @@ public class TileSolidCentrifuge extends BaseTileEntity {
     public int getEnergyTick() {
         return 30;
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

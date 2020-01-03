@@ -3,6 +3,8 @@ package com.elementtimes.tutorial.common.init;
 import com.elementtimes.elementcore.api.template.gui.server.BaseContainer;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.pipeline.test.PLTestContainer;
+import com.elementtimes.tutorial.interfaces.ITilePipeline;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +49,8 @@ public class ElementtimesGUI implements IGuiHandler {
         SupportStandED,
         SupportStandC,
         SolarDecomposer,
-        Fermenter;
+        Fermenter,
+        Test;
 
         public int id() {
             return ordinal();
@@ -65,6 +68,9 @@ public class ElementtimesGUI implements IGuiHandler {
         if (te instanceof IGuiProvider) {
             return ((IGuiProvider) te).getGuiId() >= 0 ? new BaseContainer(te, (IGuiProvider) te, player) : null;
         }
+        if (te instanceof ITilePipeline) {
+            return new PLTestContainer((ITilePipeline) te);
+        }
         return null;
     }
 
@@ -78,6 +84,10 @@ public class ElementtimesGUI implements IGuiHandler {
                 return new com.elementtimes.elementcore.api.template.gui.client.BaseGuiContainer(
                         new BaseContainer(tileEntity, provider, player));
             }
+        }
+        if (tileEntity instanceof ITilePipeline) {
+            return new com.elementtimes.tutorial.common.pipeline.test.PLTestContainerGui(
+                    new PLTestContainer((ITilePipeline) tileEntity));
         }
         return getServerGuiElement(id, player, world, x, y, z);
     }

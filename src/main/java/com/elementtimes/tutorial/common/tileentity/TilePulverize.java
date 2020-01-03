@@ -95,9 +95,4 @@ public class TilePulverize extends BaseTileEntity {
         return ElementtimesBlocks.pulverizer.getLocalizedName();
 
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.block.pipeline;
+package com.elementtimes.tutorial.common.pipeline;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -10,9 +10,9 @@ import net.minecraft.world.World;
  * 物品（ItemStack）类型的 Element
  * @author luqin2007
  */
-public class ItemElement extends BaseElement<ItemStack> {
+public class ItemElement extends BaseElement {
 
-    public static ElementType<ItemElement> TYPE = new ElementType<ItemElement>() {
+    public static ElementType TYPE = new ElementType() {
 
         @Override
         public String type() {
@@ -29,9 +29,13 @@ public class ItemElement extends BaseElement<ItemStack> {
         super(TYPE.type());
     }
 
+    public ItemStack getItem() {
+        return (ItemStack) element;
+    }
+
     @Override
     public boolean isEmpty() {
-        return element == null || element.isEmpty();
+        return element == null || getItem().isEmpty();
     }
 
     @Override
@@ -39,7 +43,7 @@ public class ItemElement extends BaseElement<ItemStack> {
         ItemElement e = new ItemElement();
         e.path = path;
         e.type = type;
-        e.element = element.copy();
+        e.element = getItem().copy();
         e.posIndex = posIndex;
         e.totalTick = totalTick;
         return e;
@@ -47,7 +51,7 @@ public class ItemElement extends BaseElement<ItemStack> {
 
     @Override
     protected NBTTagCompound elementSerializer() {
-        return element.serializeNBT();
+        return getItem().serializeNBT();
     }
 
     @Override
@@ -58,7 +62,7 @@ public class ItemElement extends BaseElement<ItemStack> {
     @Override
     public void drop(World world, BlockPos pos) {
         if (!isEmpty()) {
-            Block.spawnAsEntity(world, pos, element);
+            Block.spawnAsEntity(world, pos, getItem());
         }
     }
 }

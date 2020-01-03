@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.block;
 
 import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBlock;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.interfaces.ISupportStandModule;
 import com.elementtimes.tutorial.common.tileentity.TileCrucible;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;

@@ -107,9 +107,4 @@ public class TileFluidHeater extends BaseTileEntity {
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 152, 83)
         };
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -144,12 +144,7 @@ item.elementtimes.siliconplate.name=硅板
 item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
-item.elementtimes.pipelineitemconnect.name=普通物品管道
-item.elementtimes.pipelineiteminput.name=普通物品输入管道
-item.elementtimes.pipelineitemoutput.name=普通物品输出管道
-item.elementtimes.pipelinefluidconnect.name=普通流体管道
-item.elementtimes.pipelinefluidinput.name=普通流体输入管道
-item.elementtimes.pipelinefluidoutput.name=普通流体输出管道
+item.elementtimes.carvedcpu.name=carvedcpu
 # block
 tile.elementtimes.beaker.name=烧杯
 tile.elementtimes.crucible.name=坩埚
@@ -214,6 +209,13 @@ tile.elementtimes.blocktin.name=锡块
 tile.elementtimes.leadore.name=铅矿
 tile.elementtimes.tinore.name=锡矿
 tile.elementtimes.uraniumore.name=铀矿
+tile.elementtimes.pipelineiteminput.name=物品输入管道
+tile.elementtimes.pipelineitemoutput.name=物品输出管道
+tile.elementtimes.pipelineitemconnect.name=物品连接管道
+tile.elementtimes.pipelinefluidinput.name=流体输入管道
+tile.elementtimes.pipelinefluidoutput.name=流体输出管道
+tile.elementtimes.pipelinefluidconnect.name=流体连接管道
+tile.elementtimes.test.name=测试方块
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
 tile.elementtimes.magnesiumchloridesolution.name=氯化镁溶液

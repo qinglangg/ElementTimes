@@ -77,9 +77,4 @@ public class TileGeneratorFluid extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.FluidGenerator.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -82,9 +82,4 @@ public class TilePumpAir extends BaseTileEntity {
                 FluidSlotInfo.createOutput(0, 77, 28)
         };
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

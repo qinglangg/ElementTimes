@@ -118,11 +118,6 @@ public class TileCoagulator extends BaseTileEntity {
     }
 
     @Override
-    public void update() {
-        update(this);
-    }
-
-    @Override
     public ResourceLocation getBackground() {
         return new ResourceLocation(ElementTimes.MODID, "textures/gui/coagulator.png");
     }

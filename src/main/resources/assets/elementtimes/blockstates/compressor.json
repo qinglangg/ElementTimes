@@ -4,6 +4,7 @@
     "model": "elementtimes:compressor"
   },
   "variants": {
+    "inventory": [{}],
     "running": {
       "true": {},
       "false": {}

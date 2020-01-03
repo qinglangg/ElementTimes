@@ -71,11 +71,6 @@ public class TileBeaker extends BaseTileEntity implements IGuiProvider {
     }
 
     @Override
-    public void update() {
-        update(this);
-    }
-
-    @Override
     public MachineRecipeHandler getRecipes() {
         if (world.getBlockState(pos) == ElementtimesBlocks.supportStand) {
             return RECIPE_STAND;

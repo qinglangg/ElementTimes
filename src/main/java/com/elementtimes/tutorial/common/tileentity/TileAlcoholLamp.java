@@ -6,10 +6,10 @@ import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineL
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.common.block.AlcoholLamp;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.interfaces.ISupportStandModule;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
-import com.elementtimes.tutorial.common.tileentity.interfaces.ISSMTileEntity;
+import com.elementtimes.tutorial.interfaces.ISSMTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -57,11 +57,6 @@ public class TileAlcoholLamp extends BaseTileEntity {
     @Override
     public int getGuiId() {
         return -1;
-    }
-
-    @Override
-    public void update() {
-        update(this);
     }
 
     @Override

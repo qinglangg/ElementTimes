@@ -4,6 +4,17 @@
     "model": "cube"
   },
   "variants": {
+    "inventory": [{
+      "textures": {
+        "particle": "elementtimes:blocks/solidfluidreactor/top",
+        "down": "elementtimes:blocks/solidfluidreactor/bottom",
+        "up": "elementtimes:blocks/solidfluidreactor/top",
+        "north": "elementtimes:blocks/solidfluidreactor/side",
+        "south": "elementtimes:blocks/solidfluidreactor/side",
+        "west": "elementtimes:blocks/solidfluidreactor/side",
+        "east": "elementtimes:blocks/solidfluidreactor/off"
+      }
+    }],
     "running": {
       "false": {
         "textures": {

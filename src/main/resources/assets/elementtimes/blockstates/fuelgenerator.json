@@ -4,6 +4,17 @@
     "model": "cube"
   },
   "variants": {
+    "inventory": [{
+      "textures": {
+        "particle": "elementtimes:blocks/fuel_generator/a",
+        "down": "elementtimes:blocks/fuel_generator/a",
+        "up": "elementtimes:blocks/fuel_generator/a",
+        "north": "elementtimes:blocks/fuel_generator/b",
+        "south": "elementtimes:blocks/fuel_generator/b",
+        "west": "elementtimes:blocks/fuel_generator/b",
+        "east": "elementtimes:blocks/fuel_generator/off"
+      }
+    }],
     "running": {
       "false": {
         "textures": {

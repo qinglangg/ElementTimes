@@ -1,10 +1,14 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.tutorial.common.block.pipeline.BaseElement;
-import com.elementtimes.tutorial.common.block.pipeline.ElementType;
+import com.elementtimes.tutorial.common.pipeline.BaseElement;
+import com.elementtimes.tutorial.common.pipeline.ElementType;
+import com.elementtimes.tutorial.common.pipeline.test.PLTestNetwork;
+import com.elementtimes.tutorial.interfaces.IByteData;
+import com.elementtimes.tutorial.interfaces.ITilePipeline;
+import com.elementtimes.tutorial.interfaces.ITilePipelineInput;
+import com.elementtimes.tutorial.interfaces.ITilePipelineOutput;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -14,13 +18,16 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 import static com.elementtimes.tutorial.common.block.pipeline.Pipeline.CONNECTED_PROPERTIES;
 
@@ -29,224 +36,214 @@ import static com.elementtimes.tutorial.common.block.pipeline.Pipeline.CONNECTED
  * @author luqin2007
  */
 @SuppressWarnings({"DuplicatedCode", "UnusedReturnValue", "WeakerAccess"})
-public abstract class BaseTilePipeline extends TileEntity implements ITickable {
+public abstract class BaseTilePipeline extends TileEntity implements ITilePipeline, ITickable, IByteData {
 
     private static final String NBT = "_pipeline_elements_";
     private static final String DATA = "_pipeline_data_";
 
     private List<BaseElement> elements = new LinkedList<>();
     private List<BaseElement> elementAdd = new LinkedList<>();
-
-    private int data = 0b000000000000;
+    private List<BaseElement> elementRemove = new LinkedList<>();
 
     /**
-     * 当某一方向方块发生变化时调用
-     * @param neighbor 位置
+     *  0-5 ：connected
+     *  6-11：interrupted
+     * 12-15：io(PipelineIO)
      */
+    private int data = 0;
+    private IBlockState newBlockState = null;
+
+    @Override
     public void onNeighborChanged(BlockPos neighbor) {
-        if (world != null) {
-            EnumFacing direction = ECUtils.block.getPosFacing(this.pos, neighbor);
-            if (isConnected(direction)) {
-                if (!canConnectTo(direction)) {
-                    disconnectInternal(direction);
+        if (world != null && !world.isRemote) {
+            EnumFacing direction = ECUtils.block.getPosFacing(pos, neighbor);
+            if (isConnected(neighbor, direction)) {
+                if (!canConnectTo(neighbor, direction)) {
+                    disconnect(neighbor, direction);
                 }
             } else {
-                connect(direction);
+                connect(neighbor, direction);
             }
         }
     }
 
-    /**
-     * 管道被移除时调用
-     */
-    public void onRemoved(IBlockState state) {
-        Iterator<BaseElement> iterator = elements.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().drop(world, pos);
-            iterator.remove();
-        }
-    }
-
+    @Override
     public void onPlace(ItemStack stack, EntityLivingBase placer) {
-        for (EnumFacing facing : EnumFacing.values()) {
-            connect(facing);
-        }
-    }
-
-    /**
-     * 某一方向是否可以连接
-     * @param direction 方向
-     * @return 可连接
-     */
-    public abstract boolean canConnectTo(EnumFacing direction);
-
-    /**
-     * 某一方向是否可以连接
-     * 该方法主要是用于需要验证相邻管道是否可以连接，防止双方互相调用
-     * @param pos 另一位置
-     * @param direction 方向
-     * @return 可连接
-     */
-    protected abstract boolean canConnectBy(BlockPos pos, EnumFacing direction);
-
-    /**
-     * 尝试连接某一方向
-     * @param direction 方向
-     * @return 是否成功连接
-     */
-    public boolean connect(EnumFacing direction) {
-        if (world != null && !isConnected(direction) && canConnectTo(direction)) {
-            connectInternal(direction);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 某位置是否已连接
-     * @param pos 位置
-     * @return 连接
-     */
-    public boolean isConnected(BlockPos pos) {
-        if (world != null) {
-            EnumFacing facing = ECUtils.block.getPosFacing(this.pos, pos);
-            if (facing != null) {
-                return isConnected(facing);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 从某一位置断开连接
-     * @param pos 位置
-     */
-    public void disconnect(BlockPos pos) {
-        EnumFacing direction = ECUtils.block.getPosFacing(this.pos, pos);
-        if (world != null && direction != null && isConnected(direction)) {
-            disconnectInternal(direction);
-        }
-    }
-
-    /**
-     * 某一方向是否可以输出物品
-     * @param pos 位置
-     * @param element 物品
-     * @return 是否可以输出
-     */
-    public abstract boolean canOutput(BlockPos pos, BaseElement element);
-
-    /**
-     * 是否可向某方向发送物品
-     * @param pos 位置
-     * @param element 物品
-     * @return 是否可发送
-     */
-    public boolean canSend(BlockPos pos, BaseElement element) {
-        if (world != null && isConnected(pos)) {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof BaseTilePipeline) {
-                return ((BaseTilePipeline) te).canReceive(pos, element);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 是否可接收某方向的物品
-     * @param pos 位置
-     * @param element 物品
-     * @return 某方向物品
-     */
-    public abstract boolean canReceive(BlockPos pos, BaseElement element);
-
-    /**
-     * 向某方向发送物品
-     * @param pos 发送的位置
-     * @param element 物品
-     * @return 如果不能完全发送，则返回未能发送的物品
-     */
-    public BaseElement send(BlockPos pos, BaseElement element) {
-        if (world != null) {
-            if (canSend(pos, element)) {
-                element.remove(pos);
-                BaseTilePipeline pipeline = (BaseTilePipeline) world.getTileEntity(pos);
-                if (pipeline != null) {
-                    return pipeline.receive(pos, element);
+        if (world != null && !world.isRemote) {
+            for (EnumFacing direction : EnumFacing.VALUES) {
+                BlockPos pos = this.pos.offset(direction);
+                if (!isConnected(pos, direction) && canConnectTo(pos, direction)) {
+                    if (writeByteValue(direction.getIndex())) {
+                        setBlockState(state -> state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], true));
+                    }
                 }
             }
         }
-        return element;
     }
 
-    /**
-     * 从某方向接收物品
-     * @param pos 位置
-     * @param element 物品
-     * @return 如果不能完全接收，则返回未能接受的物品
-     */
-    protected BaseElement receive(BlockPos pos, BaseElement element) {
+    @Override
+    public void onRemoved(IBlockState state) {
+        if (world != null && !world.isRemote) {
+            updateElement();
+            Iterator<BaseElement> iterator = elements.iterator();
+            while (iterator.hasNext()) {
+                iterator.next().drop(world, pos);
+                iterator.remove();
+            }
+        }
+    }
+
+    @Override
+    public boolean isConnected(BlockPos pos, EnumFacing direction) {
+        return direction != null && readByteValue(direction.getIndex());
+    }
+
+    @Override
+    public boolean canPost(BlockPos pos, EnumFacing direction, BaseElement element) {
+        if (world != null && isConnected(pos, direction)) {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof ITilePipeline) {
+                return ((ITilePipeline) te).canReceive(pos, element);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public BaseElement post(BlockPos pos, EnumFacing direction, BaseElement element) {
+        if (world != null && !world.isRemote) {
+            removeElement(element);
+            if (canPost(pos, direction, element)) {
+                ITilePipeline pipeline = (ITilePipeline) world.getTileEntity(pos);
+                if (pipeline != null) {
+                    PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.post, element, pos);
+                    return pipeline.onReceive(pos, element);
+                }
+            }
+            return element;
+        }
+        return null;
+    }
+
+    @Override
+    public BaseElement onReceive(BlockPos pos, BaseElement element) {
         if (canReceive(pos, element)) {
-            element.remove(pos);
             addElement(element);
+            PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.receive, element, pos);
             return null;
         } else {
             return element;
         }
     }
 
-    /**
-     * 将物品输出到某个方向
-     * @param pos 位置
-     * @param element 物品
-     * @return 返回剩余方向未能完全接收的物品
-     */
-    public abstract BaseElement output(BlockPos pos, BaseElement element);
+    @Override
+    public void removeElement(BaseElement element) {
+        elementRemove.add(element);
+    }
 
-    /**
-     * 获取某物品在当前管道中停留的时间
-     * @param element 传输物品
-     * @return 停留时间(tick)
-     */
-    public abstract int getKeepTime(BaseElement element);
-
+    @Override
     public void addElement(BaseElement element) {
         elementAdd.add(element);
     }
 
     @Override
-    public void tick() {
-        boolean needSave = !(elementAdd.isEmpty() && elements.isEmpty());
-        this.elements.addAll(elementAdd);
-        this.elementAdd.clear();
-        Iterator<BaseElement> iterator = elements.iterator();
-        while (iterator.hasNext()) {
-            BaseElement element = iterator.next();
-            element.onTick(world);
-            if (element.isRemoved(pos)) {
-                iterator.remove();
-            }
-        }
-        if (needSave) {
-            markDirty();
+    public void dropElement(BaseElement element) {
+        if (world != null && !world.isRemote) {
+            element.drop(world, pos);
+            removeElement(element);
+            PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.drop, element, pos);
         }
     }
 
     @Override
+    public boolean isInterrupted(BlockPos pos, EnumFacing direction) {
+        return direction != null && readByteValue(direction.getIndex() + 6);
+    }
+
+    @Override
+    public void setInterrupt(BlockPos pos, EnumFacing direction) {
+        writeByteValue(direction.getIndex() + 6);
+        if (isConnected(pos, direction) && clearByteValue(direction.getIndex())) {
+            data = ECUtils.math.setByte(data, direction.getIndex(), false);
+            setBlockState(state -> state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], false));
+        }
+    }
+
+    @Override
+    public void update() {
+        if (world != null && !world.isRemote) {
+            boolean needSave = !(elementRemove.isEmpty() && elementAdd.isEmpty() && elements.isEmpty());
+            updateElement();
+            // tick
+            elements.forEach(BaseElement::tickIncrease);
+            // output
+            if (this instanceof ITilePipelineOutput) {
+                for (BaseElement element : elements) {
+                    if (element.isFinalPos() && element.tick >= getKeepTime(element)) {
+                        removeElement(element);
+                        BaseElement back = ((ITilePipelineOutput) this).output(element);
+                        if (back != null && !back.isEmpty()) {
+                            if (!back.send(world, this, element.path.get(0))) {
+                                dropElement(back);
+                            }
+                        }
+                    }
+                }
+                updateElement();
+            }
+            // post
+            for (BaseElement element : elements) {
+                if (!element.isEmpty() && element.tick >= getKeepTime(element)) {
+                    BlockPos nextPos = element.nextPos();
+                    if (nextPos == null) {
+                        element.drop(world, pos);
+                    } else {
+                        TileEntity te = world.getTileEntity(nextPos);
+                        if (te instanceof ITilePipeline && ((ITilePipeline) te).canReceive(pos, element)) {
+                            removeElement(element);
+                            BaseElement back = post(nextPos, ECUtils.block.getPosFacing(pos, nextPos), element);
+                            if (back != null && !back.isEmpty()) {
+                                if (!back.send(world, this, element.path.get(0))) {
+                                    dropElement(back);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // input
+            if (this instanceof ITilePipelineInput) {
+                ((ITilePipelineInput) this).input();
+            }
+            updateElement();
+            // save
+            if (needSave) {
+                markDirty();
+            }
+            // state
+            if (newBlockState != null) {
+                IBlockState state = world.getBlockState(pos);
+                if (state != newBlockState) {
+                    world.notifyBlockUpdate(pos, state, newBlockState, 3);
+                    ECUtils.block.setBlockState(world, pos, newBlockState, this);
+                    world.markBlockRangeForRenderUpdate(pos, pos);
+                }
+            }
+            newBlockState = null;
+        }
+    }
+
+    @Nonnull
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        elements.addAll(elementAdd);
-        elementAdd.clear();
+        updateElement();
         if (!elements.isEmpty()) {
             NBTTagList list = new NBTTagList();
             for (BaseElement element : elements) {
-                if (!element.isRemoved(pos)) {
-                    NBTTagCompound e = new NBTTagCompound();
-                    e.setString("type", element.type);
-                    e.setTag("element", element.serializeNBT());
-                    list.appendTag(e);
-                } else {
-                    element.remove(pos);
-                }
+                NBTTagCompound e = new NBTTagCompound();
+                e.setString("type", element.type);
+                e.setTag("element", element.serializeNBT());
+                list.appendTag(e);
             }
             compound.setTag(NBT, list);
         }
@@ -282,6 +279,7 @@ public abstract class BaseTilePipeline extends TileEntity implements ITickable {
         return new SPacketUpdateTileEntity(pos, 1, nbt);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
@@ -293,58 +291,32 @@ public abstract class BaseTilePipeline extends TileEntity implements ITickable {
         this.data = pkt.getNbtCompound().getInteger("data");
     }
 
-    public boolean isConnected(EnumFacing direction) {
-        return ECUtils.math.fromByte(data, direction.getIndex());
+    @Override
+    public int getByteData() {
+        return data;
     }
 
-    public boolean isInterrupted(EnumFacing direction) {
-        return ECUtils.math.fromByte(data, direction.getIndex() + 6);
-    }
-
-    public void connectInternal(EnumFacing direction) {
-        IBlockState state = world.getBlockState(pos);
-        if (!world.isRemote && !isConnected(direction) && !isInterrupted(direction)) {
-            data = ECUtils.math.setByte(data, direction.getIndex(), true);
-            IBlockState newState = state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], true);
-            ECUtils.block.setBlockState(world, pos, newState, world.getTileEntity(pos));
-            markDirtyAndRender(state, newState);
-        }
-    }
-
-    public void disconnectInternal(EnumFacing direction) {
-        IBlockState state = world.getBlockState(pos);
-        if (isConnected(direction)) {
-            data = ECUtils.math.setByte(data, direction.getIndex(), false);
-            IBlockState newState = state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], false);
-            ECUtils.block.setBlockState(world, pos, newState, world.getTileEntity(pos));
-            markDirtyAndRender(state, newState);
-        }
-    }
-
-    public void interruptInternal(EnumFacing direction) {
-        IBlockState state = world.getBlockState(pos);
-        if (!isInterrupted(direction)) {
-            data = ECUtils.math.setByte(data, direction.getIndex() + 6, true);
-            if (isConnected(direction)) {
-                data = ECUtils.math.setByte(data, direction.getIndex(), false);
-                IBlockState newState = state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], false);
-                ECUtils.block.setBlockState(world, pos, newState, world.getTileEntity(pos));
-                markDirtyAndRender(state, newState);
-            }
-        }
-    }
-
-    public void clearInterruptInternal(EnumFacing direction) {
-        if (isInterrupted(direction)) {
-            data = ECUtils.math.setByte(data, direction.getIndex() + 6, false);
-            connect(direction);
-        }
+    @Override
+    public void setByteData(int data) {
+        this.data = data;
         markDirty();
     }
 
-    public void markDirtyAndRender(IBlockState oldState, IBlockState newState) {
-        markDirty();
-        world.notifyBlockUpdate(pos, oldState, newState, 3);
-        world.markBlockRangeForRenderUpdate(pos, pos);
+    protected void setBlockState(Function<IBlockState, IBlockState> blockStateEditor) {
+        if (newBlockState == null) {
+            newBlockState = world.getBlockState(pos);
+        }
+        newBlockState = blockStateEditor.apply(newBlockState);
+    }
+
+    protected void updateElement() {
+        if (!elementRemove.isEmpty()) {
+            elements.removeAll(elementRemove);
+            elementRemove.clear();
+        }
+        if (!elementAdd.isEmpty()) {
+            elements.addAll(elementAdd);
+            elementAdd.clear();
+        }
     }
 }

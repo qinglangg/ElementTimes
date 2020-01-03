@@ -43,11 +43,6 @@ public class TileFermenter extends BaseTileEntity {
         return ElementtimesGUI.Machines.Fermenter.id();
     }
 
-    @Override
-    public void update() {
-        update(this);
-    }
-
     @Nonnull
     @Override
     public Slot[] getSlots() {

@@ -98,11 +98,5 @@ public class TileGeneratorFuel extends BaseTileEntity {
     @Override
     public String getTitle() {
         return ElementtimesBlocks.fuelGenerator.getLocalizedName();
-
-    }
-
-    @Override
-    public void update() {
-        update(this);
     }
 }

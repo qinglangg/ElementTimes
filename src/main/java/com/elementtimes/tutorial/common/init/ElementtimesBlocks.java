@@ -10,9 +10,15 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.machine.Compressor;
 import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
+import com.elementtimes.tutorial.common.block.pipeline.PipelineIO;
 import com.elementtimes.tutorial.common.block.tree.*;
 import com.elementtimes.tutorial.common.tileentity.*;
-import com.elementtimes.tutorial.common.tileentity.pipeline.*;
+import com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidConnectPipeline;
+import com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidInputPipeline;
+import com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidOutputPipeline;
+import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemConnectPipeline;
+import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeline;
+import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -126,39 +132,25 @@ public class ElementtimesBlocks {
     // Machine
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "furnace", clazz = "com.elementtimes.tutorial.common.tileentity.TileFurnace")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block furnace = new BaseClosableMachine<>(TileFurnace.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY, registerName = "fuelGenerator", unlocalizedName = "fuelGenerator")
     @ModBlock.TileEntity(name = "fuel_generator", clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFuel")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block fuelGenerator = new BaseClosableMachine<>(TileGeneratorFuel.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorSun")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block sunGenerator = new BaseClosableMachine<>(TileGeneratorSun.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY, registerName = "rebuild", unlocalizedName = "rebuild")
     @ModBlock.TileEntity(name = "rebuild", clazz = "com.elementtimes.tutorial.common.tileentity.TileRebuild")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block rebuild = new BaseClosableMachine<>(TileRebuild.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "compressor", clazz = "com.elementtimes.tutorial.common.tileentity.TileCompressor")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     @ModBlock.AnimTESR
     public static Block compressor = new Compressor();
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "forming", clazz = "com.elementtimes.tutorial.common.tileentity.TileForming")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block forming = new BaseClosableMachine<>(TileForming.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "extractor", clazz = "com.elementtimes.tutorial.common.tileentity.TileExtractor")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block extractor = new BaseClosableMachine<>(TileExtractor.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "pulverizer", clazz = "com.elementtimes.tutorial.common.tileentity.TilePulverize")
@@ -171,103 +163,74 @@ public class ElementtimesBlocks {
     public static Block supportStand = new SupportStand();
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidmelter", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidMelter")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block solidMelter = new BaseClosableMachine<>(TileSolidMelter.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "condenser", clazz = "com.elementtimes.tutorial.common.tileentity.TileCondenser")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block condenser = new BaseClosableMachine<>(TileCondenser.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "fluidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileFluidReactor")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block fluidReactor = new BaseClosableMachine<>(TileFluidReactor.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileGeneratorFluid")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block fluidGenerator = new BaseClosableMachine<>(TileGeneratorFluid.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidReactor")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block solidReactor = new BaseClosableMachine<>(TileSolidReactor.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "fluidheater", clazz = "com.elementtimes.tutorial.common.tileentity.TileFluidHeater")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block fluidHeater = new BaseClosableMachine<>(TileFluidHeater.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "electrolyticcell", clazz = "com.elementtimes.tutorial.common.tileentity.TileElectrolyticCell")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block electrolyticCell = new BaseClosableMachine<>(TileElectrolyticCell.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidFluidreactor", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidFluidReactor")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block solidFluidReactor = new BaseClosableMachine<>(TileSolidFluidReactor.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "pumpAir", clazz = "com.elementtimes.tutorial.common.tileentity.TilePumpAir")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block pumpAir = new BaseClosableMachine<>(TilePumpAir.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "pumpFluid", clazz = "com.elementtimes.tutorial.common.tileentity.TilePumpFluid")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block pumpFluid = new BaseClosableMachine<>(TilePumpFluid.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "itemreducer", clazz = "com.elementtimes.tutorial.common.tileentity.TileItemReducer")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block itemReducer = new BaseClosableMachine<>(TileItemReducer.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "centrifuge", clazz = "com.elementtimes.tutorial.common.tileentity.TileCentrifuge")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block centrifuge = new BaseClosableMachine<>(TileCentrifuge.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "coagulator", clazz = "com.elementtimes.tutorial.common.tileentity.TileCoagulator")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block coagulator = new BaseClosableMachine<>(TileCoagulator.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidCentrifuge", clazz = "com.elementtimes.tutorial.common.tileentity.TileSolidCentrifuge")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block solidCentrifuge = new BaseClosableMachine<>(TileSolidCentrifuge.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileSolarDecomposer")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block solarDecomposer = new BaseClosableMachine<>(TileSolarDecomposer.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileFermenter")
-    @ModBlock.StateMapperCustom
-    @ModBlock.StateMap
     public static Block fermenter = new BaseClosableMachine<>(TileFermenter.class, ElementTimes.instance);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.elementcore.api.template.block.BlockTileBase")
+    public static Block fluidTank = new BlockTileBase<>(TileFluidTank.class, ElementTimes.instance);
 
     // Pipeline
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemInputPipeline")
-    public static Block pipelineItemInput = new Pipeline(ItemInputPipeline::new);
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeline")
+    public static Block pipelineItemInput = new PipelineIO(ItemInputPipeline::new);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemOutputPipeline")
-    public static Block pipelineItemOutput = new Pipeline(ItemOutputPipeline::new);
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline")
+    public static Block pipelineItemOutput = new PipelineIO(ItemOutputPipeline::new);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.ItemConnectPipeline")
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemConnectPipeline")
     public static Block pipelineItemConnect = new Pipeline(ItemConnectPipeline::new);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidInputPipeline")
-    public static Block pipelineFluidInput = new Pipeline(FluidInputPipeline::new);
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidInputPipeline")
+    public static Block pipelineFluidInput = new PipelineIO(FluidInputPipeline::new);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidOutputPipeline")
-    public static Block pipelineFluidOutput = new Pipeline(FluidOutputPipeline::new);
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidOutputPipeline")
+    public static Block pipelineFluidOutput = new PipelineIO(FluidOutputPipeline::new);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.FluidConnectPipeline")
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidConnectPipeline")
     public static Block pipelineFluidConnect = new Pipeline(FluidConnectPipeline::new);
 
     // 其他
@@ -323,4 +286,9 @@ public class ElementtimesBlocks {
     @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileBeaker")
     @SupportStandModule
     public static Block beaker = new Beaker();
+
+    // Test
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock.TileEntity(clazz = "com.elementtimes.tutorial.common.tileentity.TileTest")
+    public static Block test = new Test();
 }

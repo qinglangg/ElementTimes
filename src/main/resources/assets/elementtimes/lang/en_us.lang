@@ -145,12 +145,6 @@ item.elementtimes.cpu.name=cpu
 item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
 item.elementtimes.carvedcpu.name=carvedcpu
-item.elementtimes.pipelineitemconnect.name=Normal Item Pipeline
-item.elementtimes.pipelineiteminput.name==Normal Item Pipeline In
-item.elementtimes.pipelineitemoutput.name=Normal Item Pipeline Out
-item.elementtimes.pipelinefluidconnect.name=Normal Fluid Pipeline
-item.elementtimes.pipelinefluidinput.name=Normal Fluid Pipeline In
-item.elementtimes.pipelinefluidoutput.name=Normal Fluid Pipeline Out
 # block
 tile.elementtimes.beaker.name=Beaker
 tile.elementtimes.crucible.name=Crucible
@@ -215,6 +209,13 @@ tile.elementtimes.blocktin.name=blocktin
 tile.elementtimes.leadore.name=leadore
 tile.elementtimes.tinore.name=tinore
 tile.elementtimes.uraniumore.name=uraniumore
+tile.elementtimes.pipelineiteminput.name=Item Input Pipeline
+tile.elementtimes.pipelineitemoutput.name=Item Output Pipeline
+tile.elementtimes.pipelineitemconnect.name=Item Connect Pipeline
+tile.elementtimes.pipelinefluidinput.name=Fluid Input Pipeline
+tile.elementtimes.pipelinefluidoutput.name=Fluid Output Pipeline
+tile.elementtimes.pipelinefluidconnect.name=Fluid Connect Pipeline
+tile.elementtimes.test.name=Test Block
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2
 tile.elementtimes.magnesiumchloridesolution.name=mgcl2

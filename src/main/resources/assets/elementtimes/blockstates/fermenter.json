@@ -4,6 +4,17 @@
     "model": "cube"
   },
   "variants": {
+    "inventory": [{
+      "textures": {
+        "particle": "elementtimes:blocks/fermenter/top",
+        "down": "elementtimes:blocks/fermenter/bottom",
+        "up": "elementtimes:blocks/fermenter/top",
+        "north": "elementtimes:blocks/fermenter/side",
+        "south": "elementtimes:blocks/fermenter/side",
+        "west": "elementtimes:blocks/fermenter/side",
+        "east": "elementtimes:blocks/fermenter/off"
+      }
+    }],
     "running": {
       "false": {
         "textures": {

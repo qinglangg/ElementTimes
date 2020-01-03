@@ -168,9 +168,4 @@ public class TileCompressor extends BaseTileEntity {
             getASM().transition(ANIMATION_STATE_STOP);
         }
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

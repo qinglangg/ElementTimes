@@ -40,6 +40,7 @@ public class Compressor extends BaseClosableMachine<TileCompressor> {
 
     @Nonnull
     @Override
+    @SuppressWarnings("deprecation")
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.475D, 1.0D);
     }

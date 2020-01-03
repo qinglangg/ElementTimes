@@ -5,9 +5,9 @@ import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineL
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineTickable;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
 import com.elementtimes.tutorial.common.block.SupportStand;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.interfaces.ISupportStandModule;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.tileentity.interfaces.ISSMTileEntity;
+import com.elementtimes.tutorial.interfaces.ISSMTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;

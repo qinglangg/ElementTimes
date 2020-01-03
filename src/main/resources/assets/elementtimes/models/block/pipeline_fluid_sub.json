@@ -1,4 +1,5 @@
 {
+	"credit": "ddd",
 	"parent": "block/cube_all",
 	"textures": {
 		"particle": "elementtimes:blocks/pipeline/fluid"
@@ -20,6 +21,7 @@
 	"groups": [
 		{
 			"name": "item",
+			"origin": [8, 8, 8],
 			"children": [0]
 		}
 	]

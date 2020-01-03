@@ -234,9 +234,4 @@ public class TileFluidReactor extends BaseTileEntity {
     public int getEnergyTick() {
         return 10;
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

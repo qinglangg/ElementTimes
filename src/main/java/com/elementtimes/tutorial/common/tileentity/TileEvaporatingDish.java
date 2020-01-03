@@ -106,11 +106,6 @@ public class TileEvaporatingDish extends BaseTileEntity {
     }
 
     @Override
-    public void update() {
-        update(this);
-    }
-
-    @Override
     public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }

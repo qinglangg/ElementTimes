@@ -119,9 +119,4 @@ public class TileCrucible extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.SupportStandC.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

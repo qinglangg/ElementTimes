@@ -110,10 +110,5 @@ public class TileExtractor extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.Extractor.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }
 

@@ -1,7 +1,6 @@
-package com.elementtimes.tutorial.common.tileentity.interfaces;
+package com.elementtimes.tutorial.interfaces;
 
 import com.elementtimes.tutorial.common.block.SupportStand;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
 
 import java.util.Set;
 

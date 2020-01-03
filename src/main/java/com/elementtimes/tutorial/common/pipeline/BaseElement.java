@@ -1,23 +1,26 @@
-package com.elementtimes.tutorial.common.block.pipeline;
+package com.elementtimes.tutorial.common.pipeline;
 
-import com.elementtimes.tutorial.common.tileentity.pipeline.BaseTilePipeline;
+import com.elementtimes.tutorial.common.pipeline.test.PLTestNetwork;
+import com.elementtimes.tutorial.interfaces.ITilePipeline;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 管道传输内容信息
  * @author luqin2007
  */
-public abstract class BaseElement<T> implements INBTSerializable<NBTTagCompound> {
+public abstract class BaseElement implements INBTSerializable<NBTTagCompound> {
 
     // path
     public int posIndex = 0;
@@ -26,77 +29,43 @@ public abstract class BaseElement<T> implements INBTSerializable<NBTTagCompound>
     public int pause = 0;
     public List<BlockPos> path = Collections.emptyList();
     // element
-    public T element;
+    public Object element;
     public String type;
-    private Set<BlockPos> removePos = new HashSet<>();
-    private boolean removeAll = false;
 
     public BaseElement(String type) {
         this.type = type;
     }
 
-    public void onTick(World world) {
+    public void tickIncrease() {
         totalTick++;
         tick++;
-        if (!path.isEmpty() && path.size() > posIndex) {
-            BlockPos pos = path.get(posIndex);
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof BaseTilePipeline) {
-                BaseTilePipeline pipeline = (BaseTilePipeline) te;
-                int tick = pipeline.getKeepTime(this);
-                if (this.tick > tick) {
-                    posIndex++;
-                    BaseElement back;
-                    if (posIndex == path.size() - 1) {
-                        back = pipeline.output(pos, this);
-                    } else {
-                        back = pipeline.send(pos, this);
-                    }
-                    if (back != null) {
-                        if (!send(world, pos, pos)) {
-                            drop(world, pos);
-                        }
-                    }
-                }
-            } else {
-                drop(world, pos);
-            }
-        }
     }
 
-    public boolean send(World world, BlockPos from, BlockPos container) {
-        for (PLPath path : PLPath.find(world, this, from, container).values()) {
+    public BlockPos nextPos() {
+        posIndex++;
+        return posIndex >= path.size() ? null : path.get(posIndex);
+    }
+
+    public boolean isFinalPos() {
+        return posIndex == path.size() - 1;
+    }
+
+    public boolean send(World world, ITilePipeline pipeline, BlockPos container) {
+        BlockPos from = pipeline.getPos();
+        for (PLPath path : PLPath.find(world, this, from, container)) {
             if (!path.isEmpty()) {
-                BlockPos tePos = path.path.get(0);
-                TileEntity te = world.getTileEntity(tePos);
-                if (te instanceof BaseTilePipeline) {
-                    ((BaseTilePipeline) te).addElement(this);
-                    posIndex = 1;
-                    tick = 0;
-                    pause = 0;
-                    this.path = new ArrayList<>(path.path.size() + 2);
-                    this.path.add(path.from);
-                    this.path.addAll(path.path);
-                    this.path.add(path.to);
-                    return true;
-                }
+                pipeline.addElement(this);
+                posIndex = 1;
+                tick = 0;
+                pause = 0;
+                this.path = new ArrayList<>();
+                this.path.add(path.from);
+                this.path.addAll(path.path);
+                PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.send, this, pipeline.getPos());
+                return true;
             }
         }
         return false;
-    }
-
-    public void remove(BlockPos pos) {
-        removePos.add(pos);
-    }
-
-    public void destory() {
-        removeAll = true;
-    }
-
-    public boolean isRemoved(BlockPos pos) {
-        boolean b = removeAll || removePos.contains(pos);
-        removePos.remove(pos);
-        return b;
     }
 
     /**
@@ -117,7 +86,7 @@ public abstract class BaseElement<T> implements INBTSerializable<NBTTagCompound>
      * @param o 物品
      * @return 是否相同
      */
-    public boolean isElementEqual(T o) {
+    public boolean isElementEqual(Object o) {
         return Objects.equals(element, o);
     }
 
@@ -125,7 +94,7 @@ public abstract class BaseElement<T> implements INBTSerializable<NBTTagCompound>
      * 复制
      * @return 复制
      */
-    public abstract BaseElement<T> copy();
+    public abstract BaseElement copy();
 
     /**
      * 将 Element 保存到 NBT 数据
@@ -138,6 +107,18 @@ public abstract class BaseElement<T> implements INBTSerializable<NBTTagCompound>
      * @param compound NBT
      */
     protected abstract void elementDeserializer(NBTTagCompound compound);
+
+    public <T> T get(Class<? extends T> type) {
+        return getOrDefault(type, null);
+    }
+
+    public <T> T getOrDefault(Class<? extends T> type, T defValue) {
+        if (type.isInstance(element)) {
+            //noinspection unchecked
+            return (T) element;
+        }
+        return defValue;
+    }
 
     @Override
     public NBTTagCompound serializeNBT() {

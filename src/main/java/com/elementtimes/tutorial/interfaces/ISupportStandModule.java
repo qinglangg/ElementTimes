@@ -1,8 +1,7 @@
-package com.elementtimes.tutorial.common.block.interfaces;
+package com.elementtimes.tutorial.interfaces;
 
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
 import com.elementtimes.tutorial.common.block.SupportStand;
-import com.elementtimes.tutorial.common.tileentity.interfaces.ISSMTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

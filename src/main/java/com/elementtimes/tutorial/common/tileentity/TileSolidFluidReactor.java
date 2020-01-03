@@ -306,9 +306,4 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 4, 137, 84)
         };
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "elementtimes:pipeline_fluid_io"
+    "model": "elementtimes:pipeline_fluid"
   },
   "variants": {
     "inventory": [{}],
@@ -10,12 +10,20 @@
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
         "x": 270
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
+        "x": 270
       }
     },
     "connected_down": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
+        "x": 90
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
         "x": 90
       }
     },
@@ -24,12 +32,20 @@
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
         "y": 90
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
+        "y": 90
       }
     },
     "connected_west": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 270
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
         "y": 270
       }
     },
@@ -38,12 +54,20 @@
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
         "y": 0
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
+        "y": 0
       }
     },
     "connected_south": {
       "false": {},
       "true": {
         "submodel": "elementtimes:pipeline_fluid_sub",
+        "y": 180
+      },
+      "io": {
+        "submodel": "elementtimes:pipeline_fluid_in",
         "y": 180
       }
     }

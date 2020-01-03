@@ -94,9 +94,4 @@ public class TileRebuild extends BaseTileEntity {
         return ElementtimesBlocks.rebuild.getLocalizedName();
 
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

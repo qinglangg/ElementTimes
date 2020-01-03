@@ -4,6 +4,7 @@
     "model": "elementtimes:electrolyticcell"
   },
   "variants": {
+    "inventory": [{}],
     "running": {
       "true": {},
       "false": {}

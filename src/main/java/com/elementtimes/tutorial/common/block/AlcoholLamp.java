@@ -5,13 +5,13 @@ import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBloc
 import com.elementtimes.elementcore.api.template.capability.fluid.ITankHandler;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileTESR;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.interfaces.ISupportStandModule;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.common.tileentity.TileAlcoholLamp;
 import com.elementtimes.tutorial.common.tileentity.TileSupportStand;
-import com.elementtimes.tutorial.common.tileentity.interfaces.ISSMTileEntity;
+import com.elementtimes.tutorial.interfaces.ISSMTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.BlockStateContainer;

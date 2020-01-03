@@ -94,9 +94,4 @@ public class TileForming extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.Forming.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -95,9 +95,4 @@ public class TileGeneratorElement extends BaseTileEntity {
     public int getGuiId() {
         return ElementtimesGUI.Machines.ElementGenerator.id();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

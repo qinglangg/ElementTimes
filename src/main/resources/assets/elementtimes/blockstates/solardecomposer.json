@@ -4,6 +4,17 @@
     "model": "cube"
   },
   "variants": {
+    "inventory": [{
+      "textures": {
+        "particle": "elementtimes:blocks/solardecomposer/off",
+        "down": "elementtimes:blocks/solardecomposer/down",
+        "up": "elementtimes:blocks/solardecomposer/up",
+        "north": "elementtimes:blocks/solardecomposer/side",
+        "south": "elementtimes:blocks/solardecomposer/side",
+        "west": "elementtimes:blocks/solardecomposer/side",
+        "east": "elementtimes:blocks/solardecomposer/off"
+      }
+    }],
     "running": {
       "false": {
         "textures": {

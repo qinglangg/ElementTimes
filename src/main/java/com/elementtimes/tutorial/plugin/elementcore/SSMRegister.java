@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.plugin.elementcore;
 
 import com.elementtimes.elementcore.api.common.ECModContainer;
 import com.elementtimes.tutorial.common.block.SupportStand;
-import com.elementtimes.tutorial.common.block.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.interfaces.ISupportStandModule;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.lang.annotation.ElementType;

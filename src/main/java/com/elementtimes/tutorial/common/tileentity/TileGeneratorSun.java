@@ -45,11 +45,6 @@ public class TileGeneratorSun extends BaseTileEntity {
     }
 
     @Override
-    public void update() {
-        update(this);
-    }
-
-    @Override
     public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }

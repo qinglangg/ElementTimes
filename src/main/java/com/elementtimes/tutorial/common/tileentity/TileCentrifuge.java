@@ -114,9 +114,4 @@ public class TileCentrifuge extends BaseTileEntity {
         return ElementtimesBlocks.centrifuge.getLocalizedName();
 
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

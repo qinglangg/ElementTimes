@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.block.pipeline;
+package com.elementtimes.tutorial.common.pipeline;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,9 +11,9 @@ import net.minecraftforge.fluids.FluidStack;
  * 物品（ItemStack）类型的 Element
  * @author luqin2007
  */
-public class FluidElement extends BaseElement<FluidStack> {
+public class FluidElement extends BaseElement {
 
-    public static ElementType<FluidElement> TYPE = new ElementType<FluidElement>() {
+    public static ElementType TYPE = new ElementType() {
 
         @Override
         public String type() {
@@ -30,9 +30,13 @@ public class FluidElement extends BaseElement<FluidStack> {
         super(TYPE.type());
     }
 
+    public FluidStack getFluid() {
+        return (FluidStack) element;
+    }
+
     @Override
     public boolean isEmpty() {
-        return element == null || element.amount == 0;
+        return element == null || getFluid().amount == 0;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class FluidElement extends BaseElement<FluidStack> {
         FluidElement e = new FluidElement();
         e.path = path;
         e.type = type;
-        e.element = element.copy();
+        e.element = getFluid().copy();
         e.posIndex = posIndex;
         e.totalTick = totalTick;
         return e;
@@ -48,7 +52,7 @@ public class FluidElement extends BaseElement<FluidStack> {
 
     @Override
     protected NBTTagCompound elementSerializer() {
-        return element.writeToNBT(new NBTTagCompound());
+        return getFluid().writeToNBT(new NBTTagCompound());
     }
 
     @Override
@@ -58,9 +62,9 @@ public class FluidElement extends BaseElement<FluidStack> {
 
     @Override
     public void drop(World world, BlockPos pos) {
-        if (element != null && element.amount >= 1000) {
-            int count = element.amount / 1000;
-            IBlockState state = element.getFluid().getBlock().getDefaultState();
+        if (element != null && getFluid().amount >= 1000) {
+            int count = getFluid().amount / 1000;
+            IBlockState state = getFluid().getFluid().getBlock().getDefaultState();
             for (EnumFacing direction : EnumFacing.values()) {
                 BlockPos offset = pos.offset(direction);
                 IBlockState s = world.getBlockState(offset);

@@ -7,11 +7,7 @@
     }
   },
   "variants": {
-    "inventory": [
-      {}
-    ],
-    "normal": [
-      {}
-    ]
+    "inventory": [{}],
+    "normal": [{}]
   }
 }

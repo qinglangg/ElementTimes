@@ -95,9 +95,4 @@ public class TileItemReducer extends BaseTileEntity {
         return ElementtimesBlocks.itemReducer.getLocalizedName();
 
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

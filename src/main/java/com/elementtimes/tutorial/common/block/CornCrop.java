@@ -22,8 +22,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
+@SuppressWarnings("NullableProblems")
 public class CornCrop extends BlockBush implements IGrowable {
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
 	private static final AxisAlignedBB[] CROPS_AABB = new AxisAlignedBB[] {
@@ -222,6 +224,7 @@ public class CornCrop extends BlockBush implements IGrowable {
 	/**
 	 * Convert the given metadata into a BlockState for this Block
 	 */
+	@Nonnull
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.withAge(meta);

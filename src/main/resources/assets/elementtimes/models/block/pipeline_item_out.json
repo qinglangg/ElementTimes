@@ -1,0 +1,36 @@
+{
+	"credit": "ddd",
+	"parent": "block/cube_all",
+	"textures": {
+		"0": "elementtimes:blocks/pipeline/item",
+		"particle": "elementtimes:blocks/pipeline/item"
+	},
+	"elements": [
+		{
+			"name": "pipeline",
+			"from": [6, 6, 1],
+			"to": [10, 10, 7],
+			"faces": {
+				"north": {"uv": [0, 2, 2, 5], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [2.5, 2.5, 4.5, 4.5], "rotation": 90, "texture": "#0", "cullface": "east"},
+				"south": {"uv": [2, 0, 4.5, 2.5], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [2.5, 2.5, 4.5, 4.5], "rotation": 270, "texture": "#0", "cullface": "west"},
+				"up": {"uv": [2.5, 2.5, 4.5, 4.5], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [2.5, 2.5, 4.5, 4.5], "rotation": 180, "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [5, 5, 0],
+			"to": [11, 11, 1],
+			"faces": {
+				"north": {"uv": [3, 8.5, 6, 11.5], "texture": "#0"},
+				"east": {"uv": [5.5, 8.5, 6.5, 11.5], "texture": "#0"},
+				"south": {"uv": [6, 8.5, 9, 11.5], "texture": "#0"},
+				"west": {"uv": [5.5, 8.5, 6.5, 12], "texture": "#0"},
+				"up": {"uv": [3, 11, 6, 12], "texture": "#0"},
+				"down": {"uv": [6, 11, 9, 12], "texture": "#0"}
+			}
+		}
+	]
+}

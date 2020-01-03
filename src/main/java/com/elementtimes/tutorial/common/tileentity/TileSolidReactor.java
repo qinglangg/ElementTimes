@@ -254,9 +254,4 @@ public class TileSolidReactor extends BaseTileEntity {
     public MachineRecipeHandler getRecipes() {
         return RECIPE;
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }

@@ -98,9 +98,4 @@ public class TilePumpFluid extends BaseTileEntity {
     public String getTitle() {
         return ElementtimesBlocks.pumpFluid.getLocalizedName();
     }
-
-    @Override
-    public void update() {
-        update(this);
-    }
 }
