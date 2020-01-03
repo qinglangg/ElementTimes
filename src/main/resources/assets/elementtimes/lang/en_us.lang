@@ -94,6 +94,8 @@ item.elementtimes.plateadamas.name=Adamas Plate
 item.elementtimes.silver.name=Silver Ingot
 item.elementtimes.silverpowder.name=Silver Powder
 item.elementtimes.salt.name=Salt
+item.elementtimes.ironpowder.name=ironpowder
+item.elementtimes.cuo.name=CuO
 item.elementtimes.rubber.name=Rubber
 item.elementtimes.gearsilver.name=Silver Gear
 item.elementtimes.platesilver.name=Silver Plate
@@ -348,6 +350,7 @@ chat.elementtimes.hammer.pipeline_path=from [%s, %s, %s] to [%s, %s, %s], time: 
 # subtitle
 subtitle.elementtimes.sounds=Cube Land
 subtitle.elementtimes.record=record(ET)
+item.record.sounds.desc=Cube Land
 item.elementknife.name=Element Knife
 # book
 elementtimes.book.minecraft=ElementTimes Guide

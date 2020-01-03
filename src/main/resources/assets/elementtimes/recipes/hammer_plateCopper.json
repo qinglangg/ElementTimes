@@ -1,10 +1,10 @@
 {
   "type": "elementtimes:ore",
   "group": "elementtimes:recipes",
-  "input": "oreIron",
+  "input": "ingotCopper",
   "damage": 1,
   "output": {
-    "item": "elementtimes:ironpowder",
-    "count": 3
+    "item": "elementtimes:plateCopper",
+    "count": 1
   }
 }

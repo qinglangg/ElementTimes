@@ -8,16 +8,14 @@
   ],
   "key": {
     "B": {
-      "type":"forge:ore_dict",
-      "ore":"logWood"
+    "item": "elementtimes:diamondblock"
     },
     "A": {
-      "type":"forge:ore_dict",
-      "ore":"plankWood"
+      "item": "elementtimes:diamondingot"
     }
   },
   "result": {
-    "item": "elementtimes:gearwood",
-    "count": 2
+    "item": "elementtimes:gearadamas",
+    "count": 4
   }
 }

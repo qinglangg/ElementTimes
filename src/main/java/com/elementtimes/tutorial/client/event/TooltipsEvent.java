@@ -33,10 +33,15 @@ public class TooltipsEvent {
             lines.add(new TextComponentString("用热还原法在固体反应器中使用还原剂(煤炭)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
             lines.add(new TextComponentString("还可以用热还原法在固液反应器中使用还原剂(CO,H2)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
         }
-        else if (itemStack.getItem() == ElementtimesItems.Fe2O3) {
+        else if (itemStack.getItem() == ElementtimesItems.ironpowder) {
             lines.add(new TextComponentString("Fe2O3").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("SiO2");
             lines.add("CaCO3");
+            lines.add(new TextComponentString("用热还原法在固体反应器中使用还原剂(煤炭)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+            lines.add(new TextComponentString("还可以用热还原法在固液反应器中使用还原剂(CO,H2)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+        }
+        else if (itemStack.getItem() == ElementtimesItems.Fe2O3) {
+            lines.add(new TextComponentString("Fe2O3").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add(new TextComponentString("用热还原法在固体反应器中使用还原剂(煤炭)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
             lines.add(new TextComponentString("还可以用热还原法在固液反应器中使用还原剂(CO,H2)进行还原为铁锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
         }
@@ -53,6 +58,11 @@ public class TooltipsEvent {
             lines.add(new TextComponentString("CuO").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add("SiO2");
             lines.add("CaCO3");
+            lines.add(new TextComponentString("用热还原法在固体反应器中使用还原剂(煤炭)进行还原为铜锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+            lines.add(new TextComponentString("还可以用热还原法在固液反应器中使用还原剂(CO,H2)进行还原为铜锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
+        }
+        else if (itemStack.getItem() == ElementtimesItems.CuO) {
+            lines.add(new TextComponentString("CuO").setStyle(new Style().setColor(TextFormatting.BLUE)).getFormattedText());
             lines.add(new TextComponentString("用热还原法在固体反应器中使用还原剂(煤炭)进行还原为铜锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
             lines.add(new TextComponentString("还可以用热还原法在固液反应器中使用还原剂(CO,H2)进行还原为铜锭").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)).getFormattedText());
         }

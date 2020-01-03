@@ -34,7 +34,7 @@ public class TileForming extends BaseTileEntity {
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE.add(10000, "plankWood", 9, ElementtimesItems.gearWood, 3)
-                    .add(10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
+                    .add(10000, "ingotSilver", 9, ElementtimesItems.gearSilver, 3)
                     .add(10000, "stone", 9, ElementtimesItems.gearStone, 3)
                     .add(10000, "coal", 9, ElementtimesItems.gearCarbon, 3)
                     .add(10000, "ingotGold", 9, ElementtimesItems.gearGold, 3)
@@ -46,6 +46,7 @@ public class TileForming extends BaseTileEntity {
                     .add(10000, "ingotLead", 9, ElementtimesItems.gearLead, 3)
                     .add(10000, ElementtimesItems.diamondIngot, 9, ElementtimesItems.gearAdamas, 3)
                     .add(10000,Blocks.OBSIDIAN, 9, ElementtimesItems.gearObsidian, 3)
+                    .add(10000, "gemQuartz", 9, ElementtimesItems.gearQuartz, 3)
                     .add(10000, "ingotTin", 9, ElementtimesItems.gearTin, 3);
         }
     }
