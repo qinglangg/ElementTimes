@@ -32,7 +32,42 @@ public class TileFluidReactor extends BaseTileEntity {
 
     public static void init() {
         if (RECIPES.getMachineRecipes().isEmpty()) {
-            RECIPES //AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
+            RECIPES 
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(0)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid, 1000))
+            		.endAdd()
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(0)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.diluteSulfuricAcid, 1000))
+            		.endAdd()
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(0)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid, 1000))
+            		.endAdd()
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(0)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 1000))
+            		.endAdd()
+            
+            
+            
+            
+            
+            
+            		//AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
             		.newRecipe()
                     .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.AlCl3,1000))
@@ -97,6 +132,34 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 3000))
                     .endAdd()
 
+                    //2SO2+O2=2SO3
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.so2, 2000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.so3, 2000))
+                    .endAdd()
+                    //SO2+H2O=H2SO3
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.so2, 1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.h2so3, 1000))
+                    .endAdd()
+                    //SO3+H2O=H2SO4
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.so3, 1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.h2so4, 1000))
+                    .endAdd()
+                    //2H2SO3+O2=2H2SO4
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so3, 2000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.h2so4, 2000))
+                    .endAdd()
 
               		//CO+H2O(g)=co2+H2
                     .newRecipe()
@@ -148,12 +211,12 @@ public class TileFluidReactor extends BaseTileEntity {
                     .endAdd()
 
 
-                    //NH3
+                    //3H2+N2=2NH3
                     .newRecipe()
                     .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,3000))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 1000))
-                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 2000))
                     .endAdd()
 
 

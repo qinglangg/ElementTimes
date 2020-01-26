@@ -163,6 +163,14 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.coarseSilicon, 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Sicl4, 1000))
                     .endAdd()
+                    
+                    //S+O2=SO2
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.sulfurPowder, 1))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.so2, 1000))
+                    .endAdd()
 
                     //铁矿石获得铁
                     .newRecipe()

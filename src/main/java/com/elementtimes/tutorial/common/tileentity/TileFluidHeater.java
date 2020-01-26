@@ -46,11 +46,42 @@ public class TileFluidHeater extends BaseTileEntity {
                     .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, Fluid.BUCKET_VOLUME))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steam, Fluid.BUCKET_VOLUME))
                     .endAdd()
+                    //蒸发皿完成后移到蒸发皿的内容
                     .newRecipe()
-                    .addCost(5000)
+                    .addCost(10000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionDilute, Fluid.BUCKET_VOLUME))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, Fluid.BUCKET_VOLUME))
                     .endAdd()
+                    //蒸发皿完成后移到蒸发皿的内容
+                    .newRecipe()
+                    .addCost(10000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    //蒸发皿完成后移到蒸发皿的内容
+                    .newRecipe()
+                    .addCost(10000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.HCl, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    //蒸发皿完成后移到蒸发皿的内容
+                    .newRecipe()
+                    .addCost(10000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.diluteSulfuricAcid, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    //蒸发皿完成后移到蒸发皿的内容
+                    .newRecipe()
+                    .addCost(10000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid, Fluid.BUCKET_VOLUME))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.h2so4, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    
+                    
+                    
+                    
+                    
+                    
                     ;
         }
     }
