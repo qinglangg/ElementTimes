@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.pipeline.test;
 
-import com.elementtimes.elementcore.api.annotation.ModNetwork;
+import com.elementtimes.elementcore.api.annotation.old.ModNetwork;
 import com.elementtimes.tutorial.common.pipeline.BaseElement;
 import com.elementtimes.tutorial.common.pipeline.ElementType;
 import io.netty.buffer.ByteBuf;

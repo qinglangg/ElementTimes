@@ -1,14 +1,7 @@
 package com.elementtimes.tutorial.client;
 
-import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.elementcore.api.tools.CreativeTabWrapper;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,14 +16,5 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         new NetworkLoader();
-        // 创造
-        CreativeTabWrapper.apply(CreativeTabs.MISC, "misc").addPredicate(itemStack -> {
-            Item item = itemStack.getItem();
-            if (item == ForgeModContainer.getInstance().universalBucket) {
-                FluidStack f = ECUtils.fluid.getFluid(itemStack);
-                return !f.getFluid().getName().startsWith("elementtimes.");
-            }
-            return true;
-        });
     }
 }

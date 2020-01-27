@@ -1,7 +1,8 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModItem;
-import com.elementtimes.elementcore.api.annotation.ModOreDict;
+import com.elementtimes.elementcore.api.annotation.old.ModItem;
+import com.elementtimes.elementcore.api.annotation.old.ModOreDict;
+import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.item.*;
 import net.minecraft.init.SoundEvents;
@@ -73,9 +74,11 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79Si")
     public static Item Silicon = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item bambooCharcoal = new ItemFuel(800);
+    @ModBurnTime(800)
+    public static Item bambooCharcoal = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item amylum = new Amylum();
+    @ModBurnTime(400)
+    public static Item amylum = new ModFood(5, 4.0F);
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item corn = new Corn();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
@@ -175,9 +178,11 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item sulfurOrePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    public static Item sulfurPowder = new ItemFuel(800);
+    @ModBurnTime(800)
+    public static Item sulfurPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Item sucroseCharCoal = new ItemFuel(800);
+    @ModBurnTime(800)
+    public static Item sucroseCharCoal = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("ingotPlatinum")
     public static Item platinumIngot = new Item();

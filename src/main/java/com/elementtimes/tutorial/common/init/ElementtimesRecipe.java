@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModRecipe;
+import com.elementtimes.elementcore.api.annotation.old.ModRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;

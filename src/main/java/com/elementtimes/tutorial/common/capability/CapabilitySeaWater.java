@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.capability;
 
-import com.elementtimes.elementcore.api.annotation.ModCapability;
+import com.elementtimes.elementcore.api.annotation.old.ModCapability;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

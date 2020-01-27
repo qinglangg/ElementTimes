@@ -7,7 +7,7 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import com.elementtimes.elementcore.api.annotation.ModBlock;
+import com.elementtimes.elementcore.api.annotation.old.ModBlock;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 
 import net.minecraft.tileentity.TileEntity;

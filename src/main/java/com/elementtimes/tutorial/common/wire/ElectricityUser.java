@@ -7,7 +7,7 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import com.elementtimes.elementcore.api.annotation.ModBlock;
+import com.elementtimes.elementcore.api.annotation.old.ModBlock;
 
 import java.util.Objects;
 

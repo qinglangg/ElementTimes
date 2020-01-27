@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModPotion;
+import com.elementtimes.elementcore.api.annotation.old.ModPotion;
 import com.elementtimes.tutorial.common.potion.*;
 import net.minecraft.potion.Potion;
 

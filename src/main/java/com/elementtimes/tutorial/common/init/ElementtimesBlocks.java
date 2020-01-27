@@ -1,9 +1,10 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModBlock;
-import com.elementtimes.elementcore.api.annotation.ModItem;
-import com.elementtimes.elementcore.api.annotation.ModOreDict;
+import com.elementtimes.elementcore.api.annotation.old.ModBlock;
+import com.elementtimes.elementcore.api.annotation.old.ModItem;
+import com.elementtimes.elementcore.api.annotation.old.ModOreDict;
 import com.elementtimes.elementcore.api.annotation.enums.GenType;
+import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.elementcore.api.template.block.BaseClosableMachine;
 import com.elementtimes.elementcore.api.template.block.BlockTileBase;
 import com.elementtimes.tutorial.ElementTimes;
@@ -43,7 +44,7 @@ public class ElementtimesBlocks {
     @ModOreDict("treeSapling")
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_log", unlocalizedName = "rubber_log")
-    @ModBlock.BurningTime(300)
+    @ModBurnTime(300)
     @ModOreDict("logWood")
     public static Block rubberLog = new RubberLog();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")

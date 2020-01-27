@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModFluid;
+import com.elementtimes.elementcore.api.annotation.old.ModFluid;
+import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -169,8 +170,9 @@ public class ElementtimesFluids {
     public static Fluid Naoh = new Fluid("elementtimes.naoh",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
-    
-    @ModFluid(density = -10, burningTime = 1600)
+
+    @ModBurnTime(1600)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid H = new Fluid("elementtimes.h",
             new ResourceLocation(ElementTimes.MODID, "fluid/h_still"),
@@ -194,25 +196,29 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/butter_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/butter_fluid"), 0xFF92925E);
 
-    @ModFluid(density = -10, burningTime = 5000)
+    @ModBurnTime(5000)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid acetylene = new Fluid("elementtimes.acetylene",
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/acetylene_fluid"), 0xFF3B3B3B);
 
-    @ModFluid(density = -10, burningTime = 7000)
+    @ModBurnTime(7000)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid ethylene = new Fluid("elementtimes.ethylene",
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
 
-    @ModFluid(density = -10, burningTime = 800)
+    @ModBurnTime(800)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid co = new Fluid("elementtimes.co",
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/ethylene_fluid"), 0xFF5B5B5B);
-    
-    @ModFluid(burningTime = 6000)
+
+    @ModBurnTime(6000)
+    @ModFluid()
     @ModFluid.FluidBlock
     public static Fluid ethanol = new Fluid("elementtimes.ethanol",
             new ResourceLocation(ElementTimes.MODID, "fluid/ethanol_still"),
@@ -230,13 +236,15 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/calmogastrin_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/calmogastrin_fluid"), 0xFF3B9884);
 
-    @ModFluid(density = -10, burningTime = 6000)
+    @ModBurnTime(6000)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid methane = new Fluid("elementtimes.methane",
             new ResourceLocation(ElementTimes.MODID, "fluid/methane_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/methane_fluid"), 0xFF868686);
 
-    @ModFluid(density = -10, burningTime = 9000)
+    @ModBurnTime(9000)
+    @ModFluid(density = -10)
     @ModFluid.FluidBlock
     public static Fluid ethane = new Fluid("elementtimes.ethane",
             new ResourceLocation(ElementTimes.MODID, "fluid/methane_still"),

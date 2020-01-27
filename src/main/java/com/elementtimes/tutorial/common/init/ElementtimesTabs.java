@@ -1,13 +1,19 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.ModCreativeTabs;
+import com.elementtimes.elementcore.api.annotation.old.ModCreativeTabs;
+import com.elementtimes.elementcore.api.annotation.part.Field;
+import com.elementtimes.elementcore.api.annotation.part.Method;
+import com.elementtimes.elementcore.api.annotation.tools.ModTabEditor;
+import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.elementcore.api.template.tabs.CreativeTabDynamic;
 import com.elementtimes.elementcore.api.template.tabs.CreativeTabStatic;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.plugin.GuideBook;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -69,4 +75,17 @@ public class ElementtimesTabs {
     public static CreativeTabs Ore = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimesore", 20,
             ElementtimesBlocks.oreSalt, ElementtimesBlocks.copperOre, ElementtimesBlocks.platinumOre,
             ElementtimesBlocks.sulfurOre, ElementtimesBlocks.uraniumOre, ElementtimesBlocks.leadOre, ElementtimesBlocks.tinOre);
+
+    @ModTabEditor(tab = @Field(container = ElementtimesTabs.class, name = "misc"), editor = @Method(container = ElementtimesTabs.class, name = "editMisc"))
+    public static CreativeTabs misc = CreativeTabs.MISC;
+    public static void editMisc(NonNullList<ItemStack> items) {
+        items.removeIf(itemStack -> {
+            Item item = itemStack.getItem();
+            if (item == ForgeModContainer.getInstance().universalBucket) {
+                FluidStack f = ECUtils.fluid.getFluid(itemStack);
+                return f.getFluid().getName().startsWith("elementtimes.");
+            }
+            return false;
+        });
+    }
 }
