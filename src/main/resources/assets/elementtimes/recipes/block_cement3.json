@@ -2,15 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "group": "elementtimes:recipes",
   "pattern": [
-    "AA"
+    "A"
   ],
   "key": {
     "A": {
-      "item": "minecraft:beetroot"
+      "item": "elementtimes:cement"
     }
-   },
+  },
   "result": {
-    "item": "elementtimes:starchpowder",
-    "count": 4
-  }
-} 
+    "item": "tconstruct:soil",
+    "data": 0,
+    "count": 1
+    }
+}

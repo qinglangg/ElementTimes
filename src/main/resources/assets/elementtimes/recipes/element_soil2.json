@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "elementtimes:recipes",
+  "ingredients": [
+    {
+      "item": "tconstruct:dried_clay",
+      "data": 0
+    },
+    {
+      "item": "tconstruct:dried_clay",
+      "data": 1
+    },
+    {
+      "item": "tconstruct:soil",
+      "data": 0
+    },
+    {
+      "item": "tconstruct:soil",
+      "data": 1
+    },
+    {
+      "item": "tconstruct:slime_dirt",
+      "data": 0
+    },
+    {
+      "item": "tconstruct:slime_dirt",
+      "data": 1
+    },
+    {
+      "item": "tconstruct:slime_dirt",
+      "data": 2
+    },
+    {
+      "item": "tconstruct:slime_dirt",
+      "data": 3
+    },
+    {
+      "item": "tconstruct:deco_ground",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "elementtimes:soilelement",
+    "count": 1
+  }
+}
