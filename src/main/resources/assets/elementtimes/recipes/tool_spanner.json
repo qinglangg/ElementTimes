@@ -6,11 +6,15 @@
   },
   "pattern": [
     "  A",
-    " A ",
+    " B ",
     "A  "
   ],
   "key": {
-    "A": {
+      "A": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "B": {
       "type": "forge:ore_dict",
       "ore": "ingotCopper"
     }

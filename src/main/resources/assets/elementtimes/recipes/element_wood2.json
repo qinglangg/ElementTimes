@@ -2,23 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "group": "elementtimes:recipes",
   "pattern": [
-    "AWB",
-    "LWT",
+    "LWL",
+    "LWL",
     "GSC"
   ],
   "key": {
-    "B": {
-      "item": "tconstruct:slime_congealed",
-      "data": 0
-    },
-    "A": {
-      "item": "tconstruct:slime_grass",
-      "data": 0
-    },
-    "T": {
-      "item": "tconstruct:slime_grass",
-      "data": 1
-    },
     "L": {
       "item": "elementtimes:leafessence"
     },

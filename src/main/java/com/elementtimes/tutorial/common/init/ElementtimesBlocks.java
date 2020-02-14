@@ -76,7 +76,7 @@ public class ElementtimesBlocks {
     public static Block leadOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("oreCopper")
-    @ModBlock.HarvestLevel
+    @ModBlock.HarvestLevel(level = 1)
     @ModBlock.WorldGen
     public static Block copperOre = new Block(Material.ROCK).setHardness(15f).setResistance(10f);
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
@@ -243,14 +243,14 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel
     @ModItem.Tooltip("\u00a79CaCO3")
-    public static Block stoneBlock = new Block(Material.ROCK).setHardness(75f).setResistance(15f);
+    public static Block stoneBlock = new Block(Material.ROCK).setHardness(50f).setResistance(20f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 3)
     @ModOreDict("cement")
-    public static Block cement = new Block(Material.ROCK).setHardness(750f).setResistance(30f);
+    public static Block cement = new Block(Material.ROCK).setHardness(200f).setResistance(50f);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.HarvestLevel(level = 4)
-    public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(7000f).setResistance(150f);
+    public static Block cementAndSteelBarMixture = new Block(Material.ROCK).setHardness(1000f).setResistance(150f);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.HarvestLevel
     public static Block blockMultiSilverCopper = new Block(Material.IRON);
