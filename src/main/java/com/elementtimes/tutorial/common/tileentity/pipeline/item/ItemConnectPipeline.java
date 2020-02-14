@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.tileentity.pipeline.item;
 import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
 import com.elementtimes.tutorial.common.pipeline.BaseElement;
 import com.elementtimes.tutorial.common.tileentity.pipeline.BaseTilePipeline;
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
+import com.elementtimes.tutorial.common.pipeline.ITilePipeline;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

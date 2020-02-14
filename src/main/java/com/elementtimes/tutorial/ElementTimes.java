@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 20.发酵机未完成（豆焰的酶还没画呢）
  * 21.联动并且支持匠魂（卿岚部分）
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.3.0,0.4.0);before:guideapi")
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.4.0,0.5.0);before:guideapi")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
 

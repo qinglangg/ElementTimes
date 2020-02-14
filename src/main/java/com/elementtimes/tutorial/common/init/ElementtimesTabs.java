@@ -1,7 +1,6 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.old.ModCreativeTabs;
-import com.elementtimes.elementcore.api.annotation.part.Field;
+import com.elementtimes.elementcore.api.annotation.ModTab;
 import com.elementtimes.elementcore.api.annotation.part.Method;
 import com.elementtimes.elementcore.api.annotation.tools.ModTabEditor;
 import com.elementtimes.elementcore.api.common.ECUtils;
@@ -34,7 +33,7 @@ public class ElementtimesTabs {
     public static final String INDUSTRY = "industry";
     public static final String ORE = "ore";
 
-    @ModCreativeTabs(value = MAIN)
+    @ModTab(MAIN)
     public static CreativeTabs Main = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimes", 20,
             ElementtimesItems.fireElement, ElementtimesItems.waterElement, ElementtimesItems.endElement,
             ElementtimesItems.photoElement, ElementtimesItems.woodElement, ElementtimesItems.goldElement,
@@ -48,11 +47,11 @@ public class ElementtimesTabs {
         }
     };
 
-    @ModCreativeTabs(value = AGRICULTURE)
+    @ModTab(AGRICULTURE)
     public static CreativeTabs Agriculture = new CreativeTabDynamic(ElementTimes.MODID + ".Agriculture", 20,
             ElementtimesItems.corn, ElementtimesItems.bakedCorn, ElementtimesItems.puremeat);
 
-    @ModCreativeTabs(value = CHEMICAL)
+    @ModTab(CHEMICAL)
     public static CreativeTabs Chemical = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimeschemicalindustry",
             FluidRegistry.getBucketFluids().stream()
                     .filter(f -> f.getName().startsWith("elementtimes"))
@@ -68,16 +67,17 @@ public class ElementtimesTabs {
         }
     };
 
-    @ModCreativeTabs(value = INDUSTRY)
+    @ModTab(INDUSTRY)
     public static CreativeTabs Industry = new CreativeTabStatic(ElementTimes.MODID + ".Industry", ElementtimesItems.spanner);
 
-    @ModCreativeTabs(value = ORE)
+    @ModTab(ORE)
     public static CreativeTabs Ore = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimesore", 20,
             ElementtimesBlocks.oreSalt, ElementtimesBlocks.copperOre, ElementtimesBlocks.platinumOre,
             ElementtimesBlocks.sulfurOre, ElementtimesBlocks.uraniumOre, ElementtimesBlocks.leadOre, ElementtimesBlocks.tinOre);
 
-    @ModTabEditor(tab = @Field(container = ElementtimesTabs.class, name = "misc"), editor = @Method(container = ElementtimesTabs.class, name = "editMisc"))
+    @ModTabEditor(@Method(value = ElementtimesTabs.class, name = "editMisc"))
     public static CreativeTabs misc = CreativeTabs.MISC;
+
     public static void editMisc(NonNullList<ItemStack> items) {
         items.removeIf(itemStack -> {
             Item item = itemStack.getItem();

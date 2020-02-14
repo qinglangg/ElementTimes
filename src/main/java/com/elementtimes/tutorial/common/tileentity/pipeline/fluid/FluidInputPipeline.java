@@ -1,7 +1,9 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline.fluid;
 
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileFluidHandler;
 import com.elementtimes.tutorial.common.pipeline.FluidElement;
-import com.elementtimes.tutorial.interfaces.ITilePipelineInput;
+import com.elementtimes.tutorial.common.pipeline.IPipelineInput;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +19,7 @@ import javax.annotation.Nonnull;
  * 用于将物品从容器转移到管道网络
  * @author luqin
  */
-public class FluidInputPipeline extends FluidIOPipeline implements ITilePipelineInput {
+public class FluidInputPipeline extends FluidIOPipeline implements IPipelineInput {
 
     private int coldDown = 0;
     private int maxColdDown = 20;
@@ -30,8 +32,13 @@ public class FluidInputPipeline extends FluidIOPipeline implements ITilePipeline
         EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
         BlockPos target = pos.offset(ioSide);
         TileEntity te = world.getTileEntity(target);
+        IFluidHandler handler;
         if (te != null) {
-            IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, ioSide.getOpposite());
+            if (te instanceof ITileFluidHandler) {
+                handler = ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT);
+            } else {
+                handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, ioSide.getOpposite());
+            }
             if (handler != null) {
                 FluidStack drain = handler.drain(Integer.MAX_VALUE, false);
                 if (drain != null && drain.amount != 0) {
@@ -43,6 +50,17 @@ public class FluidInputPipeline extends FluidIOPipeline implements ITilePipeline
                 }
             }
         }
+    }
+
+    @Override
+    public boolean canConnectIO(BlockPos pos, EnumFacing direction) {
+        if (world != null) {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof ITileFluidHandler) {
+                return ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT).size() > 0;
+            }
+        }
+        return super.canConnectIO(pos, direction);
     }
 
     @Override

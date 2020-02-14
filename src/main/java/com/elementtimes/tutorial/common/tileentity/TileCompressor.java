@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.old.ModInvokeStatic;
+import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
@@ -12,7 +12,6 @@ import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;

@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.pipeline;
 
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
-import com.elementtimes.tutorial.interfaces.ITilePipelineIO;
+import com.elementtimes.tutorial.common.pipeline.IPipelineOutput;
+import com.elementtimes.tutorial.common.pipeline.ITilePipeline;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
@@ -49,23 +49,23 @@ public class PipelineIO extends Pipeline {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         AxisAlignedBB aabb = super.getBoundingBox(state, source, pos);
         TileEntity te = source.getTileEntity(pos);
-        if (te instanceof ITilePipelineIO && ((ITilePipelineIO) te).isConnectedIO()) {
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.UP), EnumFacing.UP)) {
+        if (te instanceof IPipelineOutput && ((IPipelineOutput) te).isConnectedIO()) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.UP), EnumFacing.UP)) {
                 aabb = aabb.union(AABB_PIPELINE_UP);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.DOWN), EnumFacing.DOWN)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.DOWN), EnumFacing.DOWN)) {
                 aabb = aabb.union(AABB_PIPELINE_DOWN);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.EAST), EnumFacing.EAST)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.EAST), EnumFacing.EAST)) {
                 aabb = aabb.union(AABB_PIPELINE_EAST);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.WEST), EnumFacing.WEST)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.WEST), EnumFacing.WEST)) {
                 aabb = aabb.union(AABB_PIPELINE_WEST);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.NORTH), EnumFacing.NORTH)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.NORTH), EnumFacing.NORTH)) {
                 aabb = aabb.union(AABB_PIPELINE_NORTH);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH)) {
                 aabb = aabb.union(AABB_PIPELINE_SOUTH);
             }
         }
@@ -76,23 +76,23 @@ public class PipelineIO extends Pipeline {
     public void addCollisionBoxToList(IBlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox, @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
         super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof ITilePipelineIO && ((ITilePipelineIO) te).isConnectedIO()) {
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.UP), EnumFacing.UP)) {
+        if (te instanceof IPipelineOutput && ((IPipelineOutput) te).isConnectedIO()) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.UP), EnumFacing.UP)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_UP);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.DOWN), EnumFacing.DOWN)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.DOWN), EnumFacing.DOWN)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_DOWN);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.EAST), EnumFacing.EAST)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.EAST), EnumFacing.EAST)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_EAST);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.WEST), EnumFacing.WEST)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.WEST), EnumFacing.WEST)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_WEST);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.NORTH), EnumFacing.NORTH)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.NORTH), EnumFacing.NORTH)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_NORTH);
             }
-            if (((ITilePipelineIO) te).isConnectedIO(pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH)) {
+            if (((IPipelineOutput) te).isConnectedIO(pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH)) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_PIPELINE_SOUTH);
             }
         }

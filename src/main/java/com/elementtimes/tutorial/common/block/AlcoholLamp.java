@@ -119,7 +119,7 @@ public class AlcoholLamp extends BlockAABB implements ITileEntityProvider, ISupp
 
     @Nonnull
     @Override
-    public Supplier getActiveObject(World worldIn, BlockPos pos) {
+    public Supplier<?> getActiveObject(World worldIn, BlockPos pos) {
         return () -> new TileAlcoholLamp(worldIn, pos);
     }
 

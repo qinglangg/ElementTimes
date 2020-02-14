@@ -1,13 +1,8 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.tutorial.common.pipeline.BaseElement;
-import com.elementtimes.tutorial.common.pipeline.ElementType;
-import com.elementtimes.tutorial.common.pipeline.test.PLTestNetwork;
+import com.elementtimes.tutorial.common.pipeline.*;
 import com.elementtimes.tutorial.interfaces.IByteData;
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
-import com.elementtimes.tutorial.interfaces.ITilePipelineInput;
-import com.elementtimes.tutorial.interfaces.ITilePipelineOutput;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -116,11 +111,11 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
             if (canPost(pos, direction, element)) {
                 ITilePipeline pipeline = (ITilePipeline) world.getTileEntity(pos);
                 if (pipeline != null) {
-                    PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.post, element, pos);
-                    return pipeline.onReceive(pos, element);
+                    BaseElement receive = pipeline.onReceive(pos, element);
+                    return receive == null ? null : receive.back();
                 }
             }
-            return element;
+            return element.back();
         }
         return null;
     }
@@ -129,21 +124,24 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
     public BaseElement onReceive(BlockPos pos, BaseElement element) {
         if (canReceive(pos, element)) {
             addElement(element);
-            PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.receive, element, pos);
             return null;
         } else {
-            return element;
+            return element.back();
         }
     }
 
     @Override
-    public void removeElement(BaseElement element) {
-        elementRemove.add(element);
+    public void removeElement(@Nullable BaseElement element) {
+        if (element != null) {
+            elementRemove.add(element);
+        }
     }
 
     @Override
-    public void addElement(BaseElement element) {
-        elementAdd.add(element);
+    public void addElement(@Nullable BaseElement element) {
+        if (element != null && !element.isEmpty()) {
+            elementAdd.add(element);
+        }
     }
 
     @Override
@@ -151,7 +149,6 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
         if (world != null && !world.isRemote) {
             element.drop(world, pos);
             removeElement(element);
-            PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.drop, element, pos);
         }
     }
 
@@ -177,20 +174,16 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
             // tick
             elements.forEach(BaseElement::tickIncrease);
             // output
-            if (this instanceof ITilePipelineOutput) {
+            if (this instanceof IPipelineOutput) {
+                IPipelineOutput po = (IPipelineOutput) this;
                 for (BaseElement element : elements) {
                     if (element.isFinalPos() && element.tick >= getKeepTime(element)) {
                         removeElement(element);
-                        BaseElement back = ((ITilePipelineOutput) this).output(element);
-                        if (back != null && !back.isEmpty()) {
-                            if (!back.send(world, this, element.path.get(0))) {
-                                dropElement(back);
-                            }
-                        }
+                        addElement(po.output(element));
                     }
                 }
-                updateElement();
             }
+            updateElement();
             // post
             for (BaseElement element : elements) {
                 if (!element.isEmpty() && element.tick >= getKeepTime(element)) {
@@ -201,19 +194,14 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
                         TileEntity te = world.getTileEntity(nextPos);
                         if (te instanceof ITilePipeline && ((ITilePipeline) te).canReceive(pos, element)) {
                             removeElement(element);
-                            BaseElement back = post(nextPos, ECUtils.block.getPosFacing(pos, nextPos), element);
-                            if (back != null && !back.isEmpty()) {
-                                if (!back.send(world, this, element.path.get(0))) {
-                                    dropElement(back);
-                                }
-                            }
+                            addElement(post(nextPos, ECUtils.block.getPosFacing(pos, nextPos), element));
                         }
                     }
                 }
             }
             // input
-            if (this instanceof ITilePipelineInput) {
-                ((ITilePipelineInput) this).input();
+            if (this instanceof IPipelineInput) {
+                ((IPipelineInput) this).input();
             }
             updateElement();
             // save
@@ -257,8 +245,8 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
         if (compound.hasKey(NBT)) {
             NBTTagList list = compound.getTagList(NBT, Constants.NBT.TAG_COMPOUND);
             elements.clear();
-            for (NBTBase inbt : list) {
-                NBTTagCompound nbt = (NBTTagCompound) inbt;
+            for (NBTBase iNbt : list) {
+                NBTTagCompound nbt = (NBTTagCompound) iNbt;
                 String type = nbt.getString("type");
                 ElementType typeObj = ElementType.TYPES.get(type);
                 if (typeObj != null) {

@@ -1,7 +1,11 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline.item;
 
+import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileItemHandler;
 import com.elementtimes.tutorial.common.block.pipeline.PipelineIO;
-import com.elementtimes.tutorial.interfaces.ITilePipelineIO;
+import com.elementtimes.tutorial.common.pipeline.BaseElement;
+import com.elementtimes.tutorial.common.pipeline.IPipelineOutput;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -10,12 +14,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 
 import static com.elementtimes.tutorial.common.block.pipeline.PipelineIO.CONNECTED_PROPERTIES;
 
-public class ItemIOPipeline extends ItemConnectPipeline implements ITilePipelineIO {
+/**
+ * @author luqin2007
+ */
+public class ItemIOPipeline extends ItemConnectPipeline implements IPipelineOutput {
 
     @Override
     public void onPlace(ItemStack stack, EntityLivingBase placer) {
@@ -114,5 +122,52 @@ public class ItemIOPipeline extends ItemConnectPipeline implements ITilePipeline
             state = state.withProperty(CONNECTED_PROPERTIES[value.getIndex()], type);
         }
         return state;
+    }
+
+    @Override
+    public BaseElement output(BaseElement element) {
+        if (world != null && !world.isRemote && isConnectedIO()) {
+            EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
+            BlockPos pos = this.pos.offset(ioSide);
+            EnumFacing facing = ECUtils.block.getPosFacing(this.pos, pos);
+            TileEntity te = world.getTileEntity(pos);
+            IItemHandler handler;
+            if (te != null) {
+                if (te instanceof ITileItemHandler) {
+                    handler = ((ITileItemHandler) te).getItemHandler(SideHandlerType.INPUT);
+                } else {
+                    handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                }
+                if (handler != null) {
+                    ItemStack back = ItemHandlerHelper.insertItem(handler, (ItemStack) element.element, false);
+                    return back.isEmpty() ? null : element.copyBack(back);
+                }
+            }
+            return element.back();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean canOutput(BaseElement element) {
+        if (world != null && !world.isRemote && isConnectedIO() && isElementAllowOutput(element)) {
+            EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
+            TileEntity te = world.getTileEntity(pos.offset(ioSide));
+            IItemHandler capability;
+            if (te != null) {
+                if (te instanceof ITileItemHandler) {
+                    capability = ((ITileItemHandler) te).getItemHandler(SideHandlerType.INPUT);
+                } else {
+                    capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ioSide.getOpposite());
+                }
+                ItemStack stack = ItemHandlerHelper.insertItem(capability, element.get(ItemStack.class), true);
+                return stack.isEmpty() || stack.getCount() < element.get(ItemStack.class).getCount();
+            }
+        }
+        return false;
+    }
+
+    protected boolean isElementAllowOutput(BaseElement element) {
+        return element.back;
     }
 }

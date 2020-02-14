@@ -27,7 +27,7 @@ public class MaxEnchantmentLevelFactory implements IRecipeFactory {
             Map<ResourceLocation, IRecipeFactory> recipeFactories = (Map<ResourceLocation, IRecipeFactory>) recipesField.get(null);
             ShapedRecipes recipes = (ShapedRecipes) recipeFactories.get(new ResourceLocation("minecraft:crafting_shaped")).parse(context, json);
             ItemStack result = recipes.getRecipeOutput();
-            ECUtils.item.addMaxEnchantments(result);
+            ECUtils.item.addAllEnchantments(result);
             return recipes;
         } catch (Exception e) {
             e.printStackTrace();

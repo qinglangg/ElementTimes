@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.old.ModInvokeStatic;
+import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGeneratorLifecycle;
@@ -12,7 +12,6 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -44,11 +43,6 @@ public class TileGeneratorElement extends BaseTileEntity {
     public TileGeneratorElement() {
         super(ElementtimesConfig.GENERAL.generaterMaxEnergy, 1, 0);
         addLifeCycle(new EnergyGeneratorLifecycle<>(this));
-    }
-
-    @Override
-    public SideHandlerType getEnergyType(EnumFacing facing) {
-        return SideHandlerType.OUTPUT;
     }
 
     @Nonnull

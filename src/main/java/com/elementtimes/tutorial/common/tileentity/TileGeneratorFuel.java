@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.old.ModInvokeStatic;
+import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGeneratorLifecycle;
@@ -12,7 +12,6 @@ import com.elementtimes.tutorial.config.ElementtimesConfig;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.SlotItemHandler;
@@ -55,11 +54,6 @@ public class TileGeneratorFuel extends BaseTileEntity {
     @Override
     public MachineRecipeHandler getRecipes() {
         return RECIPE;
-    }
-
-    @Override
-    public SideHandlerType getEnergyType(EnumFacing facing) {
-        return SideHandlerType.OUTPUT;
     }
 
     @Override

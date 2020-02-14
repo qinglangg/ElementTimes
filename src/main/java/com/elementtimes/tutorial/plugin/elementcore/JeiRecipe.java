@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.plugin.elementcore;
 
 import com.elementtimes.elementcore.api.common.ECModContainer;
 import com.elementtimes.elementcore.api.common.ECUtils;
-import com.elementtimes.elementcore.api.common.LoaderHelper;
+import com.elementtimes.elementcore.api.common.helper.ObjHelper;
 import com.elementtimes.elementcore.api.template.tileentity.interfaces.IGuiProvider;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import org.objectweb.asm.Type;
@@ -16,6 +16,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Map;
 
+/**
+ * JEI 支持
+ * @author luqin2007
+ */
 public class JeiRecipe {
 
     /**
@@ -40,8 +44,8 @@ public class JeiRecipe {
 
     public static void parser(ASMDataTable.ASMData data, ECModContainer container) {
         if (Loader.isModLoaded("jei")) {
-            LoaderHelper.getOrLoadClass(container.elements, data.getClassName()).ifPresent(aClass -> {
-                ECUtils.reflect.getField(aClass, data.getObjectName(), null, MachineRecipeHandler.class, container.logger).ifPresent(recipe -> {
+            ObjHelper.findClass(container.elements, data.getClassName()).ifPresent(aClass -> {
+                ECUtils.reflect.get(aClass, data.getObjectName(), null, MachineRecipeHandler.class, container.elements).ifPresent(recipe -> {
                     Map<String, Object> info = data.getAnnotationInfo();
                     Block block = Block.getBlockFromName((String) info.get("block"));
                     if (block == null) {
@@ -54,7 +58,7 @@ public class JeiRecipe {
                     int h = (int) info.get("h");
                     Block finalBlock = block;
                     Type guiType = (Type) info.get("gui");
-                    ECUtils.reflect.create(guiType.getClassName(), IGuiProvider.class, container.logger)
+                    ECUtils.reflect.create(guiType.getClassName(), IGuiProvider.class, container.elements)
                             .ifPresent(gui -> com.elementtimes.tutorial.plugin.jei.JeiSupport.registerMachineRecipe(finalBlock, gui, recipe, id, u, v, w, h));
                 });
             });

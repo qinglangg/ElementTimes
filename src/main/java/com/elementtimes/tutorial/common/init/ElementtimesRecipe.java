@@ -1,14 +1,36 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.old.ModRecipe;
+import com.elementtimes.elementcore.api.annotation.ModRecipe;
+import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.elementcore.api.template.ingredient.DamageIngredient;
+import com.elementtimes.elementcore.api.utils.RecipeUtils;
+import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static com.elementtimes.tutorial.common.item.Hammer.TAG_DAMAGE;
+import static com.elementtimes.tutorial.common.item.Hammer.TAG_REMOVE;
 
 /**
  * 所有合成表
@@ -55,5 +77,46 @@ public class ElementtimesRecipe {
 			null, "minecraft:flint", null,
 			"elementtimes:concrete", PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), "elementtimes:concrete",
 			null, "minecraft:flint", null
+	};
+
+    @ModRecipe.RecipeMethod
+	public static Collection<IRecipe> hammerRecipe() {
+		List<IRecipe> recipes = new ArrayList<>();
+		int i = 0;
+		for (RecipeUtils.RecipeInfo recipeInfo : ECUtils.recipe.getOneItemCrafting(null, "logWood")) {
+			ItemStack inputItem = recipeInfo.inputs.get(0);
+			ItemStack outputItem = recipeInfo.output;
+			if (!inputItem.isEmpty() && !outputItem.isEmpty()) {
+				ResourceLocation group = new ResourceLocation(ElementTimes.MODID, "recipes");
+				ItemStack outputResult = ItemHandlerHelper.copyStackWithSize(outputItem, 16);
+				NonNullList<Ingredient> inputs = NonNullList.create();
+				inputs.add(new DamageIngredient(new Item[] {
+						ElementtimesItems.smallHammer, ElementtimesItems.mediumHammer, ElementtimesItems.bigHammer}, 1));
+				inputs.add(Ingredient.fromStacks(inputItem));
+				ShapelessOreRecipe recipe = new ShapelessOreRecipe(group, inputs, outputResult) {
+					@Nonnull
+					@Override
+					public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+						NonNullList<ItemStack> ret = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+						for (int i = 0; i < ret.size(); i++) {
+							ItemStack stack = inv.getStackInSlot(i);
+							if (stack.getItem() == ElementtimesItems.smallHammer
+									|| stack.getItem() == ElementtimesItems.mediumHammer
+									|| stack.getItem() == ElementtimesItems.bigHammer) {
+								boolean removeTag = !stack.hasTagCompound();
+								NBTTagCompound nbt = stack.getOrCreateSubCompound(ElementTimes.MODID + "_bind");
+								nbt.setInteger(TAG_DAMAGE, 1);
+								nbt.setBoolean(TAG_REMOVE, removeTag);
+							}
+							ret.set(i, ForgeHooks.getContainerItem(stack));
+						}
+						return ret;
+					}
+				};
+				recipe.setRegistryName(ElementTimes.MODID, "hammer_wood_" + (i++));
+				recipes.add(recipe);
+			}
+		}
+		return recipes;
 	};
 }

@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.block.fluid;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.CapabilitySeaWater;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
 import net.minecraft.block.material.Material;
@@ -29,6 +30,7 @@ public class SeaWaterBlock extends BlockFluidClassic {
 
     public SeaWaterBlock(Fluid fluid) {
         super(fluid, Material.WATER);
+        setRegistryName(ElementTimes.MODID, fluid.getName());
     }
 
     @Override

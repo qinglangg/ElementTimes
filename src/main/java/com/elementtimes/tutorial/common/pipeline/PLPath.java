@@ -1,7 +1,5 @@
 package com.elementtimes.tutorial.common.pipeline;
 
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
-import com.elementtimes.tutorial.interfaces.ITilePipelineOutput;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -40,7 +38,7 @@ public class PLPath {
             TileEntity te = world.getTileEntity(thisPos);
             if (te instanceof ITilePipeline) {
                 ITilePipeline pipeline = (ITilePipeline) te;
-                if (pipeline instanceof ITilePipelineOutput && ((ITilePipelineOutput) pipeline).canOutput(element)) {
+                if (pipeline instanceof IPipelineOutput && ((IPipelineOutput) pipeline).canOutput(element)) {
                     PLPath path = tryBuildPLPath(world, element, elementContainer, pathPositions);
                     if (path != null) {
                         wayResults.add(path);

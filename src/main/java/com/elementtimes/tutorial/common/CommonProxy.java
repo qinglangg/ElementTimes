@@ -1,8 +1,5 @@
 package com.elementtimes.tutorial.common;
 
-import com.elementtimes.tutorial.common.event.BiomeStructureEvent;
-import com.elementtimes.tutorial.common.event.OreEvent;
-import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.common.pipeline.ElementType;
 import com.elementtimes.tutorial.common.pipeline.FluidElement;
@@ -13,7 +10,6 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -35,14 +31,11 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
-        new ElementtimesGUI().init();
         ElementtimesRecipe.init(event);
-        MinecraftForge.ORE_GEN_BUS.register(OreEvent.class);
-        MinecraftForge.TERRAIN_GEN_BUS.register(BiomeStructureEvent.class);
         ElementType.register(FluidElement.TYPE, ItemElement.TYPE);
     }
 
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(@SuppressWarnings("unused") FMLPostInitializationEvent event) {
         FurnaceRecipes.instance().getSmeltingList().keySet()
                 .removeIf(input -> input.getItem() == Item.getItemFromBlock(Blocks.IRON_ORE));
     }

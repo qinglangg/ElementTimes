@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.old.ModInvokeStatic;
+import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
@@ -61,12 +61,7 @@ public class TileFluidReactor extends BaseTileEntity {
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 1000))
             		.endAdd()
-            
-            
-            
-            
-            
-            
+
             		//AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
             		.newRecipe()
                     .addCost(1000)

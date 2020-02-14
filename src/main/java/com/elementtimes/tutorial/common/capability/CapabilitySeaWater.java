@@ -1,6 +1,8 @@
 package com.elementtimes.tutorial.common.capability;
 
-import com.elementtimes.elementcore.api.annotation.old.ModCapability;
+import com.elementtimes.elementcore.api.annotation.ModCapability;
+import com.elementtimes.elementcore.api.annotation.part.Getter;
+import com.elementtimes.elementcore.api.annotation.part.Method;
 import com.elementtimes.tutorial.ElementTimes;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,9 +19,9 @@ import javax.annotation.Nullable;
  * 记录实体使用盐数量
  * @author luqin2007
  */
-@ModCapability(storageClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$SeaStorage",
-        typeInterfaceClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$ISeaWater",
-        typeImplementationClass = "com.elementtimes.tutorial.common.capability.CapabilitySeaWater$SeaWater")
+@ModCapability(type = CapabilitySeaWater.ISeaWater.class,
+        typeFactory = @Method(CapabilitySeaWater.SeaWater.class),
+        storage = @Getter(CapabilitySeaWater.SeaStorage.class))
 public class CapabilitySeaWater {
 
     public static final ResourceLocation NAME = new ResourceLocation(ElementTimes.MODID, "cap_salt");

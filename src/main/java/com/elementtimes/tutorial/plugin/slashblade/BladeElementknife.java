@@ -45,7 +45,7 @@ public class BladeElementknife {
         ItemSlashBlade.SpecialAttackType.set(tag, 3);
         // 手中不持刀时此刀的显示情况，0是不显示，1是在左手，2是在背后，3是背在背上
         ItemSlashBlade.StandbyRenderType.set(tag, 3);
-        ECUtils.item.addMaxEnchantments(etherealshadow);
+        ECUtils.item.addAllEnchantments(etherealshadow);
         SlashBlade.registerCustomItemStack(name, etherealshadow);
         // 设置名字
         ItemSlashBladeNamed.NamedBlades.add(name);

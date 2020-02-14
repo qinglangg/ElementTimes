@@ -7,7 +7,7 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import com.elementtimes.elementcore.api.annotation.old.ModBlock;
+import com.elementtimes.elementcore.api.annotation.ModBlock;
 
 import java.util.Objects;
 
@@ -15,8 +15,7 @@ import java.util.Objects;
  * 所有电力设备的父级TE，其中包含了最为基础的方法和循环接口
  * @author EmptyDremas
  */
-@ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY_USER",
-		clazz = "com.elementtimes.tutorial.common.wire.ElectricityUser")
+@ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY_USER", value = ElectricityUser.class)
 public abstract class ElectricityUser extends Electricity {
 	
 	@Override

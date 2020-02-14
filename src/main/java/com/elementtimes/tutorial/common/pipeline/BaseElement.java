@@ -1,7 +1,5 @@
 package com.elementtimes.tutorial.common.pipeline;
 
-import com.elementtimes.tutorial.common.pipeline.test.PLTestNetwork;
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -31,9 +29,15 @@ public abstract class BaseElement implements INBTSerializable<NBTTagCompound> {
     // element
     public Object element;
     public String type;
+    public boolean back;
 
     public BaseElement(String type) {
+        this(type, false);
+    }
+
+    public BaseElement(String type, boolean back) {
         this.type = type;
+        this.back = back;
     }
 
     public void tickIncrease() {
@@ -61,7 +65,6 @@ public abstract class BaseElement implements INBTSerializable<NBTTagCompound> {
                 this.path = new ArrayList<>();
                 this.path.add(path.from);
                 this.path.addAll(path.path);
-                PLTestNetwork.sendMessage(PLTestNetwork.TestElementType.send, this, pipeline.getPos());
                 return true;
             }
         }
@@ -91,10 +94,29 @@ public abstract class BaseElement implements INBTSerializable<NBTTagCompound> {
     }
 
     /**
+     * 标记 返回物品
+     * @return 返回
+     */
+    public BaseElement back() {
+        back = true;
+        return this;
+    }
+
+    /**
      * 复制
      * @return 复制
      */
     public abstract BaseElement copy();
+
+    /**
+     * 复制
+     * @return 复制
+     */
+    public BaseElement copyBack(Object element) {
+        BaseElement back = copy().back();
+        back.element = element;
+        return back;
+    }
 
     /**
      * 将 Element 保存到 NBT 数据

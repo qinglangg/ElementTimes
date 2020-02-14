@@ -7,9 +7,8 @@
 */
 package com.elementtimes.tutorial.common.wire;
 
-import com.elementtimes.elementcore.api.annotation.old.ModBlock;
+import com.elementtimes.elementcore.api.annotation.ModBlock;
 import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
  * @author EmptyDremas
  *
  */
-@ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY", clazz = "com.elementtimes.tutorial.common.wire.Electricity")
+@ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY", value = Electricity.class)
 public abstract class Electricity extends TileEntity implements ITickable {
 
 	private static Object uniqueSign;

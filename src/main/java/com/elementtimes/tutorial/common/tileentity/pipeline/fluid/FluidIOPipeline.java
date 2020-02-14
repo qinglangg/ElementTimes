@@ -1,13 +1,17 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline.fluid;
 
+import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.ITileFluidHandler;
 import com.elementtimes.tutorial.common.block.pipeline.PipelineIO;
-import com.elementtimes.tutorial.interfaces.ITilePipelineIO;
+import com.elementtimes.tutorial.common.pipeline.BaseElement;
+import com.elementtimes.tutorial.common.pipeline.IPipelineOutput;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -15,7 +19,10 @@ import javax.annotation.Nonnull;
 
 import static com.elementtimes.tutorial.common.block.pipeline.PipelineIO.CONNECTED_PROPERTIES;
 
-public class FluidIOPipeline extends FluidConnectPipeline implements ITilePipelineIO {
+/**
+ * @author luqin2007
+ */
+public class FluidIOPipeline extends FluidConnectPipeline implements IPipelineOutput {
 
     @Override
     public void onPlace(ItemStack stack, EntityLivingBase placer) {
@@ -114,5 +121,56 @@ public class FluidIOPipeline extends FluidConnectPipeline implements ITilePipeli
             state = state.withProperty(CONNECTED_PROPERTIES[value.getIndex()], type);
         }
         return state;
+    }
+
+    @Override
+    public BaseElement output(BaseElement element) {
+        if (isConnectedIO()) {
+            EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
+            BlockPos target = pos.offset(ioSide);
+            TileEntity te = world.getTileEntity(target);
+            IFluidHandler handler;
+            if (te != null) {
+                if (te instanceof ITileFluidHandler) {
+                    handler = ((ITileFluidHandler) te).getTanks(SideHandlerType.INPUT);
+                } else {
+                    handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, ioSide.getOpposite());
+                }
+                if (handler != null) {
+                    FluidStack stack = element.get(FluidStack.class);
+                    int fillCount = handler.fill(stack, true);
+                    if (stack != null && stack.amount > fillCount) {
+                        BaseElement copy = element.copy();
+                        copy.get(FluidStack.class).amount = stack.amount - fillCount;
+                        return copy.back();
+                    }
+                }
+            }
+        }
+        return element.back();
+    }
+
+    @Override
+    public boolean canOutput(BaseElement element) {
+        if (world != null && !world.isRemote && isConnectedIO() && isElementAllowOutput(element)) {
+            EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
+            TileEntity te = world.getTileEntity(pos.offset(ioSide));
+            IFluidHandler capability;
+            if (te != null) {
+                if (te instanceof ITileFluidHandler) {
+                    capability = ((ITileFluidHandler) te).getTanks(SideHandlerType.INPUT);
+                } else {
+                    capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, ioSide.getOpposite());
+                }
+                if (capability != null) {
+                    return capability.fill(element.get(FluidStack.class), false) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected boolean isElementAllowOutput(BaseElement element) {
+        return element.back;
     }
 }

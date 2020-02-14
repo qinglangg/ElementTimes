@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.api.annotation.old.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
@@ -22,7 +21,9 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-@ModInvokeStatic("init")
+/**
+ * @author luqin2007
+ */
 public class TileSolidReactor extends BaseTileEntity {
 
     @JeiRecipe.MachineRecipe(block = "elementtimes:solidreactor", gui = TileSolidReactor.class, u = 30, v = 5, w = 117, h = 96)

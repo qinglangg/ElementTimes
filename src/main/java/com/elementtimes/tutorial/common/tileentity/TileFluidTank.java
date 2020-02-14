@@ -34,9 +34,4 @@ public class TileFluidTank extends BaseTileEntity {
     public int getGuiId() {
         return 0;
     }
-
-    @Override
-    public void update() {
-
-    }
 }

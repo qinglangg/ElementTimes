@@ -1,8 +1,10 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.old.ModFluid;
+import com.elementtimes.elementcore.api.annotation.ModFluid;
+import com.elementtimes.elementcore.api.annotation.part.Method;
 import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.block.fluid.SeaWaterBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 
@@ -137,7 +139,7 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);
     
     @ModFluid
-    @ModFluid.FluidBlock(className = "com.elementtimes.tutorial.common.block.fluid.SeaWaterBlock")
+    @ModFluid.FluidBlockFunc(@Method(SeaWaterBlock.class))
     public static Fluid seawater = new Fluid("elementtimes.seawater",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutionconcentrated_fluid"), 0xFF3B9595);

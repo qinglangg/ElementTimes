@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.block.pipeline;
 
 import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBlock;
 import com.elementtimes.tutorial.ElementTimes;
-import com.elementtimes.tutorial.interfaces.ITilePipeline;
+import com.elementtimes.tutorial.common.pipeline.ITilePipeline;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

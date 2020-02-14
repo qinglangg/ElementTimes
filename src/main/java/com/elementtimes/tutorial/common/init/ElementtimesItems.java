@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.init;
 
-import com.elementtimes.elementcore.api.annotation.old.ModItem;
-import com.elementtimes.elementcore.api.annotation.old.ModOreDict;
+import com.elementtimes.elementcore.api.annotation.ModItem;
+import com.elementtimes.elementcore.api.annotation.tools.ModOreDict;
 import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.item.*;
