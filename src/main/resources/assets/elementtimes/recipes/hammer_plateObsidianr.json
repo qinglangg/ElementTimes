@@ -1,7 +1,7 @@
 {
   "type": "elementtimes:ore",
   "group": "elementtimes:recipes",
-  "input": "minecraft:quartz",
+  "input": "minecraft:obsidian",
   "damage": 1,
   "output": {
     "item": "elementtimes:plateObsidian",

@@ -11,7 +11,10 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.google.common.collect.ImmutableMap;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.EnumFacing;
@@ -62,8 +65,8 @@ public class TileCompressor extends BaseTileEntity {
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotLead", 1, ElementtimesItems.plateLead, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotTin", 1, ElementtimesItems.plateTin, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount)
+                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, Blocks.OBSIDIAN, 1, ElementtimesItems.plateObsidian, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.plateAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, Items.QUARTZ, 1, ElementtimesItems.plateObsidian, ElementtimesConfig.COMPRESSOR.powderCount)
             		.add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.Silicon, 1, ElementtimesItems.siliconPlate, ElementtimesConfig.COMPRESSOR.powderCount)
                     .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.Al, 1, ElementtimesItems.aluminiumPlate, ElementtimesConfig.COMPRESSOR.powderCount)
             		
