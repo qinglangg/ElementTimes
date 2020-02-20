@@ -112,7 +112,7 @@ public class ElementtimesConfig {
     public static final class Pul {
         @Config.Comment("设置打粉机机最大电容量")
         @Config.Name("pulMaxEnergy")
-        public int pulMaxEnergy = 320000;
+        public int pulMaxEnergy = 32000;
 
         @Config.Comment("设置打粉机每Tick消耗电量(相当于打粉速度")
         @Config.Name("pulMaxExtract")
@@ -134,7 +134,7 @@ public class ElementtimesConfig {
     public static final class ItemReducer {
         @Config.Comment("设置还原机最大电容量")
         @Config.Name("maxEnergy")
-        public int maxEnergy = 320000;
+        public int maxEnergy = 32000;
 
         @Config.Comment("设置还原机每Tick消耗电量(速度)")
         @Config.Name("maxExtract")
@@ -152,7 +152,7 @@ public class ElementtimesConfig {
     public static final class Compressor {
         @Config.Comment("设置压缩机机最大电容量")
         @Config.Name("compressorMaxEnergy")
-        public int maxEnergy = 320000;
+        public int maxEnergy = 32000;
 
         @Config.Comment("设置压缩机每Tick消耗电量(相当于打粉速度")
         @Config.Name("compressorMaxExtract")
@@ -174,7 +174,7 @@ public class ElementtimesConfig {
     public static final class Furnace {
         @Config.Comment("设置熔炉最大电容量")
         @Config.Name("maxEnergy")
-        public int maxEnergy = 100000;
+        public int maxEnergy = 32000;
 
         @Config.Comment("设置熔炉每Tick消耗电量")
         @Config.Name("maxExtract")
@@ -188,7 +188,7 @@ public class ElementtimesConfig {
     public static final class Extractor {
         @Config.Comment("设置提取机最大电容量")
         @Config.Name("maxEnergy")
-        public int maxEnergy = 320000;
+        public int maxEnergy = 32000;
 
         @Config.Comment("设置提取机每Tick消耗电量")
         @Config.Name("maxExtract")
@@ -216,7 +216,7 @@ public class ElementtimesConfig {
     public static final class Forming {
         @Config.Comment("设置整形机最大电容量")
         @Config.Name("maxEnergy")
-        public int maxEnergy = 320000;
+        public int maxEnergy = 32000;
 
         @Config.Comment("设置整形机每Tick消耗电量")
         @Config.Name("maxExtract")
