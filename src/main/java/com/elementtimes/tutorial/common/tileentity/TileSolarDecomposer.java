@@ -45,8 +45,6 @@ public class TileSolarDecomposer extends TileSolidFluidReactor {
            // .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no2, 4000))
             //.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
             //.endAdd()
-    
-    
     ;
 
     @Override

@@ -1,6 +1,5 @@
 package com.elementtimes.tutorial.common.tileentity;
 
-import com.elementtimes.elementcore.ElementCore;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
@@ -8,6 +7,7 @@ import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGene
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
@@ -37,13 +37,12 @@ public class TileGeneratorFluid extends BaseTileEntity {
 
     @Override
     public ResourceLocation getBackground() {
-        return new ResourceLocation(ElementCore.instance().container.id(), "textures/gui/fluidgenerator.png");
+        return new ResourceLocation(ElementTimes.MODID, "textures/gui/fluidgenerator.png");
     }
 
     @Override
     public GuiSize getSize() {
-        return new GuiSize().withSize(164, 176, 81, 7).withTitleY(80)
-                .withEnergy(45, 66, 24, 164, 86, 4);
+        return new GuiSize().withSize(176, 164, 8, 82).withTitleY(71).withEnergy(45, 66, 24, 164, 86, 4);
     }
 
     @Nonnull
@@ -64,13 +63,13 @@ public class TileGeneratorFluid extends BaseTileEntity {
     public Slot[] getSlots() {
         return new Slot[] {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 70, 40),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 80, 40)
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 88, 40)
         };
     }
 
     @Override
     public String getTitle() {
-        return ElementtimesBlocks.sunGenerator.getLocalizedName();
+        return ElementtimesBlocks.fluidGenerator.getLocalizedName();
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -55,7 +56,7 @@ public abstract class BaseElement implements INBTSerializable<NBTTagCompound> {
     }
 
     public boolean send(World world, ITilePipeline pipeline, BlockPos container) {
-        BlockPos from = pipeline.getPos();
+        BlockPos from = ((TileEntity) pipeline).getPos();
         for (PLPath path : PLPath.find(world, this, from, container)) {
             if (!path.isEmpty()) {
                 pipeline.addElement(this);

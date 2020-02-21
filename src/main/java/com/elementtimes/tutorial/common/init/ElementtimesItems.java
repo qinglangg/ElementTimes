@@ -140,6 +140,7 @@ public class ElementtimesItems {
     public static Item uranium = new Item();
     @ModItem.Tooltip("\u00a79U U^235/238")
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("")
     public static Item tinPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item leadPowder = new Item();

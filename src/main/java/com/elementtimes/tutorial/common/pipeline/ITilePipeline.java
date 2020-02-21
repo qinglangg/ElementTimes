@@ -14,8 +14,6 @@ import javax.annotation.Nonnull;
  */
 public interface ITilePipeline {
 
-    BlockPos getPos();
-
     // ===========================================================================
     // 世界交互相关
 
