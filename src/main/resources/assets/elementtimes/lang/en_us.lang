@@ -148,6 +148,7 @@ item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
 item.elementtimes.carvedcpu.name=carvedcpu
 # block
+tile.elementtimes.corncrop.name=Corn
 tile.elementtimes.beaker.name=Beaker
 tile.elementtimes.crucible.name=Crucible
 tile.elementtimes.woodessence.name=Woodessenc
@@ -217,6 +218,7 @@ tile.elementtimes.pipelineitemconnect.name=Item Connect Pipeline
 tile.elementtimes.pipelinefluidinput.name=Fluid Input Pipeline
 tile.elementtimes.pipelinefluidoutput.name=Fluid Output Pipeline
 tile.elementtimes.pipelinefluidconnect.name=Fluid Connect Pipeline
+tile.elementtimes.fluidtank.name=流体储罐
 tile.elementtimes.test.name=Test Block
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2

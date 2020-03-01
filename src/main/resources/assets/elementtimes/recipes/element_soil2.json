@@ -1,6 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
   "group": "elementtimes:recipes",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
   "ingredients": [
     {
       "item": "tconstruct:dried_clay",

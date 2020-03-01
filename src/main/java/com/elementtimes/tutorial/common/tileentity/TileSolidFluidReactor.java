@@ -322,7 +322,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
     @Override
     public FluidSlotInfo[] getFluids() {
         return new FluidSlotInfo[]{
-                FluidSlotInfo.createInput(0, 42, 15),
+                FluidSlotInfo.createInput(0, 43, 15),
                 FluidSlotInfo.createOutput(0, 116, 15),
                 FluidSlotInfo.createOutput(1, 137, 15)
         };
@@ -337,7 +337,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 2, 116, 66),
                 new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 3, 137, 66),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 95, 22),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 95, 34),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 1, 95, 40),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 2, 43, 84),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 3, 116, 84),
                 new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 4, 137, 84)

@@ -49,7 +49,7 @@ public class TileGeneratorFluid extends BaseTileEntity {
     @Override
     public FluidSlotInfo[] getFluids() {
         return new FluidSlotInfo[] {
-                FluidSlotInfo.createInputHorizontal(0, 64, 19)
+                FluidSlotInfo.createInputHorizontal(0, 65, 20)
         };
     }
 
@@ -62,8 +62,8 @@ public class TileGeneratorFluid extends BaseTileEntity {
     @Override
     public Slot[] getSlots() {
         return new Slot[] {
-                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 70, 40),
-                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 88, 40)
+                new SlotItemHandler(getItemHandler(SideHandlerType.INPUT), 0, 71, 41),
+                new SlotItemHandler(getItemHandler(SideHandlerType.OUTPUT), 0, 89, 41)
         };
     }
 

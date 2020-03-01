@@ -55,6 +55,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     compile fileTree(dir: 'lib', includes: ['*.jar'])
+//    deobfCompile 'com.github.luiqn2007:ElementCore2:1.12.2-0.5.1-20200301-095112'
     // compile against the JEI API but do not include it at runtime
     deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
     // at runtime, use the full JEI jar
@@ -63,6 +64,7 @@ dependencies {
 }
 
 repositories {
+    maven { url 'https://jitpack.io' }
     maven {
         name = "Progwml6 maven"
         url = "http://dvs1.progwml6.com/files/maven"

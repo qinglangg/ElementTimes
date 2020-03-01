@@ -40,10 +40,8 @@ import net.minecraftforge.fml.common.Mod;
 public class ElementtimesBlocks {
 
     // Plant
-    @ModBlock(registerName = "corn_crop", unlocalizedName = "cornCrop")
-    public static Block cornCrop = new com.elementtimes.tutorial.common.block.CornCrop();
-    @ModBlock(registerName = "corn_crop_up", unlocalizedName = "cornCropUp")
-    public static Block cornCropUp = new CornCropUp();
+    @ModBlock(registerName = "corn_crop")
+    public static Block cornCrop = new CornCrop();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
     @ModBlock.WorldGenObj(value = @Getter(RubberGenerator.RubberNatureGenerator.class), type = GenType.Tree)
     @ModOreDict("treeSapling")
@@ -217,7 +215,8 @@ public class ElementtimesBlocks {
     public static Block fermenter = new BaseClosableMachine<>(TileFermenter.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(TileFluidTank.class)
-    public static Block fluidTank = new BlockTileBase<>(TileFluidTank.class, ElementTimes.instance);
+    @ModBlock.TESR("com.elementtimes.tutorial.client.block.FluidTankRender")
+    public static Block fluidTank = new BlockTileBase<>(TileFluidTank.class);
 
     // Pipeline
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)

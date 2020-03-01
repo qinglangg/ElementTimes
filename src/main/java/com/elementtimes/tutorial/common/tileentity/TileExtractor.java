@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 @ModInvokeStatic("init")
 public class TileExtractor extends BaseTileEntity {
 
-    @JeiRecipe.MachineRecipe(block = "elementtimes:extractor", gui = TileExtractor.class, u = 44, v = 16, w = 90, h = 44)
+    @JeiRecipe.MachineRecipe(block = "elementtimes:extractor", gui = TileExtractor.class, u = 44, v = 6, w = 90, h = 44)
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 3, 0, 0);
 
     public static void init() {

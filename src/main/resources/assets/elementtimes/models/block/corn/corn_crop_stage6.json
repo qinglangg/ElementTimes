@@ -1,6 +1,0 @@
-{
-    "parent": "block/crop",
-    "textures": {
-        "crop": "elementtimes:blocks/corn/corn_crop_stage6"
-    }
-}

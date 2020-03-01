@@ -1,5 +1,13 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": {
+            "all": "elementtimes:blocks/platinumblock"
+        }
+    },
     "variants": {
-        "normal": { "model": "elementtimes:platinumblock" }
+        "inventory": [{}],
+        "normal": [{}]
     }
 }

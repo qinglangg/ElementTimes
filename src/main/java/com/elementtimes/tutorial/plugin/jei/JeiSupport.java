@@ -32,7 +32,6 @@ public class JeiSupport implements IModPlugin {
         // 玉米
         IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
         blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCrop));
-        blacklist.addIngredientToBlacklist(new ItemStack(ElementtimesBlocks.cornCropUp));
         // 机器配方
         for (MachineRecipeData machine : MACHINES) {
             registerJeiRecipes(registry, machine.block, machine.recipe, machine.id);

@@ -1,58 +1,13 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube"
+    "model": "cube_all",
+    "textures": {
+      "all": "elementtimes:blocks/fluidtank"
+    }
   },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/fluidtank/top",
-        "down": "elementtimes:blocks/fluidtank/bottom",
-        "up": "elementtimes:blocks/fluidtank/top",
-        "north": "elementtimes:blocks/fluidtank/side",
-        "south": "elementtimes:blocks/fluidtank/side",
-        "west": "elementtimes:blocks/fluidtank/side",
-        "east": "elementtimes:blocks/fluidtank/off"
-      }
-    }],
-    "normal": [{}],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/fluidtank/top",
-          "down": "elementtimes:blocks/fluidtank/bottom",
-          "up": "elementtimes:blocks/fluidtank/top",
-          "north": "elementtimes:blocks/fluidtank/side",
-          "south": "elementtimes:blocks/fluidtank/side",
-          "west": "elementtimes:blocks/fluidtank/side",
-          "east": "elementtimes:blocks/fluidtank/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/fluidtank/top",
-          "down": "elementtimes:blocks/fluidtank/bottom",
-          "up": "elementtimes:blocks/fluidtank/top",
-          "north": "elementtimes:blocks/fluidtank/side",
-          "south": "elementtimes:blocks/fluidtank/side",
-          "west": "elementtimes:blocks/fluidtank/side",
-          "east": "elementtimes:blocks/fluidtank/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "inventory": [{}],
+    "normal": [{}]
   }
 }

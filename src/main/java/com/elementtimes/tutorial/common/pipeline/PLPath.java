@@ -76,34 +76,6 @@ public class PLPath {
         return path;
     }
 
-//    public PLPath copy() {
-//        PLPath path = new PLPath();
-//        path.path.addAll(this.path);
-//        path.from = this.from;
-//        path.totalTick = this.totalTick;
-//        return path;
-//    }
-
-//    private void test(World world, BaseElement element, LinkedList<BlockPos> subPath, long subTick) {
-//        if (!subPath.isEmpty()) {
-//            int indexFirst = path.indexOf(subPath.getFirst());
-//            int indexLast = path.lastIndexOf(subPath.getLast());
-//            if (indexFirst >= 0 && indexLast >= indexFirst) {
-//                List<BlockPos> subPathCheck = path.subList(indexFirst, indexLast + 1);
-//                long t = subPathCheck.stream().map(world::getTileEntity).mapToLong(te -> ((ITilePipeline) te).getKeepTime(element)).sum();
-//                if (t > subTick || (t == subTick && subPathCheck.size() > subPath.size())) {
-//                    List<BlockPos> first = path.subList(0, indexFirst);
-//                    List<BlockPos> last = path.subList(indexLast + 1, path.size());
-//                    LinkedList<BlockPos> paths = new LinkedList<>();
-//                    paths.addAll(first);
-//                    paths.addAll(subPath);
-//                    paths.addAll(last);
-//                    this.path = paths;
-//                }
-//            }
-//        }
-//    }
-
     public boolean isEmpty() {
         return path.isEmpty();
     }

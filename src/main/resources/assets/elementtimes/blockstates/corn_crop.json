@@ -1,13 +1,27 @@
 {
-    "variants": {
-        "age=0": { "model": "elementtimes:corn/corn_crop_stage0" },
-        "age=1": { "model": "elementtimes:corn/corn_crop_stage1" },
-        "age=2": { "model": "elementtimes:corn/corn_crop_stage2" },
-        "age=3": { "model": "elementtimes:corn/corn_crop_stage3" },
-        "age=4": { "model": "elementtimes:corn/corn_crop_stage4" },
-        "age=5": { "model": "elementtimes:corn/corn_crop_stage5" },
-        "age=6": { "model": "elementtimes:corn/corn_crop_stage6" },
-        "age=7": { "model": "elementtimes:corn/corn_crop_stage7" },
-        "inventory": { "model": "elementtimes:corn/corn_crop_stage7" }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "crop",
+    "textures": {
+      "crop": "elementtimes:blocks/corn/corn_crop_stage0"
     }
+  },
+  "variants": {
+    "inventory": [{}],
+    "normal": [{}],
+    "age": {
+       "0": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage0"}},
+       "1": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage1"}},
+       "2": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage2"}},
+       "3": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage3"}},
+       "4": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage4"}},
+       "5": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage5"}},
+       "6": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage6"}},
+       "7": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_stage7"}},
+       "8": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_up_stage0"}},
+       "9": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_up_stage1"}},
+      "10": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_up_stage2"}},
+      "11": {"textures": {"crop": "elementtimes:blocks/corn/corn_crop_up_stage3"}}
+    }
+  }
 }

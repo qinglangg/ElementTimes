@@ -1,5 +1,14 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_column",
+        "textures": {
+            "end": "elementtimes:blocks/elementgeneraterdown",
+            "side": "elementtimes:blocks/pulverizer"
+        }
+    },
     "variants": {
-        "normal": { "model": "elementtimes:pulverizer" }
+        "inventory": [{}],
+        "normal": [{}]
     }
 }

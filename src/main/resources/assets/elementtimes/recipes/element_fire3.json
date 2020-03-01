@@ -1,6 +1,12 @@
 {
     "type":"minecraft:crafting_shaped",
     "group": "elementtimes:recipes",
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "tconstruct"
+        }
+    ],
     "pattern":[
         "A A",
         "BFC",

@@ -101,18 +101,18 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, MachineRecipeWrapper recipeWrapper, @Nonnull IIngredients ingredients) {
+        int inputItemCount = recipeWrapper.inputItems.size();
+        int inputFluidCount = recipeWrapper.inputFluids.size();
         recipeLayout.getItemStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
             List<Map<ItemStack, List<String>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
-            tooltip.addAll(stringMaps.get(slotIndex).get(ingredient));
+            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputItemCount).get(ingredient));
         });
         recipeLayout.getFluidStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
             List<Map<FluidStack, List<String>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
-            tooltip.addAll(stringMaps.get(slotIndex).get(ingredient));
+            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputFluidCount).get(ingredient));
         });
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();
-        int inputItemCount = recipeWrapper.inputItems.size();
-        int inputFluidCount = recipeWrapper.inputFluids.size();
         for (int i = 0; i < items.length; i++) {
             itemStacks.init(i, i < inputItemCount, items[i][0], items[i][1]);
         }

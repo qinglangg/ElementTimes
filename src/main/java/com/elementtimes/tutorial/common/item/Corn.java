@@ -25,7 +25,7 @@ public class Corn extends ModFood {
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote) {
 			IBlockState state = worldIn.getBlockState(pos);
-			if(state.getBlock()==Blocks.FARMLAND&&state.getValue(BlockFarmland.MOISTURE)>0) {
+			if(state.getBlock()==Blocks.FARMLAND && state.getValue(BlockFarmland.MOISTURE) > 0) {
 				worldIn.setBlockState(pos.up(),ElementtimesBlocks.cornCrop.getDefaultState());
 				player.getHeldItem(hand).shrink(1);
 			}

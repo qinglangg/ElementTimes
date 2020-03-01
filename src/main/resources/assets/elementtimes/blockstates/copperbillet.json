@@ -1,5 +1,13 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": {
+            "all": "elementtimes:blocks/copperbillet"
+        }
+    },
     "variants": {
-        "normal": { "model": "elementtimes:copperbillet" }
+        "inventory": [{}],
+        "normal": [{}]
     }
 }

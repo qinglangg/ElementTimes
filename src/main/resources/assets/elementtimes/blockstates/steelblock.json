@@ -1,5 +1,13 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": {
+            "all": "elementtimes:blocks/steelblock"
+        }
+    },
     "variants": {
-        "normal": { "model": "elementtimes:steelblock" }
+        "inventory": [{}],
+        "normal": [{}]
     }
 }

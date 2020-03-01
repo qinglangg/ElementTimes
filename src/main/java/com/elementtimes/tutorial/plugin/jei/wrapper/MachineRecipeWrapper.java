@@ -116,7 +116,7 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         ItemStack stack = item.copy();
         if (stack.getCount() == 0 && isInput) {
             stack.setCount(1);
-            tooltips.add("无消耗");
+            tooltips.add("催化剂");
         }
         if (ingredient.probability < 1) {
             tooltips.add("概率：" + ingredient.probability * 100 + "%");
@@ -129,7 +129,7 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         FluidStack stack = fluid.copy();
         if (stack.amount == 0 && isInput) {
             stack.amount = 1000;
-            tooltips.add("无消耗");
+            tooltips.add("催化剂");
         }
         tooltips.addAll(ingredient.tooltips);
         return stack;

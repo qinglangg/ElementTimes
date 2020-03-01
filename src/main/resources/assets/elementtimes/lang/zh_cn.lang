@@ -148,6 +148,7 @@ item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
 item.elementtimes.carvedcpu.name=carvedcpu
 # block
+tile.elementtimes.corncrop.name=玉米
 tile.elementtimes.beaker.name=烧杯
 tile.elementtimes.crucible.name=坩埚
 tile.elementtimes.woodessence.name=精华木材
@@ -217,6 +218,7 @@ tile.elementtimes.pipelineitemconnect.name=物品连接管道
 tile.elementtimes.pipelinefluidinput.name=流体输入管道
 tile.elementtimes.pipelinefluidoutput.name=流体输出管道
 tile.elementtimes.pipelinefluidconnect.name=流体连接管道
+tile.elementtimes.fluidtank.name=流体储罐
 tile.elementtimes.test.name=测试方块
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
