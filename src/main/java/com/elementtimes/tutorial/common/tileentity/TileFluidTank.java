@@ -41,6 +41,14 @@ public class TileFluidTank extends TileEntity {
         mHandler.setLevel(newLevel);
     }
 
+    public NBTTagCompound write() {
+        return mHandler.serializeNBT();
+    }
+
+    public void read(NBTTagCompound nbt) {
+        mHandler.deserializeNBT(nbt);
+    }
+
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
@@ -57,31 +65,36 @@ public class TileFluidTank extends TileEntity {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setTag("t", mHandler.serializeNBT());
+        compound.setTag("t", write());
         return super.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        mHandler.deserializeNBT(compound.getCompoundTag("t"));
+        read(compound.getCompoundTag("t"));
         super.readFromNBT(compound);
     }
 
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 1, mHandler.serializeNBT());
+        return new SPacketUpdateTileEntity(pos, 1, write());
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        mHandler.deserializeNBT(pkt.getNbtCompound());
+        read(pkt.getNbtCompound());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
     }
 
     @Override
     public void markDirty() {
         super.markDirty();
-        if (!world.isRemote) {
+        if (world != null && !world.isRemote) {
             IBlockState state = world.getBlockState(pos);
             world.notifyBlockUpdate(pos, state, state, 1);
         }

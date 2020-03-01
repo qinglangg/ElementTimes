@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * @author qinglan,luqin2007
- * TODO  2.元素发电机JEI显示每个元素发电量 5.烧杯GUI
+ * TODO  5.烧杯GUI
  * 7.导线（空梦部分）
  * 以下为可选TODO
  * 2.添加竹子自然生成并且可以生长（完全抄mc高版本，可能得物品变成方块，具体看高版本竹子咋写的），添加完成以后移除现存的打草掉落竹子的方式，和打草掉落玉米在一个类

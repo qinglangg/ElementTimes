@@ -19,7 +19,9 @@ import javax.annotation.Nonnull;
  */
 @SideOnly(Side.CLIENT)
 public class FluidTankRender extends FastTESR<TileFluidTank> {
-    
+
+    private boolean isSync = false;
+
     @Override
     public void renderTileEntityFast(TileFluidTank te, double x, double y, double z, float partialTicks,
                                      int destroyStage, float partial, @Nonnull BufferBuilder buffer) {

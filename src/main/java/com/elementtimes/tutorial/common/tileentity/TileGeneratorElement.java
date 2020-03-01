@@ -4,6 +4,7 @@ import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGeneratorLifecycle;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
@@ -12,6 +13,8 @@ import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import com.elementtimes.tutorial.config.ElementtimesConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -29,15 +32,20 @@ public class TileGeneratorElement extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.add(r -> -ElementtimesConfig.GENERAL.generaterFive, ElementtimesItems.fiveElements)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterEnd, ElementtimesItems.endElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterSoilGen, ElementtimesItems.soilElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterWoodGen, ElementtimesItems.woodElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterWaterGen, ElementtimesItems.waterElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterFireGen, ElementtimesItems.fireElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterSun, ElementtimesItems.photoElement)
-                    .add(r -> -ElementtimesConfig.GENERAL.generaterGoldGen, ElementtimesItems.goldElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterFive, ElementtimesItems.fiveElements);
+            addRecipe(ElementtimesConfig.GENERAL.generaterEnd, ElementtimesItems.endElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterSoilGen, ElementtimesItems.soilElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterWoodGen, ElementtimesItems.woodElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterWaterGen, ElementtimesItems.waterElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterFireGen, ElementtimesItems.fireElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterSun, ElementtimesItems.photoElement);
+            addRecipe(ElementtimesConfig.GENERAL.generaterGoldGen, ElementtimesItems.goldElement);
         }
+    }
+
+    private static void addRecipe(int energy, Item element) {
+        IngredientPart<ItemStack> input = IngredientPart.forItem(element, 1).withStrings("Total " + energy + " FE");
+        RECIPE.newRecipe().addCost(energy).addItemInput(input).endAdd();
     }
 
     public TileGeneratorElement() {
