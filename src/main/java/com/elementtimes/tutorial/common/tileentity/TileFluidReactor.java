@@ -35,28 +35,28 @@ public class TileFluidReactor extends BaseTileEntity {
             RECIPES 
             		//烧杯完成后移到烧杯的内容
             		.newRecipe()
-            		.addCost(0)
+            		.addCost(1000)
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.h2so4,1000))
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid, 1000))
             		.endAdd()
             		//烧杯完成后移到烧杯的内容
             		.newRecipe()
-            		.addCost(0)
+            		.addCost(1000)
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.concentratedSulfuricAcid,1000))
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.diluteSulfuricAcid, 1000))
             		.endAdd()
             		//烧杯完成后移到烧杯的内容
             		.newRecipe()
-            		.addCost(0)
+            		.addCost(1000)
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.HCl,1000))
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid, 1000))
             		.endAdd()
             		//烧杯完成后移到烧杯的内容
             		.newRecipe()
-            		.addCost(0)
+            		.addCost(1000)
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ConcentratedHydrochloricAcid,1000))
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 1000))
@@ -217,7 +217,7 @@ public class TileFluidReactor extends BaseTileEntity {
 
                     //Co2+Ca(OH)2=CaCO3+H2O
                     .newRecipe()
-                    .addCost(0)
+                    .addCost(1000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.co2, Fluid.BUCKET_VOLUME))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.calciumHydroxide, Fluid.BUCKET_VOLUME))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.calciumCarbonate , 1))

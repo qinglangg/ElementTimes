@@ -93,7 +93,7 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     //2Na+Cl2=2NaCl
                     .newRecipe()
-                    .addCost(0)
+                    .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.na, 2))
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
@@ -132,25 +132,25 @@ public class TileSolidFluidReactor extends BaseTileEntity {
 
                     //钠与水反应
                     .newRecipe()
-                    .addCost(0)
-                    .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
+                    .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.na, 2))
+                    .addFluidInput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .endAdd()
                     .newRecipe()
-                    .addCost(0)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 2000))
+                    .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.na, 2))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.H, 1000))
                     .endAdd()
 
                     //电石制取乙炔
                     .newRecipe()
-                    .addCost(0)
-                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 2000))
+                    .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.calciumacetylide, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.NaClSolutionConcentrated, 2000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.calciumHydroxide, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
