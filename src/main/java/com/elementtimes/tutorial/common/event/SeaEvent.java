@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.event;
 import com.elementtimes.elementcore.api.common.ECUtils;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.capability.CapabilitySeaWater;
+import com.elementtimes.tutorial.common.generator.OceanGenerator;
 import com.elementtimes.tutorial.common.init.ElementtimesMagic;
 import com.elementtimes.tutorial.common.potion.SaltedFish;
 import net.minecraft.entity.Entity;
@@ -15,18 +16,22 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -167,6 +172,19 @@ public class SeaEvent {
             if (effectSaltedFish != null) {
                 speedAttr.applyModifier(new AttributeModifier(UUID_SPEED, "speed-", -speedAttr.getAttributeValue() * 0.9, 0));
                 event.getEntityLiving().moveVertical *= 0.9;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onSeaGenerate(DecorateBiomeEvent.Post event) {
+        OceanGenerator generator = new OceanGenerator();
+        World world = event.getWorld();
+        if (world != null && !world.isRemote) {
+            Random rand = event.getRand();
+            ChunkPos chunkPos = event.getChunkPos();
+            if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.LAKE_WATER)) {
+                generator.generate(world, rand, chunkPos.getBlock(0, 0, 0));
             }
         }
     }
