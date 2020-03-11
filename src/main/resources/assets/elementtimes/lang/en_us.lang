@@ -218,7 +218,7 @@ tile.elementtimes.pipelineitemconnect.name=Item Connect Pipeline
 tile.elementtimes.pipelinefluidinput.name=Fluid Input Pipeline
 tile.elementtimes.pipelinefluidoutput.name=Fluid Output Pipeline
 tile.elementtimes.pipelinefluidconnect.name=Fluid Connect Pipeline
-tile.elementtimes.fluidtank.name=流体储罐
+tile.elementtimes.fluidtank.name=Fluid Tank
 tile.elementtimes.test.name=Test Block
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2
