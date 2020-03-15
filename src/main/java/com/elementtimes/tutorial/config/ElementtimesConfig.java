@@ -1,6 +1,10 @@
 package com.elementtimes.tutorial.config;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Extractor;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Forming;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Furnace;
+import com.elementtimes.tutorial.config.ElementtimesConfig.Compressor.Rebuild;
 
 import net.minecraftforge.common.config.Config;
 
@@ -34,19 +38,19 @@ public class ElementtimesConfig {
 
     @Config.Name("furnace")
     @Config.LangKey("elementtimes.config.furnace")
-    public static final Compressor.Furnace FURNACE = new Compressor.Furnace();
+    public static final Furnace FURNACE = new Furnace();
 
     @Config.Name("extractor")
     @Config.LangKey("elementtimes.config.extractor")
-    public static final Compressor.Extractor EXTRACTOR = new Compressor.Extractor();
+    public static final Extractor EXTRACTOR = new Extractor();
 
     @Config.Name("rebuild")
     @Config.LangKey("elementtimes.config.rebuild")
-    public static final Compressor.Rebuild REBUILD = new Compressor.Rebuild();
+    public static final Rebuild REBUILD = new Rebuild();
 
     @Config.Name("forming")
     @Config.LangKey("elementtimes.config.forming")
-    public static final Compressor.Forming FORMING = new Compressor.Forming();
+    public static final Forming FORMING = new Forming();
 
     public static final class General {
         @Config.Comment("设置发电机最大容量")
