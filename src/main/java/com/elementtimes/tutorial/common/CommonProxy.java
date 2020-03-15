@@ -1,10 +1,10 @@
 package com.elementtimes.tutorial.common;
 
+import com.elementtimes.tutorial.common.autonet.NetworkLoader;
 import com.elementtimes.tutorial.common.init.ElementtimesRecipe;
 import com.elementtimes.tutorial.common.pipeline.ElementType;
 import com.elementtimes.tutorial.common.pipeline.FluidElement;
 import com.elementtimes.tutorial.common.pipeline.ItemElement;
-import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
 import com.elementtimes.tutorial.plugin.slashblade.BladeElementknife;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.init.Blocks;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
-    	new NetworkLoader();
+        new NetworkLoader();
         String flammPfeil = "flammpfeil.slashblade";
         if (Loader.isModLoaded(flammPfeil)) {
             SlashBlade.InitEventBus.register(new BladeElementknife());

@@ -358,10 +358,10 @@ item.elementknife.name=元素刀
 elementtimes.book.minecraft=元素手册
 elementtimes.book.patchouli.landing=$(o)$(4)欢迎来到元素时代!
 # wire
-item.wire_copper.name=铜导线
-item.wire_iron.name=铁导线
-item.wire_aluminum.name=铝导线
-item.wire_glod.name=金导线
-item.wire_tin.name=锡导线
-item.wire_high.name=高能导线
-item.wire_element.name=元素导线
+tile.wire_copper.name=铜导线
+tile.wire_iron.name=铁导线
+tile.wire_aluminum.name=铝导线
+tile.wire_glod.name=金导线
+tile.wire_tin.name=锡导线
+tile.wire_high.name=高能导线
+tile.wire_element.name=元素导线

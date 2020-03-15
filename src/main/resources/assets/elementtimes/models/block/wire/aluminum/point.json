@@ -26,13 +26,19 @@
 			"translation": [0, 0, -1]
 		},
 		"firstperson_righthand": {
-			"translation": [1.25, 3.75, 0]
+			"rotation": [0, 0, -15],
+			"translation": [0.5, 0.5, 0]
 		},
 		"firstperson_lefthand": {
-			"translation": [1.25, 3.75, 0]
+			"rotation": [0, 0, 15],
+			"translation": [0.5, 0.5, 0]
+		},
+		"gui": {
+			"rotation": [41, 38, 0]
 		},
 		"head": {
-			"translation": [0, 8.5, 0]
+			"translation": [0, -2, -5.5],
+			"scale": [2.47852, 1.07813, 1.30664]
 		}
 	}
 }

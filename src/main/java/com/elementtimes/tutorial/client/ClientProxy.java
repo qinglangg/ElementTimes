@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.client;
 
 import com.elementtimes.tutorial.common.CommonProxy;
-import com.elementtimes.tutorial.common.wire.simpleImpl.NetworkLoader;
+import com.elementtimes.tutorial.common.autonet.NetworkLoader;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
