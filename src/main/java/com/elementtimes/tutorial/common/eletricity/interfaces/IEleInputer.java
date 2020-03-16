@@ -33,6 +33,15 @@ public interface IEleInputer extends IRegister {
 	IVoltage getVoltage(TileEntity te);
 	
 	/**
+	 * 根据输入的电能判断电器可消耗的电能
+	 * @param now 当前方块
+	 * @param energy 能量值
+	 * @return 返回值 ≤ energy
+	 * @throws ClassCastException 如果不支持输入的TE
+	 */
+	int getEnergy(TileEntity now, int energy);
+	
+	/**
 	 * 判断当前方块能否从指定方向获取电能
 	 * @param now 当前方块
 	 * @param facing 指定方向

@@ -28,12 +28,6 @@ public interface IAutoNetwork {
 	/**
 	 * 处理接收的信息
 	 */
-	void reveive(@Nonnull NBTTagCompound compound);
-	
-	World getWorld();
-	
-	boolean isInvalid();
-	
-	BlockPos getPos();
+	void receive(@Nonnull NBTTagCompound compound);
 	
 }

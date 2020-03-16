@@ -32,6 +32,11 @@ public class EleSrcInputer implements IEleInputer {
 	}
 	
 	@Override
+	public int getEnergy(TileEntity now, int energy) {
+		return now.getCapability(CapabilityEnergy.ENERGY, null).receiveEnergy(energy, true);
+	}
+	
+	@Override
 	public IVoltage getVoltage(TileEntity te) {
 		return EnumVoltage.ORDINARY;
 	}

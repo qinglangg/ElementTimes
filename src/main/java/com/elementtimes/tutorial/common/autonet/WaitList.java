@@ -7,6 +7,7 @@ import java.util.Set;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -67,12 +68,13 @@ public class WaitList {
 			NetworkRegister.forEach(true, network -> {
 				NBTTagCompound message = network.send();
 				if (message != null) {
+					TileEntity te = (TileEntity) network;
 					message.setIntArray("_pos", new int[] {
-							network.getPos().getX(),
-							network.getPos().getY(),
-							network.getPos().getZ()});
-					message.setInteger("_world", network.getWorld().provider.getDimension());
-					if (!(message == null)) sendToService(new MessageBase(message));
+							te.getPos().getX(),
+							te.getPos().getY(),
+							te.getPos().getZ()});
+					message.setInteger("_world", te.getWorld().provider.getDimension());
+					sendToService(new MessageBase(message));
 				}
 			});
 		} else {
@@ -80,22 +82,23 @@ public class WaitList {
 				NetworkRegister.forEach(false, network -> {
 					NBTTagCompound message = network.send();
 					if (message != null) {
+						TileEntity te = (TileEntity) network;
 						message.setIntArray("_pos", new int[] {
-								network.getPos().getX(),
-								network.getPos().getY(),
-								network.getPos().getZ()});
-						message.setInteger("_world", network.getWorld().provider.getDimension());
+								te.getPos().getX(),
+								te.getPos().getY(),
+								te.getPos().getZ()});
+						message.setInteger("_world", te.getWorld().provider.getDimension());
 						int amount = message.getInteger("playerAmount");
 						if (amount > 0) {
 							Set<EntityPlayerMP> players = new HashSet<>(amount);
 							for (int i = 0; i < amount; ++i) {
-								EntityPlayerMP player = (EntityPlayerMP) network.getWorld().getPlayerEntityByName(
+								EntityPlayerMP player = (EntityPlayerMP) te.getWorld().getPlayerEntityByName(
 										message.getString("player" + i));
 								if (player == null) throw new ClassCastException("指定玩家不存在！[" +
 										                              message.getString("player" + i) + "]");
 								players.add(player);
 							}
-							if (!(message == null)) sendToClient(new MessageBase(message), players);
+							sendToClient(new MessageBase(message), players);
 						}
 					}
 				});
@@ -125,7 +128,7 @@ public class WaitList {
 					clientMessage.add(mb);
 				} else {
 					++amount;
-					et.reveive(mb.getCompound());
+					et.receive(mb.getCompound());
 				}
 			});
 			client = clientMessage;

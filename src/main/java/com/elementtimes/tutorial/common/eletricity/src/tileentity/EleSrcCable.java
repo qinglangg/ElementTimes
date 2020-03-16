@@ -449,7 +449,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	private EnumFacing[] cacheFacing;
 	
 	@Override
-	public void reveive(@Nonnull NBTTagCompound message) {
+	public void receive(@Nonnull NBTTagCompound message) {
 		up = message.getBoolean("up");
 		down = message.getBoolean("down");
 		east = message.getBoolean("east");

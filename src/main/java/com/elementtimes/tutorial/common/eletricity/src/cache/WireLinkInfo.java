@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.info.EleLineCache;
@@ -141,6 +142,9 @@ public final class WireLinkInfo extends EleLineCache {
 	private static void calculateHelper(EleSrcCable start, TileEntity prev,
 	                                    TileEntity user, IEleInputer inputer, PathInfo info) {
 		info.setUser(user).setInputer(inputer);
+		AtomicReference<UseInfo> realUseInfo = new AtomicReference<>();
+		AtomicReference<TileEntity> realOut = new AtomicReference<>();
+		AtomicReference<IEleOutputer> realOutper = new AtomicReference<>();
 		
 		IEleTransfer transfer = EleWorker.getTransfer(start);
 		int energy = inputer.getEnergy(user);
@@ -158,6 +162,13 @@ public final class WireLinkInfo extends EleLineCache {
 								.setVoltage(useInfo.getVoltage());
 						return false;
 					}
+					int k = inputer.getEnergy(user, useInfo.getEnergy());
+					if (k > 0 && (realUseInfo.get() == null ||
+							              realUseInfo.get().getEnergy() < k)) {
+						realUseInfo.set(useInfo.setEnergy(k));
+						realOut.set(entry.getKey());
+						realOutper.set(entry.getValue());
+					}
 				}
 				if (next != null) {
 					info.merge(EleWorker.getTransfer(next).findPath(next, user, inputer));
@@ -174,10 +185,23 @@ public final class WireLinkInfo extends EleLineCache {
 							.setVoltage(useInfo.getVoltage());
 						return false;
 					}
+					int k = inputer.getEnergy(user, useInfo.getEnergy());
+					if (k > 0 && (realUseInfo.get() == null ||
+							              realUseInfo.get().getEnergy() < k)) {
+						realUseInfo.set(useInfo.setEnergy(k));
+						realOut.set(entry.getKey());
+						realOutper.set(entry.getValue());
+					}
 				}
 				return true;
 			}
 		});
+		if (info.getOuter() == null && realUseInfo.get() != null) {
+			info.setEnergy(realUseInfo.get().getEnergy())
+				.setOuter(realOut.get())
+				.setOutputer(realOutper.get())
+				.setVoltage(realUseInfo.get().getVoltage());
+		}
 	}
 	
 	/**
