@@ -37,12 +37,14 @@ import static net.minecraft.util.EnumFacing.WEST;
  * @author EmptyDreams
  * @version V1.0
  */
-@SuppressWarnings("unused")
 @ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY_TRANSFER", value = EleSrcCable.class)
 public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable {
 	
-	public EleSrcCable() { }
+	public EleSrcCable() {
+		NetworkRegister.register(this);
+	}
 	public EleSrcCable(int meMax, int loss) {
+		this();
 		this.meMax = meMax;
 		this.loss = loss;
 	}
@@ -358,7 +360,6 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	@Override
 	public void update() {
 		if (cache == null) {
-			NetworkRegister.register(this);
 			if (world.isRemote) cache = CLIENT_CACHE;
 			else {
 				WireLinkInfo.calculateCache(this);
