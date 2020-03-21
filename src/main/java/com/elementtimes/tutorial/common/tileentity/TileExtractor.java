@@ -9,7 +9,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -58,7 +58,9 @@ public class TileExtractor extends BaseTileEntity {
     }
 
     public TileExtractor() {
-        super(ElementtimesConfig.EXTRACTOR.maxEnergy, 1, 3);
+        super(ETConfig.EXTRACTOR.capacity, 1, 3);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.EXTRACTOR.input);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.EXTRACTOR.capacity);
     }
 
     @Nonnull
@@ -69,12 +71,7 @@ public class TileExtractor extends BaseTileEntity {
 
     @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.EXTRACTOR.maxExtract;
-    }
-
-    @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.EXTRACTOR.maxReceive);
+        return ETConfig.EXTRACTOR.extract;
     }
 
     @Override

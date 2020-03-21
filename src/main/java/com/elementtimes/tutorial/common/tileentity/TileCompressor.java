@@ -3,16 +3,15 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.google.common.collect.ImmutableMap;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -42,39 +41,38 @@ public class TileCompressor extends BaseTileEntity {
     private final static String ANIMATION_STATE_PLAY = "play";
     private final static String ANIMATION_STATE_STOP = "stop";
 
-    public TileCompressor() {
-        super(ElementtimesConfig.COMPRESSOR.maxEnergy, 1, 1);
-    }
-
     @JeiRecipe.MachineRecipe(block = "elementtimes:compressor", gui = TileCompressor.class, u = 44, v = 16, w = 90, h = 44)
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
-
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.add(ElementtimesConfig.COMPRESSOR.powderEnergy, "plankWood", 1, ElementtimesItems.platewood, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotCopper", 1, ElementtimesItems.plateCopper, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "gemDiamond", 1, ElementtimesItems.plateDiamond, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotGold", 1, ElementtimesItems.plateGold, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotIron", 1, ElementtimesItems.plateIron, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotPlatinum", 1, ElementtimesItems.platePlatinum, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "gemQuartz", 1, ElementtimesItems.plateQuartz, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSteel", 1, ElementtimesItems.plateSteel, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "stone", 1, ElementtimesItems.plateStone, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy,ElementtimesItems.stonepowder, 1, ElementtimesItems.plateStone, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, Items.COAL, 1, ElementtimesItems.plateCarbon, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotLead", 1, ElementtimesItems.plateLead, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotTin", 1, ElementtimesItems.plateTin, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, "ingotSilver", 1, ElementtimesItems.plateSilver, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, Blocks.OBSIDIAN, 1, ElementtimesItems.plateObsidian, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.diamondIngot, 1, ElementtimesItems.plateAdamas, ElementtimesConfig.COMPRESSOR.powderCount)
-            		.add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.Silicon, 1, ElementtimesItems.siliconPlate, ElementtimesConfig.COMPRESSOR.powderCount)
-                    .add(ElementtimesConfig.COMPRESSOR.powderEnergy, ElementtimesItems.Al, 1, ElementtimesItems.aluminiumPlate, ElementtimesConfig.COMPRESSOR.powderCount)
-            		
-            		;
+            RECIPE.newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("plankWood"                   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platewood     , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotCopper"                 , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateCopper   , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("gemDiamond"                  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateDiamond  , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotGold"                   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateGold     , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotIron"                   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateIron     , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotPlatinum"               , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platePlatinum , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("gemQuartz"                   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateQuartz   , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotSteel"                  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateSteel    , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("stone"                       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateStone    , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.stonepowder , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateStone    , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(Items.COAL                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateCarbon   , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotLead"                   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateLead     , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotTin"                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateTin      , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem("ingotSilver"                 , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateSilver   , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(Blocks.OBSIDIAN               , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateObsidian , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.diamondIngot, 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.plateAdamas   , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.Silicon     , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.siliconPlate  , () -> ETConfig.COMPRESSOR.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.COMPRESSOR.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.Al          , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.aluminiumPlate, () -> ETConfig.COMPRESSOR.count)).endAdd();
         }
     }
 
     private AnimationStateMachine mAnimationStateMachine;
+
+    public TileCompressor() {
+        super(ETConfig.COMPRESSOR.capacity, 1, 1);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.COMPRESSOR.capacity);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.COMPRESSOR.input);
+    }
 
     @Nonnull
     @Override
@@ -83,13 +81,8 @@ public class TileCompressor extends BaseTileEntity {
     }
 
     @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.COMPRESSOR.maxReceive);
-    }
-
-    @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.COMPRESSOR.maxExtract;
+        return ETConfig.COMPRESSOR.extract;
     }
 
     @Override

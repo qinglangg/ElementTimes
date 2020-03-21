@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * 机器 jei 合成表
@@ -21,10 +22,10 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
     public final List<List<FluidStack>> inputFluids;
     public final List<List<ItemStack>> outputItems;
     public final List<List<FluidStack>> outputFluids;
-    public final List<Map<ItemStack, List<String>>> itemOutputString;
-    public final List<Map<ItemStack, List<String>>> itemInputString;
-    public final List<Map<FluidStack, List<String>>> fluidOutputString;
-    public final List<Map<FluidStack, List<String>>> fluidInputString;
+    public final List<Map<ItemStack,  Supplier<List<String>>>> itemOutputString;
+    public final List<Map<ItemStack,  Supplier<List<String>>>> itemInputString;
+    public final List<Map<FluidStack, Supplier<List<String>>>> fluidOutputString;
+    public final List<Map<FluidStack, Supplier<List<String>>>> fluidInputString;
 
     private MachineRecipeWrapper(MachineRecipe recipe) {
         inputItems = new ArrayList<>();
@@ -32,12 +33,11 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         for (IngredientPart<ItemStack> input : recipe.inputs) {
             List<ItemStack> itemInput = input.allViableValues.get();
             List<ItemStack> itemList = new ArrayList<>();
-            Map<ItemStack, List<String>> stringMap = new HashMap<>();
+            Map<ItemStack, Supplier<List<String>>> stringMap = new HashMap<>();
             for (ItemStack item : itemInput) {
-                List<String> strings = new ArrayList<>();
-                ItemStack stack = addString(input, item, strings, true);
+                ItemStack stack = item.copy();
                 itemList.add(stack);
-                stringMap.put(stack, strings);
+                stringMap.put(stack, () -> getTooltips(input, stack, true));
             }
             inputItems.add(itemList);
             itemInputString.add(stringMap);
@@ -48,12 +48,11 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         for (IngredientPart<FluidStack> input : recipe.fluidInputs) {
             List<FluidStack> fluidInput = input.allViableValues.get();
             List<FluidStack> fluidList = new ArrayList<>();
-            Map<FluidStack, List<String>> stringMap = new HashMap<>();
+            Map<FluidStack, Supplier<List<String>>> stringMap = new HashMap<>();
             for (FluidStack fluid : fluidInput) {
-                List<String> strings = new ArrayList<>();
-                FluidStack stack = addString(input, fluid, strings, true);
+                FluidStack stack = fluid.copy();
                 fluidList.add(stack);
-                stringMap.put(stack, strings);
+                stringMap.put(stack, () -> getTooltips(input, stack, true));
             }
             inputFluids.add(fluidList);
             fluidInputString.add(stringMap);
@@ -64,12 +63,11 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         for (IngredientPart<ItemStack> output : recipe.outputs) {
             List<ItemStack> itemOutput = output.allViableValues.get();
             List<ItemStack> itemList = new ArrayList<>();
-            Map<ItemStack, List<String>> stringMap = new HashMap<>();
+            Map<ItemStack, Supplier<List<String>>> stringMap = new HashMap<>();
             for (ItemStack item : itemOutput) {
-                List<String> strings = new ArrayList<>();
-                ItemStack stack = addString(output, item, strings, false);
+                ItemStack stack = item.copy();
                 itemList.add(stack);
-                stringMap.put(stack, strings);
+                stringMap.put(stack, () -> getTooltips(output, stack, false));
             }
             outputItems.add(itemList);
             itemOutputString.add(stringMap);
@@ -80,12 +78,11 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         for (IngredientPart<FluidStack> output : recipe.fluidOutputs) {
             List<FluidStack> fluidOutput = output.allViableValues.get();
             List<FluidStack> fluidList = new ArrayList<>();
-            Map<FluidStack, List<String>> stringMap = new HashMap<>();
+            Map<FluidStack, Supplier<List<String>>> stringMap = new HashMap<>();
             for (FluidStack fluid : fluidOutput) {
-                List<String> strings = new ArrayList<>();
-                FluidStack stack = addString(output, fluid, strings, true);
+                FluidStack stack = fluid.copy();
                 fluidList.add(stack);
-                stringMap.put(stack, strings);
+                stringMap.put(stack, () -> getTooltips(output, stack, false));
             }
             outputFluids.add(fluidList);
             fluidOutputString.add(stringMap);
@@ -112,8 +109,8 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         return wrappers;
     }
 
-    private ItemStack addString(IngredientPart<ItemStack> ingredient, ItemStack item, List<String> tooltips, boolean isInput) {
-        ItemStack stack = item.copy();
+    private List<String> getTooltips(IngredientPart<ItemStack> ingredient, ItemStack stack, boolean isInput) {
+        List<String> tooltips = new ArrayList<>();
         if (stack.getCount() == 0 && isInput) {
             stack.setCount(1);
             tooltips.add("催化剂");
@@ -121,17 +118,17 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         if (ingredient.probability < 1) {
             tooltips.add("概率：" + ingredient.probability * 100 + "%");
         }
-        tooltips.addAll(ingredient.tooltips);
-        return stack;
+        tooltips.addAll(ingredient.getTooltips());
+        return tooltips;
     }
 
-    private FluidStack addString(IngredientPart<FluidStack> ingredient, FluidStack fluid, List<String> tooltips, boolean isInput) {
-        FluidStack stack = fluid.copy();
+    private List<String> getTooltips(IngredientPart<FluidStack> ingredient, FluidStack stack, boolean isInput) {
+        List<String> tooltips = new ArrayList<>();
         if (stack.amount == 0 && isInput) {
             stack.amount = 1000;
             tooltips.add("催化剂");
         }
-        tooltips.addAll(ingredient.tooltips);
-        return stack;
+        tooltips.addAll(ingredient.getTooltips());
+        return tooltips;
     }
 }

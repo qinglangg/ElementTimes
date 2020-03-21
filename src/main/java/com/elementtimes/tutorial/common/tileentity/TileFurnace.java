@@ -7,7 +7,7 @@ import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipe
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -44,7 +44,9 @@ public class TileFurnace extends BaseTileEntity {
     }
 
     public TileFurnace() {
-        super(ElementtimesConfig.FURNACE.maxEnergy, 1, 1);
+        super(ETConfig.FURNACE.capacity, 1, 1);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.FURNACE.input);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.FURNACE.capacity);
     }
 
     @Nonnull
@@ -55,12 +57,7 @@ public class TileFurnace extends BaseTileEntity {
 
     @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.FURNACE.maxExtract;
-    }
-
-    @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.FURNACE.maxReceive);
+        return ETConfig.FURNACE.extract;
     }
 
     @Override

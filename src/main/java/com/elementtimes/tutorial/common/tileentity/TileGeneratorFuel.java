@@ -8,7 +8,7 @@ import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipe
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -40,14 +40,16 @@ public class TileGeneratorFuel extends BaseTileEntity {
                             return 0;
                         }
                         ItemStack stack = value.inputs.get(0);
-                        return -TileEntityFurnace.getItemBurnTime(stack) * 10;
+                        return -TileEntityFurnace.getItemBurnTime(stack) * ETConfig.FUEL_GENERAL.multiple;
                     }).endAdd();
         }
     }
 
     public TileGeneratorFuel() {
-        super(ElementtimesConfig.FUEL_GENERAL.generaterMaxEnergy, 1, 0);
+        super(ETConfig.FUEL_GENERAL.capacity, 1, 0);
         addLifeCycle(new EnergyGeneratorLifecycle<>(this));
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.FUEL_GENERAL.output);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.FUEL_GENERAL.capacity);
     }
 
     @Nonnull
@@ -58,12 +60,7 @@ public class TileGeneratorFuel extends BaseTileEntity {
 
     @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.FUEL_GENERAL.generaterMaxReceive;
-    }
-
-    @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.FUEL_GENERAL.generaterMaxExtract);
+        return ETConfig.FUEL_GENERAL.generate;
     }
 
     @Override

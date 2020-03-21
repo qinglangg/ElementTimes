@@ -8,7 +8,7 @@ import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
@@ -23,10 +23,6 @@ import javax.annotation.Nonnull;
  */
 @ModInvokeStatic("init")
 public class TileForming extends BaseTileEntity {
-
-    public TileForming() {
-        super(ElementtimesConfig.FORMING.maxEnergy, 1, 1);
-    }
 
     @JeiRecipe.MachineRecipe(block = "elementtimes:forming", gui = TileForming.class, u = 44, v = 16, w = 90, h = 44)
     public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(1, 1, 0, 0);
@@ -51,6 +47,12 @@ public class TileForming extends BaseTileEntity {
         }
     }
 
+    public TileForming() {
+        super(ETConfig.FORMING.capacity, 1, 1);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.FORMING.input);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.FORMING.capacity);
+    }
+
     @Nonnull
     @Override
     public MachineRecipeHandler getRecipes() {
@@ -58,13 +60,8 @@ public class TileForming extends BaseTileEntity {
     }
 
     @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.FORMING.maxReceive);
-    }
-
-    @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.FORMING.maxExtract;
+        return ETConfig.FORMING.extract;
     }
 
     @Override

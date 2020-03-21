@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * 有一个物品输入和一个物品输出的 JEI 合成表界面兼容
@@ -104,12 +105,12 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
         int inputItemCount = recipeWrapper.inputItems.size();
         int inputFluidCount = recipeWrapper.inputFluids.size();
         recipeLayout.getItemStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            List<Map<ItemStack, List<String>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
-            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputItemCount).get(ingredient));
+            List<Map<ItemStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
+            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputItemCount).get(ingredient).get());
         });
         recipeLayout.getFluidStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            List<Map<FluidStack, List<String>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
-            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputFluidCount).get(ingredient));
+            List<Map<FluidStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
+            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputFluidCount).get(ingredient).get());
         });
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();

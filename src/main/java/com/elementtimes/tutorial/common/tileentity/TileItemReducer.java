@@ -3,12 +3,13 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,25 +31,25 @@ public class TileItemReducer extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesItems.bambooCharcoal, 1, ElementtimesItems.bamboo, 4)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesItems.sucroseCharCoal, 1, Items.REEDS, 4)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockTin", 1, ElementtimesItems.tin, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockLead", 1, ElementtimesItems.lead, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockCopper", 1, ElementtimesItems.copper, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockPlatinum", 1, ElementtimesItems.platinumIngot, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSilver", 1, ElementtimesItems.silver, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, "blockSteel", 1, ElementtimesItems.steelIngot, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, ElementtimesBlocks.diamondBlock, 1, ElementtimesItems.diamondIngot, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.MELON_BLOCK,1,Items.MELON, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.NETHER_WART_BLOCK,1,Items.NETHER_WART, 9)
-                    .add(ElementtimesConfig.ITEM_REDUCER.powderEnergy, Blocks.GLOWSTONE,1,Items.GLOWSTONE_DUST, 4)	
-                    
-            ;
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.bambooCharcoal , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.bamboo       , 4));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.sucroseCharCoal, 1)).addItemOutput(IngredientPart.forItem(Items.REEDS                    , 4));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockTin"                       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tin          , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockLead"                      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.lead         , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockCopper"                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.copper       , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockPlatinum"                  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platinumIngot, 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSilver"                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.silver       , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSteel"                     , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot   , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesBlocks.diamondBlock  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.diamondIngot , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.MELON_BLOCK               , 1)).addItemOutput(IngredientPart.forItem(Items.MELON                    , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.NETHER_WART_BLOCK         , 1)).addItemOutput(IngredientPart.forItem(Items.NETHER_WART              , 9));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE                 , 1)).addItemOutput(IngredientPart.forItem(Items.GLOWSTONE_DUST           , 4));
         }
     }
 
     public TileItemReducer() {
-        super(ElementtimesConfig.ITEM_REDUCER.maxEnergy, 1, 1);
+        super(ETConfig.ITEM_REDUCER.capacity, 1, 1);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.ITEM_REDUCER.input);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.ITEM_REDUCER.capacity);
     }
 
     @Nonnull
@@ -58,13 +59,8 @@ public class TileItemReducer extends BaseTileEntity {
     }
 
     @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.ITEM_REDUCER.maxReceive);
-    }
-
-    @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.ITEM_REDUCER.maxExtract;
+        return ETConfig.ITEM_REDUCER.extract;
     }
 
     @Override
@@ -93,6 +89,5 @@ public class TileItemReducer extends BaseTileEntity {
     @Override
     public String getTitle() {
         return ElementtimesBlocks.itemReducer.getLocalizedName();
-
     }
 }

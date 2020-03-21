@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.block.tree;
 
 import com.elementtimes.tutorial.common.generator.RubberGenerator;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -19,11 +19,6 @@ import java.util.Random;
  * @author KSGFK create in 2019/6/4
  */
 public class RubberSapling extends BlockBush implements IGrowable {
-    private int rubberProbability;
-
-    public RubberSapling() {
-        applyConfig();
-    }
 
     @Override
     public boolean canGrow(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, boolean isClient) {
@@ -50,17 +45,13 @@ public class RubberSapling extends BlockBush implements IGrowable {
                     high++;
                 }
                 for (int a = 0; a < high; a++) {
-                    if (rand.nextInt(100) < rubberProbability) {
+                    if (rand.nextInt(100) < ETConfig.NATURAL.probabilityRubber) {
                         IBlockState s = worldIn.getBlockState(pos.up(a));
                         worldIn.setBlockState(pos.up(a), s.withProperty(RubberLog.HAS_RUBBER, true));
                     }
                 }
             }
         }
-    }
-
-    public void applyConfig() {
-        rubberProbability = ElementtimesConfig.GENERAL.rubberTreeGenRubberProbability;
     }
 
     @Override

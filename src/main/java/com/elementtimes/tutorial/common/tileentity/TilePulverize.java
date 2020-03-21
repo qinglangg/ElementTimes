@@ -3,12 +3,13 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.config.ElementtimesConfig;
+import com.elementtimes.tutorial.config.ETConfig;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
@@ -29,26 +30,28 @@ public class TilePulverize extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.add(ElementtimesConfig.PUL.pulPowderEnergy, "oreIron", 1, ElementtimesItems.ironpowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreRedstone", 1, ElementtimesItems.redstonePowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreGold", 1, ElementtimesItems.goldPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreDiamond", 1, ElementtimesItems.diamondPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreLapis", 1, ElementtimesItems.bluestonePowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreEmerald", 1, ElementtimesItems.greenstonePowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreCopper", 1, ElementtimesItems.copperPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreCoal", 1, ElementtimesItems.coalPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "orePlatinum", 1, ElementtimesItems.platinumOrePowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreSilver", 1, ElementtimesItems.silverPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreQuartz", 1, ElementtimesItems.quartzPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreSulfur", 1, ElementtimesItems.sulfurOrePowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreLead", 1, ElementtimesItems.leadPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, "oreTin", 1, ElementtimesItems.tinPowder, ElementtimesConfig.PUL.pulPowderCount)
-                    .add(ElementtimesConfig.PUL.pulPowderEnergy, Items.BLAZE_ROD, 1, Items.BLAZE_POWDER, 8);
+            RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreIron"      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.ironpowder       , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreRedstone"  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.redstonePowder   , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreGold"      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.goldPowder       , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreDiamond"   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.diamondPowder    , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreLapis"     , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.bluestonePowder  , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreEmerald"   , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.greenstonePowder , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreCopper"    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.copperPowder     , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreCoal"      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.coalPowder       , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("orePlatinum"  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platinumOrePowder, () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreSilver"    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.silverPowder     , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreQuartz"    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.quartzPowder     , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreSulfur"    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.sulfurOrePowder  , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreLead"      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.leadPowder       , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreTin"       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tinPowder        , () -> ETConfig.PULVERIZE.count)).endAdd()
+                  .newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem(Items.BLAZE_ROD, 1)).addItemOutput(IngredientPart.forItem(Items.BLAZE_POWDER                 , () -> ETConfig.PULVERIZE.count)).endAdd();
         }
     }
 
     public TilePulverize() {
-        super(ElementtimesConfig.PUL.pulMaxEnergy, 1, 1);
+        super(ETConfig.PULVERIZE.capacity, 1, 1);
+        getEnergyHandler().setTransferSupplier(() -> ETConfig.PULVERIZE.input);
+        getEnergyHandler().setCapacitySupplier(() -> ETConfig.PULVERIZE.capacity);
     }
 
     @Nonnull
@@ -58,13 +61,8 @@ public class TilePulverize extends BaseTileEntity {
     }
 
     @Override
-    public void applyConfig() {
-        setEnergyTransfer(ElementtimesConfig.PUL.pulMaxReceive);
-    }
-
-    @Override
     public int getEnergyTick() {
-        return ElementtimesConfig.PUL.pulMaxExtract;
+        return ETConfig.PULVERIZE.energy;
     }
 
     @Override
