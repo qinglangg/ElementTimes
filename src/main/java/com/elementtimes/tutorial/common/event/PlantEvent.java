@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.event;
 
 import com.elementtimes.tutorial.ElementTimes;
+import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -47,7 +48,7 @@ public class PlantEvent {
 			int chance = 30;
 			if (rand.nextInt(chance) == 0) {
 				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
-						new ItemStack(ElementtimesItems.bamboo)));
+						new ItemStack(ElementtimesBlocks.bamboo)));
 			}
 		}
 	}

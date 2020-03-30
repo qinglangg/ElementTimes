@@ -118,7 +118,10 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
         if (ingredient.probability < 1) {
             tooltips.add("概率：" + ingredient.probability * 100 + "%");
         }
-        tooltips.addAll(ingredient.getTooltips());
+        List<String> list = ingredient.getTooltips();
+        if (list != null && !list.isEmpty()) {
+            tooltips.addAll(list);
+        }
         return tooltips;
     }
 
@@ -128,7 +131,10 @@ public class MachineRecipeWrapper implements IRecipeWrapper {
             stack.amount = 1000;
             tooltips.add("催化剂");
         }
-        tooltips.addAll(ingredient.getTooltips());
+        List<String> list = ingredient.getTooltips();
+        if (list != null && !list.isEmpty()) {
+            tooltips.addAll(list);
+        }
         return tooltips;
     }
 }

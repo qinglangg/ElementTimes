@@ -20,9 +20,7 @@ import net.minecraftforge.common.util.EnumHelper;
 public class ElementtimesItems {
 
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item fiveElements = new ItemRecord(
-            "sounds",
-            new SoundEvent(new ResourceLocation(ElementTimes.MODID,"sounds"))) {}.setMaxStackSize(64);
+    public static Item fiveElements = new ItemRecord("sounds", new SoundEvent(new ResourceLocation(ElementTimes.MODID,"sounds"))) {}.setMaxStackSize(64);
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item endElement = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
@@ -37,9 +35,6 @@ public class ElementtimesItems {
     public static Item goldElement = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item cropesSence = new Item();
-    @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    @ModOreDict("bamboo")
-    public static Item bamboo = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModItem.Tooltip("\u00a79Na")
     public static Item na = new Item();

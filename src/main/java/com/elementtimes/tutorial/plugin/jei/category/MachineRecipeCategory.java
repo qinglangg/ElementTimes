@@ -105,12 +105,22 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipeWrapp
         int inputItemCount = recipeWrapper.inputItems.size();
         int inputFluidCount = recipeWrapper.inputFluids.size();
         recipeLayout.getItemStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            List<Map<ItemStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
-            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputItemCount).get(ingredient).get());
+            try {
+                List<Map<ItemStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.itemInputString : recipeWrapper.itemOutputString;
+                List<String> list = stringMaps.get(input ? slotIndex : slotIndex - inputItemCount).get(ingredient).get();
+                if (list != null && !list.isEmpty()) {
+                    tooltip.addAll(list);
+                }
+            } catch (Exception ignored) {}
         });
         recipeLayout.getFluidStacks().addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            List<Map<FluidStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
-            tooltip.addAll(stringMaps.get(input ? slotIndex : slotIndex - inputFluidCount).get(ingredient).get());
+            try {
+                List<Map<FluidStack, Supplier<List<String>>>> stringMaps = input ? recipeWrapper.fluidInputString : recipeWrapper.fluidOutputString;
+                List<String> list = stringMaps.get(input ? slotIndex : slotIndex - inputFluidCount).get(ingredient).get();
+                if (list != null && !list.isEmpty()) {
+                    tooltip.addAll(list);
+                }
+            } catch (Exception ignored) {}
         });
         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();

@@ -60,6 +60,8 @@ public class ElementtimesBlocks {
     public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block leafesSence = new EssenceLeaf();
+    @ModBlock(registerName = "bamboo", creativeTabKey = ElementtimesTabs.AGRICULTURE)
+    public static Block bamboo = new Bamboo();
 
     // Ore
     @ModBlock(creativeTabKey = ElementtimesTabs.ORE)
@@ -296,4 +298,7 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
     @ModBlock.TileEntity(TileTest.class)
     public static Block test = new Test();
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock.TileEntity(TileCreativeEnergyBox.class)
+    public static Block creativeEnergy = new BlockTileBase<>(TileCreativeEnergyBox.class);
 }

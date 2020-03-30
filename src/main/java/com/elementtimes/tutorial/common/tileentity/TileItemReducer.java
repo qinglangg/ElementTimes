@@ -31,7 +31,7 @@ public class TileItemReducer extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.bambooCharcoal , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.bamboo       , 4));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.bambooCharcoal , 1)).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bamboo      , 4));
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.sucroseCharCoal, 1)).addItemOutput(IngredientPart.forItem(Items.REEDS                    , 4));
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockTin"                       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tin          , 9));
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockLead"                      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.lead         , 9));
