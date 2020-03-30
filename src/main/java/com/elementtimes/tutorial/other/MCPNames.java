@@ -1,5 +1,7 @@
 package com.elementtimes.tutorial.other;
 
+import net.minecraftforge.fml.common.Loader;
+
 /**
  * 反射用
  * @author luqin2007
@@ -19,5 +21,9 @@ public class MCPNames {
         public boolean match(String name) {
             return name != null && (name.equals(mcp) || name.equals(this.name));
         }
+    }
+
+    public static boolean isNetease() {
+        return Loader.isModLoaded("antimod") && Loader.isModLoaded("networkmod") && Loader.isModLoaded("friendplaymod");
     }
 }

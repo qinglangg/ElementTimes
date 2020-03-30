@@ -9,23 +9,39 @@ import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPar
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
-import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
+import com.elementtimes.tutorial.config.ETConfig;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 @ModInvokeStatic("init")
 public class TileGeneratorFluid extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE = null;
+    public static MachineRecipeHandler RECIPE = new MachineRecipeHandler(0, 0, 1, 0);
 
     public static void init() {
-        if (RECIPE == null) {
-            RECIPE = new MachineRecipeHandler(0, 0, 1, 0)
-                    .newRecipe().addCost(-1000).addFluidInput(IngredientPart.forFluid(ElementtimesFluids.ethanol, 1000)).endAdd();
+        if (RECIPE.getMachineRecipes().isEmpty()) {
+            for (Fluid fluid : FluidRegistry.getBucketFluids()) {
+                FluidStack fluidStack = new FluidStack(fluid, Fluid.BUCKET_VOLUME);
+                ItemStack bucket = FluidUtil.getFilledBucket(fluidStack);
+                int burnTime = TileEntityFurnace.getItemBurnTime(bucket);
+                if (burnTime > 0) {
+                    IngredientPart<FluidStack> ingredient = IngredientPart.forFluid(fluidStack)
+                            .withStrings(() -> Collections.singletonList(burnTime * ETConfig.GENERATOR_FLUID.multiple + "FE/1000mb"));
+                    RECIPE.newRecipe().addCost(capture -> -burnTime * ETConfig.GENERATOR_FLUID.multiple)
+                            .addFluidInput(ingredient).endAdd();
+                }
+            }
         }
     }
 

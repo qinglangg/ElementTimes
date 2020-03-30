@@ -219,7 +219,12 @@ tile.elementtimes.pipelinefluidinput.name=Fluid Input Pipeline
 tile.elementtimes.pipelinefluidoutput.name=Fluid Output Pipeline
 tile.elementtimes.pipelinefluidconnect.name=Fluid Connect Pipeline
 tile.elementtimes.fluidtank.name=Fluid Tank
+tile.elementtimes.energybox.name=Energy Box
+tile.elementtimes.creativeenergy.name=Infinite Energy Box
+tile.elementtimes.creativetank.name=Infinite Fluid Tank
+tile.elementtimes.creativechest.name=Infinite Single Item Handler
 tile.elementtimes.test.name=Test Block
+tile.elementtimes.bamboo.name=Test Block
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2
 tile.elementtimes.magnesiumchloridesolution.name=mgcl2

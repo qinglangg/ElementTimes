@@ -5,6 +5,7 @@ import com.elementtimes.elementcore.api.annotation.ModItem;
 import com.elementtimes.elementcore.api.annotation.enums.GenType;
 import com.elementtimes.elementcore.api.annotation.enums.HarvestType;
 import com.elementtimes.elementcore.api.annotation.part.Getter;
+import com.elementtimes.elementcore.api.annotation.part.Getter2;
 import com.elementtimes.elementcore.api.annotation.tools.ModBurnTime;
 import com.elementtimes.elementcore.api.annotation.tools.ModOreDict;
 import com.elementtimes.elementcore.api.template.block.BaseClosableMachine;
@@ -218,7 +219,13 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(TileFluidTank.class)
     @ModBlock.TESR("com.elementtimes.tutorial.client.block.FluidTankRender")
+    @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.EmptyMachineState"))
     public static Block fluidTank = new BlockTileBase<>(TileFluidTank.class);
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModBlock.TileEntity(TileEnergyBox.class)
+    @ModBlock.TESR("com.elementtimes.tutorial.client.block.EnergyBoxRender")
+    @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.EmptyMachineState"))
+    public static Block energyBox = new BlockTileBase<>(TileEnergyBox.class);
 
     // Pipeline
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
@@ -300,5 +307,14 @@ public class ElementtimesBlocks {
     public static Block test = new Test();
     @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
     @ModBlock.TileEntity(TileCreativeEnergyBox.class)
+    @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeEnergy = new BlockTileBase<>(TileCreativeEnergyBox.class);
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock.TileEntity(TileCreativeFluidTank.class)
+    @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
+    public static Block creativeTank = new BlockTileBase<>(TileCreativeFluidTank.class);
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock.TileEntity(TileCreativeItemChest.class)
+    @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
+    public static Block creativeChest = new BlockTileBase<>(TileCreativeItemChest.class);
 }

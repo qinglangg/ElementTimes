@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "elementtimes:blocks/fluidtank"
+      "all": "elementtimes:blocks/infinite_machine"
     }
   },
   "variants": {

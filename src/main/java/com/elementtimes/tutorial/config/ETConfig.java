@@ -46,7 +46,15 @@ public class ETConfig {
     @Config.LangKey("elementtimes.config.forming")
     public static final Forming FORMING = new Forming();
 
+    @Config.Name("generator_fluid")
+    @Config.LangKey("elementtimes.config.generator_fluid")
+    public static final FluidGen GENERATOR_FLUID = new FluidGen();
+
     @Config.Name("natural")
     @Config.LangKey("elementtimes.config.natural")
     public static final Natural NATURAL = new Natural();
+
+    @Config.Name("storage")
+    @Config.LangKey("elementtimes.config.storage")
+    public static final Storage STORAGE = new Storage();
 }

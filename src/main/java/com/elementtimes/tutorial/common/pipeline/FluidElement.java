@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.pipeline;
 
+import com.elementtimes.tutorial.other.MCPNames;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -62,6 +63,9 @@ public class FluidElement extends BaseElement {
 
     @Override
     public void drop(World world, BlockPos pos) {
+        if (MCPNames.isNetease()) {
+            return;
+        }
         if (element != null && getFluid().amount >= 1000) {
             int count = getFluid().amount / 1000;
             IBlockState state = getFluid().getFluid().getBlock().getDefaultState();

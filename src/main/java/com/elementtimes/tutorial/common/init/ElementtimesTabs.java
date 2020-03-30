@@ -52,11 +52,12 @@ public class ElementtimesTabs {
             ElementtimesItems.corn, ElementtimesItems.bakedCorn, ElementtimesItems.puremeat);
 
     @ModTab(CHEMICAL)
-    public static CreativeTabs Chemical = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimeschemicalindustry",
-            FluidRegistry.getBucketFluids().stream()
-                    .filter(f -> f.getName().startsWith("elementtimes"))
-                    .map(f -> FluidUtil.getFilledBucket(new FluidStack(f, Fluid.BUCKET_VOLUME)))
-                    .toArray(ItemStack[]::new)) {
+    public static CreativeTabs Chemical = new CreativeTabDynamic(ElementTimes.MODID + ".Elementtimeschemicalindustry", 20,
+            ElementtimesItems.SiC, ElementtimesItems.Mg, ElementtimesItems.Al, ElementtimesItems.AgBr,
+            ElementtimesItems.AgCl, ElementtimesItems.AgI, ElementtimesItems.Silicon, ElementtimesItems.stoneIngot,
+            ElementtimesItems.Al2O3_Na3AlF6, ElementtimesItems.CaSo4, ElementtimesItems.Na3AlF6,
+            ElementtimesItems.calciumCarbonate, ElementtimesItems.calciumacetylide, ElementtimesItems.calciumOxide,
+            ElementtimesItems.concrete, ElementtimesItems.salt) {
         @Override
         public void displayAllRelevantItems(NonNullList<ItemStack> list) {
             FluidRegistry.getBucketFluids().stream()
