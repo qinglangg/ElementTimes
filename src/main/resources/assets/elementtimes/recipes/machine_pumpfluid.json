@@ -5,25 +5,15 @@
     "item": "elementtimes:pumpfluid"
   },
   "pattern": [
-    " A ",
-    "BCD",
-    " E "
+    "bab"
   ],
   "key": {
-    "A": {
-      "item": "elementtimes:blockmultisilvercopper"
-    },
-    "B": {
-      "item": "elementtimes:blockmultigoldplatinum"
-    },
-    "C": {
+
+    "a": {
       "item": "elementtimes:pumpair"
     },
-    "D": {
-      "item": "elementtimes:blockmulticarbonsteel"
-    },
-    "E": {
-      "item": "elementtimes:blockmultiwoodstone"
+    "b": {
+      "item": "elementtimes:fluidtank"
     }
   }
 }

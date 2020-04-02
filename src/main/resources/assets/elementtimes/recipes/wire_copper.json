@@ -6,7 +6,7 @@
   ],
   "key": {
     "W": {
-        "type": "forge:ore_dict",
+      "type": "forge:ore_dict",
       "ore": "ingotCopper"
     }
   },

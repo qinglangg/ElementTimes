@@ -2,7 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "group": "elementtimes:recipes",
   "pattern": [
-    "   ",
     "AAA",
     " B "
   ],
@@ -11,7 +10,7 @@
       "item": "elementtimes:solarpanels"
     },
     "B": {
-      "item": "elementtimes:fuelgenerator"
+      "item": "elementtimes:energybox"
     }
   },
   "result": {

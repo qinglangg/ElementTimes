@@ -6,5 +6,5 @@ public class Storage {
 
     @Config.Comment("能量容器最大容量 (RF)")
     @Config.Name("energy")
-    public int energy = 100000;
+    public int energy = 10000000;
 }

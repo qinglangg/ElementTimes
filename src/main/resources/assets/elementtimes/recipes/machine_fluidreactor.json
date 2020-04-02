@@ -5,20 +5,11 @@
     "item": "elementtimes:fluidreactor"
   },
   "pattern": [
-    "ABA",
-    "BCB",
     "BDB"
   ],
   "key": {
-    "A": {
-      "item": "elementtimes:cement"
-    },
     "B": {
-      "type":"forge:ore_dict",
-      "ore":"ingotSteel"
-    },
-    "C": {
-      "item": "elementtimes:pumpair"
+      "item": "elementtimes:fluidtank"
     },
     "D": {
       "item": "elementtimes:fuelgenerator"
