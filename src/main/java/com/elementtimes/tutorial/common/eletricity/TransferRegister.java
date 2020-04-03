@@ -36,6 +36,8 @@ public final class TransferRegister {
 	
 	@SubscribeEvent
 	public static void registerBlock(RegistryEvent.Register<Block> event) {
+		//银
+		blockList.add(new WireBlock("wire_silver"));
 		//铜
 		blockList.add(new WireBlock("wire_copper"));
 		//铁
