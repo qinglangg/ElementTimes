@@ -28,6 +28,7 @@ import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeli
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.common.Mod;
 
@@ -61,7 +62,10 @@ public class ElementtimesBlocks {
     public static Block woodesSence = new EssenceLog().setHardness(50f).setResistance(15f).setLightLevel(50f);
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block leafesSence = new EssenceLeaf();
-    @ModBlock(registerName = "bamboo", creativeTabKey = ElementtimesTabs.AGRICULTURE)
+    @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
+    @ModOreDict("bamboo")
+//    @ModBlock.WorldGenObj(value = @Getter(BambooGenerator.class), type = GenType.Tree)
+    @ModBlock.Tooltip("目前生长有点bug，尽量合成，不要种植")
     public static Block bamboo = new Bamboo();
 
     // Ore
@@ -282,6 +286,11 @@ public class ElementtimesBlocks {
     public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
     @ModBlock
     public static Block fr = new FluidReplace();
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    public static Block bambooBlock = new Block(Material.WOOD);
+    public static Block bambooDoor = Door.wood();
+    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    public static Block bambooStair = new BlockStairs(bambooBlock.getDefaultState()) {};
 
     // Chemical
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "alcohol_lamp")
@@ -305,15 +314,15 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
     @ModBlock.TileEntity(TileTest.class)
     public static Block test = new Test();
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock
     @ModBlock.TileEntity(TileCreativeEnergyBox.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeEnergy = new BlockTileBase<>(TileCreativeEnergyBox.class);
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock
     @ModBlock.TileEntity(TileCreativeFluidTank.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeTank = new BlockTileBase<>(TileCreativeFluidTank.class);
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock
     @ModBlock.TileEntity(TileCreativeItemChest.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeChest = new BlockTileBase<>(TileCreativeItemChest.class);

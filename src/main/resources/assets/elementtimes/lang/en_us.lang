@@ -147,6 +147,7 @@ item.elementtimes.cpu.name=cpu
 item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
 item.elementtimes.carvedcpu.name=carvedcpu
+item.elementtimes.bamboodoor.name=Bamboo Door
 # block
 tile.elementtimes.corncrop.name=Corn
 tile.elementtimes.beaker.name=Beaker
@@ -224,7 +225,11 @@ tile.elementtimes.creativeenergy.name=Infinite Energy Box
 tile.elementtimes.creativetank.name=Infinite Fluid Tank
 tile.elementtimes.creativechest.name=Infinite Single Item Handler
 tile.elementtimes.test.name=Test Block
-tile.elementtimes.bamboo.name=Test Block
+tile.elementtimes.bamboo.name=Bamboo
+tile.elementtimes.bambooblock.name=Bamboo Block
+tile.elementtimes.bamboodoor.name=Bamboo Door
+tile.elementtimes.bamboostair.name=Bamboo Stair
+
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2
 tile.elementtimes.magnesiumchloridesolution.name=mgcl2
