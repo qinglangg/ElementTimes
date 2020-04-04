@@ -47,6 +47,14 @@ public class TileSolidCentrifuge extends BaseTileEntity {
             		.endAdd()
             		
             		.newRecipe()
+            		.addCost(5000)
+            		.addItemInput(IngredientPart.forItem(ElementtimesItems.uraniumPowder, 1))
+            		.addItemOutput(IngredientPart.forItem(ElementtimesItems.bingU3O8, 1))
+            		.addItemOutput(IngredientPart.forItem(ElementtimesItems.smallU3O8, 1))
+            		.addItemOutput(IngredientPart.forItem(ElementtimesItems.slag, 1))
+            		.endAdd()
+            		
+            		.newRecipe()
                     .addCost(1000)
                     .addItemInput(IngredientPart.forItem(ElementtimesItems.slag, 1))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder, 1))

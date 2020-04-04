@@ -213,6 +213,13 @@ public class TileSolidReactor extends BaseTileEntity {
                     .addItemInput(IngredientPart.forItem(Items.COAL, 2))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, 2000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium, 1))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.UO2small,1))
+                    .addItemInput(IngredientPart.forItem(Items.COAL, 2))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.co, 2000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.uranium235, 1))
                     .endAdd();
             
             

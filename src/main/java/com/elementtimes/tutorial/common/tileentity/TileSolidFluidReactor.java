@@ -155,6 +155,21 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.acetylene, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
                     .endAdd()
+                    //U3O8到uo2
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.bingU3O8, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.UO2, 2))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(ElementtimesItems.smallU3O8, 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER, 2000))
+                    .addItemOutput(IngredientPart.forItem(ElementtimesItems.UO2small, 2))
+                    .endAdd()
 
                     //粗硅和Cl2出SiCl4
                     .newRecipe()

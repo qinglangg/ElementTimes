@@ -147,6 +147,10 @@ item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
 item.elementtimes.bamboodoor.name=竹门
+item.elementtimes.bingu3o8.name=三氧化八铀
+item.elementtimes.smallu3o8.name=三氧化八铀
+item.elementtimes.uo2small.name=二氧化铀
+item.elementtimes.uranium235.name=铀锭
 # block
 tile.elementtimes.corncrop.name=玉米
 tile.elementtimes.beaker.name=烧杯

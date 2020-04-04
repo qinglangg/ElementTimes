@@ -148,6 +148,10 @@ item.elementtimes.cpuup.name=cpuup
 item.elementtimes.cpudown.name=cpudown
 item.elementtimes.carvedcpu.name=carvedcpu
 item.elementtimes.bamboodoor.name=Bamboo Door
+item.elementtimes.bingu3o8.name=u3o8
+item.elementtimes.smallu3o8.name=u3o8
+item.elementtimes.uo2small.name=uo2
+item.elementtimes.uranium235.name=uranium
 # block
 tile.elementtimes.corncrop.name=Corn
 tile.elementtimes.beaker.name=Beaker

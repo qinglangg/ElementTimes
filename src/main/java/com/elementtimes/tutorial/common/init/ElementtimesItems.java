@@ -62,6 +62,12 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item slag = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem.Tooltip("\u00a79U3O8 U^238")
+    public static Item bingU3O8 = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem.Tooltip("\u00a79U3O8 U^235")
+    public static Item smallU3O8 = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item sandpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("dustStone")
@@ -132,12 +138,18 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79U3O8 U^235/238")
     @ModOreDict("dustUranium")
     public static Item uraniumPowder = new Item();
-	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModItem.Tooltip("\u00a79UO2 U^235/238")
+	@ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem.Tooltip("\u00a79UO2 U^238")
     public static Item UO2 = new Item();
-	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
+	@ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModItem.Tooltip("\u00a79UO2 U^235")
+    public static Item UO2small = new Item();
+	@ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+	@ModItem.Tooltip("\u00a79U U^238")
     public static Item uranium = new Item();
-    @ModItem.Tooltip("\u00a79U U^235/238")
+	@ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+	@ModItem.Tooltip("\u00a79U U^235")
+    public static Item uranium235 = new Item();
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("dustTin")
     public static Item tinPowder = new Item();
