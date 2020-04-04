@@ -34,7 +34,7 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return true || canGrow(worldIn, pos, state, worldIn.isRemote);
+        return canGrow(worldIn, pos, state, worldIn.isRemote);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
     }
 
     public int getMaxHeight() {
-        return 10;
+        return 12;
     }
 
     public boolean nextYCheck(World world, BlockPos pos) {

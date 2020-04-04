@@ -146,6 +146,8 @@ item.elementtimes.siliconplate.name=硅板
 item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
+item.elementtimes.carvedcpu.name=carvedcpu
+item.elementtimes.bamboodoor.name=竹门
 # block
 tile.elementtimes.corncrop.name=玉米
 tile.elementtimes.beaker.name=烧杯
@@ -224,6 +226,10 @@ tile.elementtimes.creativetank.name=无限储罐
 tile.elementtimes.creativechest.name=无限单物品容器
 tile.elementtimes.test.name=测试方块
 tile.elementtimes.bamboo.name=竹子
+tile.elementtimes.bambooblock.name=竹方块
+tile.elementtimes.bamboodoor.name=竹门
+tile.elementtimes.bamboostair.name=竹台阶
+
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
 tile.elementtimes.magnesiumchloridesolution.name=氯化镁溶液
