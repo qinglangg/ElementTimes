@@ -9,13 +9,16 @@ import net.minecraft.item.ItemDoor;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.GameData;
 
 @Mod.EventBusSubscriber
 public class RegisterEvent {
 
     @SubscribeEvent
     public static void item(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemDoor(ElementtimesBlocks.bambooDoor).setUnlocalizedName("elementtimes.bamboodoor").setRegistryName(ElementtimesBlocks.bambooDoor.getRegistryName()).setCreativeTab(ElementtimesTabs.Main));
+        ItemDoor door = new ItemDoor(ElementtimesBlocks.bambooDoor);
+        event.getRegistry().register(door.setUnlocalizedName("elementtimes.bamboodoor").setRegistryName(ElementtimesBlocks.bambooDoor.getRegistryName()).setCreativeTab(ElementtimesTabs.Main));
+        GameData.getBlockItemMap().put(ElementtimesBlocks.bambooDoor, door);
     }
 
     @SubscribeEvent
