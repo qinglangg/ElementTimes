@@ -5,18 +5,11 @@
     "item": "elementtimes:pumpair"
   },
   "pattern": [
-    "ABA",
-    "BCB",
-    "ABA"
+    "BCB"
   ],
   "key": {
-    "A": {
-      "type": "forge:ore_dict",
-      "ore": "blockRedstone"
-    },
-    "B": {
-      "type": "forge:ore_dict",
-      "ore": "blockLapis"
+   "B": {
+      "item": "minecraft:piston"
     },
     "C": {
       "item": "elementtimes:compressor"

@@ -6,8 +6,8 @@
   },
   "pattern": [
     "ABC",
-    "DEF",
-    "GHI"
+    "DIF",
+    "GHE"
   ],
   "key": {
     "A": {
@@ -35,7 +35,7 @@
       "item": "elementtimes:compressor"
     },
     "I": {
-      "item": "elementtimes:blockmulticarbonsteel"
+      "item": "elementtimes:energybox"
     }
   }
 }

@@ -286,10 +286,10 @@ public class ElementtimesBlocks {
     public static Block blockMultiObsidianDiamond = new Block(Material.IRON);
     @ModBlock
     public static Block fr = new FluidReplace();
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block bambooBlock = new Block(Material.WOOD);
     public static Block bambooDoor = Door.wood();
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block bambooStair = new BlockStairs(bambooBlock.getDefaultState()) {};
 
     // Chemical
@@ -314,15 +314,15 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
     @ModBlock.TileEntity(TileTest.class)
     public static Block test = new Test();
-    @ModBlock
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(TileCreativeEnergyBox.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeEnergy = new BlockTileBase<>(TileCreativeEnergyBox.class);
-    @ModBlock
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(TileCreativeFluidTank.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeTank = new BlockTileBase<>(TileCreativeFluidTank.class);
-    @ModBlock
+    @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(TileCreativeItemChest.class)
     @ModBlock.StateMapper(@Getter2("com.elementtimes.tutorial.other.InfiniteMachineState"))
     public static Block creativeChest = new BlockTileBase<>(TileCreativeItemChest.class);

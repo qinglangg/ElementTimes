@@ -7,11 +7,11 @@
   "key": {
     "W": {
       "type": "forge:ore_dict",
-      "ore": "ingotCopper"
+      "ore": "ingotSilver"
     }
   },
   "result": {
-    "item": "elementtimes:wire_copper",
+    "item": "elementtimes:wire_silver",
     "count": 10
     }
 }

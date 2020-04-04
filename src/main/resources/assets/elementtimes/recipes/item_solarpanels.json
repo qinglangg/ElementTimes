@@ -3,15 +3,11 @@
   "group": "elementtimes:recipes",
   "pattern": [
     "AAA",
-    "BBB",
     "CCC"
   ],
   "key": {
     "A": {
       "item": "minecraft:daylight_detector"
-    },
-    "B": {
-      "item": "elementtimes:siliconsolarcell"
     },
     "C": {
       "item": "elementtimes:light_guide_fibre"

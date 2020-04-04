@@ -2,20 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "group": "elementtimes:recipes",
   "result": {
-    "item": "elementtimes:fluidgenerator"
+    "item": "elementtimes:energybox"
   },
   "pattern": [
-    "ABC"
+    "ABA",
+    "CCC",
+    "ABA"
   ],
   "key": {
-    "C": {
-      "item": "elementtimes:pumpfluid"
+    "A": {
+      "item": "elementtimes:aluminiumplate"
     },
     "B": {
-      "item": "elementtimes:waterelement"
-    },
-    "A": {
       "item": "elementtimes:fuelgenerator"
+    },
+    "C": {
+      "item": "elementtimes:siliconsolarcell"
     }
   }
 }
