@@ -28,8 +28,11 @@ import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeli
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -65,7 +68,7 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModOreDict("bamboo")
 //    @ModBlock.WorldGenObj(value = @Getter(BambooGenerator.class), type = GenType.Tree)
-    @ModBlock.Tooltip("目前生长有点bug，尽量合成，不要种植")
+    @ModBlock.Tooltip("当前版本1.7.4竹子生长存在bug，获取方式仍为打草获得，不要种植。元素时代持续开发ing")
     public static Block bamboo = new Bamboo();
 
     // Ore
@@ -287,7 +290,8 @@ public class ElementtimesBlocks {
     @ModBlock
     public static Block fr = new FluidReplace();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    public static Block bambooBlock = new Block(Material.WOOD);
+    @ModBurnTime(1600)
+    public static Block bambooBlock = new Block(Material.WOOD).setHardness(7f).setResistance(5f);
     public static Block bambooDoor = Door.wood();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block bambooStair = new BlockStairs(bambooBlock.getDefaultState()) {};
@@ -311,7 +315,7 @@ public class ElementtimesBlocks {
     public static Block beaker = new Beaker();
 
     // Test
-    @ModBlock(creativeTabKey = ElementtimesTabs.MAIN)
+    @ModBlock
     @ModBlock.TileEntity(TileTest.class)
     public static Block test = new Test();
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)

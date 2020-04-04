@@ -17,7 +17,7 @@ public class RegisterEvent {
     @SubscribeEvent
     public static void item(RegistryEvent.Register<Item> event) {
         ItemDoor door = new ItemDoor(ElementtimesBlocks.bambooDoor);
-        event.getRegistry().register(door.setUnlocalizedName("elementtimes.bamboodoor").setRegistryName(ElementtimesBlocks.bambooDoor.getRegistryName()).setCreativeTab(ElementtimesTabs.Main));
+        event.getRegistry().register(door.setUnlocalizedName("elementtimes.bamboodoor").setRegistryName(ElementtimesBlocks.bambooDoor.getRegistryName()).setCreativeTab(ElementtimesTabs.Agriculture));
         GameData.getBlockItemMap().put(ElementtimesBlocks.bambooDoor, door);
     }
 

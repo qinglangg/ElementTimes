@@ -2,8 +2,9 @@
   "type": "forge:ore_shaped",
   "group": "elementtimes:recipes",
   "pattern": [
-    "AA",
-    "AA"
+    "AAA",
+    "A A",
+    "AAA"
   ],
   "key": {
     "A": {
@@ -13,6 +14,6 @@
   },
   "result": {
     "item": "elementtimes:bambooblock",
-    "count": 4
+    "count": 1
   }
 }

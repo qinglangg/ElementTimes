@@ -219,7 +219,7 @@ tile.elementtimes.pipelinefluidinput.name=流体输入管道
 tile.elementtimes.pipelinefluidoutput.name=流体输出管道
 tile.elementtimes.pipelinefluidconnect.name=流体连接管道
 tile.elementtimes.fluidtank.name=流体储罐
-tile.elementtimes.energybox.name=能量盒
+tile.elementtimes.energybox.name=储能器
 tile.elementtimes.creativeenergy.name=无限能量盒
 tile.elementtimes.creativetank.name=无限储罐
 tile.elementtimes.creativechest.name=无限单物品容器
@@ -227,7 +227,7 @@ tile.elementtimes.test.name=测试方块
 tile.elementtimes.bamboo.name=竹子
 tile.elementtimes.bambooblock.name=竹方块
 tile.elementtimes.bamboodoor.name=竹门
-tile.elementtimes.bamboostair.name=竹台阶
+tile.elementtimes.bamboostair.name=竹楼梯
 
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
