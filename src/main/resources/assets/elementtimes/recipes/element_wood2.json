@@ -3,10 +3,16 @@
   "group": "elementtimes:recipes",
   "pattern": [
     "LWL",
-    "LWL",
+    "BWA",
     "GSC"
   ],
   "key": {
+    "A": {
+      "item": "elementtimes:bamboo"
+    },
+    "B": {
+      "item": "elementtimes:corn"
+    },
     "L": {
       "item": "elementtimes:leafessence"
     },
