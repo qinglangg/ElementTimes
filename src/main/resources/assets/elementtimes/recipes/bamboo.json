@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    " A ",
+    " A ",
+    "CAC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:dirt",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "elementtimes:bamboo",
+    "count": 4
+  }
+}

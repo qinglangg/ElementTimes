@@ -146,7 +146,6 @@ item.elementtimes.siliconplate.name=硅板
 item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
-item.elementtimes.carvedcpu.name=carvedcpu
 item.elementtimes.bamboodoor.name=竹门
 # block
 tile.elementtimes.corncrop.name=玉米

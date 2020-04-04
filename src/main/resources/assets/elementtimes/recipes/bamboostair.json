@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:bambooblock"
+    }
+  },
+  "result": {
+    "item": "elementtimes:bamboostair",
+    "count": 4
+  }
+}

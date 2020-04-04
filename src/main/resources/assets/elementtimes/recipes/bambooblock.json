@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "type":"forge:ore_dict",
+      "ore":"bamboo"
+    }
+  },
+  "result": {
+    "item": "elementtimes:bambooblock",
+    "count": 4
+  }
+}
