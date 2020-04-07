@@ -4,18 +4,19 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import com.elementtimes.elementcore.api.annotation.ModBlock;
+import com.elementtimes.tutorial.common.autonet.IAutoNetwork;
+import com.elementtimes.tutorial.common.autonet.NetworkRegister;
+import com.elementtimes.tutorial.common.autonet.WaitList;
+import com.elementtimes.tutorial.common.eletricity.BlockPosUtil;
 import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.Electricity;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
-import com.elementtimes.tutorial.common.eletricity.src.cache.WireLinkInfo;
+import com.elementtimes.tutorial.common.eletricity.src.info.WireLinkInfo;
 import com.elementtimes.tutorial.common.eletricity.src.info.IETForEach;
-import com.elementtimes.tutorial.common.autonet.IAutoNetwork;
-import com.elementtimes.tutorial.common.autonet.NetworkRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,17 +27,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-import static net.minecraft.util.EnumFacing.DOWN;
-import static net.minecraft.util.EnumFacing.EAST;
-import static net.minecraft.util.EnumFacing.NORTH;
-import static net.minecraft.util.EnumFacing.SOUTH;
-import static net.minecraft.util.EnumFacing.UP;
-import static net.minecraft.util.EnumFacing.WEST;
-
 /**
  * @author EmptyDreams
  * @version V1.0
  */
+@SuppressWarnings("unused")
 @ModBlock.TileEntity(name = "IN_FATHER_ELECTRICITY_TRANSFER", value = EleSrcCable.class)
 public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable {
 	
@@ -57,49 +52,18 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	private boolean south = false;
 	private boolean north = false;
 	/** 电线连接的方块，不包括电线方块 */
-	private List<TileEntity> linkedBlocks = new ArrayList<TileEntity>(5) {
-		
+	private List<BlockPos> linkedBlocks = new ArrayList<BlockPos>(5) {
 		@Override
-		public boolean contains(Object o) {
-			if (o instanceof TileEntity) {
-				for (int i = 0, size = size(); i < size; ++i) {
-					if (get(i).getPos().equals(((TileEntity) o).getPos())) return true;
-				}
-			}
-			return false;
-		}
-		
-		@Override
-		public boolean add(TileEntity tileEntity) {
-			Objects.requireNonNull(tileEntity, "tileEntity == null");
+		public boolean add(BlockPos tileEntity) {
+			WaitList.checkNull(tileEntity, "tileEntity");
 			return super.add(tileEntity);
-		}
-		
-		@Override
-		public boolean remove(Object o) {
-			if (o instanceof TileEntity) {
-				for (int i = 0, size = size(); i < size; ++i) {
-					if (get(i).getPos().equals(((TileEntity) o).getPos())) {
-						remove(i);
-						return true;
-					}
-				}
-			} else if (o instanceof BlockPos) {
-				for (int i = 0, size = size(); i < size; ++i) {
-					if (get(i).getPos().equals(o)) {
-						remove(i);
-						return true;
-					}
-				}
-			}
-			return false;
 		}
 	};
 	/** 上一根电线 */
-	private TileEntity prev = null;
+	private BlockPos prev = null;
 	private IEleTransfer prevShip = null;
 	/** 下一根电线 */
-	private TileEntity next = null;
+	private BlockPos next = null;
 	private IEleTransfer nextShip = null;
 	/** 最大电流量 */
 	protected int meMax = 5000;
@@ -118,8 +82,8 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 */
 	public boolean canLink(TileEntity target) {
 		if (EleWorker.isTransfer(target)) {
-			return prev == null || prev.equals(target) ||
-					       next == null || next.equals(target);
+			return prev == null || prev.equals(target.getPos()) ||
+					       next == null || next.equals(target.getPos());
 		}
 		return EleWorker.isOutputer(target) || EleWorker.isInputer(target);
 	}
@@ -130,17 +94,17 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 *
 	 * @throws IllegalArgumentException 如果 ele == null 且 {@link #getLinkAmount()} > 1
 	 */
-	public TileEntity next(TileEntity from) {
+	public TileEntity next(BlockPos from) {
 		if (from == null) {
 			if (next == null) {
 				if (prev == null) return null;
-				return prev;
+				return getPrev();
 			}
-			if (prev == null) return next;
+			if (prev == null) return getNext();
 			throw new IllegalArgumentException("from == null，信息不足！");
 		}
-		if (from.equals(next)) return prev;
-		if (from.equals(prev)) return next;
+		if (from.equals(next) && prev != null) return getPrev();
+		if (from.equals(prev) && next != null) return getNext();
 		return null;
 	}
 	
@@ -163,16 +127,19 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 * @param target 要连接的方块
 	 * @return 连接成功返回true，否则返回false
 	 */
-	public boolean link(TileEntity target) {
-		if (target == null || target == this || world.isRemote) return false;
-		IEleTransfer et = EleWorker.getTransfer(target);
+	public boolean link(BlockPos target) {
+		if (target == null || target.equals(pos) || world.isRemote) return false;
+		if (cache == null) update();
+		TileEntity targetEntity = world.getTileEntity(target);
+		if (targetEntity == null) return false;
+		IEleTransfer et = EleWorker.getTransfer(targetEntity);
 		if (et != null) {
-			if (!et.canLink(target, this)) return false;
+			if (!et.canLink(targetEntity, this)) return false;
 			if (next == null) {
 				if (prev == null || !prev.equals(target)) {
 					next = target;
 					nextShip = et;
-					cache.merge(nextShip.getLineCache(next));
+					cache.merge(nextShip.getLineCache(getNext()));
 					updateLinkShow();
 					return true;
 				}
@@ -181,27 +148,18 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 			} else if (prev == null) {
 				prev = target;
 				prevShip = et;
-				cache.merge(prevShip.getLineCache(prev));
+				cache.merge(prevShip.getLineCache(getPrev()));
 				updateLinkShow();
 				return true;
 			} else return prev.equals(target);
 			return false;
 		}
-		if (target.hasCapability(CapabilityEnergy.ENERGY, whatFacing(target.getPos(), pos))) {
+		if (EleWorker.isInputer(targetEntity) || EleWorker.isOutputer(targetEntity)) {
 			if (!linkedBlocks.contains(target)) linkedBlocks.add(target);
 			updateLinkShow();
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * 连接一个方块
-	 * @param pos 要连接的方块
-	 * @return 连接成功返回true，否则返回false
-	 */
-	public final boolean link(BlockPos pos) {
-		return link(pos == null ? null : world.getTileEntity(pos));
 	}
 	
 	public void updateLinkShow() {
@@ -212,7 +170,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		setUp(false);
 		setDown(false);
 		if (next != null) {
-			switch (whatFacing(pos, next.getPos())) {
+			switch (BlockPosUtil.whatFacing(pos, next)) {
 				case EAST: setEast(true); break;
 				case WEST: setWest(true); break;
 				case SOUTH: setSouth(true); break;
@@ -222,7 +180,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 			}
 		}
 		if (prev != null) {
-			switch (whatFacing(pos, prev.getPos())) {
+			switch (BlockPosUtil.whatFacing(pos, prev)) {
 				case EAST: setEast(true); break;
 				case WEST: setWest(true); break;
 				case SOUTH: setSouth(true); break;
@@ -231,8 +189,8 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 				default: setDown(true);
 			}
 		}
-		for (TileEntity block : linkedBlocks) {
-			switch (whatFacing(pos, block.getPos())) {
+		for (BlockPos block : linkedBlocks) {
+			switch (BlockPosUtil.whatFacing(pos, block)) {
 				case EAST: setEast(true); break;
 				case WEST: setWest(true); break;
 				case SOUTH: setSouth(true); break;
@@ -250,54 +208,15 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 * @param pos 要删除的连接坐标，为null时不会做任何事情
 	 */
 	public final void deleteLink(BlockPos pos) {
+		if (world.isRemote) return;
 		if (pos == null) return;
-		if (next != null && pos.equals(next.getPos())) {
-			if (next instanceof EleSrcCable) {
-				EleSrcCable next = (EleSrcCable) this.next;
-				if (next.getLinkAmount() == 1) {
-					cache.plusMakerAmount(-nextShip.getOutputerAround(next).size());
-					next.setCache(null);
-					this.next = null;
-				} else {
-					this.next = null;
-					WireLinkInfo.calculateCache(this);
-				}
-			} else {
-				if (nextShip.getLinkAmount(next) == 1) {
-					cache.plusMakerAmount(-nextShip.getLineCache(next).getOutputerAmount());
-					nextShip.setLineCache(next, nextShip.createLineCache(next));
-					this.next = null;
-				} else {
-					cache.disperse(nextShip.getLineCache(next));
-					this.next = null;
-					WireLinkInfo.calculateCache(this);
-				}
-				
-			}
-		} else if (prev != null && pos.equals(prev.getPos())) {
-			if (prev instanceof EleSrcCable) {
-				EleSrcCable prev = (EleSrcCable) this.prev;
-				if (prev.getLinkAmount() == 1) {
-					cache.plusMakerAmount(-prevShip.getOutputerAround(prev).size());
-					prev.setCache(null);
-					this.prev = null;
-				} else {
-					this.prev = null;
-					WireLinkInfo.calculateCache(this);
-				}
-			} else {
-				if (prevShip.getLinkAmount(prev) == 1) {
-					cache.plusMakerAmount(-prevShip.getLineCache(prev).getOutputerAmount());
-					prevShip.setLineCache(next, prevShip.createLineCache(prev));
-					prev = null;
-				} else {
-					cache.disperse(prevShip.getLineCache(prev));
-					prev = null;
-					WireLinkInfo.calculateCache(this);
-				}
-			}
+		if (pos.equals(next)) {
+			next = null;
+			WireLinkInfo.calculateCache(this);
+		} else if (pos.equals(prev)) {
+			prev = null;
+			WireLinkInfo.calculateCache(this);
 		} else {
-			//noinspection SuspiciousMethodCalls
 			linkedBlocks.remove(pos);
 		}
 		updateLinkShow();
@@ -308,7 +227,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 * @param run 要运行的指令
 	 */
 	public final void forEachAll(IETForEach run) {
-		if (getLinkAmount() <= 1) {
+		if (getLinkAmount() == 1) {
 			forEach(null, run);
 		} else {
 			forEach(next, run, true);
@@ -321,7 +240,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 * @param prev 上一根电线
 	 * @param run 要运行的内容
 	 */
-	public final void forEach(TileEntity prev, IETForEach run) {
+	public final void forEach(BlockPos prev, IETForEach run) {
 		forEach(prev, run, true);
 	}
 	
@@ -332,9 +251,9 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 * @param isNow 是否遍历当前电线
 	 */
 	@SuppressWarnings("ConstantConditions")
-	private void forEach(TileEntity prev, IETForEach run, boolean isNow) {
+	private void forEach(BlockPos prev, IETForEach run, boolean isNow) {
 		TileEntity next = next(prev);
-		prev = this;
+		prev = pos;
 		if (next instanceof EleSrcCable) {
 			if (isNow && !run.run(this, false, null)) return;
 		} else {
@@ -342,7 +261,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		}
 		for (EleSrcCable et = (EleSrcCable) next; !(et == null || et == this); et = (EleSrcCable) next) {
 			next = et.next(prev);
-			prev = et;
+			prev = et.getPos();
 			if (next instanceof EleSrcCable) {
 				if (run.run(et, false, null)) continue;
 			} else {
@@ -353,37 +272,26 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		}
 	}
 	
-	//--------------------常规重写--------------------//
+	//--------------------常规--------------------//
 	
 	private static final WireLinkInfo CLIENT_CACHE = new WireLinkInfo();
-	
 	@Override
 	public void update() {
 		if (cache == null) {
 			if (world.isRemote) cache = CLIENT_CACHE;
 			else {
 				WireLinkInfo.calculateCache(this);
-				if (cachePos != null) {
-					if (cachePos[0] != null) next = world.getTileEntity(cachePos[0]);
-					if (cachePos[1] != null) prev = world.getTileEntity(cachePos[1]);
-					if (cacheFacing != null) {
-						for (EnumFacing facing : cacheFacing)
-							linkedBlocks.add(world.getTileEntity(pos.offset(facing)));
-					}
-					cacheFacing = null;
-					cachePos = null;
-				}
+				nextShip = EleWorker.getTransfer(getNext());
+				prevShip = EleWorker.getTransfer(getPrev());
 			}
 		}
 		
-		if (!world.isRemote) {
-			for (TileEntity block : linkedBlocks) {
-				block = world.getTileEntity(block.getPos());
-				if (block == null) continue;
-				if (block.getCapability(CapabilityEnergy.ENERGY,
-						whatFacing(pos, block.getPos())).receiveEnergy(1, true) > 0) {
-					EleWorker.useEleEnergy(block);
-				}
+		TileEntity entity;
+		for (BlockPos block : linkedBlocks) {
+			entity = world.getTileEntity(block);
+			//noinspection ConstantConditions
+			if (entity.hasCapability(CapabilityEnergy.ENERGY, BlockPosUtil.whatFacing(block, pos))) {
+				EleWorker.useEleEnergy(entity);
 			}
 		}
 	}
@@ -435,19 +343,29 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	/** 设置电力损耗指数 */
 	public final void setLoss(int loss) { this.loss = loss; }
 	/** 获取上一根电线 */
-	public final TileEntity getPrev() { return prev; }
+	public final TileEntity getPrev() { return prev == null ? null : world.getTileEntity(prev); }
 	/** 获取下一根电线 */
-	public final TileEntity getNext() { return next; }
+	public final TileEntity getNext() { return next == null ? null : world.getTileEntity(next); }
+	/** 获取上一根电线的坐标 */
+	public final BlockPos getPrevPos() { return prev; }
+	/** 获取下一根电线的坐标 */
+	public final BlockPos getNextPos() { return next; }
 	/** 获取连接的方块. 返回的列表可以随意修改 */
-	public final List<TileEntity> getLinkedBlocks() { return new ArrayList<>(linkedBlocks); }
+	public final List<TileEntity> getLinkedBlocks() {
+		List<TileEntity> blocks = new ArrayList<>(linkedBlocks.size());
+		//noinspection ForLoopReplaceableByForEach
+		for (int i = 0; i < linkedBlocks.size(); i++) {
+			blocks.add(world.getTileEntity(linkedBlocks.get(i)));
+		}
+		return blocks;
+	}
 	
-	/*
-	 * 因为在radFromNBT阶段世界没有加载完毕，调用world.getTileEntity会返回null，
-	 * 所有建立一个临时列表在用户调用next方法的时候检查是否需要更新参数，
-	 * 当cachePos==null的时候标志已经更新，不需要再次更新
+	/**
+	 * 存储已经更新过的玩家列表，因为作者认为单机时长会更多，所以选择1作为默认值。<br>
+	 * 	不同方块不共用此列表且此列表不会离线存储，当玩家离开方块过远或退出游戏等操作导致
+	 * 		方块暂时“删除”后此列表将重置以保证所有玩家可以正常渲染电线方块
 	 */
-	private BlockPos[] cachePos = new BlockPos[2];
-	private EnumFacing[] cacheFacing;
+	private final List<String> players = new ArrayList<>(1);
 	
 	@Override
 	public void receive(@Nonnull NBTTagCompound message) {
@@ -461,13 +379,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		world.markBlockRangeForRenderUpdate(pos, pos);
 	}
 	
-	/**
-	 * 存储已经更新过的玩家列表，因为作者认为单机时长会更多，所以选择1作为默认值。<br>
-	 * 	不同方块不共用此列表且此列表不会离线存储，当玩家离开方块过远或退出游戏等操作导致
-	 * 		方块暂时“删除”后此列表将重置以保证所有玩家可以正常渲染电线方块
-	 */
-	private final List<String> players = new ArrayList<>(1);
-	
+	@SuppressWarnings("NullableProblems")
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		players.clear();
@@ -531,19 +443,19 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		north = compound.getBoolean("north");
 		
 		if (compound.getBoolean("hasNext")) {
-			cachePos[0] = readBlockPos(compound, "next");
+			next = BlockPosUtil.readBlockPos(compound, "next");
 		}
 		if (compound.getBoolean("hasPrev")) {
-			cachePos[1] = readBlockPos(compound, "prev");
+			prev = BlockPosUtil.readBlockPos(compound, "prev");
 		}
 		
 		int size = compound.getInteger("maker_size");
-		cacheFacing = new EnumFacing[size];
 		for (int i = 0; i < size; ++i) {
-			cacheFacing[i] = EnumFacing.getFront(compound.getInteger("facing_" + i));
+			linkedBlocks.add(pos.offset(EnumFacing.getFront(compound.getInteger("facing_" + i))));
 		}
 	}
 	
+	@SuppressWarnings("NullableProblems")
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
@@ -557,71 +469,30 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		compound.setBoolean("hasNext", next != null);
 		compound.setBoolean("hasPrev", prev != null);
 		if (next != null) {
-			writeBlockPos(compound, next.getPos(), "next");
+			BlockPosUtil.writeBlockPos(compound, next, "next");
 		}
 		if (prev != null) {
-			writeBlockPos(compound, prev.getPos(), "prev");
+			BlockPosUtil.writeBlockPos(compound, prev, "prev");
 		}
 		
 		int size = 0;
-		for (TileEntity te : linkedBlocks) {
-			compound.setInteger("facing_" + size++, whatFacing(pos, te.getPos()).getIndex());
+		for (BlockPos block : linkedBlocks) {
+			compound.setInteger("facing_" + size++, BlockPosUtil.whatFacing(pos, block).getIndex());
 		}
 		compound.setInteger("maker_size", size);
 		
 		return compound;
 	}
 	
+	@SuppressWarnings("NullableProblems")
 	@Override
 	public final boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		return false;
 	}
+	@SuppressWarnings("NullableProblems")
 	@Override
 	public final <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		return null;
-	}
-	
-	/**
-	 * 读取坐标
-	 * @param compound 要读取的标签
-	 * @param name 名称
-	 * @return 坐标
-	 */
-	public static BlockPos readBlockPos(NBTTagCompound compound, String name) {
-		return new BlockPos(compound.getInteger(name + "_x"),
-				compound.getInteger(name + "_y"), compound.getInteger(name + "_z"));
-	}
-	
-	/**
-	 * 写入一个坐标到标签中
-	 * @param compound 要写入的标签
-	 * @param pos 坐标
-	 * @param name 名称
-	 */
-	public static void writeBlockPos(NBTTagCompound compound, BlockPos pos, String name) {
-		compound.setInteger(name + "_x", pos.getX());
-		compound.setInteger(name + "_y", pos.getY());
-		compound.setInteger(name + "_z", pos.getZ());
-	}
-	
-	public static EnumFacing whatFacing(BlockPos now, BlockPos pos) {
-		BlockPos cache = now.west();
-		int code = pos.hashCode();
-		if (cache.hashCode() == code && cache.equals(pos))
-			return WEST;
-		cache = now.east();
-		if (cache.hashCode() == code && cache.equals(pos))
-			return EAST;
-		cache = now.south();
-		if (cache.hashCode() == code && cache.equals(pos))
-			return SOUTH;
-		cache = now.north();
-		if (cache.hashCode() == code && cache.equals(pos))
-			return NORTH;
-		cache = now.down();
-		if (cache.hashCode() == code && cache.equals(pos))
-			return DOWN;
-		return UP;
 	}
 	
 }

@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.eletricity.interfaces;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.elementtimes.tutorial.common.eletricity.BlockPosUtil;
 import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
 import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcInputer;
@@ -55,7 +56,7 @@ public interface IEleInputer extends IRegister {
 	 */
 	default Map<TileEntity, IEleTransfer> getTransferAround(TileEntity now) {
 		Map<TileEntity, IEleTransfer> list = new HashMap<>(4);
-		IEleTransfer.forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
+		BlockPosUtil.forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
 			IEleTransfer et = EleWorker.getTransfer(te);
 			if (et != null && et.isLink(te, now)) list.put(te,et);
 		});
@@ -68,9 +69,9 @@ public interface IEleInputer extends IRegister {
 	 */
 	default Map<TileEntity, IEleOutputer> getOutputerAround(TileEntity now) {
 		Map<TileEntity, IEleOutputer> list = new HashMap<>(3);
-		IEleTransfer.forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
+		BlockPosUtil.forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
 			IEleOutputer out = EleWorker.getOutputer(te);
-			if (out != null && isAllowable(now, facing) && out.isAllowable(te, IEleTransfer.upsideDown(facing)))
+			if (out != null && isAllowable(now, facing) && out.isAllowable(te, BlockPosUtil.upsideDown(facing)))
 				list.put(te, out);
 		});
 		return list;

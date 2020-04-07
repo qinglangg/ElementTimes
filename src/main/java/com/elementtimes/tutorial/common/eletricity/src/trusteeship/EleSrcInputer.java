@@ -54,8 +54,7 @@ public class EleSrcInputer implements IEleInputer {
 	@Override
 	public boolean contains(TileEntity te) {
 		IEnergyStorage cap = te.getCapability(CapabilityEnergy.ENERGY, null);
-		if (cap == null) return false;
-		return cap.receiveEnergy(1, true) >= 1;
+		return cap != null;
 	}
 	
 }

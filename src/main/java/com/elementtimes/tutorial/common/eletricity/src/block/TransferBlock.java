@@ -108,10 +108,12 @@ abstract public class TransferBlock extends BlockContainer {
 		Block block = fromEntity == null ? worldIn.getBlockState(fromPos).getBlock() : fromEntity.getBlockType();
 		if (block == Blocks.AIR) {
 			EleSrcCable tew = (EleSrcCable) worldIn.getTileEntity(pos);
+			assert tew != null;
 			tew.deleteLink(fromPos);
 		} else if (fromEntity != null) {
 			EleSrcCable tew = (EleSrcCable) worldIn.getTileEntity(pos);
-			tew.link(fromEntity);
+			assert tew != null;
+			tew.link(fromPos);
 		}
 	}
 	

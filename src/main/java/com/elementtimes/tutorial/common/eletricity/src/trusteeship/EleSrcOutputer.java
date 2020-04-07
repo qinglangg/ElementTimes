@@ -50,7 +50,6 @@ public class EleSrcOutputer implements IEleOutputer {
 	@Override
 	public boolean contains(TileEntity te) {
 		IEnergyStorage cap = te.getCapability(CapabilityEnergy.ENERGY, null);
-		if (cap == null) return false;
-		return cap.extractEnergy(1, true) >= 1;
+		return cap != null;
 	}
 }

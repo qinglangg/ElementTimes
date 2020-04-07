@@ -13,6 +13,9 @@ import com.elementtimes.tutorial.common.eletricity.interfaces.IEleOutputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
 import com.elementtimes.tutorial.common.autonet.WaitList;
+import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcInputer;
+import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcOutputer;
+import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcTransfer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.Mod;
 

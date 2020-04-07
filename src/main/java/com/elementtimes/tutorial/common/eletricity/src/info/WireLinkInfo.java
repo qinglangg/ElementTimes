@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.eletricity.src.cache;
+package com.elementtimes.tutorial.common.eletricity.src.info;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -149,7 +149,7 @@ public final class WireLinkInfo extends EleLineCache {
 		IEleTransfer transfer = EleWorker.getTransfer(start);
 		int energy = inputer.getEnergy(user);
 		IVoltage voltage = inputer.getVoltage(user);
-		start.forEach(prev, (it, isEnd, next) -> {
+		start.forEach(prev == null ? null : prev.getPos(), (it, isEnd, next) -> {
 			info.getPath().add(it);
 			if (isEnd) {
 				for (Map.Entry<TileEntity, IEleOutputer> entry : transfer.getOutputerAround(it).entrySet()) {

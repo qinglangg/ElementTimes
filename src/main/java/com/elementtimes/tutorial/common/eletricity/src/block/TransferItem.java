@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.eletricity.src.block;
 
+import com.elementtimes.tutorial.common.eletricity.BlockPosUtil;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -55,7 +56,6 @@ public final class TransferItem extends ItemBlock {
         
         ItemStack itemstack = player.getHeldItem(hand);
         if (!itemstack.isEmpty() && player.canPlayerEdit(blockPos, facing, itemstack)) {
-        	//Object[] os = whatState(worldIn, this.block, blockPos, new BlockPos[] { pos });
             IBlockState iblockstate1 = placeBlockAt(itemstack, player, worldIn, blockPos, this.block.getDefaultState());
             if (iblockstate1 != null) {
             	//更新TileEntity
@@ -65,8 +65,8 @@ public final class TransferItem extends ItemBlock {
 	            nbt.setBlockType(this.block);
 	            nbt.update();
 	            if (pos != blockPos) nbt.link(pos);
-	            IEleTransfer.forEachAroundTE(worldIn, blockPos, (te, fa) -> {
-	            	if (pos != te.getPos()) nbt.link(te);
+	            BlockPosUtil.forEachAroundTE(worldIn, blockPos, (te, fa) -> {
+	            	if (pos != te.getPos()) nbt.link(te.getPos());
 	            });
 	            worldIn.setTileEntity(blockPos, nbt);
             	

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import com.elementtimes.tutorial.common.eletricity.BlockPosUtil;
 import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.info.EleLineCache;
 import com.elementtimes.tutorial.common.eletricity.info.PathInfo;
@@ -130,44 +131,12 @@ public interface IEleTransfer extends IRegister {
 	
 	default Map<TileEntity, IEleOutputer> getOutputerAround(TileEntity now) {
 		Map<TileEntity, IEleOutputer> list = new HashMap<>(3);
-		forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
+		BlockPosUtil.forEachAroundTE(now.getWorld(), now.getPos(), (te, facing) -> {
 			IEleOutputer out = EleWorker.getOutputer(te);
-			if (out != null && isLink(now, te) && out.isAllowable(te, upsideDown(facing)))
+			if (out != null && isLink(now, te) && out.isAllowable(te, BlockPosUtil.upsideDown(facing)))
 				list.put(te, out);
 		});
 		return list;
-	}
-	
-	/**
-	 * 遍历指定方块周围的所有TE，不包含TE的不会进行遍历
-	 * @param world 所在世界
-	 * @param pos 中心方块
-	 * @param run 要运行的代码，其中TE只遍历到的TE，EnumFacing指TE相对于中心方块的方向
-	 */
-	static void forEachAroundTE(World world, BlockPos pos, BiConsumer<? super TileEntity, EnumFacing> run) {
-		TileEntity te = world.getTileEntity(pos.up());
-		if (te != null) run.accept(te, UP);
-		te = world.getTileEntity(pos.down());
-		if (te != null) run.accept(te, DOWN);
-		te = world.getTileEntity(pos.west());
-		if (te != null) run.accept(te, WEST);
-		te = world.getTileEntity(pos.north());
-		if (te != null) run.accept(te, NORTH);
-		te = world.getTileEntity(pos.south());
-		if (te != null) run.accept(te, SOUTH);
-		te = world.getTileEntity(pos.east());
-		if (te != null) run.accept(te, EAST);
-	}
-	
-	static EnumFacing upsideDown(EnumFacing facing) {
-		switch (facing) {
-			case UP: return DOWN;
-			case EAST: return WEST;
-			case WEST: return EAST;
-			case NORTH: return SOUTH;
-			case SOUTH: return NORTH;
-			default: return UP;
-		}
 	}
 	
 }

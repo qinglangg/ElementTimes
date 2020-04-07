@@ -2,13 +2,12 @@ package com.elementtimes.tutorial.common.eletricity.src.trusteeship;
 
 import javax.annotation.Nullable;
 
-import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.info.EleLineCache;
 import com.elementtimes.tutorial.common.eletricity.info.PathInfo;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleInputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
-import com.elementtimes.tutorial.common.eletricity.src.cache.WireLinkInfo;
+import com.elementtimes.tutorial.common.eletricity.src.info.WireLinkInfo;
 import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +42,7 @@ public class EleSrcTransfer implements IEleTransfer {
 	
 	@Override
 	public boolean link(TileEntity now, TileEntity target) {
-		return ((EleSrcCable) now).link(target);
+		return ((EleSrcCable) now).link(target.getPos());
 	}
 	
 	@Override

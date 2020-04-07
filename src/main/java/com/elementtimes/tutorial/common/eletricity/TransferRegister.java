@@ -27,9 +27,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public final class TransferRegister {
 	
 	static {
-		EleWorker.registerTransfer(new EleSrcTransfer());
-		EleWorker.registerOutputer(new EleSrcOutputer());
 		EleWorker.registerInputer(new EleSrcInputer());
+		EleWorker.registerOutputer(new EleSrcOutputer());
+		EleWorker.registerTransfer(new EleSrcTransfer());
 	}
 	
 	private static List<TransferBlock> blockList = new ArrayList<>(7);
