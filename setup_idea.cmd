@@ -11,7 +11,7 @@ echo.
 echo.
 
 echo ####################
-echo Loading Eclipse
+echo Loading IDEA
 echo ####################
 echo.
 title eclipse

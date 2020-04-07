@@ -468,6 +468,12 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	 */
 	private final List<String> players = new ArrayList<>(1);
 	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		players.clear();
+		return super.getUpdateTag();
+	}
+	
 	/**
 	 * 这其中写有更新内部数据的代码，重写时应该调用
 	 *
@@ -498,6 +504,8 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 				if (player instanceof EntityPlayerMP) {
 					players.add(player.getName());
 					sendPlayers.add(player.getName());
+				} else {
+					players.remove(player.getName());
 				}
 			}
 		}
