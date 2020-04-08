@@ -31,19 +31,19 @@ public class TileItemReducer extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.bambooCharcoal , 1)).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bamboo      , 4));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesBlocks.bambooBlock, 1)).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bamboo         , 8));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.sucroseCharCoal, 1)).addItemOutput(IngredientPart.forItem(Items.REEDS                    , 4));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockTin"                       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tin          , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockLead"                      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.lead         , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockCopper"                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.copper       , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockPlatinum"                  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platinumIngot, 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSilver"                    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.silver       , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSteel"                     , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot   , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesBlocks.diamondBlock  , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.diamondIngot , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.MELON_BLOCK               , 1)).addItemOutput(IngredientPart.forItem(Items.MELON                    , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.NETHER_WART_BLOCK         , 1)).addItemOutput(IngredientPart.forItem(Items.NETHER_WART              , 9));
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE                 , 1)).addItemOutput(IngredientPart.forItem(Items.GLOWSTONE_DUST           , 4));
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.bambooCharcoal , 1)).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bamboo, 4)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesBlocks.bambooBlock, 1)).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bamboo, 8)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesItems.sucroseCharCoal, 1)).addItemOutput(IngredientPart.forItem(Items.REEDS, 4)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockTin", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tin, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockLead", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.lead, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockCopper", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.copper, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockPlatinum", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.platinumIngot, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSilver", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.silver, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem("blockSteel", 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.steelIngot, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(ElementtimesBlocks.diamondBlock, 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.diamondIngot, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.MELON_BLOCK, 1)).addItemOutput(IngredientPart.forItem(Items.MELON , 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.NETHER_WART_BLOCK, 1)).addItemOutput(IngredientPart.forItem(Items.NETHER_WART, 9)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE, 1)).addItemOutput(IngredientPart.forItem(Items.GLOWSTONE_DUST, 4)).endAdd();
         }
     }
 
@@ -61,7 +61,7 @@ public class TileItemReducer extends BaseTileEntity {
 
     @Override
     public int getEnergyTick() {
-        return ETConfig.ITEM_REDUCER.extract;
+        return ETConfig.ITEM_REDUCER.energy;
     }
 
     @Override

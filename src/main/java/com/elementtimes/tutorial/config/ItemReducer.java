@@ -19,4 +19,5 @@ public class ItemReducer {
     @Config.Comment("设置还原机每个矿物耗电量")
     @Config.Name("energy")
     public int energy = 8000;
+    
 }

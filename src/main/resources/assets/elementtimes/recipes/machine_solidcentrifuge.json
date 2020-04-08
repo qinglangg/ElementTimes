@@ -5,25 +5,22 @@
     "item": "elementtimes:solidcentrifuge"
   },
   "pattern": [
-    "ABC",
-    "DED",
-    "CBA"
+    " A ",
+    "BCD",
+    " A "
   ],
   "key": {
     "A": {
-      "item": "minecraft:sticky_piston"
+      "item": "minecraft:piston"
     },
     "B": {
-      "item": "elementtimes:cementandsteelbarmixture"
-    },
-    "C": {
-      "item": "minecraft:clay"
-    },
-    "D": {
       "item": "elementtimes:woodelement"
     },
-    "E": {
-      "item": "elementtimes:centrifuge"
+    "C": {
+      "item": "elementtimes:fuelgenerator"
+    },
+    "D": {
+      "item": "elementtimes:soilelement"
     }
   }
 }
