@@ -61,6 +61,21 @@ public class TileFluidReactor extends BaseTileEntity {
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
             		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.DiluteHydrochloricAcid, 1000))
             		.endAdd()
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(1000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hno3,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.nongHNO3, 1000))
+            		.endAdd()
+            		//烧杯完成后移到烧杯的内容
+            		.newRecipe()
+            		.addCost(1000)
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.nongHNO3,1000))
+            		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+            		.addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.xiHNO3, 1000))
+            		.endAdd()
+
 
             		//AlCl3 + 3NH3·H2O =Al(OH)3↓+ 3NH4Cl
             		.newRecipe()
@@ -213,7 +228,38 @@ public class TileFluidReactor extends BaseTileEntity {
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.nitrogen, 1000))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.ammonia, 2000))
                     .endAdd()
-
+                    
+                    //H2+Cl2=2HCL
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.H,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.HCl, 2000))
+                    .endAdd()
+                    
+                    //2NO+O2=2NO2
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.no,2000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.oxygen, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no2, 2000))
+                    .endAdd()
+                    //3NO2+H2O=2HNO3+NO
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.no2,3000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.waterDistilled, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.hno3, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no, 1000))
+                    .endAdd()
+                    //HNO3+NaOH=NaNO3+H2O
+                    .newRecipe()
+                    .addCost(1000)
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.hno3,1000))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Naoh, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.NaNo3, 1000))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.WATER,1000))
+                    .endAdd()
 
                     //Co2+Ca(OH)2=CaCO3+H2O
                     .newRecipe()

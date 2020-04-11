@@ -98,6 +98,22 @@ public class TileSolidFluidReactor extends BaseTileEntity {
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.chlorine, 1000))
                     .addItemOutput(IngredientPart.forItem(ElementtimesItems.salt, 2))
                     .endAdd()
+                    //3Cu+8HNO3(稀)=3Cu(NO3)2+2NO+4H2O
+                    .newRecipe()
+                    .addCost(2000)
+                    .addItemInput(IngredientPart.forItem("ingotCopper", 3))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.xiHNO3, 8000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Cu_no3_2, 3000))
+                    .endAdd()
+                    //Cu+4HNO3(浓)=Cu(NO3)2+2NO2+2H2O
+                    .newRecipe()
+                    .addCost(2000)
+                    .addItemInput(IngredientPart.forItem("ingotCopper", 1))
+                    .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.nongHNO3, 4000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.no2, 2000))
+                    .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.Cu_no3_2, 1000))
+                    .endAdd()
 
                     //2Ag+Cl2=2AgCl
                     .newRecipe()

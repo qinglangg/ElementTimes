@@ -149,6 +149,11 @@ public class ElementtimesFluids {
     public static Fluid NaAlO2 = new Fluid("elementtimes.naalo2",
             new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_fluid"), 0xFF3B9595);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid Cu_no3_2 = new Fluid("elementtimes.cu_no3_2",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naalo2_fluid"), 0xFF3B9595);
 
     @ModFluid
     @ModFluid.FluidBlock
@@ -170,6 +175,13 @@ public class ElementtimesFluids {
     @ModFluid
     @ModFluid.FluidBlock
     public static Fluid Naoh = new Fluid("elementtimes.naoh",
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
+    
+    
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid NaNo3 = new Fluid("elementtimes.nano3",
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/naclsolutiondilute_fluid"), 0xFF4E9696);
 
@@ -329,6 +341,16 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/hno3_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/hno3_fluid"), 0xFF96603B);
 
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid nongHNO3 = new Fluid("elementtimes.nonghno3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/no2_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/no2_still"), 0xFF9F3F3F);
+    @ModFluid
+    @ModFluid.FluidBlock
+    public static Fluid xiHNO3 = new Fluid("elementtimes.xihon3",
+            new ResourceLocation(ElementTimes.MODID, "fluid/no_still"),
+            new ResourceLocation(ElementTimes.MODID, "fluid/no_fluid"), 0xFF967474);
     @ModFluid(density = -5)
     @ModFluid.FluidBlock
     public static Fluid no = new Fluid("elementtimes.no",
