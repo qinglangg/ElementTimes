@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 public class Elementaxe  extends ItemAxe {
 
 	public Elementaxe() {
-		super(EnumHelper.addToolMaterial("elementaxe", 4, 3000, 1000.0F, 15.0F, 25),100.0F,0.0F);
+		super(EnumHelper.addToolMaterial("elementaxe", 4, 1000000, 180.0F, 100.0F, 100),180.0F,100.0F);
 	}
 
 	@Override

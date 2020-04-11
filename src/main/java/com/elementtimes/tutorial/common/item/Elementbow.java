@@ -13,7 +13,7 @@ public class Elementbow  extends ItemBow {
 	public Elementbow() 
 	{
 		super();
-        this.setMaxDamage(3840);
+        this.setMaxDamage(38400);
 	}
 
 	@Override

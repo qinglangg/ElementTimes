@@ -13,7 +13,7 @@ public class Elementsword  extends ItemSword
 {
 	public Elementsword() 
 	{
-		super(EnumHelper.addToolMaterial("elementsword", 4, 1000, 10.0F, 90.0F, 20));
+		super(EnumHelper.addToolMaterial("elementsword",4, 1000000, 100.0F, 100.0F, 100));
 	}
 	@Override
 	public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {

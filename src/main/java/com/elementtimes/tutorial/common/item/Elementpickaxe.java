@@ -22,7 +22,7 @@ public class Elementpickaxe  extends ItemPickaxe {
 
 	public Elementpickaxe() 
 	{
-		super(EnumHelper.addToolMaterial("elementpickaxe", 4, 1000, 1000.0F, 15.0F, 100));
+		super(EnumHelper.addToolMaterial("elementpickaxe", 4, 1000000, 50.0F, 100.0F, 100));
 	}
 
 	@Override

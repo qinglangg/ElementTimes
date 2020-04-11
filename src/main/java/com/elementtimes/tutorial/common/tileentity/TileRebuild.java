@@ -33,7 +33,7 @@ public class TileRebuild extends BaseTileEntity {
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
             RECIPE.add(10000000,Items.EGG, 1,new ItemStack(Blocks.DRAGON_EGG, 1))
-                    .add(4000, ElementtimesItems.starchPowder, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
+                    .add(4000, ElementtimesItems.amylum, 1, new ItemStack(ElementtimesItems.sucroseCharCoal, 1))
                     .add(10000,ElementtimesItems.woodElement, 1, Items.TOTEM_OF_UNDYING, 1)
                     .add(4000, new ItemStack(Items.COAL, 1, 1), new ItemStack(Items.COAL, 1, 0))
                     .add(50000, new ItemStack(Items.COAL, 1, 0), Items.DIAMOND, 1)

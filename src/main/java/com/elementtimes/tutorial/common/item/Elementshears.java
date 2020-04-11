@@ -13,7 +13,7 @@ public class Elementshears  extends ItemShears {
 	public Elementshears() 
 	{
 		super();
-        this.setMaxDamage(2380);
+        this.setMaxDamage(23800);
 	}
 
 	@Override

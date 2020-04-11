@@ -13,7 +13,7 @@ public class ElementFishPole  extends ItemFishingRod {
 	public ElementFishPole() 
 	{
 		super();
-        this.setMaxDamage(640);
+        this.setMaxDamage(6400);
 	}
 
 	@Override

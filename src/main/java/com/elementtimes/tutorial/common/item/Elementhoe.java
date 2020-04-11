@@ -13,7 +13,7 @@ public class Elementhoe  extends ItemHoe {
 
 	public Elementhoe() 
 	{
-		super(EnumHelper.addToolMaterial("elementhoe", 4, 1000, 1000.0F, 15.0F, 100));
+		super(EnumHelper.addToolMaterial("elementhoe",4, 500000, 50.0F, 100.0F, 100));
 	}
 
 	@Override

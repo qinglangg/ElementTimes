@@ -79,8 +79,8 @@ public class ElementtimesItems {
     @ModBurnTime(800)
     public static Item bambooCharcoal = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    @ModBurnTime(400)
-    public static Item amylum = new ModFood(5, 4.0F);
+    @ModBurnTime(600)
+    public static Item amylum = new ModFood(5, 5.0F);
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item corn = new Corn();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
@@ -255,15 +255,15 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item elementHoe = new Elementhoe();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item platinumSword = new ItemSword(EnumHelper.addToolMaterial("platinumsword", 4, 500, 10.0F, 20.0F, 20));
+    public static Item platinumSword = new ItemSword(EnumHelper.addToolMaterial("platinumsword", 4, 5000, 200.0F, 30.0F, 30));
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item platinumHoe = new ItemHoe(EnumHelper.addToolMaterial("platinumhoe", 4, 500, 300.0F, 15.0F, 100));
+    public static Item platinumHoe = new ItemHoe(EnumHelper.addToolMaterial("platinumhoe", 4, 5000, 100.0F, 10.0F, 30));
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item platinumShovel = new ItemSpade(EnumHelper.addToolMaterial("platinumshovel", 4, 500, 300.0F, 15.0F, 100));
+    public static Item platinumShovel = new ItemSpade(EnumHelper.addToolMaterial("platinumshovel", 4, 5000, 150.0F, 20.0F, 30));
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 800, 300.0F, 15.0F, 25),30.0F,0.0F) {};
+    public static Item platinumAxe = new ItemAxe(EnumHelper.addToolMaterial("platinumaxe", 4, 8000, 50.0F, 15.0F, 30),50.0F,30.0F) {};
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
-    public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 500, 300.0F, 15.0F, 50)) {};
+    public static Item platinumPick = new ItemPickaxe(EnumHelper.addToolMaterial("platinumpick", 4, 8000, 150.0F, 20.0F, 30)) {};
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModItem.Damageable(10)
     public static WoodenHalter woodenHalter = new WoodenHalter();
