@@ -15,7 +15,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * @author qinglan,luqin2007
- * TODO   1.烧杯GUI
+ * TODO
+ * 1.烧杯GUI
  * 2.禁止ic2铁矿粉和铜矿粉燃烧，使用固体反应器等同元素时代铁矿粉和铜矿粉
  * 3.支持鼠标移动gui里面流体顺序，默认输出最下面的
  * 4.引导书兼容，详细模组步骤资料请请抄袭网易开发者内容管理里面写的元素时代资料(共十六章篇)
@@ -25,13 +26,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  *
  * bug:
  * 1.太阳能材质显示问题
- * 3.液泵没法抽流体
  * 4.沉浸管道和ET机器有兼容问题
  * 6.竹子生长问题
  * 7.流体储罐只能手动放一桶，其他模组管道还蹦存档
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
  * 2.竹板
+ *
+ * TODO ec WorldReplaceMachineLifecycle 流体部分有bug，暂时只修复 et，以后修复ec
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.5.3,1.0.0);before:guideapi")
 public class ElementTimes {

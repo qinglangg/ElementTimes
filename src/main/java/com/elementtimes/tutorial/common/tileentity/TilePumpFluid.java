@@ -3,18 +3,14 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
-import com.elementtimes.elementcore.api.template.tileentity.lifecycle.WorldReplaceMachineLifecycle;
-import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
+import com.elementtimes.elementcore.api.template.tileentity.lifecycle.RecipeMachineLifecycle;
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import net.minecraft.block.state.IBlockState;
+import com.elementtimes.tutorial.other.FluidBlockRecipeLifecycle;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import javax.annotation.Nonnull;
 
@@ -24,42 +20,17 @@ import javax.annotation.Nonnull;
  */
 public class TilePumpFluid extends BaseTileEntity {
 
-    public static MachineRecipeHandler RECIPE =
-            new MachineRecipeHandler(0, 0 ,0 , 1).newRecipe().addCost(10).endAdd();
-
     public TilePumpFluid() {
         super(1000, 1, 1, 0, 0, 1, 16000);
-        addLifeCycle(new WorldReplaceMachineLifecycle(this, this::replace, this::collect,
-                20, 10, 20));
+        // TODO remove WorldReplaceMachineLifecycle
+        removeLifecycle(RecipeMachineLifecycle.class);
+        addLifeCycle(new FluidBlockRecipeLifecycle(this));
         addLifeCycle(new FluidMachineLifecycle(this));
-    }
-
-    private Fluid search = null;
-
-    private IBlockState replace(IBlockState old) {
-        search = FluidRegistry.lookupFluidForBlock(old.getBlock());
-        if (search != null) {
-            return ElementtimesBlocks.fr.getDefaultState();
-        }
-        return null;
-    }
-
-    private ImmutablePair<Integer, Object> collect(IBlockState bs) {
-        if (search != null) {
-            return ImmutablePair.of(0, search);
-        }
-        return null;
     }
 
     @Override
     public int getGuiId() {
         return ElementtimesGUI.Machines.PumpFluid.id();
-    }
-
-    @Nonnull
-    @Override
-    public MachineRecipeHandler getRecipes() {
-        return RECIPE;
     }
 
     @Override
