@@ -25,10 +25,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 7.化学实验机器诸多问题
  *
  * bug:
- * 1.太阳能材质显示问题
- * 4.沉浸管道和ET机器有兼容问题
  * 6.竹子生长问题
- * 7.流体储罐只能手动放一桶，其他模组管道还蹦存档
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
  * 2.竹板

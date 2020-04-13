@@ -146,6 +146,7 @@ item.elementtimes.siliconplate.name=硅板
 item.elementtimes.cpu.name=芯片
 item.elementtimes.cpuup.name=输入芯片
 item.elementtimes.cpudown.name=输出芯片
+item.elementtimes.carvedcpu.name=carvedcpu
 item.elementtimes.bamboodoor.name=竹门
 item.elementtimes.bingu3o8.name=三氧化八铀
 item.elementtimes.smallu3o8.name=三氧化八铀
@@ -232,6 +233,7 @@ tile.elementtimes.bamboo.name=竹子
 tile.elementtimes.bambooblock.name=竹方块
 tile.elementtimes.bamboodoor.name=竹门
 tile.elementtimes.bamboostair.name=竹楼梯
+tile.elementtimes.bambooslab.name=竹台阶
 
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
@@ -350,14 +352,6 @@ fluid.elementtimes.raregases=稀有气体
 tile.elementtimes.raregases.name=稀有气体
 fluid.elementtimes.air=空气
 tile.elementtimes.air.name=空气
-fluid.elementtimes.nano3=硝酸钠
-tile.elementtimes.nano3.name=硝酸钠
-fluid.elementtimes.nonghno3=浓硝酸
-tile.elementtimes.nonghno3.name=浓硝酸
-fluid.elementtimes.xihno3=稀硝酸
-tile.elementtimes.xihno3.name=稀硝酸
-fluid.elementtimes.cu_no3_2=硝酸铜
-tile.elementtimes.cu_no3_2.name=硝酸铜
 # enchantment
 enchantment.elementtimes.hammerdebugger=调试
 # tooltip
@@ -387,3 +381,11 @@ tile.wire_tin.name=锡导线
 tile.wire_high.name=高能导线
 tile.wire_element.name=元素导线
 tile.wire_silver.name=银导线
+fluid.elementtimes.cu_no3_2=硝酸铜
+fluid.elementtimes.nano3=硝酸钠
+fluid.elementtimes.nonghno3=浓硝酸
+fluid.elementtimes.xihno3=稀硝酸
+tile.elementtimes.cu_no3_2.name=硝酸铜
+tile.elementtimes.nano3.name=硝酸钠
+tile.elementtimes.nonghno3.name=浓硝酸
+tile.elementtimes.xihno3.name=稀硝酸

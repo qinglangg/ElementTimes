@@ -233,6 +233,7 @@ tile.elementtimes.bamboo.name=Bamboo
 tile.elementtimes.bambooblock.name=Bamboo Block
 tile.elementtimes.bamboodoor.name=Bamboo Door
 tile.elementtimes.bamboostair.name=Bamboo Stair
+tile.elementtimes.bambooslab.name=Bamboo Slab
 
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=mgcl2
