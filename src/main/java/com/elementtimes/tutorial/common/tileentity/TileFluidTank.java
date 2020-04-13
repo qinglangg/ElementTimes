@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity;
 
+import com.elementtimes.tutorial.common.UpdateHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -7,7 +8,8 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
@@ -21,32 +23,34 @@ import javax.annotation.Nullable;
  * 流体储存机
  * @author luqin2007
  */
-public class TileFluidTank extends TileEntity {
+public class TileFluidTank extends TileEntity implements IFluidHandler {
 
-    private Handler mHandler = new Handler();
+    private FluidStack fluid = null;
+    private int capability = 16000;
+    private int level = 0;
 
     public FluidStack getFluid() {
-        return mHandler.fluid;
+        return fluid;
     }
 
     public int getCapability() {
-        return mHandler.capability;
+        return capability;
     }
 
     public int getLevel() {
-        return mHandler.level;
+        return level;
     }
 
     public void setLevel(int newLevel) {
-        mHandler.setLevel(newLevel);
-    }
-
-    public NBTTagCompound write() {
-        return mHandler.serializeNBT();
-    }
-
-    public void read(NBTTagCompound nbt) {
-        mHandler.deserializeNBT(nbt);
+        if (level != newLevel) {
+            capability = 16000 + newLevel * 16000;
+            if (newLevel < level) {
+                if (fluid != null) {
+                    fluid.amount = Math.min(capability, fluid.amount);
+                }
+            }
+        }
+        markDirty();
     }
 
     @Override
@@ -58,34 +62,64 @@ public class TileFluidTank extends TileEntity {
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(mHandler);
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
         }
         return super.getCapability(capability, facing);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setTag("t", write());
+        compound.setInteger("l", level);
+        compound.setTag("f", fluid == null ? new NBTTagCompound() : fluid.writeToNBT(new NBTTagCompound()));
         return super.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        read(compound.getCompoundTag("t"));
+        UpdateHelper.tankNbtFix(compound);
+        int l = compound.getInteger("l");
+        NBTTagCompound f = compound.getCompoundTag("f");
+        if (f.hasNoTags()) {
+            fluid = null;
+        } else {
+            fluid = FluidStack.loadFluidStackFromNBT(f);
+        }
+        setLevel(l);
         super.readFromNBT(compound);
     }
 
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 1, write());
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("l", getLevel());
+        if (isEmpty()) {
+            compound.setBoolean("e", true);
+        } else {
+            compound.setBoolean("e", false);
+            compound.setInteger("c", fluid.amount);
+            compound.setString("f", fluid.getFluid().getName());
+        }
+        return new SPacketUpdateTileEntity(pos, 1, compound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        read(pkt.getNbtCompound());
+        NBTTagCompound compound = pkt.getNbtCompound();
+        setLevel(compound.getInteger("l"));
+        if (compound.getBoolean("e")) {
+            fluid = null;
+        } else {
+            Fluid fluid = FluidRegistry.getFluid(compound.getString("f"));
+            if (fluid != null) {
+                this.fluid = new FluidStack(fluid, compound.getInteger("c"));
+            }
+        }
+        markDirty();
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
@@ -93,6 +127,9 @@ public class TileFluidTank extends TileEntity {
 
     @Override
     public void markDirty() {
+        if (fluid != null && fluid.amount <= 0) {
+            fluid = null;
+        }
         super.markDirty();
         if (world != null && !world.isRemote) {
             IBlockState state = world.getBlockState(pos);
@@ -105,119 +142,79 @@ public class TileFluidTank extends TileEntity {
         return true;
     }
 
-    class Handler implements IFluidHandler, INBTSerializable<NBTTagCompound> {
-        private FluidStack fluid = null;
-        private int capability = 16000;
-        private int level = 0;
+    @Override
+    public IFluidTankProperties[] getTankProperties() {
+        FluidStack stack = isEmpty() ? null : fluid.copy();
+        boolean canFill = fluid.amount < capability;
+        boolean canDrain = fluid.amount > 0;
+        FluidTankProperties properties = new FluidTankProperties(stack, capability, canFill, canDrain);
+        return new IFluidTankProperties[] {properties};
+    }
 
-        @Override
-        public IFluidTankProperties[] getTankProperties() {
-            return new IFluidTankProperties[] {new FluidTankProperties(new FluidStack(fluid, fluid.amount), capability, true, true)};
-        }
-
-        @Override
-        public int fill(FluidStack resource, boolean doFill) {
-            if (resource == null || resource.amount == 0) {
-                return 0;
-            }
-            if (fluid != null && fluid.isFluidEqual(resource)) {
-                int fill = Math.min(capability - fluid.amount, resource.amount);
-                if (fill > 0 && doFill) {
-                    fluid.amount += fill;
-                    onFluidChange();
-                }
-                return fill;
-            }
-            if (fluid == null) {
-                int fill = Math.min(capability, resource.amount);
-                if (doFill) {
-                    fluid = new FluidStack(resource, fill);
-                    onFluidChange();
-                }
-                return fill;
-            }
+    @Override
+    public int fill(FluidStack resource, boolean doFill) {
+        if (resource == null || resource.amount == 0) {
             return 0;
         }
-
-        @Nullable
-        @Override
-        public FluidStack drain(FluidStack resource, boolean doDrain) {
-            if (resource == null || fluid == null) {
-                return null;
+        if (isEmpty()) {
+            int fill = Math.min(capability, resource.amount);
+            if (doFill) {
+                fluid = new FluidStack(resource, fill);
+                markDirty();
             }
-            if (fluid.isFluidEqual(resource)) {
-                int drain = Math.min(fluid.amount, resource.amount);
-                if (drain > 0 && doDrain) {
-                    if (fluid.amount == drain) {
-                        fluid = null;
-                    } else {
-                        fluid.amount -= drain;
-                    }
-                    onFluidChange();
+            return fill;
+        } else if (fluid.isFluidEqual(resource)) {
+            int fill = Math.min(capability - fluid.amount, resource.amount);
+            if (fill > 0) {
+                if (doFill) {
+                    fluid.amount += fill;
+                    markDirty();
                 }
-                return fluid == null ? null : new FluidStack(fluid, drain);
+                return fill;
             }
+        }
+        return 0;
+    }
+
+    @Nullable
+    @Override
+    public FluidStack drain(FluidStack resource, boolean doDrain) {
+        if (isEmpty() || resource == null || resource.amount <= 0) {
             return null;
         }
-
-        @Nullable
-        @Override
-        public FluidStack drain(int maxDrain, boolean doDrain) {
-            if (fluid == null) {
-                return null;
-            }
-            int drain = Math.min(maxDrain, fluid.amount);
+        if (resource == fluid || fluid.isFluidEqual(resource)) {
+            int drain = Math.min(fluid.amount, resource.amount);
             if (drain > 0) {
+                FluidStack cache = fluid;
                 if (doDrain) {
-                    if (fluid.amount == drain) {
-                        fluid = null;
-                    } else {
-                        fluid.amount -= drain;
-                    }
-                    onFluidChange();
+                    fluid.amount -= drain;
+                    markDirty();
                 }
-                return fluid == null ? null : new FluidStack(fluid, drain);
+                return new FluidStack(cache, drain);
             }
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public FluidStack drain(int maxDrain, boolean doDrain) {
+        if (isEmpty() || maxDrain <= 0) {
             return null;
         }
-
-        private void setLevel(int newLevel) {
-            if (level != newLevel) {
-                capability = 16000 + newLevel * 16000;
-                if (newLevel < level) {
-                    if (fluid != null) {
-                        fluid.amount = Math.min(capability, fluid.amount);
-                    }
-                }
+        int drain = Math.min(maxDrain, fluid.amount);
+        if (drain > 0) {
+            FluidStack cache = fluid;
+            if (doDrain) {
+                fluid.amount -= drain;
+                markDirty();
             }
-            onFluidChange();
+            return new FluidStack(cache, drain);
         }
+        return null;
+    }
 
-        private void onFluidChange() {
-            if (fluid != null && fluid.amount == 0) {
-                fluid = null;
-            }
-            markDirty();
-        }
-
-        @Override
-        public NBTTagCompound serializeNBT() {
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setInteger("l", level);
-            compound.setTag("f", fluid == null ? new NBTTagCompound() : fluid.writeToNBT(new NBTTagCompound()));
-            return compound;
-        }
-
-        @Override
-        public void deserializeNBT(NBTTagCompound nbt) {
-            int l = nbt.getInteger("l");
-            NBTTagCompound f = nbt.getCompoundTag("f");
-            if (f.hasNoTags()) {
-                fluid = null;
-            } else {
-                fluid = FluidStack.loadFluidStackFromNBT(f);
-            }
-            setLevel(l);
-        }
+    public boolean isEmpty() {
+        return fluid == null || fluid.amount == 0 || fluid.getFluid() == null;
     }
 }

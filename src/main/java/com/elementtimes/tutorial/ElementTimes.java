@@ -22,6 +22,18 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 5.发酵机未完成（豆焰的酶还没画呢）
  * 6.支持沙子粉(物品id:sandpowder,已经注册了)熄灭酒精灯
  * 7.化学实验机器诸多问题
+ *
+ * bug:
+ * 1.太阳能材质显示问题
+ * 2.流体发电机只能选一种，即使消耗完，再放第二种也放不进去
+ * 3.液泵没法抽流体
+ * 4.沉浸管道和ET机器有兼容问题
+ * 5.不仅仅网易会漏气，国际版也漏气
+ * 6.竹子生长问题
+ * 7.流体储罐只能手动放一桶，其他模组管道还蹦存档
+ * 非bug:
+ * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
+ * 2.竹板
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.5.3,1.0.0);before:guideapi")
 public class ElementTimes {

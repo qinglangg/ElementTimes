@@ -125,7 +125,7 @@ public class FluidIOPipeline extends FluidConnectPipeline implements IPipelineOu
 
     @Override
     public BaseElement output(BaseElement element) {
-        if (isConnectedIO()) {
+        if (world != null && !world.isRemote && isConnectedIO()) {
             EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
             BlockPos target = pos.offset(ioSide);
             TileEntity te = world.getTileEntity(target);
@@ -141,13 +141,17 @@ public class FluidIOPipeline extends FluidConnectPipeline implements IPipelineOu
                     int fillCount = handler.fill(stack, true);
                     if (stack != null && stack.amount > fillCount) {
                         BaseElement copy = element.copy();
-                        copy.get(FluidStack.class).amount = stack.amount - fillCount;
-                        return copy.back();
+                        if (!copy.isEmpty()) {
+                            copy.get(FluidStack.class).amount = stack.amount - fillCount;
+                            return copy.isEmpty() ? null : copy.back();
+                        }
                     }
+                    return null;
                 }
             }
+            return element.back();
         }
-        return element.back();
+        return null;
     }
 
     @Override
