@@ -144,10 +144,12 @@ public class TileFluidTank extends TileEntity implements IFluidHandler {
 
     @Override
     public IFluidTankProperties[] getTankProperties() {
-        FluidStack stack = isEmpty() ? null : fluid.copy();
-        boolean canFill = fluid.amount < capability;
-        boolean canDrain = fluid.amount > 0;
-        FluidTankProperties properties = new FluidTankProperties(stack, capability, canFill, canDrain);
+        FluidTankProperties properties;
+        if (isEmpty()) {
+            properties = new FluidTankProperties(null, capability, true, true);
+        } else {
+            properties = new FluidTankProperties(fluid.copy(), capability, true, true);
+        }
         return new IFluidTankProperties[] {properties};
     }
 
