@@ -25,10 +25,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  *
  * bug:
  * 1.太阳能材质显示问题
- * 2.流体发电机只能选一种，即使消耗完，再放第二种也放不进去
  * 3.液泵没法抽流体
  * 4.沉浸管道和ET机器有兼容问题
- * 5.不仅仅网易会漏气，国际版也漏气
  * 6.竹子生长问题
  * 7.流体储罐只能手动放一桶，其他模组管道还蹦存档
  * 非bug:
