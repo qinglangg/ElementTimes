@@ -127,7 +127,7 @@ public final class EleWorker {
 	 */
 	public static UseInfo useEleEnergy(TileEntity te, IEleInputer inputer) {
 		Map<TileEntity, IEleOutputer> outs = inputer.getOutputerAround(te);
-			if (outs.isEmpty()) {
+		if (outs.isEmpty()) {
 			Map<TileEntity, IEleTransfer> transfers = inputer.getTransferAround(te);
 			if (transfers.isEmpty()) return null;
 			

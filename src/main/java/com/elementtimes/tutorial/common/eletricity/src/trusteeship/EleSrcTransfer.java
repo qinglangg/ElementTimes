@@ -22,11 +22,12 @@ public class EleSrcTransfer implements IEleTransfer {
 	@Override
 	public PathInfo findPath(TileEntity start, TileEntity user, IEleInputer inputer) {
 		EleLineCache cache = getLineCache(start);
-		PathInfo info = cache.read(start, user, inputer);
+		PathInfo info = null;
+		if (cache != null) info = cache.read(start, user, inputer);
 		if (info != null) return info;
 		info = WireLinkInfo.calculate((EleSrcCable) start, user, inputer);
 		if (info == null) return null;
-		cache.writeInfo(info);
+		if (cache != null) cache.writeInfo(info);
 		return info;
 	}
 	

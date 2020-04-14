@@ -29,7 +29,7 @@ public class EleSrcOutputer implements IEleOutputer {
 	
 	@Override
 	public boolean isAllowable(TileEntity te, EnumFacing facing) {
-		return te.getCapability(CapabilityEnergy.ENERGY, facing) != null;
+		return te.getCapability(CapabilityEnergy.ENERGY, facing).extractEnergy(Integer.MAX_VALUE, true) > 0;
 	}
 	
 	@Override

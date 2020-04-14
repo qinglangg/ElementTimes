@@ -153,6 +153,7 @@ public final class WireLinkInfo extends EleLineCache {
 			info.getPath().add(it);
 			if (isEnd) {
 				for (Map.Entry<TileEntity, IEleOutputer> entry : transfer.getOutputerAround(it).entrySet()) {
+					if (entry.getKey() == user) continue;
 					UseInfo useInfo = entry.getValue().output(
 							entry.getKey(), Integer.MAX_VALUE, voltage, true);
 					if (useInfo.getEnergy() >= energy) {

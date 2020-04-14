@@ -61,7 +61,7 @@ public class PathInfo implements Comparable<PathInfo> {
 	 */
 	public final UseInfo invoke(TileEntity user, IEleInputer inputer) {
 		UseInfo real = outputer.output(outer, energy + lossEnergy, voltage, false);
-		inputer.useEnergy(user, real.getEnergy(), real.getVoltage());
+		int k = inputer.useEnergy(user, real.getEnergy(), real.getVoltage());
 		TileEntity transfer;
 		for (int i = 0; i < path.size(); i++) {
 			transfer = path.get(i);

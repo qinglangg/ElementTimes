@@ -13,6 +13,7 @@ import net.minecraftforge.energy.IEnergyStorage;
  * @author EmptyDreams
  * @version V1.0
  */
+@SuppressWarnings("ConstantConditions")
 public class EleSrcInputer implements IEleInputer {
 	
 	private static final ResourceLocation NAME =
