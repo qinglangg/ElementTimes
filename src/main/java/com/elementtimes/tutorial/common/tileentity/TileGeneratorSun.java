@@ -18,7 +18,7 @@ public class TileGeneratorSun extends BaseTileEntity {
         addLifeCycle(new IMachineLifecycle() {
             @Override
             public boolean onCheckStart() {
-                return world != null && world.isDaytime();
+                return world != null && world.isDaytime() && world.canBlockSeeSky(pos);
             }
         });
         setEnergyTransfer(2000);

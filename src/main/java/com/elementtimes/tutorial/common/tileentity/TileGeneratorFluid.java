@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.tileentity;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.BaseTileEntity;
 import com.elementtimes.elementcore.api.template.tileentity.SideHandlerType;
+import com.elementtimes.elementcore.api.template.tileentity.interfaces.IMachineLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.EnergyGeneratorLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.lifecycle.FluidMachineLifecycle;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
@@ -22,7 +23,9 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @ModInvokeStatic("init")
 public class TileGeneratorFluid extends BaseTileEntity {
@@ -31,7 +34,10 @@ public class TileGeneratorFluid extends BaseTileEntity {
 
     public static void init() {
         if (RECIPE.getMachineRecipes().isEmpty()) {
-            for (Fluid fluid : FluidRegistry.getBucketFluids()) {
+            List<Fluid> fluids = new ArrayList<>(FluidRegistry.getBucketFluids());
+            fluids.add(FluidRegistry.WATER);
+            fluids.add(FluidRegistry.LAVA);
+            for (Fluid fluid : fluids) {
                 FluidStack fluidStack = new FluidStack(fluid, Fluid.BUCKET_VOLUME);
                 ItemStack bucket = FluidUtil.getFilledBucket(fluidStack);
                 int burnTime = TileEntityFurnace.getItemBurnTime(bucket);
@@ -45,10 +51,30 @@ public class TileGeneratorFluid extends BaseTileEntity {
         }
     }
 
+    private static boolean RELOADED = false;
+
     public TileGeneratorFluid() {
         super(16000, 1, 1, 1, 16000, 0, 0);
         addLifeCycle(new EnergyGeneratorLifecycle<>(this));
         addLifeCycle(new FluidMachineLifecycle(this, 1, 0));
+        addLifeCycle(new IMachineLifecycle() {
+
+            @Override
+            public void onTickStart() {
+                fixFluidEmpty();
+            }
+
+            @Override
+            public void onTickFinish() {
+                fixFluidEmpty();
+            }
+
+            private void fixFluidEmpty() {
+                if (getEnergyUnprocessed() == 0) {
+                    setWorkingRecipe(null);
+                }
+            }
+        });
     }
 
     @Override
@@ -71,6 +97,11 @@ public class TileGeneratorFluid extends BaseTileEntity {
 
     @Override
     public MachineRecipeHandler getRecipes() {
+        if (!RELOADED) {
+            RECIPE.getMachineRecipes().clear();
+            init();
+            RELOADED = true;
+        }
         return RECIPE;
     }
 

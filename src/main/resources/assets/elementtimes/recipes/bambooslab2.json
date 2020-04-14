@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "elementtimes:recipes",
+  "pattern": [
+    "A",
+    "A"
+  ],
+  "key": {
+    "A": {
+      "item": "elementtimes:bambooslab"
+    }
+}
+},
+"result": {
+"item": "elementtimes:bambooblock"
+}
+}

@@ -29,20 +29,20 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
 
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return !worldIn.isRemote && worldIn.rand.nextFloat() <= .3f && nextYCheck(worldIn, pos);
+        return nextYCheck(worldIn, pos);
     }
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return canGrow(worldIn, pos, state, worldIn.isRemote);
+        return canGrow(worldIn, pos, state, worldIn.isRemote) && worldIn.rand.nextFloat() <= .5f;
     }
 
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        if (canGrow(worldIn, pos, state, worldIn.isRemote)) {
+        if (!worldIn.isRemote && canGrow(worldIn, pos, state, false) && worldIn.rand.nextFloat() <= .3f) {
             BlockPos upPos = pos.up();
             if (!worldIn.isOutsideBuildHeight(upPos)) {
-                worldIn.setBlockState(upPos, getDefaultState(), 2);
+                worldIn.setBlockState(upPos, getDefaultState(), 3);
             }
         }
     }
@@ -60,7 +60,7 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(worldIn, pos, state, rand);
-        if (!worldIn.isRemote && drop(worldIn, state, pos) && canGrow(worldIn, pos, state, false)) {
+        if (!worldIn.isRemote && drop(worldIn, state, pos) && canGrow(worldIn, pos, state, false) && worldIn.rand.nextFloat() <= .3f) {
             grow(worldIn, rand, pos, state);
         }
     }

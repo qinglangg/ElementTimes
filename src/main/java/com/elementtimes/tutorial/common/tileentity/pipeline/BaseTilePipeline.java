@@ -190,6 +190,7 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
                     BlockPos nextPos = element.nextPos();
                     if (nextPos == null) {
                         element.drop(world, pos);
+                        removeElement(element);
                     } else {
                         TileEntity te = world.getTileEntity(nextPos);
                         if (te instanceof ITilePipeline && ((ITilePipeline) te).canReceive(pos, element)) {

@@ -28,11 +28,8 @@ import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeli
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -293,6 +290,8 @@ public class ElementtimesBlocks {
     @ModBurnTime(1600)
     public static Block bambooBlock = new Block(Material.WOOD).setHardness(7f).setResistance(5f);
     public static Block bambooDoor = Door.wood();
+    public static Block bambooSlab = BambooSlab.half();
+    public static Block bambooSlabDouble = BambooSlab.double_();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block bambooStair = new BlockStairs(bambooBlock.getDefaultState()) {};
 
