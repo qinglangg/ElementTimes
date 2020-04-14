@@ -9,9 +9,8 @@
     "A": {
       "item": "elementtimes:bambooslab"
     }
-}
-},
-"result": {
-"item": "elementtimes:bambooblock"
-}
+  },
+  "result": {
+    "item": "elementtimes:bambooblock"
+  }
 }
