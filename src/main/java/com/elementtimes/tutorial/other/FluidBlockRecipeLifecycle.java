@@ -7,6 +7,7 @@ import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.TilePumpFluid;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.*;
 
@@ -168,11 +169,11 @@ public class FluidBlockRecipeLifecycle implements IMachineLifecycle {
 
     private void replaceBlock(BlockPos pos) {
         mPump.getWorld().removeTileEntity(pos);
-        mPump.getWorld().setBlockState(pos, ElementtimesBlocks.fr.getDefaultState(), 3);
+        mPump.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
     }
 
     public int getInterval() {
-        return 20;
+        return 1;
     }
 
     public int getRadius() {

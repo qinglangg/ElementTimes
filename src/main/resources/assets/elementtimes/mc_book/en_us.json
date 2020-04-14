@@ -1,5 +1,8 @@
 [
-  ["page0_line0", "page0_line1"],
-  ["page1_line0", "page1_line1"],
-  ["long long text: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]
+
+["current version: 1.7.5.1", "1.7.5.1 notice", "bamboo growth and bamboo board have not been completed, and the fluid generator and liquid pump have been repaired"],
+["version 1.7.4 update log", "support element pickaxe right-click to switch time operation and precise acquisition (1.7.4.1)", "repair wire and pipe part connection problems (1.7.4.1)", "repair fluid generator (1.7.4.2)", "add energy storage container (1.7.4.2)", "modification of synthesis table: fluid generator fluid reactor solar energy generator solar power generation panel air pump liquid pump element generator (1.7.4.3)", "Added bamboo door bamboo square bamboo ladder (1.7.4.4)", "added industrial utilization of U (1.7.4.5)"],
+["modify part machine and element synthesis table (1.7.4.6)", "add nitrogen element utilization (1.7.4.6)", "modify starch material reconstruction machine error (1.7.4.7)", "modify leaf essence 1.7.4.7 error"],
+["planning: Qing Lan", "R & D: persistent ksgfk golden bamboo dream", "Art Engineering: hualedouyan", "thanks to bleblebleblebleupmaster: there's a little space dream, vector bacteria, tangyuan says the world", "PC players group of gugugu Studio: 673169087"],
+["unfinished parts: bamboo, bamboo board, fermentation machine, iron stand, alcohol lamp, evaporating dish, crucible, beaker"]
 ]

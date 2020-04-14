@@ -1,5 +1,7 @@
 [
-  ["第0页，第0行", "第0页，第1行"],
-  ["第1页，第0行", "第1页，第1行"],
-  ["超长串: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]
+  ["当前版本：1.7.5.1","1.7.5.1须知", "竹子生长和竹板目前还未完成，流体发电机和液泵已经修复完成"],
+  ["1.7.4版本更新日志", "支持元素镐子右键切换时运和精准采集(1.7.4.1)","修复导线和管道部分连接问题(1.7.4.1)","修复流体发电机(1.7.4.2)","增加储能容器(1.7.4.2)","合成表修改：流体发电机 流体反应器 太阳能发电机 太阳能发电板 气泵 液泵 元素发电机(1.7.4.3)","添加了竹门 竹子方块 竹子阶梯(1.7.4.4)","添加了U的工业利用(1.7.4.5)"],
+  ["修改部分机器和元素合成表(1.7.4.6)","添加氮元素利用(1.7.4.6)","修改淀粉物质重构机错误(1.7.4.7)","修改树叶精华掉落物错误(1.7.4.7)"],
+  ["策划：卿岚","研发：执着 KSGFK 金竹 空梦","美工：华乐 豆焰","鸣谢哔哩哔哩UP主：有个小小太空梦，矢量菌，汤圆说世界","咕咕咕工作室PC玩家群：673169087"],
+  ["未完成部分：竹子，竹板，发酵机，铁架台，酒精灯，蒸发皿，坩埚，烧杯"]
 ]

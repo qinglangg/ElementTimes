@@ -14,6 +14,7 @@ import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -44,6 +45,10 @@ public class TileItemReducer extends BaseTileEntity {
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.MELON_BLOCK, 1)).addItemOutput(IngredientPart.forItem(Items.MELON , 9)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.NETHER_WART_BLOCK, 1)).addItemOutput(IngredientPart.forItem(Items.NETHER_WART, 9)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.GLOWSTONE, 1)).addItemOutput(IngredientPart.forItem(Items.GLOWSTONE_DUST, 4)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(new ItemStack(Blocks.WOOL, 1,0))).addItemOutput(IngredientPart.forItem(Items.STRING, 4)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.CLAY, 1)).addItemOutput(IngredientPart.forItem(Items.CLAY_BALL, 4)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.WEB, 1)).addItemOutput(IngredientPart.forItem(Items.STRING, 8)).endAdd();
+
         }
     }
 
