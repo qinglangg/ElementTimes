@@ -26,8 +26,9 @@
       "item": "minecraft:log2",
       "data": 1
     },
-    {
-      "item": "elementtimes:rubber_log"
+    {     
+      "type": "forge:ore_dict",
+      "ore": "woodRubber"
     }
   ],
   "result": {

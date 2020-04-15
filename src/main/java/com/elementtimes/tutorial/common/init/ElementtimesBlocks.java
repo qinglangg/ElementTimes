@@ -46,14 +46,14 @@ public class ElementtimesBlocks {
     public static Block cornCrop = new CornCrop();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_sapling", unlocalizedName = "rubber_sapling")
     @ModBlock.WorldGenObj(value = @Getter(RubberGenerator.RubberNatureGenerator.class), type = GenType.Tree)
-    @ModOreDict("treeSapling")
+    @ModOreDict({"treeSapling","treeSaplingRubber"})
     public static Block rubberSapling = new RubberSapling();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_log", unlocalizedName = "rubber_log")
-    @ModBurnTime(300)
-    @ModOreDict("logWood")
+    @ModBurnTime(8000)
+    @ModOreDict({"woodRubber","logWood"})
     public static Block rubberLog = new RubberLog();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE, registerName = "rubber_leaf", unlocalizedName = "rubber_leaf")
-    @ModOreDict("treeLeaves")
+    @ModOreDict({"leavesRubber","treeLeaves"})
     public static Block rubberLeaf = new RubberLeaf();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Block saplingEssence = new EssenceSapling();

@@ -27,7 +27,8 @@
       "data": 1
     },
     {
-      "item": "elementtimes:rubber_leaf"
+      "type": "forge:ore_dict",
+      "ore": "leavesRubber"
     }
   ],
   "result": {

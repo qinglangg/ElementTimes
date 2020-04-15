@@ -27,7 +27,8 @@
       "data": 5
     },
     {
-      "item": "elementtimes:rubber_sapling"
+      "type": "forge:ore_dict",
+      "ore": "treeSaplingRubber"
     }
   ],
   "result": {

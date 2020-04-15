@@ -23,10 +23,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 5.发酵机未完成（豆焰的酶还没画呢）
  * 6.支持沙子粉(物品id:sandpowder,已经注册了)熄灭酒精灯
  * 7.化学实验机器诸多问题
- *
  * bug:
  * 6.竹子生长问题
- * 注解双矿词兼容，Item注册224行
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
  * 2.竹板

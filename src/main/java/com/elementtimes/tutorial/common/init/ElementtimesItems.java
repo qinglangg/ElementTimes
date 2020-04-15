@@ -220,8 +220,7 @@ public class ElementtimesItems {
     @ModOreDict("rubber")
     public static Item rubber = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
-    @ModOreDict("itemResin")
-   // @ModOreDict("materialResin")
+    @ModOreDict({"itemResin","materialResin"})
     public static Item rubberRaw = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModOreDict("salt")
