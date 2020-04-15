@@ -129,14 +129,14 @@ public class ElementtimesItems {
     @ModOreDict("ingotSilver")
     public static Item silver = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustGreenstone")
+    @ModOreDict("crushedGreenstone")
     public static Item greenstonePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustSilver")
+    @ModOreDict("crushedSilver")
     public static Item silverPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModItem.Tooltip("\u00a79U3O8 U^235/238")
-    @ModOreDict("dustUranium")
+    @ModOreDict("crushedUranium")
     public static Item uraniumPowder = new Item();
 	@ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModItem.Tooltip("\u00a79UO2 U^238")
@@ -151,34 +151,37 @@ public class ElementtimesItems {
 	@ModItem.Tooltip("\u00a79U U^235")
     public static Item uranium235 = new Item();
 	@ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustTin")
+    @ModOreDict("crushedTin")
     public static Item tinPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustLead")
+    @ModOreDict("crushedLead")
     public static Item leadPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustRedstone")
+    @ModOreDict("crushedRedstone")
     public static Item redstonePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustBluestone")
+    @ModOreDict("crushedBluestone")
     public static Item bluestonePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustIron")
+    @ModOreDict("crushedIron")
     public static Item ironpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedPurifiedIron")
     public static Item Fe2O3 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedPurifiedCopper")
     public static Item CuO = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustGold")
+    @ModOreDict("crushedGold")
     public static Item goldPowder= new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedCoal")
     public static Item coalPowder = new Item();
-    @ModOreDict("dustCoal")
+    @ModOreDict("crushedDiamond")
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     public static Item diamondPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustCopper")
+    @ModOreDict("crushedCopper")
     public static Item copperPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item twiningSunCompound = new Item();
@@ -189,16 +192,17 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item photoElement = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustQuartz")
+    @ModOreDict("crushedQuartz")
     public static Item quartzPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     public static Item cornBroth = new ItemSoup(20);
     @ModItem(creativeTabKey = ElementtimesTabs.MAIN)
     public static Item money = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustSulfur")
+    @ModOreDict("crushedSulfur")
     public static Item sulfurOrePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("dustSulfur")
     @ModBurnTime(800)
     public static Item sulfurPowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
@@ -208,7 +212,7 @@ public class ElementtimesItems {
     @ModOreDict("ingotPlatinum")
     public static Item platinumIngot = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
-    @ModOreDict("dustPlatinum")
+    @ModOreDict("crushedPlatinum")
     public static Item platinumOrePowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     public static Item diamondIngot = new Item();
@@ -216,6 +220,8 @@ public class ElementtimesItems {
     @ModOreDict("rubber")
     public static Item rubber = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.AGRICULTURE)
+    @ModOreDict("itemResin")
+   // @ModOreDict("materialResin")
     public static Item rubberRaw = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModOreDict("salt")

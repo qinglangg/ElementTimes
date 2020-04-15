@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  *
  * bug:
  * 6.竹子生长问题
+ * 注解双矿词兼容，Item注册224行
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
  * 2.竹板

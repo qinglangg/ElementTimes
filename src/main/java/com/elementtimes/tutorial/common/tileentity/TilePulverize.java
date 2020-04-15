@@ -44,6 +44,7 @@ public class TilePulverize extends BaseTileEntity {
             RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreSulfur"    , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.sulfurOrePowder  , () -> ETConfig.PULVERIZE.count)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreLead"      , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.leadPowder       , () -> ETConfig.PULVERIZE.count)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreTin"       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.tinPowder        , () -> ETConfig.PULVERIZE.count)).endAdd();
+            RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem("oreSalt"       , 1)).addItemOutput(IngredientPart.forItem(ElementtimesItems.salt        , () -> ETConfig.PULVERIZE.count)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.PULVERIZE.energy).addItemInput(IngredientPart.forItem(Items.BLAZE_ROD, 1)).addItemOutput(IngredientPart.forItem(Items.BLAZE_POWDER                 , () -> ETConfig.PULVERIZE.count)).endAdd();
         }
     }
