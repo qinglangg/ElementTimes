@@ -1,6 +1,7 @@
 package com.elementtimes.tutorial.common.tileentity.pipeline;
 
 import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
 import com.elementtimes.tutorial.common.pipeline.*;
 import com.elementtimes.tutorial.interfaces.IByteData;
 import net.minecraft.block.state.IBlockState;
@@ -30,15 +31,15 @@ import static com.elementtimes.tutorial.common.block.pipeline.Pipeline.CONNECTED
  * 管道 TileEntity 类
  * @author luqin2007
  */
-@SuppressWarnings({"DuplicatedCode", "UnusedReturnValue", "WeakerAccess"})
+@SuppressWarnings({"DuplicatedCode", "UnusedReturnValue", "WeakerAccess", "NullableProblems"})
 public abstract class BaseTilePipeline extends TileEntity implements ITilePipeline, ITickable, IByteData {
 
     private static final String NBT = "_pipeline_elements_";
     private static final String DATA = "_pipeline_data_";
 
-    private List<BaseElement> elements = new LinkedList<>();
-    private List<BaseElement> elementAdd = new LinkedList<>();
-    private List<BaseElement> elementRemove = new LinkedList<>();
+    private final List<BaseElement> elements = new LinkedList<>();
+    private final List<BaseElement> elementAdd = new LinkedList<>();
+    private final List<BaseElement> elementRemove = new LinkedList<>();
 
     /**
      *  0-5 ：connected
@@ -91,6 +92,40 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
     @Override
     public boolean isConnected(BlockPos pos, EnumFacing direction) {
         return direction != null && readByteValue(direction.getIndex());
+    }
+
+    @Override
+    public boolean canConnectTo(BlockPos pos, EnumFacing direction) {
+        if (world != null) {
+            if (isInterrupted(pos, direction)) {
+                return false;
+            }
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof ITilePipeline) {
+                return ((ITilePipeline) te).canConnectBy(this.pos, direction.getOpposite());
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean connect(BlockPos pos, EnumFacing direction) {
+        if (world != null && !world.isRemote && !isConnected(pos, direction) && canConnectTo(pos, direction)) {
+            if (writeByteValue(direction.getIndex())) {
+                setBlockState(state -> state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], true));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void disconnect(BlockPos pos, EnumFacing direction) {
+        if (world != null && direction != null && isConnected(pos, direction)) {
+            if (clearByteValue(direction.getIndex())) {
+                setBlockState(state -> state.withProperty(CONNECTED_PROPERTIES[direction.getIndex()], false));
+            }
+        }
     }
 
     @Override
@@ -296,6 +331,15 @@ public abstract class BaseTilePipeline extends TileEntity implements ITilePipeli
             newBlockState = world.getBlockState(pos);
         }
         newBlockState = blockStateEditor.apply(newBlockState);
+    }
+
+    @Nonnull
+    @Override
+    public IBlockState onBindActualState(@Nonnull IBlockState state, BlockPos pos) {
+        for (EnumFacing value : EnumFacing.VALUES) {
+            state = state.withProperty(Pipeline.CONNECTED_PROPERTIES[value.getIndex()], isConnected(pos.offset(value), value));
+        }
+        return state;
     }
 
     protected void updateElement() {

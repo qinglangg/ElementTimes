@@ -7,8 +7,9 @@ import com.elementtimes.elementcore.api.template.tileentity.lifecycle.RecipeMach
 import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesGUI;
-import com.elementtimes.tutorial.other.FluidBlockRecipeLifecycle;
+import com.elementtimes.tutorial.other.FluidPumpLifecycle;
 import net.minecraft.inventory.Slot;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -20,12 +21,21 @@ import javax.annotation.Nonnull;
  */
 public class TilePumpFluid extends BaseTileEntity {
 
+    private FluidPumpLifecycle fpl;
+
     public TilePumpFluid() {
         super(1000, 1, 1, 0, 0, 1, 16000);
         // TODO remove WorldReplaceMachineLifecycle
         removeLifecycle(RecipeMachineLifecycle.class);
-        addLifeCycle(new FluidBlockRecipeLifecycle(this));
+        fpl = new FluidPumpLifecycle(this);
+        addLifeCycle(fpl);
         addLifeCycle(new FluidMachineLifecycle(this));
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        fpl.read();
     }
 
     @Override

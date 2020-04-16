@@ -25,32 +25,6 @@ public class ItemInputPipeline extends ItemIOPipeline implements IPipelineInput 
     private int maxColdDown = 20;
 
     @Override
-    public void update() {
-        super.update();
-        markDirty();
-        if (world == null || !isConnectedIO()) {
-            return;
-        }
-        coldDown++;
-        if (coldDown == maxColdDown) {
-            coldDown = 0;
-        }
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        coldDown = compound.getInteger("coldDown");
-        super.readFromNBT(compound);
-    }
-
-    @Nonnull
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setInteger("coldDown", coldDown);
-        return super.writeToNBT(compound);
-    }
-
-    @Override
     public void input() {
         if (world != null && !world.isRemote && coldDown == 0 && isConnectedIO()) {
             EnumFacing ioSide = EnumFacing.VALUES[readByteValue(12, 3)];
@@ -78,6 +52,32 @@ public class ItemInputPipeline extends ItemIOPipeline implements IPipelineInput 
                 }
             }
         }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        markDirty();
+        if (world == null || !isConnectedIO()) {
+            return;
+        }
+        coldDown++;
+        if (coldDown == maxColdDown) {
+            coldDown = 0;
+        }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        coldDown = compound.getInteger("coldDown");
+        super.readFromNBT(compound);
+    }
+
+    @Nonnull
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setInteger("coldDown", coldDown);
+        return super.writeToNBT(compound);
     }
 
     @Override

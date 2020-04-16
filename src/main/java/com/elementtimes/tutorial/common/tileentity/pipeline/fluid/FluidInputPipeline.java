@@ -53,17 +53,6 @@ public class FluidInputPipeline extends FluidIOPipeline implements IPipelineInpu
     }
 
     @Override
-    public boolean canConnectIO(BlockPos pos, EnumFacing direction) {
-        if (world != null) {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof ITileFluidHandler) {
-                return ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT).size() > 0;
-            }
-        }
-        return super.canConnectIO(pos, direction);
-    }
-
-    @Override
     public void update() {
         super.update();
         if (world == null || !isConnectedIO()) {
@@ -74,6 +63,17 @@ public class FluidInputPipeline extends FluidIOPipeline implements IPipelineInpu
             coldDown = 0;
         }
         markDirty();
+    }
+
+    @Override
+    public boolean canConnectIO(BlockPos pos, EnumFacing direction) {
+        if (world != null) {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof ITileFluidHandler) {
+                return ((ITileFluidHandler) te).getTanks(SideHandlerType.OUTPUT).size() > 0;
+            }
+        }
+        return super.canConnectIO(pos, direction);
     }
 
     @Override

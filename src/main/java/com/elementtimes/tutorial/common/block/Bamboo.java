@@ -18,6 +18,7 @@ import net.minecraftforge.common.IPlantable;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+@SuppressWarnings({"NullableProblems", "deprecation"})
 public class Bamboo extends Block implements IPlantable, IGrowable {
 
     private static final AxisAlignedBB BAMBOO_AABB = new AxisAlignedBB(0.3, 0, 0.3, 0.7, 1, 0.7);
@@ -29,7 +30,20 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
 
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-        return nextYCheck(worldIn, pos);
+        BlockPos up = pos.up();
+        if (worldIn.isOutsideBuildHeight(up)) {
+            return false;
+        }
+        if (!worldIn.getBlockState(up).getBlock().isReplaceable(worldIn, up)) {
+            return false;
+        }
+        BlockPos currentPos = pos;
+        int height = 0;
+        while (worldIn.getBlockState(currentPos).getBlock() == this) {
+            height++;
+            currentPos = currentPos.down();
+        }
+        return height < getMaxHeight();
     }
 
     @Override
@@ -83,9 +97,18 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
     }
 
     @Override
+    public void observedNeighborChange(IBlockState observerState, World world, BlockPos observerPos, Block changedBlock, BlockPos changedBlockPos) {
+        super.observedNeighborChange(observerState, world, observerPos, changedBlock, changedBlockPos);
+        if (!world.isRemote && !canPlaceBlockAt(world, observerPos)) {
+            drop(world, world.getBlockState(observerPos), observerPos);
+        }
+    }
+
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
-        drop(worldIn, worldIn.getBlockState(fromPos), fromPos);
+        if (!worldIn.isRemote && worldIn.getBlockState(fromPos).getBlock() == this) {
+            drop(worldIn, worldIn.getBlockState(fromPos), fromPos);
+        }
     }
 
     @Override
@@ -109,7 +132,7 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
     }
 
     private boolean drop(World world, IBlockState state, BlockPos pos) {
-        if (!canPlaceBlockAt(world, pos.down())) {
+        if (!world.isRemote && !canPlaceBlockAt(world, pos)) {
             dropBlockAsItem(world, pos, state, 0);
             world.setBlockToAir(pos);
             return false;
@@ -119,18 +142,5 @@ public class Bamboo extends Block implements IPlantable, IGrowable {
 
     public int getMaxHeight() {
         return 12;
-    }
-
-    public boolean nextYCheck(World world, BlockPos pos) {
-        if (world.isOutsideBuildHeight(pos.up())) {
-            return false;
-        }
-        BlockPos currentPos = pos;
-        int height = 0;
-        while (world.getBlockState(pos).getBlock() == this) {
-            height++;
-            currentPos = currentPos.down();
-        }
-        return height < getMaxHeight();
     }
 }

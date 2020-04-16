@@ -28,8 +28,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
  * 2.竹板
- *
- * TODO ec WorldReplaceMachineLifecycle 流体部分有bug，暂时只修复 et，以后修复ec
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.5.3,1.0.0);before:guideapi")
 public class ElementTimes {
