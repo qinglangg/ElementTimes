@@ -1,5 +1,6 @@
 package com.elementtimes.tutorial.client.event;
 
+import com.elementtimes.tutorial.ElementTimes;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = ElementTimes.MODID)
 @SideOnly(Side.CLIENT)
 public class RegisterEvent {
 
