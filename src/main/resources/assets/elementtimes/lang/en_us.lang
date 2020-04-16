@@ -352,6 +352,14 @@ fluid.elementtimes.raregases=Rare Gases
 tile.elementtimes.raregases.name=Rare Gases
 fluid.elementtimes.air=Air
 tile.elementtimes.air.name=Air
+fluid.elementtimes.cu_no3_2=CuNO3
+tile.elementtimes.cu_no3_2.name=CuNO3
+fluid.elementtimes.nano3=NaNO
+tile.elementtimes.nano3.name=NaNO
+fluid.elementtimes.nonghno3=Concentrated Nitric Acid
+tile.elementtimes.nonghno3.name=Concentrated Nitric Acid
+fluid.elementtimes.xihno3=Dilute Nitric Acid
+tile.elementtimes.xihno3.name=Dilute Nitric Acid
 # enchantment
 enchantment.elementtimes.hammerdebugger=Debugger
 # tooltip

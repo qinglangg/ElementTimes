@@ -20,5 +20,6 @@ public class RegisterEvent {
     public static void model(ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(ElementtimesBlocks.bambooDoor, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ElementtimesBlocks.bambooDoor), 0, new ModelResourceLocation(ElementtimesBlocks.bambooDoor.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ElementtimesBlocks.bambooSlab), 0, new ModelResourceLocation(ElementtimesBlocks.bambooSlab.getRegistryName(), "inventory"));
     }
 }

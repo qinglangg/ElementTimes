@@ -353,12 +353,12 @@ tile.elementtimes.raregases.name=稀有气体
 fluid.elementtimes.air=空气
 tile.elementtimes.air.name=空气
 fluid.elementtimes.cu_no3_2=硝酸铜
-fluid.elementtimes.nano3=硝酸钠
-fluid.elementtimes.nonghno3=浓硝酸
-fluid.elementtimes.xihno3=稀硝酸
 tile.elementtimes.cu_no3_2.name=硝酸铜
+fluid.elementtimes.nano3=硝酸钠
 tile.elementtimes.nano3.name=硝酸钠
+fluid.elementtimes.nonghno3=浓硝酸
 tile.elementtimes.nonghno3.name=浓硝酸
+fluid.elementtimes.xihno3=稀硝酸
 tile.elementtimes.xihno3.name=稀硝酸
 # enchantment
 enchantment.elementtimes.hammerdebugger=调试
