@@ -7,7 +7,8 @@
   ],
   "key": {
     "A": {
-      "item": "elementtimes:bambooslab"
+      "item": "elementtimes:bambooslab",
+      "data": 0
     }
   },
   "result": {
