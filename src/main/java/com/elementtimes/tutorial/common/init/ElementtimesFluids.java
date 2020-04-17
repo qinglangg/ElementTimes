@@ -348,7 +348,7 @@ public class ElementtimesFluids {
             new ResourceLocation(ElementTimes.MODID, "fluid/no2_still"), 0xFF9F3F3F);
     @ModFluid
     @ModFluid.FluidBlock
-    public static Fluid xiHNO3 = new Fluid("elementtimes.xihon3",
+    public static Fluid xiHNO3 = new Fluid("elementtimes.xihno3",
             new ResourceLocation(ElementTimes.MODID, "fluid/no_still"),
             new ResourceLocation(ElementTimes.MODID, "fluid/no_fluid"), 0xFF967474);
     @ModFluid(density = -5)

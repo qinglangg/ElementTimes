@@ -65,7 +65,6 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModOreDict("bamboo")
 //    @ModBlock.WorldGenObj(value = @Getter(BambooGenerator.class), type = GenType.Tree)
-    @ModBlock.Tooltip("当前版本1.7.4竹子生长存在bug，获取方式仍为打草获得，不要种植。元素时代持续开发ing")
     public static Block bamboo = new Bamboo();
 
     // Ore
@@ -289,10 +288,13 @@ public class ElementtimesBlocks {
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModBurnTime(1600)
     public static Block bambooBlock = new Block(Material.WOOD).setHardness(7f).setResistance(5f);
+    @ModBurnTime(3200)
     public static Block bambooDoor = Door.wood();
+    @ModBurnTime(800)
     public static Block bambooSlab = BambooSlab.half();
     public static Block bambooSlabDouble = BambooSlab.double_();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
+    @ModBurnTime(1600)
     public static Block bambooStair = new BlockStairs(bambooBlock.getDefaultState()) {};
 
     // Chemical
