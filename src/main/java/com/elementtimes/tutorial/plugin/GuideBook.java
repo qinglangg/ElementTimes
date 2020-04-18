@@ -1,21 +1,10 @@
 package com.elementtimes.tutorial.plugin;
 
-import com.elementtimes.elementcore.api.common.ECUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.Loader;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +32,7 @@ public class GuideBook {
         } else if (Loader.isModLoaded(MOD_GUIDE_API)) {
             return guideApi();
         }
-        return minecraft();
+        return ItemStack.EMPTY;
     }
 
     /**
@@ -52,7 +41,6 @@ public class GuideBook {
      */
     public static List<ItemStack> getAllGuideBook() {
         ArrayList<ItemStack> books = new ArrayList<>();
-        books.add(minecraft());
         if (Loader.isModLoaded(MOD_PATCHOULI)) {
             books.add(patchouli());
         }
@@ -60,49 +48,6 @@ public class GuideBook {
             books.add(guideApi());
         }
         return books;
-    }
-
-    private static ItemStack minecraft() {
-        /*
-        { author, title, pages[ text:"\n" ] }
-         */
-        if (MINECRAFT_BOOK.isEmpty()) {
-            MINECRAFT_BOOK = new ItemStack(Items.WRITTEN_BOOK);
-            NBTTagCompound nbt = new NBTTagCompound();
-            nbt.setString("author", "ElementTimes");
-            nbt.setString("title", new TextComponentTranslation("elementtimes.book.minecraft").getFormattedText());
-            NBTTagList pages = new NBTTagList();
-            if (ECUtils.common.isClient()) {
-                net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getMinecraft();
-                String languageCode = mc.getLanguageManager().getCurrentLanguage().getLanguageCode();
-                net.minecraft.client.resources.IResource bookJson;
-                try {
-                    bookJson = mc.getResourceManager()
-                            .getResource(new ResourceLocation("elementtimes", "mc_book/" + languageCode + ".json"));
-                } catch (IOException e) {
-                    try {
-                        bookJson = mc.getResourceManager()
-                                .getResource(new ResourceLocation("elementtimes", "mc_book/en_us.json"));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                JsonArray bookObj = new JsonParser()
-                        .parse(new InputStreamReader(bookJson.getInputStream()))
-                        .getAsJsonArray();
-                for (JsonElement jsonElement : bookObj) {
-                    JsonArray pageLines = jsonElement.getAsJsonArray();
-                    StringBuilder sb = new StringBuilder("{\"text\":\"");
-                    for (JsonElement pageLine : pageLines) {
-                        sb.append(pageLine.getAsString()).append("\\n");
-                    }
-                    pages.appendTag(new NBTTagString(sb.append("\"}").toString()));
-                }
-            }
-            nbt.setTag("pages", pages);
-            MINECRAFT_BOOK.setTagCompound(nbt);
-        }
-        return MINECRAFT_BOOK.copy();
     }
 
     private static ItemStack patchouli() {
