@@ -16,6 +16,7 @@ import com.elementtimes.tutorial.common.block.machine.Compressor;
 import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
 import com.elementtimes.tutorial.common.block.pipeline.PipelineIO;
 import com.elementtimes.tutorial.common.block.tree.*;
+import com.elementtimes.tutorial.common.generator.BambooGenerator;
 import com.elementtimes.tutorial.common.generator.RubberGenerator;
 import com.elementtimes.tutorial.common.generator.SaltGenerator;
 import com.elementtimes.tutorial.common.generator.SulfurGenerator;
@@ -64,7 +65,7 @@ public class ElementtimesBlocks {
     public static Block leafesSence = new EssenceLeaf();
     @ModBlock(creativeTabKey = ElementtimesTabs.AGRICULTURE)
     @ModOreDict("bamboo")
-//    @ModBlock.WorldGenObj(value = @Getter(BambooGenerator.class), type = GenType.Tree)
+    @ModBlock.WorldGenObj(value = @Getter(BambooGenerator.class), type = GenType.Tree)
     public static Block bamboo = new Bamboo();
 
     // Ore
