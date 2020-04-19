@@ -7,6 +7,7 @@ import com.elementtimes.elementcore.api.common.ECModElements;
 import com.elementtimes.tutorial.common.CommonProxy;
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister;
+import com.elementtimes.tutorial.plugin.ic2.IC2Support;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -18,16 +19,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * TODO
  * 1.烧杯GUI
  * 2.禁止ic2铁矿粉和铜矿粉燃烧，使用固体反应器等同元素时代铁矿粉和铜矿粉
- * 3.支持鼠标移动gui里面流体顺序，默认输出最下面的
- * 4.引导书兼容，详细模组步骤资料请请抄袭网易开发者内容管理里面写的元素时代资料(共十六章篇)
  * 5.发酵机未完成（豆焰的酶还没画呢）
  * 6.支持沙子粉(物品id:sandpowder,已经注册了)熄灭酒精灯
  * 7.化学实验机器诸多问题
- * bug:
- * 6.竹子生长问题
  * 非bug:
  * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
- * 2.竹板
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.6.0,1.0.0);before:guideapi")
 public class ElementTimes {
@@ -48,6 +44,7 @@ public class ElementTimes {
                 .registerAnnotation(LoadState.Init, SSMRegister.SupportStandModule.class, SSMRegister::register)
                 .registerAnnotation(LoadState.Init, JeiRecipe.MachineRecipe.class, JeiRecipe::parser);
         CONTAINER = builder.build(event);
+        IC2Support.register();
     }
 
     @Mod.EventHandler
