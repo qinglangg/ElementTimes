@@ -152,6 +152,10 @@ item.elementtimes.bingu3o8.name=u3o8
 item.elementtimes.smallu3o8.name=u3o8
 item.elementtimes.uo2small.name=uo2
 item.elementtimes.uranium235.name=uranium
+item.elementtimes.osmiumpowder.name=osmiumpowder
+item.elementtimes.arditepowder.name=arditepowder
+item.elementtimes.cobaltpowder.name=cobaltpowder
+item.elementtimes.nickelpowder.name=nickelpowder
 # block
 tile.elementtimes.corncrop.name=Corn
 tile.elementtimes.beaker.name=Beaker

@@ -70,6 +70,7 @@ public class ElementtimesRecipe {
 		GameRegistry.addSmelting(ElementtimesItems.smallHammer, new ItemStack(ElementtimesItems.copper, 1),5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.mediumHammer, new ItemStack(ElementtimesItems.steelIngot, 1),5.0f);
 		GameRegistry.addSmelting(ElementtimesItems.bigHammer, new ItemStack(ElementtimesItems.diamondIngot, 1),5.0f);
+	
     }
 
 	@ModRecipe
