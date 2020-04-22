@@ -48,7 +48,6 @@ public class TileItemReducer extends BaseTileEntity {
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(new ItemStack(Blocks.WOOL, 1,0))).addItemOutput(IngredientPart.forItem(Items.STRING, 4)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.CLAY, 1)).addItemOutput(IngredientPart.forItem(Items.CLAY_BALL, 4)).endAdd();
             RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(Blocks.WEB, 1)).addItemOutput(IngredientPart.forItem(Items.STRING, 8)).endAdd();
-            RECIPE.newRecipe().addCost(c -> ETConfig.ITEM_REDUCER.energy).addItemInput(IngredientPart.forItem(new ItemStack(ElementtimesBlocks.bambooSlab, 2,0))).addItemOutput(IngredientPart.forItem(ElementtimesBlocks.bambooBlock, 1)).endAdd();
 
         }
     }

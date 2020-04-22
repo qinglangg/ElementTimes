@@ -23,8 +23,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 5.发酵机未完成（豆焰的酶还没画呢）
  * 6.支持沙子粉(物品id:sandpowder,已经注册了)熄灭酒精灯
  * 7.化学实验机器诸多问题
- * 8.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
- * 9.通过矿词禁用其他模组矿粉，纯净矿粉燃烧。如下:"crushedPurifiedCopper","crushedPurifiedIron","crushedCopper","crushedIron".备注：固体、固液已经完成了相应矿词的反应。
+ * bug:
+ * 6.竹子生长问题
+ * 非bug:
+ * 1.木龙头支持ic2,参考https://github.com/TechReborn/TechReborn/tree/1.12?files=1
+ * 2.竹板
  */
 @Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.6.0,1.0.0);before:guideapi")
 public class ElementTimes {

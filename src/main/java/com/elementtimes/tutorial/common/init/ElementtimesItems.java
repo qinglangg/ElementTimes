@@ -68,7 +68,6 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79U3O8 U^235")
     public static Item smallU3O8 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
-    @ModOreDict("dustSand")
     public static Item sandpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("dustStone")
