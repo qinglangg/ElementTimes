@@ -68,6 +68,7 @@ public class ElementtimesItems {
     @ModItem.Tooltip("\u00a79U3O8 U^235")
     public static Item smallU3O8 = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
+    @ModOreDict("dustSand")
     public static Item sandpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModOreDict("dustStone")
@@ -134,6 +135,18 @@ public class ElementtimesItems {
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModOreDict("crushedSilver")
     public static Item silverPowder = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedOsmium")
+    public static Item osmiumpowder = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedArdite")
+    public static Item arditepowder = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedCobalt")
+    public static Item cobaltpowder = new Item();
+    @ModItem(creativeTabKey = ElementtimesTabs.ORE)
+    @ModOreDict("crushedNickel")
+    public static Item nickelpowder = new Item();
     @ModItem(creativeTabKey = ElementtimesTabs.ORE)
     @ModItem.Tooltip("\u00a79U3O8 U^235/238")
     @ModOreDict("crushedUranium")

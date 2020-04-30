@@ -32,7 +32,7 @@ public class TileSolidCentrifuge extends BaseTileEntity {
             RECIPE         	
             		.newRecipe()
             		.addCost(1000)
-            		.addItemInput(IngredientPart.forItem(ElementtimesItems.ironpowder, 1))
+            		.addItemInput(IngredientPart.forItem("crushedIron", 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.Fe2O3, 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder, 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder, 1))
@@ -40,7 +40,7 @@ public class TileSolidCentrifuge extends BaseTileEntity {
             		
             		.newRecipe()
             		.addCost(1000)
-            		.addItemInput(IngredientPart.forItem(ElementtimesItems.copperPowder, 1))
+            		.addItemInput(IngredientPart.forItem("crushedCopper", 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.CuO, 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.stonepowder, 1))
             		.addItemOutput(IngredientPart.forItem(ElementtimesItems.sandpowder, 1))

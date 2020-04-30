@@ -152,6 +152,10 @@ item.elementtimes.bingu3o8.name=三氧化八铀
 item.elementtimes.smallu3o8.name=三氧化八铀
 item.elementtimes.uo2small.name=二氧化铀
 item.elementtimes.uranium235.name=铀锭
+item.elementtimes.osmiumpowder.name=锇矿粉
+item.elementtimes.arditepowder.name=阿迪特矿粉
+item.elementtimes.cobaltpowder.name=铂矿粉
+item.elementtimes.nickelpowder.name=镍矿粉
 # block
 tile.elementtimes.corncrop.name=玉米
 tile.elementtimes.beaker.name=烧杯
