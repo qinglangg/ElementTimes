@@ -26,6 +26,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 /**
  * @author EmptyDreams
@@ -489,12 +490,121 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	@SuppressWarnings("NullableProblems")
 	@Override
 	public final boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (super.hasCapability(capability, facing)) return true;
+		if (capability == CapabilityEnergy.ENERGY) {
+			if (facing == null) {
+				return !linkedBlocks.isEmpty() || next != null || prev != null;
+			} else {
+				BlockPos bp = pos.offset(facing);
+				if (linkedBlocks.contains(bp)) return true;
+				return next.equals(bp) || prev.equals(bp);
+			}
+		}
 		return false;
 	}
+	
 	@SuppressWarnings("NullableProblems")
 	@Override
 	public final <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return null;
+		if (capability == CapabilityEnergy.ENERGY) {
+			return CapabilityEnergy.ENERGY.cast(mStorage);
+		} else {
+			return super.getCapability(capability, facing);
+		}
 	}
+	
+	private final IEnergyStorage mStorage = new IEnergyStorage() {
+		
+		private boolean isNext = true;
+		private boolean isPrev = true;
+		
+		@Override
+		public int receiveEnergy(int maxReceive, boolean simulate) {
+			TileEntity te;
+			IEnergyStorage storage;
+			int k = 0;
+			for (BlockPos block : linkedBlocks) {
+				te = world.getTileEntity(block);
+				if (te == null) continue;
+				storage = te.getCapability(CapabilityEnergy.ENERGY, BlockPosUtil.whatFacing(block, pos));
+				if (storage == null) continue;
+				int i = storage.receiveEnergy(maxReceive, true);
+				if (i <= 0) continue;
+				if (i == maxReceive) {
+					if (!simulate) storage.receiveEnergy(maxReceive, false);
+					return maxReceive;
+				}
+				if (i < maxReceive) {
+					k += i;
+					if (!simulate) storage.receiveEnergy(i, false);
+					maxReceive -= i;
+				}
+			}
+			
+			if (maxReceive <= 0) return k;
+			if (isNext && next != null && (te = getNext()) != null &&
+					    (storage = te.getCapability(CapabilityEnergy.ENERGY,
+							    BlockPosUtil.whatFacing(next, pos))) != null) {
+				isNext = false;
+				int i = storage.receiveEnergy(maxReceive, true);
+				if (i == maxReceive) {
+					if (!simulate) storage.receiveEnergy(maxReceive, false);
+					isNext = true;
+					return k + maxReceive;
+				}
+				if (i < maxReceive) {
+					k += i;
+					if (!simulate) storage.receiveEnergy(i, false);
+					maxReceive -= i;
+				}
+			}
+			if (maxReceive <= 0) {
+				isNext = true;
+				return k;
+			}
+			if (isPrev && prev != null && (te = getPrev()) != null &&
+					    (storage = te.getCapability(CapabilityEnergy.ENERGY,
+							    BlockPosUtil.whatFacing(prev, pos))) != null) {
+				isPrev = false;
+				int i = storage.receiveEnergy(maxReceive, true);
+				if (i == maxReceive) {
+					if (!simulate) storage.receiveEnergy(maxReceive, false);
+					isPrev = true;
+					return k + maxReceive;
+				}
+				if (i < maxReceive) {
+					k += i;
+					if (!simulate) storage.receiveEnergy(i, false);
+				}
+			}
+			isNext = isPrev = true;
+			return k;
+		}
+		
+		@Override
+		public int extractEnergy(int maxExtract, boolean simulate) {
+			return 0;
+		}
+		
+		@Override
+		public int getEnergyStored() {
+			return Integer.MAX_VALUE;
+		}
+		
+		@Override
+		public int getMaxEnergyStored() {
+			return Integer.MAX_VALUE;
+		}
+		
+		@Override
+		public boolean canExtract() {
+			return false;
+		}
+		
+		@Override
+		public boolean canReceive() {
+			return true;
+		}
+	};
 	
 }
