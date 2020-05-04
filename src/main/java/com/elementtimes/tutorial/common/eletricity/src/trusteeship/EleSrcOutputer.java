@@ -4,6 +4,7 @@ import com.elementtimes.tutorial.common.eletricity.info.UseInfo;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleOutputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
 import com.elementtimes.tutorial.common.eletricity.src.info.EnumVoltage;
+import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -50,6 +51,6 @@ public class EleSrcOutputer implements IEleOutputer {
 	@Override
 	public boolean contains(TileEntity te) {
 		IEnergyStorage cap = te.getCapability(CapabilityEnergy.ENERGY, null);
-		return cap != null;
+		return cap != null && !(te instanceof EleSrcCable);
 	}
 }

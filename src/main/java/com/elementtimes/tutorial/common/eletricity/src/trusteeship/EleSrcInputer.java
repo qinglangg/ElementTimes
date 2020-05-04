@@ -3,6 +3,7 @@ package com.elementtimes.tutorial.common.eletricity.src.trusteeship;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleInputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
 import com.elementtimes.tutorial.common.eletricity.src.info.EnumVoltage;
+import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -55,7 +56,7 @@ public class EleSrcInputer implements IEleInputer {
 	@Override
 	public boolean contains(TileEntity te) {
 		IEnergyStorage cap = te.getCapability(CapabilityEnergy.ENERGY, null);
-		return cap != null;
+		return cap != null && !(te instanceof EleSrcCable);
 	}
 	
 }
