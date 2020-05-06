@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 
@@ -35,6 +36,8 @@ public class Spanner extends Item {
             ItemStack heldItem = playerIn.getHeldItem(handIn);
             setWorkType(playerIn, heldItem, getWorkType(heldItem).next());
             return new ActionResult<>(EnumActionResult.SUCCESS, heldItem);
+        } else {
+            System.out.println("onItemRightClick");
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
@@ -52,7 +55,7 @@ public class Spanner extends Item {
                 default: return EnumActionResult.PASS;
             }
         }
-        return EnumActionResult.PASS;
+        return EnumActionResult.SUCCESS;
     }
 
     public Type getWorkType(ItemStack stack) {
@@ -104,8 +107,9 @@ public class Spanner extends Item {
         if (te instanceof ITileItemHandler) {
             ITileItemHandler handler = (ITileItemHandler) te;
             SideHandlerType type = handler.getItemType(facing);
-            SideHandlerType next = getNextTypeAndChat(player, type);
+            SideHandlerType next = getNextTypeAndChat(player, type, handler.getAllowedItemTypes());
             handler.setItemType(facing, next);
+            te.markDirty();
         }
         return EnumActionResult.PASS;
     }
@@ -115,8 +119,9 @@ public class Spanner extends Item {
         if (te instanceof ITileFluidHandler) {
             ITileFluidHandler handler = (ITileFluidHandler) te;
             SideHandlerType type = handler.getTankType(facing);
-            SideHandlerType next = getNextTypeAndChat(player, type);
+            SideHandlerType next = getNextTypeAndChat(player, type, handler.getAllowedTankTypes());
             handler.setTankType(facing, next);
+            te.markDirty();
         }
         return EnumActionResult.PASS;
     }
@@ -126,40 +131,44 @@ public class Spanner extends Item {
         if (te instanceof ITileEnergyHandler) {
             ITileEnergyHandler handler = (ITileEnergyHandler) te;
             SideHandlerType type = handler.getEnergyType(facing);
-            SideHandlerType next = getNextTypeAndChat(player, type);
+            SideHandlerType next = getNextTypeAndChat(player, type, handler.getAllowedEnergyTypes());
             handler.setEnergyType(facing, next);
+            te.markDirty();
         }
         return EnumActionResult.PASS;
     }
 
-    protected SideHandlerType getNextTypeAndChat(EntityPlayer player, SideHandlerType type) {
-        SideHandlerType next;
+    protected SideHandlerType getNextTypeAndChat(EntityPlayer player, SideHandlerType type, SideHandlerType[] allowedTypes) {
+        allowedTypes = ArrayUtils.removeElement(allowedTypes, SideHandlerType.ALL);
+        SideHandlerType next = null;
+        if (allowedTypes.length == 0) {
+            return type;
+        } else if (allowedTypes.length == 1) {
+            return allowedTypes[0];
+        } else {
+            for (int i = 0; i < allowedTypes.length - 1; i++) {
+                if (allowedTypes[i] == type) {
+                    next = allowedTypes[i + 1];
+                    break;
+                }
+            }
+            if (next == null) {
+                next = allowedTypes[0];
+            }
+        }
         ITextComponent msg;
-        switch (type) {
-            case INPUT:
-                next = SideHandlerType.OUTPUT;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.out");
-                break;
-            case OUTPUT:
-                next = SideHandlerType.ALL;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.all");
-                break;
-            case ALL:
-                next = SideHandlerType.NONE;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.none");
-                break;
-            case NONE:
-                next = SideHandlerType.IN_OUT;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.io");
-                break;
-            case IN_OUT:
-                next = SideHandlerType.READONLY;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.readonly");
-                break;
-            default:
-                next = SideHandlerType.INPUT;
-                msg = new TextComponentTranslation("chat.elementtimes.spanner.io.in");
-                break;
+        if (next == SideHandlerType.INPUT) {
+            msg = new TextComponentTranslation("chat.elementtimes.spanner.io.in");
+        } else if (next == SideHandlerType.OUTPUT) {
+            msg = new TextComponentTranslation("chat.elementtimes.spanner.io.out");
+        } else if (next == SideHandlerType.IN_OUT) {
+            msg = new TextComponentTranslation("chat.elementtimes.spanner.io.io");
+        } else if (next == SideHandlerType.READONLY) {
+            msg = new TextComponentTranslation("chat.elementtimes.spanner.io.readonly");
+        } else if (next == SideHandlerType.NONE) {
+            msg = new TextComponentTranslation("chat.elementtimes.spanner.io.none");
+        } else {
+            return type;
         }
         player.sendMessage(msg);
         return next;
