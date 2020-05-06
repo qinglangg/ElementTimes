@@ -290,6 +290,9 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		TileEntity entity;
 		for (BlockPos block : linkedBlocks) {
 			entity = world.getTileEntity(block);
+			if (entity == null) {
+				continue;
+			}
 			//noinspection ConstantConditions
 			if (entity.hasCapability(CapabilityEnergy.ENERGY, BlockPosUtil.whatFacing(block, pos))
 					&& entity.getCapability(CapabilityEnergy.ENERGY,
