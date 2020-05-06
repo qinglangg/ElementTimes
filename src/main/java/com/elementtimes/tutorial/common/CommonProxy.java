@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * 服务器端 Proxy
@@ -37,6 +38,14 @@ public class CommonProxy {
 
     public void postInit(@SuppressWarnings("unused") FMLPostInitializationEvent event) {
         FurnaceRecipes.instance().getSmeltingList().keySet()
-                .removeIf(input -> input.getItem() == Item.getItemFromBlock(Blocks.IRON_ORE));
+                .removeIf(input -> {
+                    for (int oreID : OreDictionary.getOreIDs(input)) {
+                        String oreName = OreDictionary.getOreName(oreID);
+                        if ("crushedPurifiedCopper".equals(oreName) || "crushedPurifiedIron".equals(oreName) || "crushedCopper".equals(oreName) || "crushedIron".equals(oreName)) {
+                            return true;
+                        }
+                    }
+                    return input.getItem() == Item.getItemFromBlock(Blocks.IRON_ORE);
+                });
     }
 }

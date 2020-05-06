@@ -1,11 +1,5 @@
 package com.elementtimes.tutorial.common.eletricity.src.tileentity;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.elementtimes.elementcore.api.annotation.ModBlock;
 import com.elementtimes.tutorial.common.autonet.IAutoNetwork;
 import com.elementtimes.tutorial.common.autonet.NetworkRegister;
@@ -15,8 +9,8 @@ import com.elementtimes.tutorial.common.eletricity.EleWorker;
 import com.elementtimes.tutorial.common.eletricity.Electricity;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
-import com.elementtimes.tutorial.common.eletricity.src.info.WireLinkInfo;
 import com.elementtimes.tutorial.common.eletricity.src.info.IETForEach;
+import com.elementtimes.tutorial.common.eletricity.src.info.WireLinkInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author EmptyDreams

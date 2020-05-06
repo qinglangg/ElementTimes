@@ -1,15 +1,15 @@
 package com.elementtimes.tutorial.plugin.elementcore;
 
 import com.elementtimes.elementcore.api.common.ECModContainer;
-import com.elementtimes.tutorial.common.block.SupportStand;
-import com.elementtimes.tutorial.interfaces.ISupportStandModule;
+import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.TileSupportStand;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Field;
+import java.util.function.Supplier;
 
 /**
  * 自动注册铁架台组件
@@ -18,22 +18,21 @@ import java.lang.reflect.Field;
 public class SSMRegister {
 
     @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    public @interface SupportStandModule {}
+    @Target(ElementType.TYPE)
+    public @interface SupportStandModule {
+        String value();
+    }
 
     public static void register(ASMDataTable.ASMData data, ECModContainer container) {
-        try {
-            String className = data.getClassName();
-            String objectName = data.getObjectName();
-            Class<?> aClass = Class.forName(className);
-            Field field = aClass.getDeclaredField(objectName);
-            field.setAccessible(true);
-            Object o = field.get(null);
-            if (o instanceof ISupportStandModule) {
-                SupportStand.registerModule((ISupportStandModule) o);
+        String className = data.getClassName();
+        String key = (String) data.getAnnotationInfo().get("value");
+        Supplier<ISupportStandModule> creator = () -> {
+            try {
+                return (ISupportStandModule) Thread.currentThread().getContextClassLoader().loadClass(className).newInstance();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                return null;
             }
-        } catch (IllegalAccessException | ClassNotFoundException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+        };
+        TileSupportStand.register(key, creator);
     }
 }

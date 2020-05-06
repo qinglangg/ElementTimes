@@ -15,6 +15,7 @@ import com.elementtimes.tutorial.common.block.*;
 import com.elementtimes.tutorial.common.block.machine.Compressor;
 import com.elementtimes.tutorial.common.block.pipeline.Pipeline;
 import com.elementtimes.tutorial.common.block.pipeline.PipelineIO;
+import com.elementtimes.tutorial.common.block.stand.*;
 import com.elementtimes.tutorial.common.block.tree.*;
 import com.elementtimes.tutorial.common.generator.BambooGenerator;
 import com.elementtimes.tutorial.common.generator.RubberGenerator;
@@ -27,7 +28,7 @@ import com.elementtimes.tutorial.common.tileentity.pipeline.fluid.FluidOutputPip
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemConnectPipeline;
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemInputPipeline;
 import com.elementtimes.tutorial.common.tileentity.pipeline.item.ItemOutputPipeline;
-import com.elementtimes.tutorial.plugin.elementcore.SSMRegister.SupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
@@ -171,6 +172,7 @@ public class ElementtimesBlocks {
     public static Block elementGenerator = new BlockTileBase<>(TileGeneratorElement.class, ElementTimes.instance);
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "support_stand")
     @ModBlock.TileEntity(name = "support_stand", value = TileSupportStand.class)
+    @ModBlock.TESR("com.elementtimes.tutorial.client.block.SSMRender")
     public static Block supportStand = new SupportStand();
     @ModBlock(creativeTabKey = ElementtimesTabs.INDUSTRY)
     @ModBlock.TileEntity(name = "solidmelter", value = TileSolidMelter.class)
@@ -301,19 +303,15 @@ public class ElementtimesBlocks {
     // Chemical
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "alcohol_lamp")
     @ModBlock.TileEntity(TileAlcoholLamp.class)
-    @SupportStandModule
     public static Block alcoholLamp = new AlcoholLamp();
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL, registerName = "evaporating_dish")
     @ModBlock.TileEntity(TileEvaporatingDish.class)
-    @SupportStandModule
     public static Block evaporatingDish = new EvaporatingDish();
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.TileEntity(TileCrucible.class)
-    @SupportStandModule
     public static Block crucible = new Crucible();
     @ModBlock(creativeTabKey = ElementtimesTabs.CHEMICAL)
     @ModBlock.TileEntity(TileBeaker.class)
-    @SupportStandModule
     public static Block beaker = new Beaker();
 
     // Test

@@ -369,12 +369,16 @@ enchantment.elementtimes.hammerdebugger=Debugger
 tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
 tooltip.elementtimes.enchantment.debug=Enchantment: Enable
 # chat
-chat.elementtimes.hammer.noblock=There is no block at (%d, %d, %d)
-chat.elementtimes.hammer.noblockte=The block[%s] don't have a TileEntity
-chat.elementtimes.hammer.nonbt=The block[%s] can't serialize to NBT
-chat.elementtimes.hammer.pipeline_pipeline=pos: [%s, %s, %s], type: %s
-chat.elementtimes.hammer.pipeline_none=Pipeline not found
-chat.elementtimes.hammer.pipeline_path=from [%s, %s, %s] to [%s, %s, %s], time: %s
+chat.elementtimes.spanner.type.dismantle=Dismantle: Dismantle a machine
+chat.elementtimes.spanner.type.item=Item: Change item IO type
+chat.elementtimes.spanner.type.fluid=Fluid: Change fluid IO type
+chat.elementtimes.spanner.type.energy=Energy: Change energy IO type
+chat.elementtimes.spanner.io.in=INPUT: You can put something to the machine(if support), but can't take out anything.
+chat.elementtimes.spanner.io.out=OUTPUT: You can take something out of $s(if support), but can't put anything to it.
+chat.elementtimes.spanner.io.io=INOUT: You can take out or put in something(if support).
+chat.elementtimes.spanner.io.readonly=READONLY: You can see the item in the machine, but can't take out or put in.
+chat.elementtimes.spanner.io.none=NONE: This surface has NO capability even if the machine support.
+chat.elementtimes.spanner.io.all=ALL: Most are the same as INOUT, but sometimes has some difference.
 # subtitle
 subtitle.elementtimes.sounds=Cube Land
 subtitle.elementtimes.record=record(ET)

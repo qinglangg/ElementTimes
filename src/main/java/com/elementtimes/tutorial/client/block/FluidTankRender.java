@@ -32,7 +32,7 @@ public class FluidTankRender extends FastTESR<TileFluidTank> {
         int fontColor = stack == null ? 0xFF23FFA3 : fluid == FluidRegistry.LAVA ? 0xFFD32F2F : fluid == FluidRegistry.WATER ? 0xFF448AFF : fluid.getColor(stack);
 
         int widthFluid = Minecraft.getMinecraft().fontRenderer.getStringWidth(fluidType);
-        int widthCap = 50; // 16000/16000mb
+        int widthCap = 50;
         float left = 0.0625f;
         float yFluidName = 0.9375f, yFluidCount = -0.7825f;
         float offsetZ = 0.01f;

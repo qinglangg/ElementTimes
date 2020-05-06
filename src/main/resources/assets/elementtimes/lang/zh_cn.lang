@@ -238,7 +238,6 @@ tile.elementtimes.bambooblock.name=竹方块
 tile.elementtimes.bamboodoor.name=竹门
 tile.elementtimes.bamboostair.name=竹楼梯
 tile.elementtimes.bambooslab.name=竹台阶
-
 # fluid
 fluid.elementtimes.magnesiumchloridesolution=氯化镁溶液
 tile.elementtimes.magnesiumchloridesolution.name=氯化镁溶液
@@ -367,15 +366,19 @@ tile.elementtimes.xihno3.name=稀硝酸
 # enchantment
 enchantment.elementtimes.hammerdebugger=调试
 # tooltip
-tooltip.elementtimes.jei.rebuild.energy=能量消耗: %d RF
-tooltip.elementtimes.enchantment.debug=开发者专用调试工具
+tooltip.elementtimes.jei.rebuild.energy=Energy: %d RF
+tooltip.elementtimes.enchantment.debug=Enchantment: Enable
 # chat
-chat.elementtimes.hammer.noblock=(%d, %d, %d) 无方块
-chat.elementtimes.hammer.noblockte=方块 [%s] 无 TileEntity
-chat.elementtimes.hammer.nonbt=方块 [%s] 无法序列化为 NBT
-chat.elementtimes.hammer.pipeline_pipeline=位置：[%s, %s, %s]，类别：%s
-chat.elementtimes.hammer.pipeline_none=无管道
-chat.elementtimes.hammer.pipeline_path=[%s, %s, %s]-[%s, %s, %s], %s
+chat.elementtimes.spanner.type.dismantle=拆卸: 拆卸机器
+chat.elementtimes.spanner.type.item=物品: 切换物品输入输出类型
+chat.elementtimes.spanner.type.fluid=流体: 切换流体输入输出类型
+chat.elementtimes.spanner.type.energy=能量: 切换能量输入输出类型
+chat.elementtimes.spanner.io.in=INPUT: 可以向机器中放入物品（如果支持），但不能提取
+chat.elementtimes.spanner.io.out=OUTPUT: 可以从机器中提取物品（如果支持），但不能输入
+chat.elementtimes.spanner.io.io=INPUT: 既可以输入也可以输出
+chat.elementtimes.spanner.io.readonly=READONLY: 可以读取到机器中的物品，但不能输入或输出
+chat.elementtimes.spanner.io.none=NONE: 假定机器没有存储该类物品的能力
+chat.elementtimes.spanner.io.all=ALL: 大部分情况与 INOUT 相同，但部分机器可能有区别
 # subtitle
 subtitle.elementtimes.sounds=Cube Land(我的世界主题曲)
 subtitle.elementtimes.record=唱片响(元素时代)
@@ -412,6 +415,4 @@ tile.wire_aluminum.name=铝导线
 tile.wire_glod.name=金导线
 tile.wire_tin.name=锡导线
 tile.wire_high.name=高能导线
-tile.wire_element.name=元素导线
-tile.wire_silver.name=银导线
-
+tile.wire_element.name=wire_elementtile.wire_silver.name
