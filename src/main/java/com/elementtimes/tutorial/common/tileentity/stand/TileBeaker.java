@@ -3,7 +3,7 @@ package com.elementtimes.tutorial.common.tileentity.stand;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
-import com.elementtimes.tutorial.common.block.stand.module.ModuleBeaker;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleBeaker;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 import net.minecraftforge.fluids.Fluid;

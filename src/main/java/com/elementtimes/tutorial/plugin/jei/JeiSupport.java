@@ -25,7 +25,7 @@ import java.util.List;
 @JEIPlugin
 public class JeiSupport implements IModPlugin {
 
-    private static List<MachineRecipeData> MACHINES = new ArrayList<>();
+    private static final List<MachineRecipeData> MACHINES = new ArrayList<>();
 
     @Override
     public void register(IModRegistry registry) {

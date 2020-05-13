@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ModuleAlcoholLamp;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleAlcoholLamp;
 
 /**
  * 酒精灯

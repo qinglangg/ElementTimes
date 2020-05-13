@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * 5.发酵机未完成（豆焰的酶还没画呢）
  * 7.化学实验机器诸多问题
  */
-@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.6.0,1.0.0);before:guideapi")
+@Mod(modid = ElementTimes.MODID, name = "Element Times", version = "@version@", dependencies = "required-after:elementcore@[0.6.3,1.0.0);before:guideapi")
 public class ElementTimes {
     public static final String MODID = "elementtimes";
 

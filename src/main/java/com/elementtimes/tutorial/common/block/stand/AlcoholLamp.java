@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ModuleAlcoholLamp;
 import com.elementtimes.tutorial.common.tileentity.stand.TileAlcoholLamp;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleAlcoholLamp;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

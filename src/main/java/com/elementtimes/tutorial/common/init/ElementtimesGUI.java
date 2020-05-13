@@ -48,7 +48,8 @@ public class ElementtimesGUI implements IGuiHandler {
         SupportStandC,
         SolarDecomposer,
         Fermenter,
-        Test;
+        Test,
+        Beaker;
 
         public int id() {
             return ordinal();

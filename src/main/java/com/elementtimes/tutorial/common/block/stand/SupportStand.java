@@ -2,9 +2,9 @@ package com.elementtimes.tutorial.common.block.stand;
 
 import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBlock;
 import com.elementtimes.tutorial.common.block.BlockAABB;
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.tileentity.stand.TileSupportStand;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * (铁)架台，不一定是铁

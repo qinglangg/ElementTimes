@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.client.block;
 
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
 import com.elementtimes.tutorial.common.tileentity.stand.TileSupportStand;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;

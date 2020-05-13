@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.common.block.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ModuleEvaporatingDish;
 import com.elementtimes.tutorial.common.tileentity.stand.TileEvaporatingDish;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleEvaporatingDish;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;

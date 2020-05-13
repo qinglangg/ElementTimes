@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.block.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ModuleBeaker;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleBeaker;
 import com.elementtimes.tutorial.common.tileentity.stand.TileBeaker;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;

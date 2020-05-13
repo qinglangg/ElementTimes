@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.tileentity.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;

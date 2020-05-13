@@ -58,7 +58,7 @@ public class SeaEvent {
     }
 
     /**
-    [Cap] 玩家穿越维度时复制 Capability
+    [Cap] 玩家穿越维度时复制 ModuleCap
      */
     @SubscribeEvent
     public static void onEntityCopy(PlayerEvent.Clone event) {

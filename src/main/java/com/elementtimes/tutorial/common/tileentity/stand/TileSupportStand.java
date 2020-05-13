@@ -1,6 +1,9 @@
 package com.elementtimes.tutorial.common.tileentity.stand;
 
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.capability.ModuleCap;
+import com.elementtimes.tutorial.common.tileentity.stand.capability.ModuleFluids;
+import com.elementtimes.tutorial.common.tileentity.stand.capability.ModuleItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -14,12 +17,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
@@ -35,6 +38,7 @@ public class TileSupportStand extends TileEntity implements ITickable {
     private final HashMap<String, ISupportStandModule> modules = new HashMap<>();
     private final Map<String, NBTTagCompound> receivedData = new HashMap<>();
     private NBTTagCompound sync = null;
+    private ISupportStandModule selectedModule = null;
 
     // ISSMManager
     public static void register(String key, Supplier<ISupportStandModule> creator) {
@@ -189,21 +193,48 @@ public class TileSupportStand extends TileEntity implements ITickable {
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
         for (ISupportStandModule module : modules.values()) {
             if (module.hasCapability(capability, facing)) {
+                selectedModule = module;
                 return true;
             }
         }
         return false;
     }
 
+    public boolean hasCapability(String module, Capability<?> capability, @Nullable EnumFacing facing) {
+        return getModule(module).hasCapability(capability, facing);
+    }
+
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        for (ISupportStandModule module : modules.values()) {
-            if (module.hasCapability(capability, facing)) {
-                return module.getCapability(capability, facing);
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return (T) new ModuleItems(this, facing);
+        } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return (T) new ModuleFluids(this, facing);
+        } else {
+            for (ISupportStandModule module : modules.values()) {
+                if (module.hasCapability(capability, facing)) {
+                    return module.getCapability(capability, facing);
+                }
             }
         }
         return null;
+    }
+
+    public <T> T getCapability(String module, Capability<T> capability, @Nullable EnumFacing facing) {
+        return getModule(module).getCapability(capability, facing);
+    }
+
+    @Nonnull
+    public <T> List<ModuleCap<T>> getCapabilities(Capability<T> capability, @Nullable EnumFacing facing) {
+        List<ModuleCap<T>> list = new ArrayList<>();
+        for (ISupportStandModule module : modules.values()) {
+            if (module.hasCapability(capability, facing)) {
+                T cap = module.getCapability(capability, facing);
+                list.add(new ModuleCap<>(module, cap));
+            }
+        }
+        return list;
     }
 
     // Tesr

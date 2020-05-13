@@ -3,9 +3,8 @@ package com.elementtimes.tutorial.common.tileentity.stand;
 import com.elementtimes.elementcore.api.annotation.tools.ModInvokeStatic;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.IngredientPart;
 import com.elementtimes.elementcore.api.template.tileentity.recipe.MachineRecipeHandler;
-import com.elementtimes.tutorial.common.block.stand.module.ModuleCrucible;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ModuleCrucible;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
-import com.elementtimes.tutorial.common.tileentity.stand.BaseTileModule;
 
 /**
  * 坩埚

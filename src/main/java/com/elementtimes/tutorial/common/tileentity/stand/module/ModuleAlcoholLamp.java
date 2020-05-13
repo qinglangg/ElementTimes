@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.block.stand.module;
+package com.elementtimes.tutorial.common.tileentity.stand.module;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.common.init.ElementtimesFluids;
@@ -158,7 +158,7 @@ public class ModuleAlcoholLamp implements ISupportStandModule, IFluidHandler {
                 .renderItem(getModuleItem(), net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType.GROUND);
     }
 
-    // Capability ======================================================================================================
+    // ModuleCap ======================================================================================================
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {

@@ -1,7 +1,7 @@
 package com.elementtimes.tutorial.plugin.elementcore;
 
 import com.elementtimes.elementcore.api.common.ECModContainer;
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
 import com.elementtimes.tutorial.common.tileentity.stand.TileSupportStand;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 

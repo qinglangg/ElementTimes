@@ -1,4 +1,4 @@
-package com.elementtimes.tutorial.common.block.stand.module;
+package com.elementtimes.tutorial.common.tileentity.stand.module;
 
 import com.elementtimes.tutorial.common.init.ElementtimesBlocks;
 import com.elementtimes.tutorial.plugin.elementcore.SSMRegister;

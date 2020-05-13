@@ -2,7 +2,7 @@ package com.elementtimes.tutorial.common.block.stand;
 
 import com.elementtimes.elementcore.api.template.block.interfaces.IDismantleBlock;
 import com.elementtimes.tutorial.common.block.BlockAABB;
-import com.elementtimes.tutorial.common.block.stand.module.ISupportStandModule;
+import com.elementtimes.tutorial.common.tileentity.stand.module.ISupportStandModule;
 import com.elementtimes.tutorial.common.tileentity.stand.BaseTileModule;
 import com.elementtimes.tutorial.common.tileentity.stand.TileSupportStand;
 import net.minecraft.block.ITileEntityProvider;
