@@ -1,5 +1,7 @@
 package com.elementtimes.tutorial.common.eletricity.src.info;
 
+import javax.annotation.Nonnull;
+
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
 
 /**
@@ -38,6 +40,12 @@ public enum EnumVoltage implements IVoltage {
 	@Override
 	public int getLossIndex() {
 		return LOSS;
+	}
+	
+	@Nonnull
+	@Override
+	public IVoltage copy() {
+		return this;
 	}
 	
 	public int getIndex() { return INDEX; }

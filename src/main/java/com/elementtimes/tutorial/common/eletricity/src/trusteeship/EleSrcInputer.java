@@ -25,6 +25,11 @@ public class EleSrcInputer implements IEleInputer {
 		return now.getCapability(CapabilityEnergy.ENERGY, null).receiveEnergy(energy, false);
 	}
 	
+	@Override
+	public IVoltage getVoltage(TileEntity now, IVoltage voltage) {
+		return EnumVoltage.ORDINARY;
+	}
+	
 	/**
 	 * @throws NullPointerException 传入的TE不符合要求
 	 */
@@ -36,11 +41,6 @@ public class EleSrcInputer implements IEleInputer {
 	@Override
 	public int getEnergy(TileEntity now, int energy) {
 		return now.getCapability(CapabilityEnergy.ENERGY, null).receiveEnergy(energy, true);
-	}
-	
-	@Override
-	public IVoltage getVoltage(TileEntity te) {
-		return EnumVoltage.ORDINARY;
 	}
 	
 	@Override

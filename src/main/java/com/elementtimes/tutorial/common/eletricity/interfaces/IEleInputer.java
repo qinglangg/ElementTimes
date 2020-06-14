@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.elementtimes.tutorial.common.eletricity.BlockPosUtil;
 import com.elementtimes.tutorial.common.eletricity.EleWorker;
-import com.elementtimes.tutorial.common.eletricity.src.tileentity.EleSrcCable;
-import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcInputer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -17,21 +15,12 @@ import net.minecraft.util.EnumFacing;
  */
 public interface IEleInputer extends IRegister {
 	
-	int useEnergy(TileEntity now, int energy, IVoltage voltage);
-	
 	/**
 	 * 获取方块需要的正常电能
 	 * @param te 对应方块的TE
 	 * @throws ClassCastException 如果不支持输入的TE
 	 */
 	int getEnergy(TileEntity te);
-	
-	/**
-	 * 获取用电器需要的电压
-	 * @param te 对应方块的TE
-	 * @throws ClassCastException 如果不支持输入的TE
-	 */
-	IVoltage getVoltage(TileEntity te);
 	
 	/**
 	 * 根据输入的电能判断电器可消耗的电能
@@ -41,6 +30,21 @@ public interface IEleInputer extends IRegister {
 	 * @throws ClassCastException 如果不支持输入的TE
 	 */
 	int getEnergy(TileEntity now, int energy);
+	
+	/**
+	 * 使方块使用电能
+	 * @param now 当前方块
+	 * @param energy 能量
+	 * @param voltage 电压
+	 */
+	int useEnergy(TileEntity now, int energy, IVoltage voltage);
+	
+	/**
+	 * 获取用电器需要的电压
+	 * @param now 对应方块的TE
+	 * @throws ClassCastException 如果不支持输入的TE
+	 */
+	IVoltage getVoltage(TileEntity now, IVoltage voltage);
 	
 	/**
 	 * 判断当前方块能否从指定方向获取电能
@@ -75,17 +79,6 @@ public interface IEleInputer extends IRegister {
 				list.put(te, out);
 		});
 		return list;
-	}
-	
-	/**
-	 * 判断当前方块是否已经连接指定传输方块
-	 * @param now 当前方块
-	 * @param transfer 传输方块
-	 */
-	static boolean isLink(TileEntity now, TileEntity transfer) {
-		IEleTransfer et = EleWorker.getTransfer(transfer);
-		if (et == null) return false;
-		return et.isLink(transfer, now);
 	}
 	
 }

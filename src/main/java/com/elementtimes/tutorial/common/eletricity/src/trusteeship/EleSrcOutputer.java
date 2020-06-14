@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.eletricity.src.trusteeship;
 
-import com.elementtimes.tutorial.common.eletricity.info.UseInfo;
+import com.elementtimes.tutorial.common.eletricity.info.EleEnergy;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleOutputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
 import com.elementtimes.tutorial.common.eletricity.src.info.EnumVoltage;
@@ -22,25 +22,25 @@ public class EleSrcOutputer implements IEleOutputer {
 			new ResourceLocation("elementtimes", "EleSrcOutputer");
 	
 	@Override
-	public UseInfo output(TileEntity te, int energy, IVoltage voltage, boolean simulation) {
-		UseInfo info = new UseInfo();
-		int real = te.getCapability(CapabilityEnergy.ENERGY, null).extractEnergy(energy, simulation);
-		return info.setVoltage(EnumVoltage.ORDINARY).setEnergy(real);
+	public EleEnergy output(TileEntity te, int energy, IVoltage voltage, boolean simulation) {
+		EleEnergy info = new EleEnergy();
+		//noinspection ConstantConditions
+		info.setEnergy(te.getCapability(CapabilityEnergy.ENERGY, null)
+				               .extractEnergy(energy, simulation));
+		info.setVoltage(EnumVoltage.ORDINARY);
+		return info;
+	}
+	
+	@Override
+	public void fallback(TileEntity te, int energy) {
+		throw new AssertionError("能量系统计算错误，请联系开发人员");
 	}
 	
 	@Override
 	public boolean isAllowable(TileEntity te, EnumFacing facing) {
-		return te.getCapability(CapabilityEnergy.ENERGY, facing).extractEnergy(Integer.MAX_VALUE, true) > 0;
-	}
-	
-	@Override
-	public boolean isAllowable(TileEntity now, IVoltage voltage) {
-		return true;
-	}
-	
-	@Override
-	public int getOutput(TileEntity te) {
-		return te.getCapability(CapabilityEnergy.ENERGY, null).extractEnergy(1, true);
+		//noinspection ConstantConditions
+		return te.getCapability(CapabilityEnergy.ENERGY, facing)
+				       .extractEnergy(Integer.MAX_VALUE, true) > 0;
 	}
 	
 	@Override

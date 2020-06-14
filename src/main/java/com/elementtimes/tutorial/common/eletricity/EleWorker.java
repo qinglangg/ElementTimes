@@ -1,27 +1,24 @@
 package com.elementtimes.tutorial.common.eletricity;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-
+import com.elementtimes.tutorial.common.autonet.WaitList;
+import com.elementtimes.tutorial.common.eletricity.info.EleEnergy;
 import com.elementtimes.tutorial.common.eletricity.info.PathInfo;
-import com.elementtimes.tutorial.common.eletricity.info.UseInfo;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleInputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleOutputer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IEleTransfer;
 import com.elementtimes.tutorial.common.eletricity.interfaces.IVoltage;
-import com.elementtimes.tutorial.common.autonet.WaitList;
-import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcInputer;
-import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcOutputer;
-import com.elementtimes.tutorial.common.eletricity.src.trusteeship.EleSrcTransfer;
+import com.elementtimes.tutorial.common.eletricity.src.info.EnumVoltage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * 关于电力系统的工作都在这里进行<br>
- *
+ * 关于电力系统的工作都在这里进行
  * @author EmptyDreams
  * @version V2.0
  */
@@ -83,6 +80,12 @@ public final class EleWorker {
 		return getInputer(te) != null;
 	}
 	
+	/**
+	 * 获取指定线缆方块的托管
+	 * @param te 指定方块的TE
+	 * @return 若不存在则返回null
+	 */
+	@Nullable
 	public static IEleTransfer getTransfer(TileEntity te) {
 		for (IEleTransfer transfer : TRANSFERS) {
 			if (transfer.contains(te)) return transfer;
@@ -90,6 +93,12 @@ public final class EleWorker {
 		return null;
 	}
 	
+	/**
+	 * 获取指定发电机的托管
+	 * @param te 指定方块的TE
+	 * @return 若不存在则返回null
+	 */
+	@Nullable
 	public static IEleOutputer getOutputer(TileEntity te) {
 		for (IEleOutputer outputer : OUTPUTERS) {
 			if (outputer.contains(te)) return outputer;
@@ -97,6 +106,12 @@ public final class EleWorker {
 		return null;
 	}
 	
+	/**
+	 * 获取指定用电器的托管
+	 * @param te 指定方块的TE
+	 * @return 若不存在则返回null
+	 */
+	@Nullable
 	public static IEleInputer getInputer(TileEntity te) {
 		for (IEleInputer inputer : INPUTERS) {
 			if (inputer.contains(te)) return inputer;
@@ -109,7 +124,8 @@ public final class EleWorker {
 	 * @param te 指定方块
 	 * @return 是否成功
 	 */
-	public static UseInfo useEleEnergy(TileEntity te) {
+	@SuppressWarnings("UnusedReturnValue")
+	public static EleEnergy useEleEnergy(TileEntity te) {
 		for (IEleInputer inputer : INPUTERS) {
 			if (inputer.contains(te)) {
 				return useEleEnergy(te, inputer);
@@ -125,48 +141,23 @@ public final class EleWorker {
 	 * @param inputer 支持该方块的托管
 	 * @return 是否成功
 	 */
-	public static UseInfo useEleEnergy(TileEntity te, IEleInputer inputer) {
-		Map<TileEntity, IEleOutputer> outs = inputer.getOutputerAround(te);
-		if (outs.isEmpty()) {
-			Map<TileEntity, IEleTransfer> transfers = inputer.getTransferAround(te);
-			if (transfers.isEmpty()) return null;
-			
-			PathInfo realPath = null;
-			for (Map.Entry<TileEntity, IEleTransfer> entry : transfers.entrySet()) {
-				PathInfo pathInfo = entry.getValue().findPath(entry.getKey(), te, inputer);
-				if (pathInfo == null || pathInfo.getOuter() == null) continue;
-				if (realPath == null || realPath.getLossEnergy() > pathInfo.getLossEnergy())
-					realPath = pathInfo;
-			}
-			
-			if (realPath == null) return null;
-			lineTransfer(realPath.getPath(),
-					realPath.getEnergy() + realPath.getLossEnergy(), realPath.getVoltage());
-			return realPath.invoke(te, inputer);
-		} else {
-			IVoltage voltage = inputer.getVoltage(te);
-			int allEnergy = inputer.getEnergy(te);
-			
-			int realEnergy = 0;
-			TileEntity realOut = null;
-			IEleOutputer realOutputer = null;
-			IVoltage realVoltage = null;
-			
-			for (Map.Entry<TileEntity, IEleOutputer> enerty : outs.entrySet()) {
-				IEleOutputer outputer = enerty.getValue();
-				TileEntity out = enerty.getKey();
-				UseInfo outputInfo = outputer.output(out, Integer.MAX_VALUE, voltage, true);
-				if (outputInfo.getEnergy() >= allEnergy) {
-					realOut = out;
-					realOutputer = outputer;
-					realVoltage = outputInfo.getVoltage();
-					break;
-				}
-			}
-			
-			if (realOut == null) return null;
-			return realOutputer.output(realOut, realEnergy, realVoltage, false);
+	public static EleEnergy useEleEnergy(TileEntity te, IEleInputer inputer) {
+		if (inputer.getEnergy(te) <= 0) return new EleEnergy(0, EnumVoltage.NON);
+		Map<TileEntity, IEleTransfer> transfers = inputer.getTransferAround(te);
+		if (transfers.isEmpty()) return null;
+		
+		PathInfo realPath = null;
+		for (Map.Entry<TileEntity, IEleTransfer> entry : transfers.entrySet()) {
+			PathInfo pathInfo = entry.getValue().findPath(entry.getKey(), te, inputer);
+			if (pathInfo == null || pathInfo.getOuter() == null) continue;
+			if (realPath == null || realPath.getLossEnergy() > pathInfo.getLossEnergy())
+				realPath = pathInfo;
 		}
+		
+		if (realPath == null) return null;
+		lineTransfer(realPath.getPath(),
+				realPath.getEnergy() + realPath.getLossEnergy(), realPath.getVoltage());
+		return realPath.invoke();
 	}
 	
 	/**
@@ -182,11 +173,14 @@ public final class EleWorker {
 		try {
 			for (TileEntity entity : line) {
 				transfer = getTransfer(entity);
+				//noinspection ConstantConditions
 				infos.put(transfer, transfer.transfer(
 						entity, energy, voltage, infos.getOrDefault(transfer, null)));
 			}
 		} catch (NullPointerException e) {
-			throw new NullPointerException("线路中有至少一个电缆方块没有托管！");
+			NullPointerException rte = new NullPointerException("线路中有至少一个电缆方块没有托管！");
+			rte.initCause(e);
+			throw rte;
 		}
 	}
 	

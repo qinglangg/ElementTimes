@@ -1,6 +1,6 @@
 package com.elementtimes.tutorial.common.eletricity.interfaces;
 
-import com.elementtimes.tutorial.common.eletricity.info.UseInfo;
+import com.elementtimes.tutorial.common.eletricity.info.EleEnergy;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -21,7 +21,14 @@ public interface IEleOutputer extends IRegister {
 	 * @throws NullPointerException if te == null || voltage == null
 	 * @throws ClassCastException 如果不支持输入的TE
 	 */
-	UseInfo output(TileEntity te, int energy, IVoltage voltage, boolean simulation);
+	EleEnergy output(TileEntity te, int energy, IVoltage voltage, boolean simulation);
+	
+	/**
+	 * 用于当计算失误时回退能量操作
+	 * @param te 当前TE
+	 * @param energy 能量值
+	 */
+	void fallback(TileEntity te, int energy);
 	
 	/**
 	 * 判断指定方块能否向指定方向输出电能
@@ -30,15 +37,5 @@ public interface IEleOutputer extends IRegister {
 	 * @throws ClassCastException 如果不支持输入的TE
 	 */
 	boolean isAllowable(TileEntity te, EnumFacing facing);
-	
-	boolean isAllowable(TileEntity now, IVoltage voltage);
-	
-	/**
-	 * 获取当前可瞬时输出的电能
-	 * @param te 对应方块的TE
-	 * @throws NullPointerException if te == null
-	 * @throws ClassCastException 如果不支持输入的TE
-	 */
-	int getOutput(TileEntity te);
 	
 }
