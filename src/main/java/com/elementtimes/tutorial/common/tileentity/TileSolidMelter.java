@@ -13,10 +13,14 @@ import com.elementtimes.tutorial.common.init.ElementtimesGUI;
 import com.elementtimes.tutorial.common.init.ElementtimesItems;
 
 import com.elementtimes.tutorial.plugin.elementcore.JeiRecipe;
+
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -47,6 +51,11 @@ public class TileSolidMelter extends BaseTileEntity {
                     .addCost(10000)
                     .addItemInput(IngredientPart.forItem("ingotSteel", 1))
                     .addFluidOutput(IngredientPart.forFluid(ElementtimesFluids.steel, Fluid.BUCKET_VOLUME))
+                    .endAdd()
+                    .newRecipe()
+                    .addCost(10000)
+                    .addItemInput(IngredientPart.forItem(Blocks.MAGMA, 1))
+                    .addFluidOutput(IngredientPart.forFluid(FluidRegistry.LAVA, Fluid.BUCKET_VOLUME))
                     .endAdd()
                     .newRecipe()
                     .addCost(10000)

@@ -2,13 +2,16 @@
     "type":"minecraft:crafting_shaped",
     "group": "elementtimes:recipes",
     "pattern":[
-        "AFC",
+        "AVC",
         "BFD",
         "GEG"
     ],
     "key":{
         "A":{
             "item":"minecraft:netherrack"
+        },
+        "V":{
+            "item":"minecraft:magma_cream"
         },
         "B":{
             "item":"minecraft:nether_brick"

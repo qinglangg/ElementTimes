@@ -54,7 +54,11 @@ public class TileCoagulator extends BaseTileEntity {
             		.addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Fe, 1000))
             		.addItemOutput(IngredientPart.forItem(Items.IRON_INGOT,1))
             		.endAdd()
-            		
+            		.newRecipe()
+            		.addCost(10000)
+            		.addFluidInput(IngredientPart.forFluid(FluidRegistry.LAVA, 1000))
+            		.addItemOutput(IngredientPart.forItem(Blocks.MAGMA,1))
+            		.endAdd()
             		.newRecipe()
                     .addCost(20000)
                     .addFluidInput(IngredientPart.forFluid(ElementtimesFluids.Na, 1000))
