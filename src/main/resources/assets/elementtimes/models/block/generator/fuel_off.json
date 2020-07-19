@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementtimes:blocks/generator/fuel/off",
+        "down": "elementtimes:blocks/generator/fuel/down",
+        "up": "elementtimes:blocks/generator/fuel/up",
+        "north": "elementtimes:blocks/generator/fuel/side",
+        "south": "elementtimes:blocks/generator/fuel/side",
+        "west": "elementtimes:blocks/generator/fuel/side",
+        "east": "elementtimes:blocks/generator/fuel/off"
+    }
+}

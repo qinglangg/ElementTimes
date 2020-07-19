@@ -1,48 +1,49 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "model": "elementtimes:wire/glod/point"
+  "forge_marker": 1,
+  "defaults": {
+    "model": "elementtimes:block/wire/glod/point"
+  },
+  "variants": {
+    "up": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north",
+        "x": 270
+      }
     },
-    "variants": {
-        "inventory": [{ }],
-        "up": {
-            "false": { },
-            "true": {
-                "submodel": "elementtimes:wire/glod/north",
-                "x": 270
-            }
-        },
-        "down": {
-            "false": { },
-            "true": {
-                "submodel": "elementtimes:wire/glod/north",
-                "x": 90
-            }
-        },
-        "south": {
-            "false": { },
-            "true": {
-                "submodel": "elementtimes:wire/glod/north",
-                "y": 180
-            }
-        },
-        "north": {
-            "false": { },
-            "true": { "submodel": "elementtimes:wire/glod/north" }
-        },
-        "west": {
-            "false": { },
-            "true": {
-                "submodel": "elementtimes:wire/glod/north",
-                "y": 270
-            }
-        },
-        "east": {
-            "false": { },
-            "true": {
-                "submodel": "elementtimes:wire/glod/north",
-                "y": 90
-            }
-        }
+    "down": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north",
+        "x": 90
+      }
+    },
+    "south": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north",
+        "y": 180
+      }
+    },
+    "north": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north"
+      }
+    },
+    "west": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north",
+        "y": 270
+      }
+    },
+    "east": {
+      "false": {},
+      "true": {
+        "submodel": "elementtimes:wire/glod/north",
+        "y": 90
+      }
     }
+  }
 }

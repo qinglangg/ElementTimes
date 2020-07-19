@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "elementtimes:gold_ingot"
+    ]
+  },
+  "criteria": {
+    "gold_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementtimes:goldpowder"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "elementtimes:gold_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "gold_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

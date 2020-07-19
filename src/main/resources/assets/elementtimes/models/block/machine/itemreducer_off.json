@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementtimes:blocks/itemreducer/topoff",
+        "down":     "elementtimes:blocks/itemreducer/bottom",
+        "up":       "elementtimes:blocks/itemreducer/topoff",
+        "north":    "elementtimes:blocks/itemreducer/side",
+        "south":    "elementtimes:blocks/itemreducer/side",
+        "west":     "elementtimes:blocks/itemreducer/side",
+        "east":     "elementtimes:blocks/itemreducer/on"
+    }
+}

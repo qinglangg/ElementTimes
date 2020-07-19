@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "elementtimes:blocks/rebuild/on",
+    "down": "elementtimes:blocks/rebuild/top",
+    "up": "elementtimes:blocks/rebuild/top",
+    "north": "elementtimes:blocks/rebuild/side",
+    "south": "elementtimes:blocks/rebuild/side",
+    "west": "elementtimes:blocks/rebuild/side",
+    "east": "elementtimes:blocks/rebuild/on"
+  }
+}

@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/pumpfluid/top",
-        "down": "elementtimes:blocks/pumpfluid/bottom",
-        "up": "elementtimes:blocks/pumpfluid/top",
-        "north": "elementtimes:blocks/pumpfluid/side",
-        "south": "elementtimes:blocks/pumpfluid/side",
-        "west": "elementtimes:blocks/pumpfluid/side",
-        "east": "elementtimes:blocks/pumpfluid/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/pumpfluid/top",
-          "down": "elementtimes:blocks/pumpfluid/bottom",
-          "up": "elementtimes:blocks/pumpfluid/top",
-          "north": "elementtimes:blocks/pumpfluid/side",
-          "south": "elementtimes:blocks/pumpfluid/side",
-          "west": "elementtimes:blocks/pumpfluid/side",
-          "east": "elementtimes:blocks/pumpfluid/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/pumpfluid/top",
-          "down": "elementtimes:blocks/pumpfluid/bottom",
-          "up": "elementtimes:blocks/pumpfluid/top",
-          "north": "elementtimes:blocks/pumpfluid/side",
-          "south": "elementtimes:blocks/pumpfluid/side",
-          "west": "elementtimes:blocks/pumpfluid/side",
-          "east": "elementtimes:blocks/pumpfluid/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/pumpfluid_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/pumpfluid_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/pumpfluid_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/pumpfluid_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/pumpfluid_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/pumpfluid_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/pumpfluid_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/pumpfluid_on", "y": 270 }
   }
 }

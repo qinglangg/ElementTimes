@@ -1,74 +1,172 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "elementtimes:pipeline_fluid"
+    "model": "elementtimes:block/pipeline_fluid"
   },
   "variants": {
-    "inventory": [{}],
-    "connected_up": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "x": 270
+    "down": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "down": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "x": 90
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "x": 270
+      "input": {
+        "submodel": {
+          "down": {
+            "model": "block/elementtimes:pipeline_fluid_in",
+            "x": 90
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "down": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "x": 90
+          }
+        }
       }
     },
-    "connected_down": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "x": 90
+    "up": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "up": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "x": 270
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "x": 90
+      "input": {
+        "submodel": {
+          "up": {
+            "model": "block/elementtimes:pipeline_fluid_in",
+            "x": 270
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "up": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "x": 270
+          }
+        }
       }
     },
-    "connected_east": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "y": 90
+    "north": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "north": {
+            "model": "block/elementtimes:pipeline_fluid_sub"
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "y": 90
+      "input": {
+        "submodel": {
+          "north": {
+            "model": "block/elementtimes:pipeline_fluid_in"
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "north": {
+            "model": "block/elementtimes:pipeline_fluid_sub"
+          }
+        }
       }
     },
-    "connected_west": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "y": 270
+    "south": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "south": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 180
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "y": 270
+      "input": {
+        "submodel": {
+          "south": {
+            "model": "block/elementtimes:pipeline_fluid_in",
+            "y": 180
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "south": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 180
+          }
+        }
       }
     },
-    "connected_north": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "y": 0
+    "west": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "west": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 270
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "y": 0
+      "input": {
+        "submodel": {
+          "west": {
+            "model": "block/elementtimes:pipeline_fluid_in",
+            "y": 270
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "west": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 270
+          }
+        }
       }
     },
-    "connected_south": {
-      "false": {},
-      "true": {
-        "submodel": "elementtimes:pipeline_fluid_sub",
-        "y": 180
+    "east": {
+      "none": {},
+      "ban": {},
+      "connect": {
+        "submodel": {
+          "east": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 90
+          }
+        }
       },
-      "io": {
-        "submodel": "elementtimes:pipeline_fluid_in",
-        "y": 180
+      "input": {
+        "submodel": {
+          "east": {
+            "model": "block/elementtimes:pipeline_fluid_in",
+            "y": 90
+          }
+        }
+      },
+      "output": {
+        "submodel": {
+          "east": {
+            "model": "block/elementtimes:pipeline_fluid_sub",
+            "y": 90
+          }
+        }
       }
     }
   }

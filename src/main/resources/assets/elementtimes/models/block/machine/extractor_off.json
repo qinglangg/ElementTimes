@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementtimes:blocks/extractor/top",
+        "down": "elementtimes:blocks/extractor/bottom",
+        "up": "elementtimes:blocks/extractor/top",
+        "north": "elementtimes:blocks/extractor/side",
+        "south": "elementtimes:blocks/extractor/side",
+        "west": "elementtimes:blocks/extractor/side",
+        "east": "elementtimes:blocks/extractor/off"
+    }
+}

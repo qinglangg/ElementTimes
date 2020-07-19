@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/extractor/top",
-        "down": "elementtimes:blocks/extractor/bottom",
-        "up": "elementtimes:blocks/extractor/top",
-        "north": "elementtimes:blocks/extractor/side",
-        "south": "elementtimes:blocks/extractor/side",
-        "west": "elementtimes:blocks/extractor/side",
-        "east": "elementtimes:blocks/extractor/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/extractor/top",
-          "down": "elementtimes:blocks/extractor/bottom",
-          "up": "elementtimes:blocks/extractor/top",
-          "north": "elementtimes:blocks/extractor/side",
-          "south": "elementtimes:blocks/extractor/side",
-          "west": "elementtimes:blocks/extractor/side",
-          "east": "elementtimes:blocks/extractor/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/extractor/top",
-          "down": "elementtimes:blocks/extractor/bottom",
-          "up": "elementtimes:blocks/extractor/top",
-          "north": "elementtimes:blocks/extractor/side",
-          "south": "elementtimes:blocks/extractor/side",
-          "west": "elementtimes:blocks/extractor/side",
-          "east": "elementtimes:blocks/extractor/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/extractor_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/extractor_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/extractor_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/extractor_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/extractor_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/extractor_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/extractor_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/extractor_on", "y": 270 }
   }
 }

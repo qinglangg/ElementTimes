@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "elementtimes:blocks/solardecomposer/on",
+    "down": "elementtimes:blocks/solardecomposer/down",
+    "up": "elementtimes:blocks/solardecomposer/up",
+    "north": "elementtimes:blocks/solardecomposer/side",
+    "south": "elementtimes:blocks/solardecomposer/side",
+    "west": "elementtimes:blocks/solardecomposer/side",
+    "east": "elementtimes:blocks/solardecomposer/on"
+  }
+}

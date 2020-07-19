@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/fermenter/top",
-        "down": "elementtimes:blocks/fermenter/bottom",
-        "up": "elementtimes:blocks/fermenter/top",
-        "north": "elementtimes:blocks/fermenter/side",
-        "south": "elementtimes:blocks/fermenter/side",
-        "west": "elementtimes:blocks/fermenter/side",
-        "east": "elementtimes:blocks/fermenter/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/fermenter/top",
-          "down": "elementtimes:blocks/fermenter/bottom",
-          "up": "elementtimes:blocks/fermenter/top",
-          "north": "elementtimes:blocks/fermenter/side",
-          "south": "elementtimes:blocks/fermenter/side",
-          "west": "elementtimes:blocks/fermenter/side",
-          "east": "elementtimes:blocks/fermenter/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/fermenter/top",
-          "down": "elementtimes:blocks/fermenter/bottom",
-          "up": "elementtimes:blocks/fermenter/top",
-          "north": "elementtimes:blocks/fermenter/side",
-          "south": "elementtimes:blocks/fermenter/side",
-          "west": "elementtimes:blocks/fermenter/side",
-          "east": "elementtimes:blocks/fermenter/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/fermenter_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/fermenter_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/fermenter_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/fermenter_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/fermenter_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/fermenter_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/fermenter_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/fermenter_on", "y": 270 }
   }
 }

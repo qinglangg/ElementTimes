@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "elementtimes.corn",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "elementtimes:corncrop",
+              "properties": {
+                "age": "7"
+              }
+            }
+          ],
+          "name": "elementtimes:blocks/corn_7"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "elementtimes:corncrop",
+              "properties": {
+                "age": "11"
+              }
+            }
+          ],
+          "name": "elementtimes:blocks/corn_11"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:alternative",
+                "terms": [
+                  {
+                    "condition": "minecraft:block_state_property",
+                    "block": "elementtimes:corncrop",
+                    "properties": {
+                      "age": "7"
+                    }
+                  },
+                  {
+                    "condition": "minecraft:block_state_property",
+                    "block": "elementtimes:corncrop",
+                    "properties": {
+                      "age": "11"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "name": "elementtimes:blocks/corn_normal"
+        }
+      ]
+    }
+  ]
+}

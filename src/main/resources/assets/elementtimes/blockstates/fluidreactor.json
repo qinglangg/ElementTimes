@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/fluidreactor/top",
-        "down": "elementtimes:blocks/fluidreactor/bottom",
-        "up": "elementtimes:blocks/fluidreactor/top",
-        "north": "elementtimes:blocks/fluidreactor/side",
-        "south": "elementtimes:blocks/fluidreactor/side",
-        "west": "elementtimes:blocks/fluidreactor/side",
-        "east": "elementtimes:blocks/fluidreactor/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/fluidreactor/top",
-          "down": "elementtimes:blocks/fluidreactor/bottom",
-          "up": "elementtimes:blocks/fluidreactor/top",
-          "north": "elementtimes:blocks/fluidreactor/side",
-          "south": "elementtimes:blocks/fluidreactor/side",
-          "west": "elementtimes:blocks/fluidreactor/side",
-          "east": "elementtimes:blocks/fluidreactor/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/fluidreactor/top",
-          "down": "elementtimes:blocks/fluidreactor/bottom",
-          "up": "elementtimes:blocks/fluidreactor/top",
-          "north": "elementtimes:blocks/fluidreactor/side",
-          "south": "elementtimes:blocks/fluidreactor/side",
-          "west": "elementtimes:blocks/fluidreactor/side",
-          "east": "elementtimes:blocks/fluidreactor/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/fluidreactor_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/fluidreactor_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/fluidreactor_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/fluidreactor_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/fluidreactor_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/fluidreactor_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/fluidreactor_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/fluidreactor_on", "y": 270 }
   }
 }

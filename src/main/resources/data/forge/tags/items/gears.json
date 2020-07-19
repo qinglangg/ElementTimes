@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:gears/adamas",
+    "#forge:gears/carbon",
+    "#forge:gears/copper",
+    "#forge:gears/diamond",
+    "#forge:gears/gold",
+    "#forge:gears/iron",
+    "#forge:gears/lead",
+    "#forge:gears/obsidian",
+    "#forge:gears/platinum",
+    "#forge:gears/quartz",
+    "#forge:gears/silver",
+    "#forge:gears/steel",
+    "#forge:gears/stone",
+    "#forge:gears/tin",
+    "#forge:gears/wood"
+  ]
+}

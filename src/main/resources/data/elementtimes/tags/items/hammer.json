@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "elementtimes:hammersmall",
+    "elementtimes:hammermedium",
+    "elementtimes:hammerbig"
+  ]
+}

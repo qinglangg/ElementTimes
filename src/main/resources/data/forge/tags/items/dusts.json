@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:dusts/ardite",
+    "#forge:dusts/bluestone",
+    "#forge:dusts/coal",
+    "#forge:dusts/cobalt",
+    "#forge:dusts/copper",
+    "#forge:dusts/diamond",
+    "#forge:dusts/greenstone",
+    "#forge:dusts/gold",
+    "#forge:dusts/iron",
+    "#forge:dusts/lead",
+    "#forge:dusts/nickel",
+    "#forge:dusts/osmium",
+    "#forge:dusts/platinum",
+    "#forge:dusts/quartz",
+    "#forge:dusts/redstone",
+    "#forge:dusts/sand",
+    "#forge:dusts/silver",
+    "#forge:dusts/stone",
+    "#forge:dusts/sulfur",
+    "#forge:dusts/tin",
+    "#forge:dusts/uranium"
+  ]
+}

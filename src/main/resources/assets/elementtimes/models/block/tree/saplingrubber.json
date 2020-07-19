@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "elementtimes:blocks/tree/rubber_sapling"
+  }
+}

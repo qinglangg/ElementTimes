@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": { "model": "elementtimes:block/corncrop/down0" },
+    "age=1": { "model": "elementtimes:block/corncrop/down1" },
+    "age=2": { "model": "elementtimes:block/corncrop/down2" },
+    "age=3": { "model": "elementtimes:block/corncrop/down3" },
+    "age=4": { "model": "elementtimes:block/corncrop/down4" },
+    "age=5": { "model": "elementtimes:block/corncrop/down5" },
+    "age=6": { "model": "elementtimes:block/corncrop/down6" },
+    "age=7": { "model": "elementtimes:block/corncrop/down7" },
+    "age=8":  { "model": "elementtimes:block/corncrop/up0" },
+    "age=9":  { "model": "elementtimes:block/corncrop/up1" },
+    "age=10": { "model": "elementtimes:block/corncrop/up2" },
+    "age=11": { "model": "elementtimes:block/corncrop/up3" }
+  }
+}

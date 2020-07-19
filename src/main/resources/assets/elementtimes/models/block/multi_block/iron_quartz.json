@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "elementtimes:blocks/multi_block/blockmultiironquartz/bottom",
+    "top": "elementtimes:blocks/multi_block/blockmultiironquartz/top",
+    "side": "elementtimes:blocks/multi_block/blockmultiironquartz/side"
+  }
+}

@@ -1,6 +1,7 @@
 {
     "variants": {
-        "half=bottom,variant=default": { "model": "elementtimes:half_slab_bamboo" },
-        "half=top,variant=default": { "model": "elementtimes:upper_slab_bamboo" }
+        "type=bottom": { "model": "elementtimes:block/bamboo/slab_top" },
+        "type=top": { "model": "elementtimes:block/bamboo/slab" },
+        "type=double": { "model": "elementtimes:block/bamboo/block" }
     }
 }

@@ -1,12 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "elementtimes:wire/element/point"
+    "model": "elementtimes:block/wire/element/point"
   },
   "variants": {
-    "inventory": [
-      {}
-    ],
     "up": {
       "false": {},
       "true": {

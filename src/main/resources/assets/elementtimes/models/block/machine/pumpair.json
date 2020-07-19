@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "elementtimes:blocks/pumpair/top",
+    "down": "elementtimes:blocks/pumpair/bottom",
+    "up": "elementtimes:blocks/pumpair/top",
+    "north": "elementtimes:blocks/pumpair/north",
+    "south": "elementtimes:blocks/pumpair/south",
+    "west": "elementtimes:blocks/pumpair/west",
+    "east": "elementtimes:blocks/pumpair/east"
+  }
+}

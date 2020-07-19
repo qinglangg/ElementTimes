@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:stone"
+  },
+  "result": "elementtimes:stoneingot",
+  "experience": 5.0,
+  "cookingtime": 200
+}

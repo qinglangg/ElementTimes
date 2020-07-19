@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "elementtimes:blocks/tree/rubber_top",
+        "side": "elementtimes:blocks/tree/rubber_side2"
+    }
+}

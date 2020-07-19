@@ -1,8 +1,0 @@
-{
-    "parent": "block/half_slab",
-    "textures": {
-        "bottom": "elementtimes:blocks/bambooblock",
-        "top": "elementtimes:blocks/bambooblock",
-        "side": "elementtimes:blocks/bambooblock"
-    }
-}

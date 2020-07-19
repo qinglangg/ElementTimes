@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/forming/top",
-        "down": "elementtimes:blocks/forming/top",
-        "up": "elementtimes:blocks/forming/top",
-        "north": "elementtimes:blocks/forming/side",
-        "south": "elementtimes:blocks/forming/side",
-        "west": "elementtimes:blocks/forming/side",
-        "east": "elementtimes:blocks/forming/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/forming/top",
-          "down": "elementtimes:blocks/forming/top",
-          "up": "elementtimes:blocks/forming/top",
-          "north": "elementtimes:blocks/forming/side",
-          "south": "elementtimes:blocks/forming/side",
-          "west": "elementtimes:blocks/forming/side",
-          "east": "elementtimes:blocks/forming/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/forming/top",
-          "down": "elementtimes:blocks/forming/top",
-          "up": "elementtimes:blocks/forming/top",
-          "north": "elementtimes:blocks/forming/side",
-          "south": "elementtimes:blocks/forming/side",
-          "west": "elementtimes:blocks/forming/side",
-          "east": "elementtimes:blocks/forming/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/forming_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/forming_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/forming_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/forming_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/forming_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/forming_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/forming_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/forming_on", "y": 270 }
   }
 }

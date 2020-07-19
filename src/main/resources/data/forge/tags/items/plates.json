@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:plates/adamas",
+    "#forge:plates/carbon",
+    "#forge:plates/copper",
+    "#forge:plates/diamond",
+    "#forge:plates/gold",
+    "#forge:plates/iron",
+    "#forge:plates/lead",
+    "#forge:plates/obsidian",
+    "#forge:plates/platinum",
+    "#forge:plates/quartz",
+    "#forge:plates/silver",
+    "#forge:plates/steel",
+    "#forge:plates/stone",
+    "#forge:plates/tin",
+    "#forge:plates/wood"
+  ]
+}

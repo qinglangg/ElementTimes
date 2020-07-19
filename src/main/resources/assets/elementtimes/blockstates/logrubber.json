@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x,rubber=false": { "model": "elementtimes:block/tree/logrubber", "x": 90, "y": 90 },
+    "axis=y,rubber=false": { "model": "elementtimes:block/tree/logrubber" },
+    "axis=z,rubber=false": { "model": "elementtimes:block/tree/logrubber", "x": 90 },
+    "axis=x,rubber=true": { "model": "elementtimes:block/tree/logrubber2", "x": 90, "y": 90 },
+    "axis=y,rubber=true": { "model": "elementtimes:block/tree/logrubber2" },
+    "axis=z,rubber=true": { "model": "elementtimes:block/tree/logrubber2", "x": 90 }
+  }
+}

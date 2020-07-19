@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "elementtimes:blocks/rubber_tree/leaf"
+  }
+}

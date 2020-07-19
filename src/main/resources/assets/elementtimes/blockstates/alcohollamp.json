@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "enabled=true":  { "model": "elementtimes:block/stand/alcohollamp_on" },
+    "enabled=false": { "model": "elementtimes:block/stand/alcohollamp_off" }
+  }
+}

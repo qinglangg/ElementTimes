@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementtimes:blocks/generator/fluid/off",
+        "down": "elementtimes:blocks/generator/fluid/down",
+        "up": "elementtimes:blocks/generator/fluid/up",
+        "north": "elementtimes:blocks/generator/fluid/side",
+        "south": "elementtimes:blocks/generator/fluid/side",
+        "west": "elementtimes:blocks/generator/fluid/side",
+        "east": "elementtimes:blocks/generator/fluid/on"
+    }
+}

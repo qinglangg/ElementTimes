@@ -1,13 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube_all",
-    "textures": {
-      "all": "elementtimes:blocks/blocksilver"
-    }
-  },
   "variants": {
-    "inventory": [{}],
-    "normal": [{}]
+    "": { "model": "elementtimes:block/storage_block/silver" }
   }
 }

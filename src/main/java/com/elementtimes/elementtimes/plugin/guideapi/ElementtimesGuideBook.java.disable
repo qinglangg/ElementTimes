@@ -1,0 +1,485 @@
+package com.elementtimes.tutorial.plugin.guideapi;
+
+import amerifrance.guideapi.api.GuideBook;
+import amerifrance.guideapi.api.IGuideBook;
+import amerifrance.guideapi.api.IPage;
+import amerifrance.guideapi.api.IRecipeRenderer;
+import amerifrance.guideapi.api.impl.Book;
+import amerifrance.guideapi.api.impl.BookBinder;
+import amerifrance.guideapi.api.impl.Page;
+import amerifrance.guideapi.api.impl.abstraction.CategoryAbstract;
+import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
+import amerifrance.guideapi.category.CategoryItemStack;
+import amerifrance.guideapi.entry.EntryItemStack;
+import amerifrance.guideapi.page.*;
+import com.elementtimes.elementcore.api.common.ECUtils;
+import com.elementtimes.tutorial.ElementTimes;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.JsonUtils;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.brewing.AbstractBrewingRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.common.brewing.IBrewingRecipe;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.JsonContext;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.logging.log4j.LogManager;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
+
+/**
+ * GuideAPI 的书
+ * https://guide-api.readthedocs.io/en/latest/createabook/basic/
+
+ */
+@GuideBook
+public class ElementtimesGuideBook implements IGuideBook {
+
+    public static Book BOOK = null;
+
+    @Nullable
+    @Override
+    public Book buildBook() {
+        if (BOOK == null) {
+            if (ECUtils.common.isClient()) {
+                BOOK = readBook();
+            } else {
+                BOOK = new BookBinder(new ResourceLocation("o:o")).build();
+            }
+        }
+        return BOOK;
+    }
+
+    private static Book readBook() {
+        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        String langCode = mc.getLanguageManager().getCurrentLanguage().getLanguageCode();
+        net.minecraft.client.resources.IResource resource;
+        try {
+            resource = mc.getResourceManager().getResource(new ResourceLocation("elementtimes", "guideapi_book/" + langCode + ".json"));
+        } catch (IOException e) {
+            try {
+                resource = mc.getResourceManager().getResource(new ResourceLocation("elementtimes", "guideapi_book/en_us.json"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        JsonObject json = new JsonParser().parse(new InputStreamReader(resource.getInputStream())).getAsJsonObject();
+        ResourceLocation id = getLocation(json);
+        String author = JsonUtils.getString(json, "author", "");
+        Color color = getColor(json);
+        String title = JsonUtils.getString(json, "title", ElementTimes.MODID);
+        BookBinder binder = new BookBinder(id)
+                .setAuthor(author)
+                .setColor(color)
+                .setGuideTitle(title);
+        if (json.has("categories")) {
+            JsonElement categories = json.get("categories");
+            if (categories.isJsonObject()) {
+                binder.addCategory(buildCategory(categories.getAsJsonObject()));
+            } else if (categories.isJsonArray()) {
+                for (JsonElement element : categories.getAsJsonArray()) {
+                    if (element.isJsonObject()) {
+                        binder.addCategory(buildCategory(element.getAsJsonObject()));
+                    }
+                }
+            }
+        }
+        return binder.build();
+    }
+
+    private static CategoryAbstract buildCategory(JsonObject json) {
+        String name = JsonUtils.getString(json, "name", ElementTimes.MODID);
+        ItemStack icon = getStack(json, "icon");
+        Map<ResourceLocation, EntryAbstract> entryMap = Maps.newHashMap();
+        if (json.has("entries")) {
+            JsonElement entries = json.get("entries");
+            if (entries.isJsonObject()) {
+                ImmutablePair<ResourceLocation, EntryAbstract> entryPair = buildEntry(entries.getAsJsonObject());
+                entryMap.put(entryPair.left, entryPair.right);
+            } else if (entries.isJsonArray()) {
+                for (JsonElement element : entries.getAsJsonArray()) {
+                    ImmutablePair<ResourceLocation, EntryAbstract> entryPair = buildEntry(element.getAsJsonObject());
+                    entryMap.put(entryPair.left, entryPair.right);
+                }
+            }
+        }
+        return new CategoryItemStack(entryMap, name, icon);
+    }
+
+    private static ImmutablePair<ResourceLocation, EntryAbstract> buildEntry(JsonObject json) {
+        ResourceLocation id = getLocation(json);
+        String name = JsonUtils.getString(json, "name", ElementTimes.MODID);
+        ItemStack icon = getStack(json, "icon");
+        List<IPage> pageList = Lists.newArrayList();
+        if (json.has("pages")) {
+            JsonElement pages = json.get("pages");
+            if (pages.isJsonObject()) {
+                Collections.addAll(pageList, buildPages(pages.getAsJsonObject()));
+            } else if (pages.isJsonArray()) {
+                for (JsonElement element : pages.getAsJsonArray()) {
+                    if (element.isJsonObject()) {
+                        Collections.addAll(pageList, buildPages(element.getAsJsonObject()));
+                    }
+                }
+            }
+        }
+        return ImmutablePair.of(id, new EntryItemStack(pageList, name, icon));
+    }
+
+    private static IPage[] buildPages(@Nullable JsonElement element) {
+        if (element instanceof JsonObject && ((JsonObject) element).has("type")) {
+            JsonObject json = element.getAsJsonObject();
+            switch (json.get("type").getAsString()) {
+                case "text": return buildPageText(json);
+                case "image": return buildPageImage(json);
+                case "text&image": return buildPageTI(json);
+                case "recipe": return buildRecipe(json);
+                case "smelt": return buildSmelt(json);
+                case "brewing": return buildBrewing(json);
+                case "sound": return buildSound(json);
+                case "custom": return buildFromClass(json);
+                case "function": return buildFromFunction(json);
+                case "field": return buildFromField(json);
+                default: return new IPage[] { new Page() };
+            }
+        } else {
+            return new IPage[] { new Page() };
+        }
+    }
+
+    private static PageText[] buildPageText(JsonObject json) {
+        String text;
+        String key = JsonUtils.getString(json, "key", "");
+        if (key.isEmpty()) {
+            text = JsonUtils.getString(json, "text", "");
+        } else {
+            text = net.minecraft.client.resources.I18n.format(key);
+        }
+        int offsetY = JsonUtils.getInt(json, "offsetY", 0);
+        return new PageText[] { new PageText(text, offsetY) };
+    }
+
+    private static PageImage[] buildPageImage(JsonObject json) {
+        ResourceLocation image = getImage(json);
+        return new PageImage[] { new PageImage(image) };
+    }
+
+    private static PageTextImage[] buildPageTI(JsonObject json) {
+        String text;
+        String key = JsonUtils.getString(json, "key", "");
+        if (key.isEmpty()) {
+            text = JsonUtils.getString(json, "text", "");
+        } else {
+            text = net.minecraft.client.resources.I18n.format(key);
+        }
+        ResourceLocation image = getImage(json);
+        boolean top = !"text".equals(JsonUtils.getString(json, "top", "image"));
+        return new PageTextImage[] { new PageTextImage(text, image, top) };
+    }
+
+    private static PageIRecipe[] buildRecipe(JsonObject json) {
+        IRecipe recipe;
+        if (json.has("id")) {
+            recipe = ForgeRegistries.RECIPES.getValue(getLocation(json));
+        } else if (json.has("recipe")) {
+            recipe = CraftingHelper.getRecipe(json.get("recipe").getAsJsonObject(), new JsonContext(ElementTimes.MODID));
+        } else {
+            recipe = new ShapelessRecipes("empty", ItemStack.EMPTY, NonNullList.create());
+        }
+        if (recipe == null) {
+            recipe = new ShapelessRecipes("empty", ItemStack.EMPTY, NonNullList.create());
+        }
+        IRecipeRenderer renderer = getObject(json, "render", IRecipeRenderer.class, new Object[][]{
+                new Object[0],
+                new Object[] { json },
+                new Object[] { recipe }
+        });
+        if (renderer == null) {
+            return new PageIRecipe[] { new PageIRecipe(recipe) };
+        } else {
+            return new PageIRecipe[] { new PageIRecipe(recipe, renderer) };
+        }
+    }
+
+    private static PageFurnaceRecipe[] buildSmelt(JsonObject json) {
+        if (json.has("item")) {
+            ItemStack stack = getStack(json, "item");
+            return new PageFurnaceRecipe[] { new PageFurnaceRecipe(stack) };
+        } else if (json.has("ore")) {
+            String ore = JsonUtils.getString(json, "ore", "");
+            return new PageFurnaceRecipe[] { new PageFurnaceRecipe(ore) };
+        }
+        return new PageFurnaceRecipe[0];
+    }
+
+    private static PageBrewingRecipe[] buildBrewing(JsonObject json) {
+        ItemStack input = getStack(json, "input");
+        ItemStack ingredient = getStack(json, "ingredient");
+        ItemStack output = getStack(json, "output");
+        if (json.has("input") && json.has("ingredient") && json.has("output")) {
+            if (json.has("check") && json.get("check").isJsonPrimitive() && json.get("check").getAsBoolean()) {
+                ItemStack outputStack = BrewingRecipeRegistry.getOutput(input, ingredient);
+                if (ItemStack.areItemStacksEqual(output, outputStack)) {
+                    return new PageBrewingRecipe[] { new PageBrewingRecipe(input, ingredient, outputStack) };
+                } else {
+                    return new PageBrewingRecipe[0];
+                }
+            } else {
+                return new PageBrewingRecipe[] { new PageBrewingRecipe(input, ingredient, output) };
+            }
+        } else {
+            Stream<IBrewingRecipe> stream = BrewingRecipeRegistry.getRecipes().parallelStream();
+            if (json.has("input")) {
+                stream = stream.filter(r -> r.isInput(input));
+            }
+            if (json.has("ingredient")) {
+                stream = stream.filter(r -> r.isIngredient(ingredient));
+            }
+            return stream.map(recipe -> {
+                if (recipe instanceof BrewingRecipe) {
+                    return new BrewingRecipe[] { (BrewingRecipe) recipe };
+                } else if (recipe instanceof AbstractBrewingRecipe) {
+                    ItemStack bi = ((AbstractBrewingRecipe) recipe).getInput();
+                    Object bl = ((AbstractBrewingRecipe) recipe).getIngredient();
+                    ItemStack bo = ((AbstractBrewingRecipe) recipe).getOutput();
+                    if (bl instanceof ItemStack) {
+                        return new BrewingRecipe[] { new BrewingRecipe(bi, (ItemStack) bl, bo) };
+                    } else if (bl instanceof Collection) {
+                        Collection bls = (Collection) bl;
+                        List<BrewingRecipe> list = new ArrayList<>(bls.size());
+                        for (Object o : bls) {
+                            if (o instanceof ItemStack) {
+                                list.add(new BrewingRecipe(bi, (ItemStack) o, bo));
+                            }
+                        }
+                        return list.toArray(new BrewingRecipe[0]);
+                    } else if (bl instanceof ItemStack[]) {
+                        ItemStack[] bls = (ItemStack[]) bl;
+                        BrewingRecipe[] brs = new BrewingRecipe[bls.length];
+                        for (int i = 0; i < bls.length; i++) {
+                            brs[i] = new BrewingRecipe(bi, bls[i], bo);
+                        }
+                        return brs;
+                    } else {
+                        return new BrewingRecipe[0];
+                    }
+                } else {
+                    return new BrewingRecipe[0];
+                }
+            }).flatMap(Arrays::stream).map(PageBrewingRecipe::new).toArray(PageBrewingRecipe[]::new);
+        }
+    }
+
+    private static PageSound[] buildSound(JsonObject json) {
+        SoundEvent sound = getSound(json);
+        IPage[] pages = buildPages(json.get("page"));
+        PageSound[] sounds = new PageSound[pages.length];
+        for (int i = 0; i < pages.length; i++) {
+            sounds[i] = new PageSound(pages[i], sound);
+        }
+        return sounds;
+    }
+
+    private static IPage[] buildFromClass(JsonObject json) {
+        IPage page = getObject(json, "class", IPage.class, new Object[][] {
+                new Object[0],
+                new Object[] { json }
+        });
+        if (page == null) {
+            return new IPage[0];
+        } else {
+            return new IPage[] { page };
+        }
+    }
+
+    private static IPage[] buildFromFunction(JsonObject json) {
+        try {
+            String className = JsonUtils.getString(json, "class", "");
+            String methodName = JsonUtils.getString(json, "name", "");
+            Class clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
+            Object o = null;
+            for (Method method : clazz.getDeclaredMethods()) {
+                if (methodName.equals(method.getName())) {
+                    if (method.getParameterCount() == 0) {
+                        Class<?> returnType = method.getReturnType();
+                        if (IPage.class.isAssignableFrom(returnType)
+                                || Collection.class.isAssignableFrom(returnType)
+                                || IPage[].class.isAssignableFrom(returnType)) {
+                            if (!method.isAccessible()) {
+                                method.setAccessible(true);
+                            }
+                            o = method.invoke(null);
+                            break;
+                        }
+                    } else if (method.getParameterCount() == 1 && JsonObject.class.isAssignableFrom(method.getParameterTypes()[0])) {
+                        Class<?> returnType = method.getReturnType();
+                        if (IPage.class.isAssignableFrom(returnType)
+                                || Collection.class.isAssignableFrom(returnType)
+                                || IPage[].class.isAssignableFrom(returnType)) {
+                            if (!method.isAccessible()) {
+                                method.setAccessible(true);
+                            }
+                            o = method.invoke(null, json);
+                            break;
+                        }
+                    }
+                }
+            }
+            if (o instanceof IPage) {
+                return new IPage[] {(IPage) o};
+            } else if (o instanceof Collection) {
+                List<IPage> pages = new ArrayList<>();
+                for (Object o1 : ((Collection) o)) {
+                    if (o1 instanceof IPage) {
+                        pages.add((IPage) o1);
+                    }
+                }
+                return pages.toArray(new IPage[0]);
+            } else if (o instanceof IPage[]) {
+                return (IPage[]) o;
+            }
+        } catch (IllegalAccessException | ClassNotFoundException | InvocationTargetException ignored) { }
+        return new IPage[0];
+    }
+
+    private static IPage[] buildFromField(JsonObject json) {
+        try {
+            String className = JsonUtils.getString(json, "class", "");
+            String fieldName = JsonUtils.getString(json, "name", "");
+            Class clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
+            Object o = null;
+            for (Field field : clazz.getDeclaredFields()) {
+                if (fieldName.equals(field.getName()) && Modifier.isStatic(field.getModifiers())) {
+                    Class<?> returnType = field.getType();
+                    if (IPage.class.isAssignableFrom(returnType)
+                            || Collection.class.isAssignableFrom(returnType)
+                            || IPage[].class.isAssignableFrom(returnType)) {
+                        if (!field.isAccessible()) {
+                            field.setAccessible(true);
+                        }
+                        o = field.get(null);
+                        break;
+                    }
+                }
+            }
+            if (o instanceof IPage) {
+                return new IPage[] {(IPage) o};
+            } else if (o instanceof Collection) {
+                List<IPage> pages = new ArrayList<>();
+                for (Object o1 : ((Collection) o)) {
+                    if (o1 instanceof IPage) {
+                        pages.add((IPage) o1);
+                    }
+                }
+                return pages.toArray(new IPage[0]);
+            } else if (o instanceof IPage[]) {
+                return (IPage[]) o;
+            }
+        } catch (IllegalAccessException | ClassNotFoundException ignored) { }
+        return new IPage[0];
+    }
+
+    private static ResourceLocation getLocation(JsonObject json) {
+        String loc = JsonUtils.getString(json, "id", "");
+        if (loc.isEmpty()) {
+            return new ResourceLocation(ElementTimes.MODID, ElementTimes.MODID);
+        }
+        return new ResourceLocation(loc);
+    }
+
+    private static ResourceLocation getImage(JsonObject json) {
+        String loc = JsonUtils.getString(json, "image", "");
+        if (loc.isEmpty()) {
+            return net.minecraft.client.renderer.texture.TextureMap.LOCATION_MISSING_TEXTURE;
+        }
+        return new ResourceLocation(loc);
+    }
+
+    private static Color getColor(JsonObject json) {
+        JsonElement e = json.get("color");
+        if (e.isJsonPrimitive()) {
+            if (e.getAsJsonPrimitive().isNumber()) {
+                return new Color(e.getAsJsonPrimitive().getAsInt());
+            }
+        }
+        String c = JsonUtils.getString(json, "color", "");
+        if (c.isEmpty()) {
+            return new Color(171, 70, 30);
+        } else if (c.startsWith("0x")) {
+            return new Color(Integer.parseInt(c.substring(2), 16));
+        } else if (c.startsWith("#")) {
+            return new Color(Integer.parseInt(c.substring(1), 16));
+        } else {
+            if (NumberUtils.isCreatable(c)) {
+                return new Color(NumberUtils.toInt(c));
+            } else {
+                return ECUtils.reflect
+                        .getField(Color.class, c.toUpperCase(), null, Color.class, LogManager.getLogger())
+                        .orElse(new Color(171, 70, 30));
+            }
+        }
+    }
+
+    private static ItemStack getStack(JsonObject json, String key) {
+        ItemStack stack;
+        try {
+            stack = new ItemStack(JsonUtils.getItem(json, key));
+        } catch (JsonSyntaxException ignored) {
+            String name = JsonUtils.getString(json, key, "");
+            if (!name.isEmpty()) {
+                NonNullList<ItemStack> items = OreDictionary.getOres(name);
+                if (!items.isEmpty()) {
+                    stack = items.get(0).copy();
+                } else {
+                    stack = ItemStack.EMPTY;
+                }
+            } else {
+                stack = ItemStack.EMPTY;
+            }
+        }
+        return stack;
+    }
+
+    private static SoundEvent getSound(JsonObject json) {
+        String loc = JsonUtils.getString(json, "sound", "");
+        if (loc.isEmpty()) {
+            return SoundEvents.ENTITY_ITEMFRAME_ROTATE_ITEM;
+        }
+        return SoundEvent.REGISTRY.getObject(new ResourceLocation(loc));
+    }
+
+    private static <T> T getObject(JsonObject json, String key, Class<T> type, Object[][] params) {
+        for (Object[] param : params) {
+            Optional<T> opt = ECUtils.reflect.create(JsonUtils.getString(json, key, ""), param, type, LogManager.getLogger());
+            if (opt.isPresent()) {
+                return opt.get();
+            }
+        }
+        return null;
+    }
+}

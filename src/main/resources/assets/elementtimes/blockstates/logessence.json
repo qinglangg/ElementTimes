@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x": { "model": "elementtimes:block/tree/logessence", "x": 90, "y": 90 },
+    "axis=y": { "model": "elementtimes:block/tree/logessence" },
+    "axis=z": { "model": "elementtimes:block/tree/logessence", "x": 90 }
+  }
+}

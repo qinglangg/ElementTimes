@@ -1,46 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube",
-    "textures": {
-      "particle": "elementtimes:blocks/pumpair/top",
-      "down": "elementtimes:blocks/pumpair/bottom",
-      "up": "elementtimes:blocks/pumpair/top",
-      "north": "elementtimes:blocks/pumpair/north",
-      "south": "elementtimes:blocks/pumpair/south",
-      "west": "elementtimes:blocks/pumpair/west",
-      "east": "elementtimes:blocks/pumpair/east"
-    }
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/pumpair/top",
-        "down": "elementtimes:blocks/pumpair/bottom",
-        "up": "elementtimes:blocks/pumpair/top",
-        "north": "elementtimes:blocks/pumpair/north",
-        "south": "elementtimes:blocks/pumpair/south",
-        "west": "elementtimes:blocks/pumpair/west",
-        "east": "elementtimes:blocks/pumpair/east"
-      }
-    }],
-    "running": {
-      "false": {},
-      "true": {}
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/pumpair", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/pumpair" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/pumpair", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/pumpair", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/pumpair", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/pumpair" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/pumpair", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/pumpair", "y": 270 }
   }
 }

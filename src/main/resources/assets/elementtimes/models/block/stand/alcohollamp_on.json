@@ -1,0 +1,6 @@
+{
+    "parent": "elementtimes:block/machine/alcohollamp",
+    "textures": {
+        "fire": "elementtimes:blocks/alcohollamp/on"
+    }
+}

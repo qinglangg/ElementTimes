@@ -1,57 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube"
-  },
   "variants": {
-    "inventory": [{
-      "textures": {
-        "particle": "elementtimes:blocks/coagulator/top",
-        "down": "elementtimes:blocks/coagulator/bottom",
-        "up": "elementtimes:blocks/coagulator/top",
-        "north": "elementtimes:blocks/coagulator/side",
-        "south": "elementtimes:blocks/coagulator/side",
-        "west": "elementtimes:blocks/coagulator/side",
-        "east": "elementtimes:blocks/coagulator/off"
-      }
-    }],
-    "running": {
-      "false": {
-        "textures": {
-          "particle": "elementtimes:blocks/coagulator/top",
-          "down": "elementtimes:blocks/coagulator/bottom",
-          "up": "elementtimes:blocks/coagulator/top",
-          "north": "elementtimes:blocks/coagulator/side",
-          "south": "elementtimes:blocks/coagulator/side",
-          "west": "elementtimes:blocks/coagulator/side",
-          "east": "elementtimes:blocks/coagulator/off"
-        }
-      },
-      "true": {
-        "textures": {
-          "particle": "elementtimes:blocks/coagulator/top",
-          "down": "elementtimes:blocks/coagulator/bottom",
-          "up": "elementtimes:blocks/coagulator/top",
-          "north": "elementtimes:blocks/coagulator/side",
-          "south": "elementtimes:blocks/coagulator/side",
-          "west": "elementtimes:blocks/coagulator/side",
-          "east": "elementtimes:blocks/coagulator/on"
-        }
-      }
-    },
-    "facing": {
-      "north": {
-        "y": 90
-      },
-      "east": {
-        "y": 180
-      },
-      "south": {
-        "y": 270
-      },
-      "west": {
-        "y": 0
-      }
-    }
+    "enabled=false,facing=east":  { "model": "elementtimes:block/machine/coagulator_off", "y": 180 },
+    "enabled=false,facing=west":  { "model": "elementtimes:block/machine/coagulator_off" },
+    "enabled=false,facing=north": { "model": "elementtimes:block/machine/coagulator_off", "y": 90 },
+    "enabled=false,facing=south": { "model": "elementtimes:block/machine/coagulator_off", "y": 270 },
+    "enabled=true,facing=east":   { "model": "elementtimes:block/machine/coagulator_on", "y": 180 },
+    "enabled=true,facing=west":   { "model": "elementtimes:block/machine/coagulator_on" },
+    "enabled=true,facing=north":  { "model": "elementtimes:block/machine/coagulator_on", "y": 90 },
+    "enabled=true,facing=south":  { "model": "elementtimes:block/machine/coagulator_on", "y": 270 }
   }
 }

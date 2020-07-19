@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementtimes:blocks/fluidreactor/top",
+        "down":     "elementtimes:blocks/fluidreactor/bottom",
+        "up":       "elementtimes:blocks/fluidreactor/top",
+        "north":    "elementtimes:blocks/fluidreactor/side",
+        "south":    "elementtimes:blocks/fluidreactor/side",
+        "west":     "elementtimes:blocks/fluidreactor/side",
+        "east":     "elementtimes:blocks/fluidreactor/off"
+    }
+}

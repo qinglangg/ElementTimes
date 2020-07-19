@@ -1,0 +1,71 @@
+package com.elementtimes.elementtimes.plugin.ic2;
+
+import com.elementtimes.elementtimes.common.block.RubberLog;
+import com.elementtimes.elementtimes.common.init.Items;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.Event;
+
+public class IC2Support {
+
+    public static boolean isLoaded() {
+        return Loader.isModLoaded("ic2");
+    }
+
+    public static void register() {
+        if (isLoaded()) {
+            MinecraftForge.EVENT_BUS.register(new IC2Event());
+        }
+    }
+
+    public static boolean extractRubber(PlayerEntity player, World world, BlockPos pos, Direction side) {
+        if (isLoaded()) {
+            BlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+            if (block == ic2.core.ref.BlockName.rubber_wood.getInstance()) {
+                return ic2.core.item.tool.ItemTreetap.attemptExtract(player, world, pos, side, state, null);
+            }
+        }
+        return false;
+    }
+
+    public static void useTreeTap(PlayerInteractEvent.RightClickBlock event, ItemStack stack) {
+        ic2.core.item.tool.ItemTreetap tap = (ic2.core.item.tool.ItemTreetap) stack.getItem();
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        PlayerEntity player = event.getPlayerEntity();
+        if (!world.isRemote) {
+            BlockState bs = world.getBlockState(pos);
+            if (bs.getBlock() == ETBlocks.logRubber && bs.getValue(RubberLog.HAS_RUBBER)) {
+                world.setBlockState(pos, bs.withProperty(RubberLog.HAS_RUBBER, false));
+                world.markBlockRangeForRenderUpdate(pos, pos);
+                player.dropItem(new ItemStack(Items.rubberRaw), true, false);
+                ic2.core.util.StackUtil.damage(player, event.getHand(), ic2.core.util.StackUtil.anyStack, 1);
+                event.setUseItem(Event.Result.DENY);
+            }
+        }
+    }
+
+    public static void useElectricTreeTap(PlayerInteractEvent.RightClickBlock event, ItemStack stack) {
+        ic2.core.item.tool.ItemTreetapElectric tap = (ic2.core.item.tool.ItemTreetapElectric) stack.getItem();
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        PlayerEntity player = event.getPlayerEntity();
+        if (!world.isRemote) {
+            BlockState bs = world.getBlockState(pos);
+            if (bs.getBlock() == ETBlocks.logRubber && bs.getValue(RubberLog.HAS_RUBBER)) {
+                world.setBlockState(pos, bs.withProperty(RubberLog.HAS_RUBBER, false));
+                world.markBlockRangeForRenderUpdate(pos, pos);
+                player.dropItem(new ItemStack(Items.rubberRaw), true, false);
+                ic2.api.item.ElectricItem.manager.use(stack, tap.operationEnergyCost, player);
+                event.setUseItem(Event.Result.DENY);
+            }
+        }
+    }
+}
