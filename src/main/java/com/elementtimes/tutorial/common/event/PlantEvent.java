@@ -35,21 +35,4 @@ public class PlantEvent {
 			}
 		}
 	}
-	
-	//添加竹子自然生成以后移除
-	@SubscribeEvent
-	public static void onBreakGrass2(net.minecraftforge.event.world.BlockEvent.BreakEvent e) {
-		IBlockState state = e.getState();
-		World world = e.getWorld();
-		Random rand = world.rand;
-		BlockPos pos = e.getPos();
-		if (state.getBlock() == Blocks.TALLGRASS) {
-			//几率掉落（三十分之一）
-			int chance = 30;
-			if (rand.nextInt(chance) == 0) {
-				world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(),
-						new ItemStack(ElementtimesBlocks.bamboo)));
-			}
-		}
-	}
 }
