@@ -53,7 +53,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	private boolean south = false;
 	private boolean north = false;
 	/** 电线连接的方块，不包括电线方块 */
-	private List<BlockPos> linkedBlocks = new ArrayList<BlockPos>(5) {
+	final List<BlockPos> linkedBlocks = new ArrayList<BlockPos>(5) {
 		@Override
 		public boolean add(BlockPos tileEntity) {
 			WaitList.checkNull(tileEntity, "tileEntity");
@@ -439,7 +439,7 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT(@Nonnull NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		up = compound.getBoolean("up");
 		down = compound.getBoolean("down");
@@ -516,98 +516,6 @@ public class EleSrcCable extends Electricity implements IAutoNetwork, ITickable 
 		}
 	}
 	
-	private final IEnergyStorage mStorage = new IEnergyStorage() {
-		
-		private boolean isNext = true;
-		private boolean isPrev = true;
-		
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			TileEntity te;
-			IEnergyStorage storage;
-			int k = 0;
-			for (BlockPos block : linkedBlocks) {
-				te = world.getTileEntity(block);
-				if (te == null) continue;
-				storage = te.getCapability(CapabilityEnergy.ENERGY, BlockPosUtil.whatFacing(block, pos));
-				if (storage == null) continue;
-				int i = storage.receiveEnergy(maxReceive, true);
-				if (i <= 0) continue;
-				if (i == maxReceive) {
-					if (!simulate) storage.receiveEnergy(maxReceive, false);
-					return maxReceive;
-				}
-				if (i < maxReceive) {
-					k += i;
-					if (!simulate) storage.receiveEnergy(i, false);
-					maxReceive -= i;
-				}
-			}
-			
-			if (maxReceive <= 0) return k;
-			if (isNext && next != null && (te = getNext()) != null &&
-					    (storage = te.getCapability(CapabilityEnergy.ENERGY,
-							    BlockPosUtil.whatFacing(next, pos))) != null) {
-				isNext = false;
-				int i = storage.receiveEnergy(maxReceive, true);
-				if (i == maxReceive) {
-					if (!simulate) storage.receiveEnergy(maxReceive, false);
-					isNext = true;
-					return k + maxReceive;
-				}
-				if (i < maxReceive) {
-					k += i;
-					if (!simulate) storage.receiveEnergy(i, false);
-					maxReceive -= i;
-				}
-			}
-			if (maxReceive <= 0) {
-				isNext = true;
-				return k;
-			}
-			if (isPrev && prev != null && (te = getPrev()) != null &&
-					    (storage = te.getCapability(CapabilityEnergy.ENERGY,
-							    BlockPosUtil.whatFacing(prev, pos))) != null) {
-				isPrev = false;
-				int i = storage.receiveEnergy(maxReceive, true);
-				if (i == maxReceive) {
-					if (!simulate) storage.receiveEnergy(maxReceive, false);
-					isPrev = true;
-					return k + maxReceive;
-				}
-				if (i < maxReceive) {
-					k += i;
-					if (!simulate) storage.receiveEnergy(i, false);
-				}
-			}
-			isNext = isPrev = true;
-			return k;
-		}
-		
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			return 0;
-		}
-		
-		@Override
-		public int getEnergyStored() {
-			return Integer.MAX_VALUE;
-		}
-		
-		@Override
-		public int getMaxEnergyStored() {
-			return Integer.MAX_VALUE;
-		}
-		
-		@Override
-		public boolean canExtract() {
-			return false;
-		}
-		
-		@Override
-		public boolean canReceive() {
-			return true;
-		}
-	};
+	private final IEnergyStorage mStorage = new TransferHelper(this);
 	
 }
